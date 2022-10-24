@@ -19,14 +19,14 @@ const initialState: HeroState = {
 };
 
 export const fetchHeros = createAsyncThunk("hero/fetchHeros", async () => {
-  const response = await axios.get<HeroType[]>("/api/hero/");
+  const response = await axios.get<HeroType[]>("/api/hero/info/");
   return response.data;
 });
 
 export const fetchHero = createAsyncThunk(
   "hero/fetchHero",
   async (id: HeroType["id"], { dispatch }) => {
-    const response = await axios.get(`/api/hero/${id}/`);
+    const response = await axios.get(`/api/hero/info/${id}/`);
     return response.data ?? null;
   }
 );
@@ -34,7 +34,7 @@ export const fetchHero = createAsyncThunk(
 export const postHero = createAsyncThunk(
   "hero/postHero",
   async (hero: Pick<HeroType, "name" | "age" >, { dispatch }) => {
-    const response = await axios.post("/api/hero/", hero);
+    const response = await axios.post("/api/hero/info/", hero);
     dispatch(heroActions.addHero(response.data));
   }
 );
