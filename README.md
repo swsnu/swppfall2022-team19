@@ -1,6 +1,6 @@
 # SWPP Practice Session #8
 - Connect frontend and backend
-"HELP"
+"HELP""PULL"
 [![Build
            Status](https://travis-ci.com/swsnu/swppfall2022-team19.svg?branch=main)](https://travis-ci.com/swsnu/swppfall2022-team19)
 [![Quality Gate
