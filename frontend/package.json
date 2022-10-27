@@ -10,6 +10,7 @@
     "@types/react-router": "^5.1.19",
     "axios": "^0.24.0",
     "connected-react-router": "^6.8.0",
+    "eslint": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.1",
@@ -19,7 +20,7 @@
     "redux": "^4.0.5",
     "redux-csrf": "^1.1.0",
     "redux-thunk": "^2.3.0",
-    "typescript": "^4.8.4"
+    "typescript": "*"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -44,6 +45,13 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6"
-  }
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.10"
+  },
+  "proxy": "http://localhost:8000"
 }
