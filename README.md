@@ -1,4 +1,4 @@
-# CU
+# LetMeCU
 
 [![Build Status](https://app.travis-ci.com/swsnu/swpp2021-team11.svg?branch=master)](https://app.travis-ci.com/swsnu/swpp2021-team11)
 
