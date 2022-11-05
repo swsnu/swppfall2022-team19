@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import "./TotalScoreList.css";
 import TotalScore from "../../components/TotalScore/TotalScore";
+import React from 'react'
 
 interface IProps{
     title: string;
