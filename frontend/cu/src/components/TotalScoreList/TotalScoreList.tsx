@@ -19,11 +19,11 @@ export default function TotalScoreList (props: IProps){
     const [ totalscores, setTotalScores ] = useState<TotalScoreType[]>([
         {title: "총점", score: 5  },
 
-        {title: "맛", score: 5  },
-        {title: "재구매 의사", score: 5  },
+        {title: "맛 만족도", score: 5  },
         {title: "가성비", score: 5  },
-        {title: "재료 신선도", score: 5  },
-        {title: "적절한 양", score: 5  },
+        {title: "재구매 의사", score: 5  },
+        {title: "용량", score: 5  },
+        {title: "추천 의사", score: 5  },
     ]);
     
     return (
