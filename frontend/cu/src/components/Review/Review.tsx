@@ -1,7 +1,6 @@
 // Review
-// username | totalScore
-// cotent   | like-button
-// dispatch function: clickLikeButton                       
+// Review contains 'user_id' 'totalScore' 'comment' 'likedCount' 'liked'
+// Review.ts slice has 'clickLike' reducer  to change the state of 'liked' attribute for all te Reviews.                    
 
 
 import "./Review.css"
@@ -23,36 +22,22 @@ export default function Review(props: IProps){
     const dispatch = useDispatch()
     const postReviewHandler = () => {
         dispatch(reviewActions.clickLike)
-        if (liked == false) 
+        if (liked === false) 
             setLiked(true)
         else
             setLiked(false)
     };
 
-    if(liked)
-        return (
-            <article className ='Review'>
+    return (
+        <article className ='Review'>
+            <div className = 'review_button_except'>
                 <div className = "review_user_id">{props.user_id}</div>
                 <div className = "review_totalScore">{props.totalScore}</div>
                 <div className = "review_comment">{props.comment}</div> 
-                <div className = "like_button">
-                    <button className = 'like_button_on'> &#10084;</button>
-                </div>
-            </article>
-        );
-    else{
-        return (
-            <article className ='Review'>
-                <div className = "review_user_id">{props.user_id}</div>
-                <div className = "review_totalScore">{props.totalScore}</div>
-                <div className = "review_comment">{props.comment}</div> 
-                <div className = "like_button">
-                    <button className = 'like_button_off' > &#10084;</button>
-                </div>
-            </article>
-        );
-    }
+            </div>
+            <div className = "like_button" onClick={postReviewHandler}>
+                {liked? <button>❤️</button>: <button>🤍</button>}
+            </div> 
+        </article>
+    );
 };
-
-//onClick={() => postReviewHandler()}
-//onClick={() => postReviewHandler()}
