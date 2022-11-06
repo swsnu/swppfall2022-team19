@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postRate, rateActions } from '../../store/slices/Rate';
+import { postReview, reviewActions } from '../../store/slices/Review';
 import HeartRating from './HeartRating'
 import "./RatingForm.css"
 import { AppDispatch, RootState } from '../../store';
@@ -53,8 +54,8 @@ function RatingForm(props: Props) {
     const scores = [score1, score2, score3, score4, score5];
     const dataRate = { user_id: 1, product_id: 1, category_id: 1, scores: scores, comment: comment };
     const result1 = await dispatch(postRate(dataRate));
-    // const dataReview = {user_id: 1, score: scores, comment: comment, likedCount: 0, liked: 0};
-    // const result2 = await dispatch(postReview(dataReview));
+    const dataReview = {user_id: 1, scores: scores, comment: comment, likedCount: 0, liked: false};
+    const result2 = await dispatch(postReview(dataReview));
 
 
     clickBackHandler();

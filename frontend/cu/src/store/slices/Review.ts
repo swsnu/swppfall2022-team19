@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import { RootState } from "..";
 
 export interface ReviewType{
@@ -27,6 +28,23 @@ const initialState: ReviewState = {
     selectedReview: null,
     selectReviewLike: false,
 }
+
+//fetch reviews for specific product
+export const fetchReview = createAsyncThunk(
+    "api/productID/fetchReview",async () => {
+        const response = await axios.get<ReviewType[]>("/api/productID/review/");
+        return response.data;
+    }
+)
+
+//post review to specific product
+export const postReview = createAsyncThunk(
+    "api/postReview",
+   async (review: Pick<ReviewType, "user_id"|"scores"|"comment"|"likedCount"|"liked">,{dispatch}) => {
+    const response = await axios.post("/api/productID/reviews/", review);
+    dispatch(reviewActions.addReview(response.data));
+   }
+)
 
 export const reviewSlice = createSlice({
     name: "review",
