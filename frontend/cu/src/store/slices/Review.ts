@@ -8,19 +8,22 @@ export interface ReviewType{
     product_id: number, 
     category_id: number,
     score: number[],
-    comment:string 
+    comment:string
     }
 
 export interface ReviewState{
     reviews: ReviewType[],
-    selectedReview : ReviewType | null
+    selectedReview : ReviewType | null,
+    selectReviewLike : boolean,
+    
  }
 
 const initialState: ReviewState = {
     reviews: [
         {id: 1, user_id: 1, product_id: 1, category_id: 1, score: [4, 3, 5, 3, 3], comment: "조금 짜긴한데 만족합니다!"}
     ],
-    selectedReview: null
+    selectedReview: null,
+    selectReviewLike: false,
 }
 
 //fetch reviews for specific product
@@ -56,7 +59,12 @@ export const reviewSlice = createSlice({
             }
             state.reviews.push(newReview);
             state.selectedReview = newReview;
-        }
+        },
+        clickLike: (state, action) =>{
+            if (state.selectReviewLike) state.selectReviewLike=false;
+            else state.selectReviewLike=true;
+        },
+        
     }
 });
 
