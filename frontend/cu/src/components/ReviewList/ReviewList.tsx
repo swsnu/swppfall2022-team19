@@ -27,7 +27,6 @@ export default function ReviewList (props: IProps){
         { id: 4, username: "yammy", totalScore: 1, content: "너무 맛없음", likedCount:1, liked: true },
         { id: 5, username: "swpp", totalScore: 5, content: "나쁘지 않음. 한 번 먹어볼만 합니다.", likedCount:5,  liked: false },
     ]);
-    
     return (
         <div className="ReviewList"> 
             <div className='title'>{title}</div>

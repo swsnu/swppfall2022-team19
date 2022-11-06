@@ -50,6 +50,7 @@ function RatingForm(props: Props) {
   }
 
   const clickSaveHandler = () => {
+    //데이터를 저장하려면 정보가 부족함..
   }
 
   return (

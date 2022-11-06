@@ -7,7 +7,7 @@
 import "./Review.css"
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { reviewActions } from "../../store/slices/Review";
+import { rateActions } from "../../store/slices/Rate";
 
 
 interface IProps{
@@ -22,7 +22,7 @@ export default function Review(props: IProps){
     const [liked, setLiked] = useState<boolean>(false);
     const dispatch = useDispatch()
     const postReviewHandler = () => {
-        dispatch(reviewActions.clickLike)
+        dispatch(rateActions.clickLike)
         if (liked == false) 
             setLiked(true)
         else
