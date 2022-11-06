@@ -3,15 +3,20 @@
     width: 1000px;
     box-shadow: 0 3px 9px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
     margin: auto; 
-    margin-top: 10rem;
-    margin-bottom: 5rem;
+    margin-top: 30rem;
+    margin-bottom: 2rem;
+
   }
   
-  .TotalScore .title {
+  .TotalScoreList .title {
     padding: 1rem;
     font-size: 1rem;
     text-align: left;
     font-weight: 400;
     background: yellowgreen;
     color: black;
+  }
+
+  .TotalScoreList .views{
+    padding: 0.5rem;
   }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import "./ReviewList.css";
-import Review from "../../components/Review/Review";
+import Review from "../Review/Review";
 
 interface IProps{
     title:string;
@@ -46,15 +46,3 @@ export default function ReviewList (props: IProps){
         </div> 
     )
 }
-
-
-// 하나랑 합칠 때
-// import {useSelector} from "react-redux";
-// import {selecReview, reviewActions } from "../../store/slices/review";
-
-// inside func
-// const reviewState = useSelector(selectReview);
-// const dispatch= useDispatch();
-
-// return
-// reviewState.reviews.map(rv) => {}

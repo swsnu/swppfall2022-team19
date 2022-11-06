@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import "./TotalScoreList.css";
-import TotalScore from "../../components/TotalScore/TotalScore";
-import React from 'react'
+import TotalScore from "../TotalScore/TotalScore";
 
 interface IProps{
     title: string;
@@ -12,21 +11,23 @@ type TotalScoreType={
     score: number;
 }
 
-export default function totalScoreList (props: IProps){
+export default function TotalScoreList (props: IProps){
     const {title} = props;
 
-    const [ totalscores, setTotalScores ] = useState<TotalScoreType[]>([
-        {title: "totalScore", score: 5  },
 
-        {title: "score1", score: 5  },
-        {title: "score2", score: 5  },
-        {title: "score3", score: 5  },
-        {title: "score4", score: 5  },
-        {title: "score5", score: 5  },
+    //this part should differ by the product category
+    const [ totalscores, setTotalScores ] = useState<TotalScoreType[]>([
+        {title: "총점", score: 5  },
+
+        {title: "맛", score: 5  },
+        {title: "재구매 의사", score: 5  },
+        {title: "가성비", score: 5  },
+        {title: "재료 신선도", score: 5  },
+        {title: "적절한 양", score: 5  },
     ]);
     
     return (
-        <div className="ReviewList"> 
+        <div className="TotalScoreList"> 
             <div className='title'>{title}</div>
             <div className='views'>
                 {totalscores.map( (ts) => {
