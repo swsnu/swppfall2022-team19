@@ -7,7 +7,7 @@
 import "./Review.css"
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { reviewActions } from "../../store/slices/review";
+import { reviewActions } from "../../store/slices/Review";
 
 
 interface IProps{
