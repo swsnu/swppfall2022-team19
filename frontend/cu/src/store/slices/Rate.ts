@@ -7,7 +7,7 @@ export interface RateType{
     user_id: number, 
     product_id: number, 
     category_id: number,
-    score: number[],
+    scores: number[],
     comment:string
     }
 
@@ -18,7 +18,7 @@ export interface RateState{
 
 const initialState: RateState = {
     rates: [
-        {id: 1, user_id: 1, product_id: 1, category_id: 1, score: [3, 3, 5, 3, 3], comment: "조금 짜긴한데 만족합니다!"}
+        {id: 1, user_id: 1, product_id: 1, category_id: 1, scores: [3, 3, 5, 3, 3], comment: "조금 짜긴한데 만족합니다!"}
     ],
     selectedRate: null,
 }
@@ -34,7 +34,7 @@ export const fetchRate = createAsyncThunk(
 //post review to specific product
 export const postRate = createAsyncThunk(
     "api/postRate",
-   async (rate: Pick<RateType, "user_id"|"product_id"|"category_id"|"score"|"comment">,{dispatch}) => {
+   async (rate: Pick<RateType, "user_id"|"product_id"|"category_id"|"scores"|"comment">,{dispatch}) => {
     const response = await axios.post("/api/productID/rates/", rate);
     dispatch(rateActions.addRate(response.data));
    }
@@ -45,13 +45,13 @@ export const rateSlice = createSlice({
     name: "rate",
     initialState,
     reducers: {
-        addRate: (state, action: PayloadAction<{user_id: number, product_id: number, category_id:number,score: number[], comment: string}>) =>{
+        addRate: (state, action: PayloadAction<{user_id: number, product_id: number, category_id:number,scores: number[], comment: string}>) =>{
             const newRate = {
                 id: state.rates.length === 0 ? state.rates.length + 1: state.rates[state.rates.length -1].id + 1,
                 user_id: action.payload.user_id,
                 product_id: action.payload.product_id,
                 category_id: action.payload.category_id,
-                score : action.payload.score,
+                scores : action.payload.scores,
                 comment : action.payload.comment
             }
             state.rates.push(newRate);
