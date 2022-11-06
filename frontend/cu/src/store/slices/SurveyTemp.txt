@@ -19,6 +19,7 @@ const initialState: surveyAnswer = {
     question: 0,
 }
 
+
 export const putSurvey = createAsyncThunk(
     "user/putSurvey",
     async (survey: Pick<surveyAnswer, "gender" | "age" | "taste" | "question">, {dispatch}) => {

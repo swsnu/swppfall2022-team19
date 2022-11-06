@@ -43,46 +43,46 @@ const Survey = () => {
 
     interface genderOptions{
         readonly value: string;
-        readonly lable: string;
+        readonly label: string;
     }
     const genderList: readonly genderOptions[]  = [
-        { value: "M", lable: "남성"},
-        { value: "F", lable: "여성"}
+        { value: "M", label: "남성"},
+        { value: "F", label: "여성"}
     ]
     interface ageOptions{
         readonly value: number;
-        readonly lable: string;
+        readonly label: string;
     }
     const ageList: readonly ageOptions[] = [
-        { value: 1, lable: "~10대"},
-        { value: 2, lable: "20대"},
-        { value: 3, lable: "30대"},
-        { value: 4, lable: "40대"},
-        { value: 5, lable: "50대"},
-        { value: 6, lable: "60대~"}
+        { value: 1, label: "~10대"},
+        { value: 2, label: "20대"},
+        { value: 3, label: "30대"},
+        { value: 4, label: "40대"},
+        { value: 5, label: "50대"},
+        { value: 6, label: "60대~"}
     ]
     interface tasteOptions{
         readonly value: number;
-        readonly lable: string;
+        readonly label: string;
     }
     const tasteList: readonly tasteOptions[] =[
         // Multi Choice
-        { value: 1, lable: "간편식사" },
-        { value: 2, lable: "과자류" },
-        { value: 3, lable: "아이스크림" },
-        { value: 4, lable: "식품" },
-        { value: 5, lable: "음료" }
+        { value: 1, label: "간편식사" },
+        { value: 2, label: "과자류" },
+        { value: 3, label: "아이스크림" },
+        { value: 4, label: "식품" },
+        { value: 5, label: "음료" }
     ]
 
     // Question
     interface questionOptions{
         readonly value: number;
-        readonly lable: string;
+        readonly label: string;
     }
     const questionList: readonly questionOptions[] = [
-        { value: 1, lable: "맛" },
-        { value: 2, lable: "가성비" },
-        { value: 3, lable: "재구매 의사" }
+        { value: 1, label: "맛" },
+        { value: 2, label: "가성비" },
+        { value: 3, label: "재구매 의사" }
     ]
 
     
@@ -92,23 +92,41 @@ const Survey = () => {
         return (
             <div className="MainBox">
                 <div className="SelectBox">
-                    <Select isClearable={false} options={genderList} onChange={(event) => event===null ? setGender("") : setGender(event.value)}/>
-                    <Select options={ageList}  onChange={(event) => event===null ? setAge(-1) : setAge(event.value)}/>
+                    <div className="introBox">
+                        <h3>Let me See You!</h3>
+                        <h4>사용자 정보를 입력하고 맞춤화 된 제품을 추천받자!</h4>
+                    </div>
                     
-                    <Select defaultValue={[tasteList[0]]} components={animatedComponents} isMulti options={tasteList} onChange={(event) => {
-                        var temp: number[] = [];
-                        temp = event.map((element) => {
-                            return element.value;
-                        })
-                        console.log(temp); // debug
-                        setTaste(temp);}}
-                    />
+                    <div className="questionBox">
+                        <h5> 당신의 성별을 알려주세요 </h5>
+                        <Select className="genderDropdown" isClearable={false} options={genderList} onChange={(event) => event===null ? setGender("") : setGender(event.value)}/>
+                    </div>
+                   
+                    <div className="questionBox">
+                        <h5> 당신의 연령대를 알려주세요 </h5>
+                        <Select className="ageDropDown" options={ageList}  onChange={(event) => event===null ? setAge(-1) : setAge(event.value)}/>
+                    </div>
+                   
+                    <div className="questionBox">
+                        <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
+                        <Select className="tasteDropDown" isMulti defaultValue={[tasteList[0]]} components={animatedComponents} options={tasteList} onChange={(event) => {
+                                var temp: number[] = [];
+                                temp = event.map((element) => {
+                                    return element.value;
+                                });
+                                setTaste(temp);
+                           }}
+                        />
+                    </div>
                     
-                    <Select options={questionList} onChange={(event) => event===null ? setQuestion(-1) : setQuestion(event.value)}/>
-    
+                    <div className="questionBox">
+                        <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
+                        <Select className="questionDropDown" options={questionList} onChange={(event) => event===null ? setQuestion(-1) : setQuestion(event.value)}/>
+                    </div>
+                    
                 </div>
 
-                <button onClick={() => putSurveyHandler()}>제출하기</button>
+                <button className="submitButton" onClick={() => putSurveyHandler()}>제출하기</button>
             </div>
         )
     }

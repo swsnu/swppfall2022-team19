@@ -12,14 +12,15 @@ const ProductBlock = (props: Props) => {
     let commaPrice = props.price.toLocaleString('ko-KR');
     
     return (
-        <div className="debug">
-            <p>[디버그] 이것은 ProductBlock입니다</p>
-            <a className="productBlock" href={props.pageLink}>
+        <div className="productBlock">
+            <a className="productA" href={props.pageLink}>
                 <div className="productInfoBlock">
+                    <div className="productImageBox">
                     <img className="productImage" src={props.imgLink} alt="Product"/>
+                    </div>
                     <div className="productTextBlock">
-                        <h4 className="productName">{props.name}</h4>
-                        <p className="productPrice">{commaPrice}원</p>
+                        <p className="productName">{props.name}</p>
+                        <span className="productPrice">{commaPrice}원</span>
                     </div>
                 </div>
                 

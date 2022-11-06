@@ -12,10 +12,9 @@ import Survey from "./containers/Survey/Survey";
 function App() {
   return (
     <div>
-      <p> Happy Hacking! </p>
       <BrowserRouter>
         <Routes>
-          <Route path="/productBlock" element={<ProductBlock pageLink="https://www.naver.com/" imgLink="./Example.jpg" name="맛있는 제품" price={3400}></ProductBlock>} />
+          <Route path="/productBlock" element={<ProductBlock pageLink="/" imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="맛있는 제품" price={3400}></ProductBlock>} />
           <Route path="/survey" element={<Survey></Survey>} />
           <Route path="/:productId/ProductDetail" element={<ProductDetailPage/>}/>
         </Routes>
