@@ -8,7 +8,7 @@ import makeAnimated from 'react-select/animated';
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { putSurvey, surveyActions, surveyAnswer } from '../../store/slices/SurveyTemp';
+// import { putSurvey, surveyAnswer } from '../../store/slices/SurveyTemp';
 // temp
 
 
@@ -25,6 +25,11 @@ const Survey = () => {
     const [submitted, setSubmitted] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
 
+    
+    const putSurveyHandler = () => {
+        console.log("putSurveyHandler is called");
+    }
+    /*
     const putSurveyHandler = async () => {
         const data: surveyAnswer = { gender: gender, age: age, taste: taste, question:question };
         const result = await dispatch(putSurvey(data));
@@ -34,6 +39,7 @@ const Survey = () => {
             alert("Error on put user Survey Info");
         }
     };
+    */
 
     interface genderOptions{
         readonly value: string;
@@ -86,8 +92,8 @@ const Survey = () => {
         return (
             <div className="MainBox">
                 <div className="SelectBox">
-                    <Select options={genderList} onChange={(event) => setGender(event?.value)}/>
-                    <Select options={ageList}  onChange={(event) => setAge(event?.value)} />
+                    <Select isClearable={false} options={genderList} onChange={(event) => event===null ? setGender("") : setGender(event.value)}/>
+                    <Select options={ageList}  onChange={(event) => event===null ? setAge(-1) : setAge(event.value)}/>
                     
                     <Select defaultValue={[tasteList[0]]} components={animatedComponents} isMulti options={tasteList} onChange={(event) => {
                         var temp: number[] = [];
@@ -98,7 +104,7 @@ const Survey = () => {
                         setTaste(temp);}}
                     />
                     
-                    <Select options={questionList} onChange={(event) => setQuestion(event?.value)}/>
+                    <Select options={questionList} onChange={(event) => event===null ? setQuestion(-1) : setQuestion(event.value)}/>
     
                 </div>
 
