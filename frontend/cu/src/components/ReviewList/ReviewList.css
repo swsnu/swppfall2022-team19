@@ -1,6 +1,6 @@
 .ReviewList {
   background: white;
-  width: 1000px;
+  width: 1100px;
   box-shadow: 0 3px 9px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
   margin: auto; 
   margin-top: 0rem;
@@ -17,6 +17,7 @@
 }
 
 .ReviewList .fieldName {
+  
   padding: 0.5rem;
   font-size: 1rem;
   text-align: left;
@@ -57,7 +58,7 @@
 
 .ReviewList .fieldName_like {
   padding: 0rem;
-  margin-left: 45rem;
+  margin-left: 50rem;
   font-size: 1rem;
   text-align: right;
   font-weight: 400;
