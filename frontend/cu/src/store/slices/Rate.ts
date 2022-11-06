@@ -14,16 +14,13 @@ export interface RateType{
 export interface RateState{
     rates: RateType[],
     selectedRate : RateType | null,
-    selectReviewLike : boolean,
-    
- }
+}
 
 const initialState: RateState = {
     rates: [
         {id: 1, user_id: 1, product_id: 1, category_id: 1, score: [3, 3, 5, 3, 3], comment: "조금 짜긴한데 만족합니다!"}
     ],
     selectedRate: null,
-    selectReviewLike: false,
 }
 
 //fetch reviews for specific product
@@ -59,12 +56,7 @@ export const rateSlice = createSlice({
             }
             state.rates.push(newRate);
             state.selectedRate = newRate;
-        },
-        clickLike: (state, action) =>{
-            if (state.selectReviewLike) state.selectReviewLike=false;
-            else state.selectReviewLike=true;
-        },
-        
+        },        
     }
 });
 

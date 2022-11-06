@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 import rateReducer from "./slices/Rate";
+import reviewReducer from "./slices/Review";
 
 export const store = configureStore({
     reducer: {
-        rate: rateReducer
+        rate: rateReducer,
+        review: reviewReducer,
     }
 })
 

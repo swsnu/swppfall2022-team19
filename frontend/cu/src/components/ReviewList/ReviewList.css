@@ -15,3 +15,52 @@
   background: yellowgreen;
   color: black;
 }
+
+.ReviewList .fieldName {
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-align: left;
+  display: flex;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}
+.ReviewList .fieldName_ID {
+  padding: 0rem;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}
+
+.ReviewList .fieldName_totalScore {
+  padding: 0rem;
+  margin-left: 1rem;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}
+
+.ReviewList .fieldName_comment {
+  padding: 0rem;
+  margin-left:3rem;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}
+
+.ReviewList .fieldName_like {
+  padding: 0rem;
+  margin-left: 45rem;
+  font-size: 1rem;
+  text-align: right;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}

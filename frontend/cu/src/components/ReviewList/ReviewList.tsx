@@ -1,7 +1,9 @@
 // ReviewList
 
-import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import "./ReviewList.css";
+import { AppDispatch } from "../../store";
+import { selectReview } from "../../store/slices/Review";
 import Review from "../Review/Review";
 
 interface IProps{
@@ -10,33 +12,35 @@ interface IProps{
 
 type ReviewType={
     id: number;
-    username:string;
-    totalScore: number;
-    content: string;
+    user_id: number;
+    scores: number[];
+    comment: string;
     likedCount: number;
     liked: boolean;
 }
 
 export default function ReviewList (props: IProps){
-    const {title} = props;
+    const { title } = props;
+    const todoState = useSelector(selectReview);
+    const dispatch = useDispatch<AppDispatch>();
 
-    const [ reviews, setReviews ] = useState<ReviewType[]>([
-        { id: 1, username: "worm", totalScore: 5, content: "제가 제일 좋아하는 CU 제품입니다", likedCount:5, liked: true },
-        { id: 2, username: "sikdorak", totalScore: 5, content: "재료가 다양해서 좋아요", likedCount:5, liked: true},
-        { id: 3, username: "idi", totalScore: 2, content: "제가 기대했던 맛은 아니네요",likedCount:2, liked: true },
-        { id: 4, username: "yammy", totalScore: 1, content: "너무 맛없음", likedCount:1, liked: true },
-        { id: 5, username: "swpp", totalScore: 5, content: "나쁘지 않음. 한 번 먹어볼만 합니다.", likedCount:5,  liked: false },
-    ]);
     return (
         <div className="ReviewList"> 
             <div className='title'>{title}</div>
-            <div className='views'>
-                {reviews.map( (rv) => {
+            <div className='fieldName'>
+                <div className="fieldName_ID">ID </div>
+                <div className="fieldName_totalScore">평점 </div>
+                <div className="fieldName_comment">한줄 평가 </div>
+                <div className="fieldName_like">좋아요 </div>
+            </div>    
+            <div className='reviews'>
+                {todoState.reviews.map( (rv) => {
+                    const totalScore = (rv.scores[0] + rv.scores[1] + rv.scores[2] + rv.scores[3] + rv.scores[4])/5
                     return (<Review 
                         key={rv.id}
-                        username={rv.username}
-                        totalScore={rv.totalScore}
-                        content={rv.content}
+                        user_id={rv.user_id}
+                        totalScore={totalScore}
+                        comment={rv.comment}
                         likedCount={rv.likedCount}
                         liked={rv.liked}
                     />

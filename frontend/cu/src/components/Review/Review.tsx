@@ -7,13 +7,13 @@
 import "./Review.css"
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { rateActions } from "../../store/slices/Rate";
+import { reviewActions } from "../../store/slices/Review";
 
 
 interface IProps{
-    username: string;
+    user_id: number;
     totalScore: number;
-    content: string;
+    comment: string;
     likedCount: number;
     liked:boolean;
 }
@@ -22,7 +22,7 @@ export default function Review(props: IProps){
     const [liked, setLiked] = useState<boolean>(false);
     const dispatch = useDispatch()
     const postReviewHandler = () => {
-        dispatch(rateActions.clickLike)
+        dispatch(reviewActions.clickLike)
         if (liked == false) 
             setLiked(true)
         else
@@ -32,23 +32,27 @@ export default function Review(props: IProps){
     if(liked)
         return (
             <article className ='Review'>
-                <div className = "review_user_and_star">{props.username} {props.totalScore}</div>
+                <div className = "review_user_id">{props.user_id}</div>
+                <div className = "review_totalScore">{props.totalScore}</div>
+                <div className = "review_comment">{props.comment}</div> 
                 <div className = "like_button">
-                    <button className = 'like_button_on' onClick={() => postReviewHandler()}> &#10084;</button>
+                    <button className = 'like_button_on'> &#10084;</button>
                 </div>
-                <div className = "review_content">{props.content}</div> 
             </article>
         );
     else{
         return (
             <article className ='Review'>
-                <div className = "review_user_and_star">{props.username} {props.totalScore}</div>
+                <div className = "review_user_id">{props.user_id}</div>
+                <div className = "review_totalScore">{props.totalScore}</div>
+                <div className = "review_comment">{props.comment}</div> 
                 <div className = "like_button">
-                    <button className = 'like_button_off' onClick={() => postReviewHandler()}> &#10084;</button>
+                    <button className = 'like_button_off' > &#10084;</button>
                 </div>
-                <div className = "review_content">{props.content}</div> 
             </article>
         );
     }
 };
 
+//onClick={() => postReviewHandler()}
+//onClick={() => postReviewHandler()}
