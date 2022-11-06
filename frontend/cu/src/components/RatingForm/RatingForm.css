@@ -1,0 +1,26 @@
+
+
+body {
+    background : #f5f8ff;
+}
+
+.rating_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 547px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    padding: 25px 0 69px 0;
+    margin: 0 auto;
+}
+
+.rating_heading {
+    font-size: 32px;
+    color: #323357;
+    font-family: "Muli";
+    font-weight: 700;
+    text-align: center;
+    margin: 28px 0; 
+}
