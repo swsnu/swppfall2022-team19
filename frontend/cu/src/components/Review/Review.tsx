@@ -1,9 +1,17 @@
+// Review
+// username | totalScore
+// cotent   | like-button
+// dispatch function: clickLikeButton                       
+
+
 import "./Review.css"
-import React from "react";
+import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { reviewActions } from "../../store/slices/review";
+
 
 interface IProps{
     username: string;
-    clicked?: React.MouseEventHandler<HTMLDivElement>;
     totalScore: number;
     content: string;
     likedCount: number;
@@ -11,12 +19,36 @@ interface IProps{
 }
 
 export default function Review(props: IProps){
-    return (
-        <article className ='Review'>
-            <div className = "review_user_and_star">{props.username} {props.totalScore}</div>
-            {props.liked? <div className="liked-mark"> &#10084; </div> : <div className="liked-mark"> &#129293; </div>}
-            <div className = "review_content">{props.content}</div> 
-            
-        </article>
-    );
+    const [liked, setLiked] = useState<boolean>(false);
+    const dispatch = useDispatch()
+    const postReviewHandler = () => {
+        dispatch(reviewActions.clickLike)
+        if (liked == false) 
+            setLiked(true)
+        else
+            setLiked(false)
+    };
+
+    if(liked)
+        return (
+            <article className ='Review'>
+                <div className = "review_user_and_star">{props.username} {props.totalScore}</div>
+                <div className = "like_button">
+                    <button className = 'like_button_on' onClick={() => postReviewHandler()}> &#10084;</button>
+                </div>
+                <div className = "review_content">{props.content}</div> 
+            </article>
+        );
+    else{
+        return (
+            <article className ='Review'>
+                <div className = "review_user_and_star">{props.username} {props.totalScore}</div>
+                <div className = "like_button">
+                    <button className = 'like_button_off' onClick={() => postReviewHandler()}> &#10084;</button>
+                </div>
+                <div className = "review_content">{props.content}</div> 
+            </article>
+        );
+    }
 };
+
