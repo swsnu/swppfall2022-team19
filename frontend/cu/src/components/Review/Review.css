@@ -1,13 +1,16 @@
 .Review {
   border-top: 3px solid #f1f3f5;
   padding: 0.5rem;
-  display: row;
-  align-items: left;
   display: flex;
   transition: all 0.15s;
+  justify-content:space-between;
 }
 
-.Review .review_user_id{
+.review_button_except{
+  display: flex;
+}
+
+.review_user_id{
   font-size: 1.1rem;
   font-weight: 400;
   margin-left: 0.6rem;
@@ -16,7 +19,7 @@
   transition: all 0.15s;
 }
 
-.Review .review_totalScore{
+.review_totalScore{
   font-size: 1.1rem;
   font-weight: 400;
   margin-left: 0rem;
@@ -26,7 +29,7 @@
   transition: all 0.15s;
 }
 
-.Review .review_comment{
+.review_comment{
   padding: rem;
   font-weight: 100;
   display:  row;
@@ -36,23 +39,27 @@
   margin-bottom: 1rem;
 }
 
-.Review .like_button{
-  text-align: right;
-  margin-right: 2rem;
+.like_button{
+  border-radius: 100px;
+  box-shadow: transparent 0 0 0 2px, rgba(18, 18, 18, .1) 0 6px 20px;
+  color: #121212;
+  cursor: pointer;
+  display: right;
+  font-family: Inter, sans-serif;
+  font-size: 0.5rem;
+  font-weight: 0;
+  line-height: 1;
+  padding: 0.5rem;
+  margin-right : 3.1rem;
+  transition: box-shadow .2s, -webkit-box-shadow .2s;
+  border: 0;
+  touch-action: manipulation;
 }
 
-.Review .like_button_on {
-  font-size: 1rem;
-  line-height: 1rem;
-  text-align: right;
-  color: red; 
-  font-weight: 0;
+
+.like_button:hover {
+  box-shadow: black 0 0 0 1px, transparent 0 0 0 0;
 }
 
-.Review .like_button_off {
-  font-size: 1rem;
-  line-height: 1rem;
-  text-align: right;
-  color: red; 
-  font-weight: 0;
-}
+
+
