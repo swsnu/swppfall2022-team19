@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.http.response import HttpResponseNotAllowed
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
 import json
 from json.decoder import JSONDecodeError
@@ -23,7 +23,7 @@ def user_info(request, username, password): # login
             if user.password == password : 
                 user.loginState = True
                 user.save()
-                return JsonResponse({"id": user.id, 
+                return JsonResponse({
         "username": user.username, "password": user.password,
         # "age": user.age, "gender": user.gender, "taste": user.taste, "question": user.question,
         "loginState": user.loginState
@@ -32,7 +32,7 @@ def user_info(request, username, password): # login
     else:
         return HttpResponseNotAllowed(['PUT'])
 
-
+@csrf_exempt
 def user_list(request): # register
     if request.method == "GET":
         user_list = [user for user in User.objects.all().values()]
@@ -52,7 +52,7 @@ def user_list(request): # register
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
 
-        user = User(id = id, 
+        user = User(
         username=username, password=password,
         # age=age, gender=gender, taste=taste, question=question,
         loginState=False

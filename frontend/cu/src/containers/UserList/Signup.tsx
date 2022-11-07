@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { postUser } from "../../store/slices/user";
+// import { postUser } from "../../store/slices/user";
 import "./Signup.css";
 
 export default function Signup() {
@@ -13,15 +13,15 @@ export default function Signup() {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
 
-  const postUserHandler = async () => {
-    const data = { username: username, password: password };
-    const result = await dispatch(postUser(data));
-    if (result.type === `${postUser.typePrefix}/fulfilled`) {
-      setSubmitted(true);
-    } else {
-      alert("Error on post User");
-    }
-  };
+  // const postUserHandler = async () => {
+  //   const data = { username: username, password: password };
+  //   const result = await dispatch(postUser(data));
+  //   if (result.type === `${postUser.typePrefix}/fulfilled`) {
+  //     setSubmitted(true);
+  //   } else {
+  //     alert("Error on post User");
+  //   }
+  // };
 
   if (submitted) {
     return <Navigate to="/login" />; 
@@ -43,7 +43,7 @@ export default function Signup() {
           onChange={(event) => setPassword(event.target.value)}
         />
 
-        <button onClick={() => postUserHandler()}>Signup</button>
+        {/* <button onClick={() => postUserHandler()}>Signup</button> */}
       </div>
     );
   }
