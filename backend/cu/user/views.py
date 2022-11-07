@@ -11,14 +11,21 @@ def index(request):
     return HttpResponse('Hello, world!\n')
 
 
-@ensure_csrf_cookie
-def user_info(request, username, password): # login 
+@csrf_exempt
+def user_info(request): # login 
     if request.method == 'PUT':
-        user = User.objects.get(username = username)
-        if user is None:
-            return JsonResponse(None)
+
+        body = request.body.decode()
+        username = json.loads(body)['username']
+        password = json.loads(body)['password']
+
+        user = [user for user in User.objects.filter(username = username)]
+
+        if len(user) == 0 :
+            return JsonResponse(None, safe = False) 
 
         else: 
+            user = user[0]
             # password is wrong, not logged in. 
             if user.password == password : 
                 user.loginState = True
@@ -28,7 +35,7 @@ def user_info(request, username, password): # login
         # "age": user.age, "gender": user.gender, "taste": user.taste, "question": user.question,
         "loginState": user.loginState
          })
-            else : JsonResponse(None)  
+            else : JsonResponse(None, safe = False)  
     else:
         return HttpResponseNotAllowed(['PUT'])
 
@@ -52,20 +59,23 @@ def user_list(request): # register
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
 
-        user = User(
-        username=username, password=password,
-        # age=age, gender=gender, taste=taste, question=question,
-        loginState=False
-        )
+        user = [user for user in User.objects.filter(username = username)]
+        if len(user) == 0 :
+            user = User(
+            username=username, password=password,
+            # age=age, gender=gender, taste=taste, question=question,
+            loginState=False
+            )
 
-        user.save()
-        response_dict = {"id": user.id, 
-        "username": user.username, "password": user.password,
-        # "age": user.age, "gender": user.gender, "taste": user.taste, "question": user.question,
-        "loginState": user.loginState
-         }
+            user.save()
+            response_dict = {"id": user.id, 
+            "username": user.username, "password": user.password,
+            # "age": user.age, "gender": user.gender, "taste": user.taste, "question": user.question,
+            "loginState": user.loginState
+            }
 
-        return JsonResponse(response_dict, status=201)      
-    
+            return JsonResponse(response_dict, status=201)      
+        else: 
+            return JsonResponse(None, safe = False)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])

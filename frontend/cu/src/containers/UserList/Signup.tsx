@@ -6,7 +6,6 @@ import { AppDispatch } from "../../store";
 import { postUser } from "../../store/slices/User";
 import "./Signup.css";
 
-
 export default function Signup() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -20,7 +19,7 @@ export default function Signup() {
     if (result.type === `${postUser.typePrefix}/fulfilled`) {
       setSubmitted(true);
     } else {
-      alert("Error on post User");
+      alert("해당 아이디는 이미 사용 중에 있습니다. 다른 아이디를 사용해주세요. ");
     }
   };
 
@@ -29,22 +28,27 @@ export default function Signup() {
   } else {
     return (
       <div className="Signup">
+        
         <h1>Register</h1>
-        <label>ID</label>
+        <div>
+        <label> 아 이 디 </label>
         <input
           type="text"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
-
-      <label>Password</label>
+        </div>
+      <div>
+      <label>비밀번호</label>
         <input
           type="text"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-
-        <button onClick={() => postUserHandler()}>Signup</button>
+        </div>
+        <div>
+        <button onClick={() => postUserHandler()}>등록하기</button>
+        </div>
       </div>
     );
   }

@@ -2,8 +2,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "..";
 
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+
 export interface UserType {
-  id: number;
   username: string;
   password: string;
   loginState: boolean;
@@ -22,7 +26,7 @@ const initialState: UserState = {
 
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
-  async (id: UserType["id"], { dispatch }) => {
+  async (username: UserType["username"], { dispatch }) => {
     const response = await axios.get(`/api/user/login/`);
     return response.data ?? null;
   }
@@ -32,7 +36,7 @@ export const postUser = createAsyncThunk( // signup
   "user/postUser",
   async (user: Pick<UserType, "username" | "password" >, { dispatch }) => {
     const response = await axios.post("/api/user/signup/", user);
-    console.log(postUser)
+    console.log("postUser")
     dispatch(userActions.addUser(response.data));
   }
 );
@@ -41,7 +45,11 @@ export const putUser = createAsyncThunk( // login
   "user/putUser",
   async (user: Pick<UserType, "username" | "password" >, { dispatch }) => {
     const response = await axios.put("/api/user/login/", user);
-    dispatch(userActions.loginUser(response.data));
+    if( response.data == null ){ // if login failed ,
+      console.log("login failed in putUser")
+
+    }else{
+    dispatch(userActions.loginUser(response.data));}
   }
 );
 
@@ -51,9 +59,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     getAll: (state, action: PayloadAction<{ users: UserType[] }>) => {},
-    getUser: (state, action: PayloadAction<{ targetId: number }>) => {
+    getUser: (state, action: PayloadAction<{ targetusername: string }>) => {
       const target = state.users.find(
-        (user) => user.id === action.payload.targetId
+        (user) => user.username === action.payload.targetusername
       );
       state.selectedUser = target ?? null;
     },
@@ -61,8 +69,9 @@ export const userSlice = createSlice({
       state,
       action: PayloadAction<{ username: string; password: string }>
     ) => {
+
       const newUser = {
-        id: state.users[state.users.length - 1].id + 1, // temporary
+    
         username: action.payload.username,
         password: action.payload.password,
         loginState: false 
@@ -94,6 +103,10 @@ export const userSlice = createSlice({
       state.selectedUser = action.payload;
     });
     builder.addCase(postUser.rejected, (_state, action) => {
+      console.error(action.error);
+    });
+
+    builder.addCase(putUser.rejected, (_state, action) => {
       console.error(action.error);
     });
   },
