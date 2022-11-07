@@ -17,13 +17,13 @@ export default function TotalScoreList (props: IProps){
 
     //this part should differ by the product category
     const [ totalscores, setTotalScores ] = useState<TotalScoreType[]>([
-        {title: "총점", score: 5  },
+        {title: "총점       ", score: 4  },
 
-        {title: "맛 만족도", score: 5  },
-        {title: "가성비", score: 5  },
-        {title: "재구매 의사", score: 5  },
-        {title: "용량", score: 5  },
-        {title: "추천 의사", score: 5  },
+        {title: "맛 만족도  ", score: 3  },
+        {title: "가성비     ", score: 3  },
+        {title: "재구매 의사", score: 2  },
+        {title: "용량       ", score: 4  },
+        {title: "추천 의사  ", score: 3  },
     ]);
     
     return (

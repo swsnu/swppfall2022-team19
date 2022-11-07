@@ -22,7 +22,7 @@ type ReviewType={
 export default function ReviewList (props: IProps){
     const { title } = props;
     const todoState = useSelector(selectReview);
-    const dispatch = useDispatch<AppDispatch>();
+    //const dispatch = useDispatch<AppDispatch>();
 
     return (
         <div className="ReviewList"> 

@@ -38,7 +38,7 @@
 
 .ReviewList .fieldName_totalScore {
   padding: 0rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
   font-size: 1rem;
   text-align: left;
   font-weight: 400;
@@ -48,7 +48,7 @@
 
 .ReviewList .fieldName_comment {
   padding: 0rem;
-  margin-left:3rem;
+  margin-left:9rem;
   font-size: 1rem;
   text-align: left;
   font-weight: 400;
@@ -58,7 +58,7 @@
 
 .ReviewList .fieldName_like {
   padding: 0rem;
-  margin-left: 50rem;
+  margin-left: 43rem;
   font-size: 1rem;
   text-align: right;
   font-weight: 400;

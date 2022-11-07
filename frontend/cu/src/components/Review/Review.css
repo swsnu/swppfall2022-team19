@@ -22,15 +22,14 @@
 .review_totalScore{
   font-size: 1.1rem;
   font-weight: 400;
-  margin-left: 0rem;
-  display: table-header-group;
+  display:  flex;
   align-items: left; 
   margin-left: 2rem;
   transition: all 0.15s;
 }
 
 .review_comment{
-  padding: rem;
+  padding: 0rem;
   font-weight: 100;
   display:  row;
   text-align: left;
@@ -56,6 +55,9 @@
   touch-action: manipulation;
 }
 
+.review_totalScore .blank{
+  color: white;
+}
 
 .like_button:hover {
   box-shadow: black 0 0 0 1px, transparent 0 0 0 0;
