@@ -5,8 +5,8 @@
 
 import "./Review.css"
 import { useState } from 'react';
-import { useDispatch } from "react-redux";
-import { reviewActions } from "../../store/slices/Review";
+//import { useDispatch } from "react-redux";
+//import { reviewActions } from "../../store/slices/Review";
 
 
 interface IProps{
@@ -19,25 +19,33 @@ interface IProps{
 
 export default function Review(props: IProps){
     const [liked, setLiked] = useState<boolean>(false);
-    const dispatch = useDispatch()
+
+    //const dispatch = useDispatch()
     const postReviewHandler = () => {
-        dispatch(reviewActions.clickLike)
-        if (liked === false) 
+        //dispatch(reviewActions.clickLike)
+        if (liked === false) {
             setLiked(true)
-        else
+        }
+        else{
             setLiked(false)
+           
+        }
     };
 
     return (
         <article className ='Review'>
             <div className = 'review_button_except'>
                 <div className = "review_user_id">{props.user_id}</div>
-                <div className = "review_totalScore">{props.totalScore}</div>
+                <div className = "review_totalScore">
+                    {props.totalScore===5? '⭐⭐⭐⭐⭐': props.totalScore===4?'⭐⭐⭐⭐  ':props.totalScore===3?'⭐⭐⭐    ': props.totalScore===2?'⭐⭐      ': props.totalScore===1?'⭐        ':''}
+                    <div className = "blank">{props.totalScore===5? '': props.totalScore===4? '..........................' :props.totalScore===3?'..........................': props.totalScore===2?'...................': props.totalScore===1?'..........................':'..........................'}</div>
+                </div>
                 <div className = "review_comment">{props.comment}</div> 
             </div>
             <div className = "like_button" onClick={postReviewHandler}>
                 {liked? <button>❤️</button>: <button>🤍</button>}
             </div> 
+
         </article>
     );
 };
