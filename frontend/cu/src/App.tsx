@@ -7,6 +7,9 @@ import React from 'react';
 import ProductBlock from "./components/ProductBlock/ProductBlock";
 import Survey from "./containers/Survey/Survey";
 
+import Login from './containers/UserList/Login'
+import Signup from './containers/UserList/Signup' 
+
 
 
 function App() {
@@ -17,6 +20,10 @@ function App() {
           <Route path="/productBlock" element={<ProductBlock pageLink="/" imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="맛있는 제품" price={3400}></ProductBlock>} />
           <Route path="/survey" element={<Survey></Survey>} />
           <Route path="/:productId/ProductDetail" element={<ProductDetailPage/>}/>
+
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+
         </Routes>
       </BrowserRouter>
     </div>
