@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { postUser } from "../../store/slices/user";
+import { postUser } from "../../store/slices/User";
 import "./Signup.css";
 
 

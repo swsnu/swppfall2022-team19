@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-// import { putUser } from "../../store/slices/user";
+// import { putUser } from "../../store/slices/User";
 import "./Signup.css";
 
 export default function Login() {
