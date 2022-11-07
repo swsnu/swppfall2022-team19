@@ -5,11 +5,11 @@ body {
 }
 
 .rating_form {
-    position: absolute;
-    right: 250px;
+    position: relative;
+    right: -400px;
     width: 500px;
     height: 400px;
-    top: 20px;
+    top: 0px;
     vertical-align: auto;
     border: 3px solid green;
     display: flex;
