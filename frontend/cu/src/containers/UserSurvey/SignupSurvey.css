@@ -1,4 +1,18 @@
-.MainBox{
+/* 
+    Survey와 Signup
+*/
+.signUpAndSurvey{
+    background-color: white;
+    margin: 30px 50px 50px 30px;
+    padding: 20px 30px 30px 20px;
+}
+
+.SignupBox{
+    background-color: white;
+    padding: 10px 15px;
+}
+
+.SurveyBox{
     width: 40%;
     height: 40%;
     background-color: white;
