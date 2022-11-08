@@ -1,0 +1,49 @@
+/* 
+    Survey와 Signup
+*/
+.signUpAndSurvey{
+    background-color: white;
+    margin: 30px 50px 50px 30px;
+    padding: 20px 30px 30px 20px;
+}
+
+.SignupBox{
+    background-color: white;
+    padding: 10px 15px;
+}
+
+.SurveyBox{
+    width: 40%;
+    height: 40%;
+    background-color: white;
+    padding: 20px 30px;
+    margin: 20px 30px;
+}
+
+.SelectBox{
+    margin: 0 auto;
+}
+
+.introBox{
+    margin: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.questionBox{
+    margin: 5px auto;
+}
+
+.Survey{
+    width: 500px;
+    height: 500px;
+}
+
+.submitButton{
+    padding: 10px auto;
+    width: 100%;
+    height: 40px;
+    margin: 24px 0;
+    background-color: gainsboro;
+}
