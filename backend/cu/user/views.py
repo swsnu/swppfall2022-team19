@@ -36,9 +36,19 @@ def signup(request):
         question = req_data['question']
 
         # age 등
-        User.objects.create_user(username=username, password=password,
-                                 age=age, gender=gender, taste=taste, question=question)
-        return HttpResponse(status=201)
+        nowUser = User.objects.create_user(username=username, password=password,
+                                           age=age, gender=gender, taste=taste, question=question)
+        res = {
+            "id": nowUser.pk,
+            "username": nowUser.username,
+            "password": password,
+            "gender": nowUser.gender,
+            "age": nowUser.age,
+            "taste": nowUser.taste,
+            "question": nowUser.question,
+        }
+
+        return JsonResponse(res, status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
 

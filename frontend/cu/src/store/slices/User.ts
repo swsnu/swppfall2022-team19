@@ -57,8 +57,10 @@ const initialState: UserState = {
 export const postUser = createAsyncThunk( // signup
   "user/postUser",
   async (user: Pick<UserSignupRequest, "username" | "password" | "age" | "gender" | "question" | "taste">, { dispatch }) => {
-    const response = await axios.post("/api/user/signup/", user);
-    console.log(postUser);
+    const response = await axios.post("api/user/signup/", user);
+    console.log("response from postUser");
+    console.log(response);
+    console.log(response.data);
     dispatch(userActions.addUser(response.data));
   }
 );
@@ -122,11 +124,11 @@ export const userSlice = createSlice({
     },
     addUser: ( // register, signup
       state,
-      action: PayloadAction<UserSignupRequest>
+      action: PayloadAction<UserType>
     ) => {
       // return { ...state, selectedUser: action}
       const newUser = {
-        id: state.users[state.users.length - 1].id + 1, // temporary
+        id: action.payload.id, // state.users[state.users.length - 1].id + 1, // temporary
         username: action.payload.username,
         password: action.payload.password,
         gender: action.payload.gender,

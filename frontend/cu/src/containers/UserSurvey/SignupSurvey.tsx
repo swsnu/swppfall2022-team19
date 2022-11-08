@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import "./SignupSurvey.css";
 // https://github.com/swpp22fall-practice-sessions/swpp-p4-redux-tutorial/blob/practice/4-finish/src/containers/TodoList/NewTodo/NewTodo.tsx
 
@@ -32,14 +32,18 @@ const SignupSurvey = () => {
 
     const postUserHandler = async () => {
         const data = { username: username, password: password, age: age, gender: gender, taste: taste, question: question };
+        console.log(data);
         const result = await dispatch(postUser(data));
+        console.log(result);
+        console.log(result.type);
+        console.log(postUser.typePrefix);
         if (result.type === `${postUser.typePrefix}/fulfilled`) {
-          setSubmitted(true);
-          console.log("postUserHandler is called, username: " + username);
+            setSubmitted(true);
+            console.log("postUserHandler is called, username: " + username);
         } else {
-          alert("Error on post User");
+            alert("Error on post User");
         }
-      };
+    };
 
     /*
     const putSurveyHandler = async () => {
@@ -53,31 +57,31 @@ const SignupSurvey = () => {
     };
     */
 
-    interface genderOptions{
+    interface genderOptions {
         readonly value: number;
         readonly label: string;
     }
-    const genderList: readonly genderOptions[]  = [
-        { value: 1, label: "남성"},
-        { value: 2, label: "여성"}
+    const genderList: readonly genderOptions[] = [
+        { value: 1, label: "남성" },
+        { value: 2, label: "여성" }
     ]
-    interface ageOptions{
+    interface ageOptions {
         readonly value: number;
         readonly label: string;
     }
     const ageList: readonly ageOptions[] = [
-        { value: 1, label: "~10대"},
-        { value: 2, label: "20대"},
-        { value: 3, label: "30대"},
-        { value: 4, label: "40대"},
-        { value: 5, label: "50대"},
-        { value: 6, label: "60대~"}
+        { value: 1, label: "~10대" },
+        { value: 2, label: "20대" },
+        { value: 3, label: "30대" },
+        { value: 4, label: "40대" },
+        { value: 5, label: "50대" },
+        { value: 6, label: "60대~" }
     ]
-    interface tasteOptions{
+    interface tasteOptions {
         readonly value: string;
         readonly label: string;
     }
-    const tasteList: readonly tasteOptions[] =[
+    const tasteList: readonly tasteOptions[] = [
         // Multi Choice
         { value: "A", label: "간편식사" },
         { value: "B", label: "과자류" },
@@ -87,7 +91,7 @@ const SignupSurvey = () => {
     ]
 
     // Question
-    interface questionOptions{
+    interface questionOptions {
         readonly value: number;
         readonly label: string;
     }
@@ -97,74 +101,74 @@ const SignupSurvey = () => {
         { value: 3, label: "재구매 의사" }
     ]
 
-    
-    if (submitted){
-        return <Navigate to="/login" />; 
-    }else{
-        return (
-        <div className="singUpAndSurvey">
-            <div className="SignupBox">
-                <h1>Register</h1>
-                <label>ID</label>
-                <input
-                type="text"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-                />
 
-                <label>Password</label>
+    if (submitted) {
+        return <Navigate to="/login" />;
+    } else {
+        return (
+            <div className="singUpAndSurvey">
+                <div className="SignupBox">
+                    <h1>Register</h1>
+                    <label>ID</label>
                     <input
-                    type="text"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                        type="text"
+                        value={username}
+                        onChange={(event) => setUsername(event.target.value)}
                     />
 
-            </div>
+                    <label>Password</label>
+                    <input
+                        type="text"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
 
-            <div className="SurveyBox">
-                <div className="SelectBox">
-                    <div className="introBox">
-                        <h3>Let me See You!</h3>
-                        <h4>사용자 정보를 입력하고 맞춤화 된 제품을 추천받자!</h4>
-                    </div>
-                    
-                    <div className="questionBox">
-                        <h5> 당신의 성별을 알려주세요 </h5>
-                        <Select className="genderDropdown" isClearable={false} options={genderList} onChange={(event) => event===null ? setGender(0) : setGender(event.value)}/>
-                    </div>
-                   
-                    <div className="questionBox">
-                        <h5> 당신의 연령대를 알려주세요 </h5>
-                        <Select className="ageDropDown" options={ageList}  onChange={(event) => event===null ? setAge(0) : setAge(event.value)}/>
-                    </div>
-                   
-                    <div className="questionBox">
-                        <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
-                        <Select className="tasteDropDown" isMulti defaultValue={[tasteList[0]]} components={animatedComponents} options={tasteList} onChange={(event) => {
+                </div>
+
+                <div className="SurveyBox">
+                    <div className="SelectBox">
+                        <div className="introBox">
+                            <h3>Let me See You!</h3>
+                            <h4>사용자 정보를 입력하고 맞춤화 된 제품을 추천받자!</h4>
+                        </div>
+
+                        <div className="questionBox">
+                            <h5> 당신의 성별을 알려주세요 </h5>
+                            <Select className="genderDropdown" isClearable={false} options={genderList} onChange={(event) => event === null ? setGender(0) : setGender(event.value)} />
+                        </div>
+
+                        <div className="questionBox">
+                            <h5> 당신의 연령대를 알려주세요 </h5>
+                            <Select className="ageDropDown" options={ageList} onChange={(event) => event === null ? setAge(0) : setAge(event.value)} />
+                        </div>
+
+                        <div className="questionBox">
+                            <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
+                            <Select className="tasteDropDown" isMulti defaultValue={[tasteList[0]]} components={animatedComponents} options={tasteList} onChange={(event) => {
                                 var getStr: string = "";
                                 var temp: string[] = [];
                                 temp = event.map((element) => {
-                                  return element.value;
+                                    return element.value;
                                 });
-                    
+
                                 for (var i = 0; i < temp.length; i++) {
-                                  getStr = getStr + temp[i];
+                                    getStr = getStr + temp[i];
                                 }
                                 setTaste(getStr);
                             }}
-                        />
-                    </div>
-                    
-                    <div className="questionBox">
-                        <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
-                        <Select className="questionDropDown" options={questionList} onChange={(event) => event===null ? setQuestion(-1) : setQuestion(event.value)}/>
-                    </div>
-                    
-                </div>
+                            />
+                        </div>
 
-                <button className="submitButton" onClick={() => postUserHandler()}>제출하기</button>
+                        <div className="questionBox">
+                            <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
+                            <Select className="questionDropDown" options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} />
+                        </div>
+
+                    </div>
+
+                    <button className="submitButton" onClick={() => postUserHandler()}>제출하기</button>
+                </div>
             </div>
-        </div>
         )
     }
 

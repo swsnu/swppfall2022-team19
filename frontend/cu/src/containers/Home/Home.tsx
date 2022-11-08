@@ -1,5 +1,5 @@
 import ProductBlock from "../../components/ProductBlock/ProductBlock"
-import product from '../../../../../Data/product_data.json';
+// import product from '../../../../../Data/product_data.json';
 import "./Home.css"
 import Header from "../Header/Header"
 
