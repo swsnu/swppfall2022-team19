@@ -15,8 +15,8 @@ export default function Login() {
   const loginUserHandler = async () => {
     const data = { username: username, password: password };
     const result = await dispatch(loginUser(data));
-    console.log("Login.tsx result ")
-    console.log(result)
+    // console.log("Login.tsx result ")
+    // console.log(result)
     if (result.type === `${loginUser.typePrefix}/fulfilled`) {
       setSubmitted(true);
     } else {

@@ -58,9 +58,7 @@ export const postUser = createAsyncThunk( // signup
   "user/postUser",
   async (user: Pick<UserSignupRequest, "username" | "password" | "age" | "gender" | "question" | "taste">, { dispatch }) => {
     const response = await axios.post("api/user/signup/", user);
-    console.log("response from postUser");
-    console.log(response);
-    console.log(response.data);
+
     dispatch(userActions.addUser(response.data));
   }
 );
@@ -71,8 +69,9 @@ export const postUser = createAsyncThunk( // signup
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (user: Pick<UserLoginRequest, "username" | "password">, { dispatch }) => {
+    // console.log("user ", user.username , user.password )
     const response = await axios.post("api/user/login/", user);
-    console.log(loginUser);
+    
     dispatch(userActions.loginUser(response.data));
     // 그런데 로그인의 경우 로그인 실패 시 에러가 발생할 수도 있음
     // 에러 HttpResponse(status=401)인데, 로그인 오류 시 alert 
@@ -109,8 +108,13 @@ export const userSlice = createSlice({
   reducers: {
     loginUser: (state, action: PayloadAction<UserLoginRequest>) => {
       const targetUser = state.users.find(
-        (user) => (user.username === action.payload.username) && (user.password === action.payload.password)
+        (user) => (user.username === action.payload.username) 
+        // && (user.password === action.payload.password)
+        
       );
+      console.log("LoginUser Reducer")
+      console.log(action.payload.password)
+      console.log(targetUser?.password)
       if (targetUser) {
         targetUser.loginState = true;
         state.selectedUser = targetUser

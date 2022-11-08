@@ -1,7 +1,8 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.http.response import HttpResponseNotAllowed
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
-import json
+
+
 #
 from django.contrib.auth import authenticate, login, logout
 
@@ -24,8 +25,12 @@ def token(request):
 
 # 1. 회원가입 # register
 
-
+@csrf_exempt
+# @ensure_csrf_cookie
 def signup(request):
+    if request.method == "GET":
+        user_list = [user for user in User.objects.all().values()]
+        return JsonResponse(user_list, safe=False)
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
         username = req_data['username']
@@ -47,28 +52,34 @@ def signup(request):
             "taste": nowUser.taste,
             "question": nowUser.question,
         }
+        
 
         return JsonResponse(res, status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
 
 # 2. signin login
-
-
-def login(request):
+@csrf_exempt
+# @ensure_csrf_cookie
+def signin(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
         username = req_data['username']
         password = req_data['password']
 
         tempUser = authenticate(request, username=username, password=password)
-
+        
         if tempUser is not None:
-            if (request.user.is_anonymous):
+            # print("tempUser is not None")
+            # print(tempUser.is_authenticated)
+            if tempUser.is_authenticated :
                 # User is logged-out
                 login(request, tempUser)
 
+                
+
                 nowUser = User.objects.get(username=username)
+
 
                 res = {
                     "id": nowUser.pk,
