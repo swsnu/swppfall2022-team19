@@ -32,7 +32,7 @@ export default function Login() {
   
 
   if (submitted) {
-    return <Navigate to="/productBlock" />; // to home, temp hero
+    return <Navigate to="/home" />; // to home, temp hero
   } else {
     return (
       <div className="Login">

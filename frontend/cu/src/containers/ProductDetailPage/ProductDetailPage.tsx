@@ -12,7 +12,8 @@ function ProductDetailPage() {
   return (
     <div className="productDetailPage">
       <div className="productRate">
-        {<ProductBlock pageLink="/" imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="계란 샌드위치" price={3400}/>}
+        {/* {<ProductBlock pageLink="/" imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="계란 샌드위치" price={3400}/>} */}
+        {<ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="계란 샌드위치" price={3400}/>}
         {<RatingForm user_id={1} product_id={1} category_id={1} score={[]} />}
       </div>
       <div className="scoresReviews">

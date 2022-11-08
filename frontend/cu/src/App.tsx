@@ -19,7 +19,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/productBlock" element={<ProductBlock pageLink="/" imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="맛있는 제품" price={3400}></ProductBlock>} />
+          {/* <Route path="/productBlock" element={<ProductBlock pageLink="/" imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="맛있는 제품" price={3400}></ProductBlock>} /> */}
 
           <Route path="/home" element={<Home />} />
           <Route path="/survey" element={<Survey></Survey>} />

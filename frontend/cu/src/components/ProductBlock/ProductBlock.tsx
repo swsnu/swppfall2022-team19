@@ -2,7 +2,7 @@ import React from 'react';
 import "./ProductBlock.css";
 
 interface Props {
-    pageLink: string;
+    // pageLink: string;
     imgLink: string;
     name: string;
     price: number;
@@ -13,7 +13,7 @@ const ProductBlock = (props: Props) => {
     
     return (
         <div className="productBlock">
-            <a className="productA" href={props.pageLink}>
+            {/* <a className="productA" href={props.pageLink}> */}
                 <div className="productInfoBlock">
                     <div className="productImageBox">
                     <img className="productImage" src={props.imgLink} alt="Product"/>
@@ -24,7 +24,7 @@ const ProductBlock = (props: Props) => {
                     </div>
                 </div>
                 
-            </a>
+            {/* </a> */}
         </div>
     )
 }
