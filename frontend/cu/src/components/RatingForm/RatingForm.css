@@ -5,7 +5,7 @@ body {
 }
 
 .rating_form {
-    position: relative;
+    /* position: relative; */
     right: -400px;
     width: 500px;
     height: 400px;

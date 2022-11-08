@@ -36,29 +36,33 @@ export default function Login() {
   } else {
     return (
       <div className="Login">
-        <div>
-          <h1>Login</h1>
+
+        <div className = "IDPassword">
+        <h1>로그인</h1>
+        <div className = "IDText">
+          
           <label>아  이  디  </label>
-          <input
+          <input className = "inputID"
             type="text"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
         </div>
 
-        <div>
+        <div className = "PassText">
           <label>비밀번호</label>
-          <input
+          <input className = "inputPassword"
             type="text"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
 
-          {<button onClick={() => loginUserHandler()}>Login</button>}
+        </div>
+        
         </div>
 
+        {<button onClick={() => loginUserHandler()}>Login</button>}
         <button onClick={() => clickCreateHandler()}>회원가입</button>
-
       </div>
 
 

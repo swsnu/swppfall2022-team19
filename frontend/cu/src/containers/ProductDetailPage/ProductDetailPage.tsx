@@ -4,6 +4,7 @@ import TotalScoreList from '../../components/TotalScoreList/TotalScoreList';
 import ReviewList from '../../components/ReviewList/ReviewList';
 import ProductBlock from '../../components/ProductBlock/ProductBlock';
 import "./ProductDetailPage.css"
+import Header from '../Header/Header'
 
 function ProductDetailPage() {
 
@@ -11,6 +12,7 @@ function ProductDetailPage() {
 
   return (
     <div className="productDetailPage">
+      <Header />
       <div className="productRate">
         {/* {<ProductBlock pageLink="/" imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="계란 샌드위치" price={3400}/>} */}
         {<ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="계란 샌드위치" price={3400}/>}

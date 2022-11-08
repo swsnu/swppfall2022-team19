@@ -2,11 +2,11 @@
     display: row;
 }
 
-.productDetailPage .productRate{
+.productRate{
     display: flex;
     justify-content: center;
     margin-top: 5rem;
 }
 
-.productDetailPage .scoresReviews{
+.scoresReviews{
 }

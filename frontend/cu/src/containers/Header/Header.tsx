@@ -2,9 +2,8 @@
 import "./Header.css"
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from 'react';
-
-
-
+import { AppDispatch } from "../../store";
+import { useDispatch } from "react-redux";
 
 
 const Header = () => {
@@ -21,10 +20,15 @@ const Header = () => {
     const [submitted, setSubmitted] = useState<boolean>(false);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
     const clickSearchHandler = () => {
         setSubmitted(true);  
         }
+
+        
+    
+    
 
     const categoryHandler = (categoryID : number) => {
         navigate(`/productList/${categoryID}`)    
@@ -87,8 +91,8 @@ const Header = () => {
 
 
             </div>
-          
-        
+
+                  
 
         </div>
         
