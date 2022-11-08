@@ -1,5 +1,5 @@
 import ProductBlock from "../../components/ProductBlock/ProductBlock"
-import product from '/Users/jahyunyun/Desktop/2022-2/소프트웨어 개발의 원리와 실재/TeamRepo/swppfall2022-team19/Data/product_data.json';
+import product from "../../../../../Data/product_data.json"
 import "./Home.css"
 import Header from "../Header/Header"
 

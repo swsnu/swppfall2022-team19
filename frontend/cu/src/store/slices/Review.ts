@@ -55,6 +55,7 @@ export const reviewSlice = createSlice({
             const newReview = {
                 id: state.reviews.length === 0 ? state.reviews.length + 1: state.reviews[state.reviews.length -1].id + 1,
                 user_id: 1, //action.payload.user_id,
+                product_id: 1,
                 scores : [3,3,5,3,3],//action.payload.scores,
                 comment : action.payload.comment,
                 likedCount: 0,

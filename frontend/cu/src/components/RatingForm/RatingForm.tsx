@@ -60,7 +60,7 @@ function RatingForm(props: Props) {
     const dataRate = { user_id: 1, product_id: 1, category_id: 1, scores: scores, comment: comment };
     const result1 = await dispatch(postRate(dataRate));
 
-    const dataReview = { user_id: 1, scores: scores, comment: comment, likedCount: 0, liked: false };
+    const dataReview = { user_id: 1, product_id: 1, scores: scores, comment: comment, likedCount: 0, liked: false };
     const result2 = await dispatch(postReview(dataReview));
     setRateState(true);
     setClickRate(false);
