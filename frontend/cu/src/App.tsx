@@ -8,28 +8,21 @@ import ProductBlock from "./components/ProductBlock/ProductBlock";
 
 
 import Login from './containers/UserSurvey/Login'
-
-
+import SignupSurvey from './containers/UserSurvey/SignupSurvey'
 import Home from './containers/Home/Home'
 import Category from './containers/Category/Category'
 
-// <Route path='/signup' element={<Signup />} />
+// 
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/productBlock" element={<ProductBlock pageLink="/" imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809140575360.jpg" name="맛있는 제품" price={3400}></ProductBlock>} />
-
+          <Route path='/' element={<Login />} />
           <Route path="/home" element={<Home />} />
-
-          <Route path="/:productId/ProductDetail" element={<ProductDetailPage />} /> // product id = 1,  productdetail 1
-
-          <Route path="/productList/:companyID" element={<Category />} /> // question?
-
-          <Route path='/login' element={<Login />} />
-
-
+          <Route path='/signup' element={<SignupSurvey />} />
+          <Route path="/:productId/ProductDetail" element={<ProductDetailPage />} />
+          <Route path="/productList/:companyID" element={<Category />} />
         </Routes>
       </BrowserRouter>
     </div>
