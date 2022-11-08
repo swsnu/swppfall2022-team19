@@ -3,10 +3,6 @@ from django.contrib.auth.models import (AbstractUser)
 
 
 class User(AbstractUser):
-    first_name = None
-    last_name = None
-    email = None
-
     age = models.IntegerField(default=0)  # default 0, 만약 0으로 계속 남으면 잘못된 입력임
     gender = models.IntegerField(default=0)
     taste = models.CharField(max_length=10, default="")
