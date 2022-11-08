@@ -1,5 +1,5 @@
 import ProductBlock from "../../components/ProductBlock/ProductBlock"
-import product from '/Users/jahyunyun/Desktop/2022-2/소프트웨어 개발의 원리와 실재/TeamRepo/swppfall2022-team19/Data/product_data.json';
+// import product from '../../../../../Data/product_data.json';
 import "./Home.css"
 import Header from "../Header/Header"
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ const Home = () => {
 
     
     return (
-        
+
         <div className="Home">
         <Header />
         
@@ -32,6 +32,7 @@ const Home = () => {
         
         </div>
 
+            <div className="BasicList">
 
         <div className="UserList">
     
@@ -42,6 +43,7 @@ const Home = () => {
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801206003800.jpg" name="탑티어)에너지후르츠젤리" price={2000}></ProductBlock>
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801068408164.jpg" name="삼립)포켓몬딸기우유슈" price={2000}></ProductBlock>
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801068408157.jpg" name="삼립)포켓몬딸기바닐라컵" price={3500}></ProductBlock>
+        </div>
         </div>
         </div>
         </div>

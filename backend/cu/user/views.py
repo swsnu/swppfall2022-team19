@@ -1,16 +1,96 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.http.response import HttpResponseNotAllowed
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+import json
+#
+from django.contrib.auth import authenticate, login, logout
 
 import json
 from json.decoder import JSONDecodeError
 
 from .models import User
 
+
 def index(request):
     return HttpResponse('Hello, world!\n')
 
 
+@ensure_csrf_cookie
+def token(request):
+    if request.method == 'GET':
+        return HttpResponse(status=204)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+# 1. 회원가입 # register
+
+
+def signup(request):
+    if request.method == 'POST':
+        req_data = json.loads(request.body.decode())
+        username = req_data['username']
+        password = req_data['password']
+        age = req_data['age']
+        gender = req_data['gender']
+        taste = req_data['taste']
+        question = req_data['question']
+
+        # age 등
+        nowUser = User.objects.create_user(username=username, password=password,
+                                           age=age, gender=gender, taste=taste, question=question)
+        res = {
+            "id": nowUser.pk,
+            "username": nowUser.username,
+            "password": password,
+            "gender": nowUser.gender,
+            "age": nowUser.age,
+            "taste": nowUser.taste,
+            "question": nowUser.question,
+        }
+
+        return JsonResponse(res, status=201)
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
+# 2. signin login
+
+
+def login(request):
+    if request.method == 'POST':
+        req_data = json.loads(request.body.decode())
+        username = req_data['username']
+        password = req_data['password']
+
+        tempUser = authenticate(request, username=username, password=password)
+
+        if tempUser is not None:
+            if (request.user.is_anonymous):
+                # User is logged-out
+                login(request, tempUser)
+
+                nowUser = User.objects.get(username=username)
+
+                res = {
+                    "id": nowUser.pk,
+                    "username": nowUser.username,
+                    "gender": nowUser.gender,
+                    "age": nowUser.age,
+                    "taste": nowUser.taste,
+                    "question": nowUser.question,
+                }
+
+                return JsonResponse(res, status=201, safe=False)
+                # HttpResponse(status=204)
+            else:
+                # User is already logged-in -> error
+                return HttpResponse(status=401)
+        else:
+            return HttpResponse(status=401)
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
+
+"""
 @csrf_exempt
 def user_info(request): # login 
     if request.method == 'PUT':
@@ -79,3 +159,5 @@ def user_list(request): # register
             return JsonResponse(None, safe = False)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
+        
+"""
