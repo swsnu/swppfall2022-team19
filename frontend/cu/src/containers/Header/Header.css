@@ -1,0 +1,49 @@
+.Header {
+    background-color: gainsboro;
+    display: flex;
+    height: 5rem;
+}
+
+.Category {
+    display: flex;
+    padding: 5px 0;
+}
+
+.Meal {
+    display: flex;
+}
+
+.CategoryIcon {
+    padding: 15px;
+    max-width: 40px; 
+    max-height: 40px;
+}
+
+input {
+    
+    max-width: 80rem;
+
+    height: 2rem;
+    width: 50rem;
+    border: 0.5px;
+    border: solid;
+    border-radius: 10px;
+
+    outline: green;
+
+
+    font-size: 1.5rem;
+    padding: 0.25rem;
+
+    color: green;
+    font-weight: 500;
+
+    flex: 1;
+  }
+
+  .SearchIcon {
+    max-width: 80px; 
+    max-height: 80px;
+
+  }
+  

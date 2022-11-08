@@ -1,0 +1,13 @@
+.BasicList .productBlocks{
+    display: flex;
+    justify-content: center;  
+}
+
+.BasicList {
+    text-align: center;
+}
+
+.SearchBox {
+    display: flex;
+    align-items: center;
+}
