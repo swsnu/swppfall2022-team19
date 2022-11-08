@@ -1,0 +1,23 @@
+.Login {
+    padding: 10rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.inputID {
+    justify-content: space-between;
+    width: 300px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+
+.inputPassword {
+
+    width: 300px;
+    height: 30px;
+
+    border-radius: 5px;
+    
+}

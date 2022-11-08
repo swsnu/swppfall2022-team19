@@ -101,6 +101,17 @@ def signin(request):
         return HttpResponseNotAllowed(['POST'])
 
 
+def signout(request):
+    
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            logout(request)
+            return HttpResponse(status=204)
+        else:
+            return HttpResponse(status=401)
+    else:
+        return HttpResponse(status=405)
+
 """
 @csrf_exempt
 def user_info(request): # login 
