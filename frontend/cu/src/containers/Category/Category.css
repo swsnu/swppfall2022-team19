@@ -1,0 +1,8 @@
+.productBlocks{
+    display: flex;
+    justify-content: center;  
+}
+
+.CategoryPage{
+    text-align: center;
+}

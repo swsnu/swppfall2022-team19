@@ -35,7 +35,7 @@ const Header = () => {
 
     } else { return(
         
-        <div className = "Header">
+        <div className = "Header"  >
         
             <div className="Category">
                 <div className = "Meal" onClick={() => categoryHandler(0)} >
@@ -74,13 +74,13 @@ const Header = () => {
             </div>
 
             <div className = "SearchBox">
-            <div>
-                <input
+            
+                <input className = "SearchInput"
                 type="text"
                 value={searchKey}
                 onChange={(event) => setSearchKey(event.target.value)} />           
                 
-            </div>
+        
 
             <img className = "SearchIcon" onClick={() => clickSearchHandler()} src= {search} alt="SearchIcon" />
             {/* <button onClick={() => clickCreateHandler()}>찾아보기</button> */}
