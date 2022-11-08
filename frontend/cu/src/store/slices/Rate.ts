@@ -25,8 +25,8 @@ const initialState: RateState = {
 
 //fetch reviews for specific product
 export const fetchRate = createAsyncThunk(
-    "api/productID/fetchRate",async () => {
-        const response = await axios.get<RateType[]>("/api/productID/rates/");
+    "api/productID/fetchRate",async (productID: RateType["product_id"]) => {
+        const response = await axios.get<RateType[]>(`/api/product/${productID}/rate/`);
         return response.data;
     }
 )
@@ -35,7 +35,7 @@ export const fetchRate = createAsyncThunk(
 export const postRate = createAsyncThunk(
     "api/postRate",
    async (rate: Pick<RateType, "user_id"|"product_id"|"category_id"|"scores"|"comment">,{dispatch}) => {
-    const response = await axios.post("/api/productID/rates/", rate);
+    const response = await axios.post(`/api/product/${rate.product_id}/rate/`, rate);
     dispatch(rateActions.addRate(response.data));
    }
 )

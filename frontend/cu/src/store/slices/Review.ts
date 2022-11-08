@@ -5,6 +5,7 @@ import { RootState } from "..";
 export interface ReviewType{
     id: number;
     user_id: number;
+    product_id: number;
     scores: number[];
     comment: string;
     likedCount: number;
@@ -19,11 +20,11 @@ export interface ReviewState {
 
 const initialState: ReviewState = {
     reviews: [
-        { id: 1, user_id: 5, scores: [5,5,5,5,5], comment: "제가 제일 좋아하는 CU 제품입니다", likedCount:5, liked: true },
-        { id: 2, user_id: 4, scores: [5,5,5,5,5], comment: "재료가 다양해서 좋아요", likedCount:5, liked: true},
-        { id: 3, user_id: 3, scores: [2,2,2,2,2], comment: "제가 기대했던 맛은 아니네요",likedCount:2, liked: true },
-        { id: 4, user_id: 2, scores: [1,1,1,1,1], comment: "너무 맛없음", likedCount:1, liked: true },
-        { id: 5, user_id: 1, scores: [5,5,5,5,5], comment: "나쁘지 않음. 한 번 먹어볼만 합니다.", likedCount:5,  liked: false },
+        { id: 1, user_id: 5, product_id: 1, scores: [5,5,5,5,5], comment: "제가 제일 좋아하는 CU 제품입니다", likedCount:5, liked: true },
+        { id: 2, user_id: 4, product_id: 1, scores: [5,5,5,5,5], comment: "재료가 다양해서 좋아요", likedCount:5, liked: true},
+        { id: 3, user_id: 3, product_id: 1, scores: [2,2,2,2,2], comment: "제가 기대했던 맛은 아니네요",likedCount:2, liked: true },
+        { id: 4, user_id: 2, product_id: 1, scores: [1,1,1,1,1], comment: "너무 맛없음", likedCount:1, liked: true },
+        { id: 5, user_id: 1, product_id: 1, scores: [5,5,5,5,5], comment: "나쁘지 않음. 한 번 먹어볼만 합니다.", likedCount:5,  liked: false },
     ],
     selectedReview: null,
     selectReviewLike: false,
@@ -31,8 +32,8 @@ const initialState: ReviewState = {
 
 //fetch reviews for specific product
 export const fetchReview = createAsyncThunk(
-    "api/productID/fetchReview",async () => {
-        const response = await axios.get<ReviewType[]>("/api/productID/review/");
+    "api/productID/fetchReview",async (productID: ReviewType["product_id"]) => {
+        const response = await axios.get<ReviewType[]>(`/api/${productID}/review/`);
         return response.data;
     }
 )
@@ -40,8 +41,8 @@ export const fetchReview = createAsyncThunk(
 //post review to specific product
 export const postReview = createAsyncThunk(
     "api/postReview",
-   async (review: Pick<ReviewType, "user_id"|"scores"|"comment"|"likedCount"|"liked">,{dispatch}) => {
-    const response = await axios.post("/api/productID/reviews/", review);
+   async (review: Pick<ReviewType, "user_id"|"product_id"|"scores"|"comment"|"likedCount"|"liked">,{dispatch}) => {
+    const response = await axios.post(`/api/${review.product_id}/review/`, review);
     dispatch(reviewActions.addReview(response.data));
    }
 )
