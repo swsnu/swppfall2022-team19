@@ -83,7 +83,7 @@ function RatingForm(props: Props) {
         <div id='rating_blank'>
           {rateState === false && hideButton === false && 
             <div className='rate_box'>
-              <button id="rate_button" hidden={hideButton} onClick={() => clickRateHandler()}>평가하기</button>
+              <button id="rate_button" hidden={hideButton} onClick={() => clickRateHandler()}>내 평가 남기러 가기</button>
             </div>
             }
             {rateState === false && clickRate === true &&
