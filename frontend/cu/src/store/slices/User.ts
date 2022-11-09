@@ -112,16 +112,16 @@ export const userSlice = createSlice({
         // && (user.password === action.payload.password)
         
       );
-      console.log("LoginUser Reducer")
-      console.log(action.payload.password)
-      console.log(targetUser?.password)
+      // console.log("LoginUser Reducer")
+      // console.log(action.payload.password)
+      // console.log(targetUser?.password)
       if (targetUser) {
         targetUser.loginState = true;
         state.selectedUser = targetUser
-        console.log("Logged_in User: " + targetUser.username);
+        // console.log("Logged_in User: " + targetUser.username);
       }
       else {
-        alert("Username or password is wrong")
+        // alert("Username or password is wrong")
         state.selectedUser = null;
       };
 
