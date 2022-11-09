@@ -16,8 +16,9 @@ function Category() {
     return (
         <div className = "CategoryPage">
         <Header />
-
-        <h1>과자와 간식</h1>
+        <div className = "animated-title">
+        <h1 className = "titles">과자와 간식</h1>
+        </div>
         <div className="productBlocks" onClick = {()=> categoryHandler()}  >
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107031.jpg" name="대산)쿠키런빅별딸기스낵" price={2000}></ProductBlock>
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107024.jpg" name="대산)쿠키런빅별초코스낵" price={2000}></ProductBlock>

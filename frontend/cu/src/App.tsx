@@ -17,7 +17,7 @@ import ProductDetailPageSnack from "./containers/ProductDetailPage/ProductDetail
 // 
 function App() {
   return (
-    <div>
+    <div className="appTotal">
       <BrowserRouter>
         <Routes>
           <Route path ="/"element={<Navigate replace to={"/login"} />}  />
