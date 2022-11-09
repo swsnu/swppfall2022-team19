@@ -6,7 +6,7 @@ import ProductBlock from '../../components/ProductBlock/ProductBlock';
 import "./ProductDetailPage.css"
 import Header from '../Header/Header'
 
-function ProductDetailPage() {
+function ProductDetailPageSnack() {
 
   //왼편에 product, 오른편에 rating, 아래에 totalScoreList, 맨 아래에는 reviewList.
 
@@ -14,8 +14,8 @@ function ProductDetailPage() {
     <div className="productDetailPage">
       <Header />
       <div className="productRate">   
-        {<ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809383957350.jpg" name="핫)미트칠리빅핫도그" price={3600}/>}
-        {<RatingForm user_id={1} product_id={1} category_id={0} score={[]} />}
+      {<ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107031.jpg" name="대산)쿠키런빅별딸기스낵" price={2000}></ProductBlock>}
+        {<RatingForm user_id={1} product_id={1} category_id={1} score={[]} />}
       </div>
       <div className="scoresReviews">
         {<TotalScoreList title={"전체 평점 및 항목별 평점"} />}
@@ -25,4 +25,4 @@ function ProductDetailPage() {
   )
 }
 
-export default ProductDetailPage
+export default ProductDetailPageSnack

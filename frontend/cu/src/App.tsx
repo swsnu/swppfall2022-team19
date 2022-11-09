@@ -12,6 +12,7 @@ import SignupSurvey from './containers/UserSurvey/SignupSurvey'
 import Home from './containers/Home/Home'
 import Category from './containers/Category/Category'
 import Category1 from './containers/Category/Category1'
+import ProductDetailPageSnack from "./containers/ProductDetailPage/ProductDetailPageSnack";
 
 // 
 function App() {
@@ -23,7 +24,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path='/signup' element={<SignupSurvey />} />
-          <Route path="/:productId/ProductDetail" element={<ProductDetailPage />} />
+          <Route path="/1/ProductDetail" element={<ProductDetailPage />} />
+          <Route path="/2/ProductDetail" element={<ProductDetailPageSnack />} />
           {/* <Route path="/productList/:companyID" element={<Category />} /> */}
           <Route path="/productList/1" element={<Category />} />
           <Route path="/productList/0" element={<Category1 />} />

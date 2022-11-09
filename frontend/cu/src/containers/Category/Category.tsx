@@ -10,7 +10,7 @@ function Category() {
     const navigate = useNavigate()
 
     const categoryHandler = () => {
-        navigate(`/1/productDetail`)
+        navigate(`/2/productDetail`)
         } 
 
     return (
