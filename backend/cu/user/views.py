@@ -72,8 +72,11 @@ def signin(request):
         if tempUser is not None:
             # print("tempUser is not None")
             # print(tempUser.is_authenticated)
-            if tempUser.is_authenticated :
+            # print("request.user")
+            # print(request.user.is_anonymous)
+            if request.user.is_anonymous :
                 # User is logged-out
+                
                 login(request, tempUser)
 
                 
