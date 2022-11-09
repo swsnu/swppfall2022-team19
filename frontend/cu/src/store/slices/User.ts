@@ -79,6 +79,21 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+export const logoutUser = createAsyncThunk(
+  "user/loginUser",
+  async (user: Pick<UserLoginRequest, "username">, { dispatch }) => {
+    // console.log("user ", user.username , user.password )
+    const response = await axios.post("api/user/login/", user);
+    
+    dispatch(userActions.loginUser(response.data));
+    // 그런데 로그인의 경우 로그인 실패 시 에러가 발생할 수도 있음
+    // 에러 HttpResponse(status=401)인데, 로그인 오류 시 alert 
+
+  }
+)
+
+
+
 /*
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
@@ -112,9 +127,27 @@ export const userSlice = createSlice({
         // && (user.password === action.payload.password)
         
       );
-      console.log("LoginUser Reducer")
-      console.log(action.payload.password)
-      console.log(targetUser?.password)
+
+      console.log("loginUser in User.ts")
+      console.log(targetUser)
+      if (targetUser) {
+        targetUser.loginState = true;
+        state.selectedUser = targetUser
+        console.log("Logged_in User: " + targetUser.username);
+      }
+      else {  
+        state.selectedUser = null;
+      };
+
+    },
+      
+    logoutUser: (state, action: PayloadAction<UserLoginRequest>) => {
+      const targetUser = state.users.find(
+        (user) => (user.username === action.payload.username) 
+        // && (user.password === action.payload.password)
+        
+      );
+      
       if (targetUser) {
         targetUser.loginState = true;
         state.selectedUser = targetUser
@@ -126,6 +159,7 @@ export const userSlice = createSlice({
       };
 
     },
+
     addUser: ( // register, signup
       state,
       action: PayloadAction<UserType>

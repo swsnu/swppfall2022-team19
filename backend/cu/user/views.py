@@ -52,6 +52,8 @@ def signup(request):
             "taste": nowUser.taste,
             "question": nowUser.question,
         }
+        print("signup")
+        print(nowUser.is_anonymous)
         
 
         return JsonResponse(res, status=201)
@@ -72,11 +74,10 @@ def signin(request):
         if tempUser is not None:
             # print("tempUser is not None")
             # print(tempUser.is_authenticated)
-            if tempUser.is_authenticated :
+            if request.user.is_anonymous :
                 # User is logged-out
                 login(request, tempUser)
 
-                
 
                 nowUser = User.objects.get(username=username)
 
