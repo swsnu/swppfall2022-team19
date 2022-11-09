@@ -2,8 +2,9 @@
 import "./Header.css"
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from 'react';
-import { AppDispatch } from "../../store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { signoutUser } from "../../store/slices/User";
 
 
 const Header = () => {
@@ -14,7 +15,9 @@ const Header = () => {
     const food = require('../../Categoryicon/food.png');
     const drink = require('../../Categoryicon/drink.png');
     const search = require('../../Categoryicon/search.png')
-    
+
+    const username = useSelector((state: RootState) => state.user.selectedUser?.username);
+    const password = useSelector((state: RootState) => state.user.selectedUser?.username);
 
     const [searchKey, setSearchKey] = useState<string>("");
     const [submitted, setSubmitted] = useState<boolean>(false);
@@ -26,7 +29,16 @@ const Header = () => {
         setSubmitted(true);  
         }
 
-        
+    const clickSignoutHandler = async () => {
+        const result = await dispatch(signoutUser());
+        if (result.type === `${signoutUser.typePrefix}/fulfilled`) {
+            alert("렛미씨유에서 또 만나요!")
+            navigate("/login")
+            }
+        else {
+            alert("당신은 렛미씨유를 떠나지 못합니다.")
+        }
+    }
     
     
 
@@ -88,10 +100,9 @@ const Header = () => {
 
             <img className = "SearchIcon" onClick={() => clickSearchHandler()} src= {search} alt="SearchIcon" />
             {/* <button onClick={() => clickCreateHandler()}>찾아보기</button> */}
-
-
             </div>
 
+            <button onClick = {()=> clickSignoutHandler()}> 로그아웃</button>
                   
 
         </div>

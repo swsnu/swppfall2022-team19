@@ -103,7 +103,7 @@ def signin(request):
     else:
         return HttpResponseNotAllowed(['POST'])
 
-
+@csrf_exempt
 def signout(request):
     
     if request.method == 'GET':

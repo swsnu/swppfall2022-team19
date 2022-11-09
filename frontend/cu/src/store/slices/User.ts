@@ -79,6 +79,19 @@ export const loginUser = createAsyncThunk(
   }
 )
 
+export const signoutUser = createAsyncThunk(
+  "user/signoutUser",
+  async (user: void, { dispatch }) => {
+    // console.log("user ", user.username , user.password )
+    const response = await axios.get("api/user/signout/");
+    
+    dispatch(userActions.signoutUser(response.data));
+    // 그런데 로그인의 경우 로그인 실패 시 에러가 발생할 수도 있음
+    // 에러 HttpResponse(status=401)인데, 로그인 오류 시 alert 
+
+  }
+)
+
 /*
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
@@ -112,9 +125,7 @@ export const userSlice = createSlice({
         // && (user.password === action.payload.password)
         
       );
-      // console.log("LoginUser Reducer")
-      // console.log(action.payload.password)
-      // console.log(targetUser?.password)
+
       if (targetUser) {
         targetUser.loginState = true;
         state.selectedUser = targetUser
@@ -126,6 +137,14 @@ export const userSlice = createSlice({
       };
 
     },
+
+    signoutUser: (state, action: PayloadAction<UserLoginRequest>) => {
+
+      state.selectedUser!.loginState = false;
+      state.selectedUser = null;
+
+      },
+
     addUser: ( // register, signup
       state,
       action: PayloadAction<UserType>
@@ -144,6 +163,8 @@ export const userSlice = createSlice({
       state.users.push(newUser);
 
     },
+
+
 
     /*
     getAll: (state, action: PayloadAction<{ users: UserType[] }>) => { },
