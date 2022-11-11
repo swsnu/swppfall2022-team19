@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
 
+    const logo = require('../../Categoryicon/Logo.png')
+
     const navigate = useNavigate()
 
     const categoryHandler = () => {
@@ -18,10 +20,14 @@ const Home = () => {
 
         <div className="Home">
         <Header />
+        <img className = "CenterLogo" onClick={() => navigate("/home")} src= {logo} alt="homeLogo" />
+
         
         <div className="BasicList">
-        
-        <h1>오늘의 편의점</h1>
+            
+        <div className = "animated-title">
+        <h1 className = "titles">오늘의 편의점</h1>
+        </div>
         <div className="productBlocks"  onClick = {()=> categoryHandler()} > 
 
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809383957350.jpg" name="핫)미트칠리빅핫도그" price={3600}></ProductBlock>
@@ -36,7 +42,9 @@ const Home = () => {
 
         <div className="UserList">
     
-        <h1> 오늘의 추천 </h1>
+        <div className = "animated-title">
+        <h1 className = "titles"> 오늘의 추천 </h1>
+        </div>
         <div className="productBlocks" onClick={()=> categoryHandler()} >
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107031.jpg" name="대산)쿠키런빅별딸기스낵" price={2000}></ProductBlock>
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107024.jpg" name="대산)쿠키런빅별초코스낵" price={2000}></ProductBlock>

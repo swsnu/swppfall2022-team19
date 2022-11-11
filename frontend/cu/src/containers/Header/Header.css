@@ -1,49 +1,73 @@
-.Header {
-    background-color: gainsboro;
+/* https://dbreblog.com/53 */
+
+.header {
+    /* position: fixed; */
+    max-width: 100%;
+    max-height: 60px;
     display: flex;
-    height: 5rem;
-}
+    align-items: center;
+    padding: 1%;
+    border-color:rgb(157, 201, 42);
+    background-color: white;
+  }
 
-.Category {
-    display: flex;
-    padding: 5px 0;
-}
-
-.Meal {
-    display: flex;
-}
-
-.CategoryIcon {
-    padding: 15px;
-    max-width: 40px; 
-    max-height: 40px;
-}
-
-.SearchInput {
+  .Logo {
+    padding: 10px;
+    width: 200px;
+    height: 60px;
+    margin: 10px;
+    margin-right: 20px;
     
-    max-width: 80rem;
+  }
 
-    height: 2rem;
-    width: 50rem;
-    border: 0.5px;
+  .start-header {
+    display: flex;
+  }
+
+  .SearchInput{
+    margin-left: 50px;
+    width:500px;
+    height: 50px;
+    /* border: 0.5px; */
     border: solid;
     border-radius: 10px;
 
-    outline: green;
+    /* font-size: 1.5rem; */
 
+    color: rgb(157, 201, 42);
+    
 
-    font-size: 1.5rem;
-    padding: 0.25rem;
-
-    color: green;
-    font-weight: 500;
-
-    flex: 1;
+    
   }
 
   .SearchIcon {
-    max-width: 80px; 
-    max-height: 80px;
+    width: 60px;
+    height: 60px;
+
+    
+    
+  }
+
+.SearchBox {
+    align-items: center;
+    display: flex;
+    margin-right: 30px;
+}
+
+  .Category {
+    display: inline-flex;
 
   }
-  
+
+
+.SignoutButton{
+    font-size: 10pt;
+}
+
+  .CategoryMenu {
+    text-align: center;
+    padding: 10px;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+  }
