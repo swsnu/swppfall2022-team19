@@ -68,6 +68,9 @@ def signin(request):
         password = req_data['password']
 
         tempUser = authenticate(request, username=username, password=password)
+        print(tempUser)
+        print(request.user)
+        print(request.user.is_anonymous)
         
         if tempUser is not None:
             # print("tempUser is not None")
