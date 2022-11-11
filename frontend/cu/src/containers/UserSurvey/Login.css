@@ -1,7 +1,24 @@
+body {
+    background-color: white;
+}
+
 .Login {
-    padding: 10rem;
+
     align-items: center;
-    justify-content: space-between;
+    text-align: center;
+    
+    
+}
+
+
+
+.signinText{
+    font: white;
+}
+
+.IDPassword{
+    padding: 50px;
+    background-color: rgb(157, 201, 42);
 }
 
 
@@ -10,6 +27,7 @@
     width: 300px;
     height: 30px;
     border-radius: 5px;
+    margin: 30px;
 }
 
 
@@ -20,4 +38,5 @@
 
     border-radius: 5px;
     
+    margin: 30px;
 }

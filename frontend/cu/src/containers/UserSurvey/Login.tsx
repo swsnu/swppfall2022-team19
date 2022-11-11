@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { loginUser } from "../../store/slices/User";
+import { loginUser, signoutUser } from "../../store/slices/User";
 import './Login.css';
 
 
@@ -12,8 +12,11 @@ export default function Login() {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
 
+  const logo = require('../../Categoryicon/Logo.png')
+
   const loginUserHandler = async () => {
     const data = { username: username, password: password };
+    const result_temp = await dispatch(signoutUser()); // temp
     const result = await dispatch(loginUser(data));
     // console.log("Login.tsx result ")
     // console.log(result)
@@ -37,11 +40,13 @@ export default function Login() {
     return (
       <div className="Login">
 
+<img className = "CenterLogo" src= {logo} alt="homeLogo" />
+
         <div className = "IDPassword">
         <h1>로그인</h1>
         <div className = "IDText">
           
-          <label>아  이  디  </label>
+          <label className = "signinText">아  이  디  </label>
           <input className = "inputID"
             type="text"
             value={username}
@@ -50,7 +55,7 @@ export default function Login() {
         </div>
 
         <div className = "PassText">
-          <label>비밀번호</label>
+          <label className = "signinText">비밀번호</label>
           <input className = "inputPassword"
             type="text"
             value={password}

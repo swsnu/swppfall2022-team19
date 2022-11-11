@@ -17,7 +17,9 @@ function Category() {
         <div className = "CategoryPage">
         <Header />
 
-        <h1>간편한 식사</h1>
+        <div className = "animated-title">
+        <h1 className = "titles">간편한 식사</h1>
+        </div>
         <div className="productBlocks"  onClick = {()=> categoryHandler()} > 
 
             <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809383957350.jpg" name="핫)미트칠리빅핫도그" price={3600}></ProductBlock>
