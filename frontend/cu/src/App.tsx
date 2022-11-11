@@ -6,7 +6,6 @@ import React from 'react';
 // have to install 'yarn add react-select' for Survey
 import ProductBlock from "./components/ProductBlock/ProductBlock";
 
-
 import Login from './containers/UserSurvey/Login'
 import SignupSurvey from './containers/UserSurvey/SignupSurvey'
 import Home from './containers/Home/Home'
