@@ -1,32 +1,31 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 from user.models import User
 
 
 # Create your models here.
 
 class Tag(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length = 100)
     #user subscribed to tags?? 
 
 
 class Product(models.Model):
-    name = models.CharField()
-    mainCategory = models.CharField()
-    subCategory = models.CharField()
-    imageUrl = models.URLField()
-    details = models.TextField()
-    price = models.IntegerField()
+    name = models.CharField(max_length = 300, blank=False, null=False)
+    mainCategory = models.CharField(max_length = 100, blank=False, null=False)
+    subCategory = models.CharField(max_length = 300, blank=False, null=False)
+    imageUrl = models.URLField(blank = False)
+    details = models.TextField(max_length = 300, blank=False, null=False)
+    price = models.IntegerField(blank = False)
     newProduct = models.BooleanField(default = False)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name = "products")
 
 class Score(models.Model):
-    score = models.IntegerField()
+    score = models.IntegerField(blank = False)
 
 class Rate(models.Model):
-    user = models.ForeignKey(User)
-    product = models.ForeignKey(Product)
-    scores = models.ManyToManyField(Score)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    product = models.ForeignKey(Product, on_delete = models.CASCADE)
+    scores = models.ManyToManyField(Score, related_name = "rates")
     comment = models.TextField(blank=True)
     picture = models.ImageField(default = None)
     likedCount = models.IntegerField(default = 0)
