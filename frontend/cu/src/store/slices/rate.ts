@@ -5,9 +5,13 @@ import {UserType} from "./User"
 import { ProductType } from "./product";
 
 export interface RateType{
-    id: number
-    user: UserType['id']
-    user_username : UserType['username']
+    id: number,
+    user: UserType['id'],
+    user_username : UserType['username'],
     product: ProductType['id'],
-    
+    scores: number[],
+    comment: string,
+    picture : string, //temp, need to change later
+    likedCount: number,
+    liked: boolean
     }

@@ -18,6 +18,7 @@ class Product(models.Model):
     price = models.IntegerField(blank = False)
     newProduct = models.BooleanField(default = False)
     tags = models.ManyToManyField(Tag, related_name = "products")
+    averageScore = models.FloatField(default = 0)
 
 class Score(models.Model):
     score = models.IntegerField(blank = False)
@@ -27,6 +28,6 @@ class Rate(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
     scores = models.ManyToManyField(Score, related_name = "rates")
     comment = models.TextField(blank=True)
-    picture = models.ImageField(default = None)
+    picture = models.ImageField(upload_to='%Y/%m/%d', blank=True)
     likedCount = models.IntegerField(default = 0)
     liked = models.BooleanField(default = False)

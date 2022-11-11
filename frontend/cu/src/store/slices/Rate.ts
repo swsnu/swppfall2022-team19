@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "..";
 
+
+
+//삭제 될 파일임!
 export interface RateType{
     id: number, 
     user_id: number, 
