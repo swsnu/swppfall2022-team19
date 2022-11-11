@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import "./SignupSurvey.css";
+
+
 // https://github.com/swpp22fall-practice-sessions/swpp-p4-redux-tutorial/blob/practice/4-finish/src/containers/TodoList/NewTodo/NewTodo.tsx
 
 // yarn add react-select
@@ -28,6 +30,9 @@ const SignupSurvey = () => {
     const [question, setQuestion] = useState<number>(0);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
+    
+
+    const logo = require('../../Categoryicon/Logo.png')
 
 
     const postUserHandler = async () => {
@@ -106,7 +111,7 @@ const SignupSurvey = () => {
         return <Navigate to="/login" />;
     } else {
         return (
-            <div className="singUpAndSurvey">
+            <div className="signUpAndSurvey">
                 <div className="SignupBox">
                     <h1>Register</h1>
                     <label>ID</label>
@@ -128,7 +133,8 @@ const SignupSurvey = () => {
                 <div className="SurveyBox">
                     <div className="SelectBox">
                         <div className="introBox">
-                            <h3>Let me See You!</h3>
+                        <img className = "CenterLogo" src= {logo} alt="homeLogo" />
+
                             <h4>사용자 정보를 입력하고 맞춤화 된 제품을 추천받자!</h4>
                         </div>
 
