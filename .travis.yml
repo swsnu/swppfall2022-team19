@@ -25,7 +25,7 @@ jobs:
         - cd frontend
         - cd cu
         - yarn install
-        - yarn yarn add redux react-redux @reduxjs/toolkit
+        - yarn add redux react-redux @reduxjs/toolkit
         - yarn add react-select 
       script:
         - ./node_modules/.bin/eslint src
