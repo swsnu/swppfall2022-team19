@@ -2,8 +2,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "..";
 
-export interface ProductType {
 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+export interface ProductType {
     id: number,
     name: string,
     mainCategory: string,
@@ -18,7 +21,7 @@ export interface ProductType {
 
 export interface ProductState {
     products: ProductType[],
-    selectedProduct: ProductState | null
+    selectedProduct: ProductType | null
 }
 
 
@@ -84,5 +87,5 @@ export const fetchProductByMainCategory= createAsyncThunk(
 
 
   export const productActions = productSlice.actions;
-  export const selectedProduct = (state: RootState) => state.product.selectedProduct;
+  export const selectProduct = (state: RootState) => state.product;
   export default productSlice.reducer;

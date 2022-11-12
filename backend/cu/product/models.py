@@ -21,12 +21,16 @@ class Product(models.Model):
     averageScore = models.FloatField(default = 0)
 
 class Score(models.Model):
-    score = models.IntegerField(blank = False)
+    score1 = models.IntegerField(blank = False)
+    score2 = models.IntegerField(blank = False)
+    score3 = models.IntegerField(blank = False)
+    score4 = models.IntegerField(blank = False)
+    score5 = models.IntegerField(blank = False)
 
 class Rate(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
-    scores = models.ManyToManyField(Score, related_name = "rates")
+    scores = models.ForeignKey(Score, on_delete = models.CASCADE)
     comment = models.TextField(blank=True)
     picture = models.ImageField(upload_to='%Y/%m/%d', blank=True)
     likedCount = models.IntegerField(default = 0)

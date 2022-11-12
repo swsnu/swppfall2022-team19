@@ -4,11 +4,14 @@ import { RootState } from "..";
 import { UserType } from "./User"
 import { ProductType } from "./product";
 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+
 export interface RateType {
     id: number,
     user_id: UserType['id'],
     user_username: UserType['username'],
-    product: ProductType['id'],
+    product_id: ProductType['id'],
     scores: number[],
     comment: string,
     picture: string, //temp, need to change later
@@ -39,8 +42,8 @@ export const fetchRates = createAsyncThunk(
 
 export const createRate = createAsyncThunk(
     'product/createRate',
-    async ({id, data}: {id: ProductType['id'], data: Omit<RateType, 'id'>}, { dispatch }) => {
-        const response = await axios.post(`/api/product/${id}/rate/`, data)  
+    async (data: Omit<RateType, 'id'>, { dispatch }) => {
+        const response = await axios.post(`/api/product/${data.product_id}/rate/`, data)  
         dispatch(rateActions.addRate(response.data))
         return response.data
     }
@@ -93,5 +96,5 @@ export const rateSlice = createSlice({
 })
 
 export const rateActions = rateSlice.actions
-export const selectedRate = (state: RootState) => state.rate.selectedRate
+export const selectRate = (state: RootState) => state.rate
 export default rateSlice.reducer

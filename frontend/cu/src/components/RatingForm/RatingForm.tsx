@@ -1,25 +1,28 @@
-import React, { useState } from 'react'
-import { Navigate, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router'
 import { useDispatch } from "react-redux";
 import HeartRating from './HeartRating'
 import "./RatingForm.css"
 import { AppDispatch, RootState } from '../../store';
 import FixedHeartRating from './FixedHeartRating';
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
+import { createRate, deleteRate, fetchRates, RateType, updateRate } from '../../store/slices/rate';
+import { UserType } from '../../store/slices/User';
+import { ProductType } from '../../store/slices/product';
 
-type Props = {
-  user_id: number,
-  product_id: number,
-  category_id: number,
-  score: number[],
-  clickSubmit?: React.MouseEventHandler<HTMLButtonElement>,
-  clickCancel?: React.MouseEventHandler<HTMLButtonElement>,
+interface Props {
+  user?: UserType,
+  product: ProductType,
+  rate: RateType | undefined
 }
 
 
 function RatingForm(props: Props) {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+
+
+  let user_has_rate = (props.rate != undefined)   //check if user has rated the product or not
 
   //update score for each question when the user clicks rating
   const [score1, setScore1] = useState(0);
@@ -28,9 +31,23 @@ function RatingForm(props: Props) {
   const [score4, setScore4] = useState(0);
   const [score5, setScore5] = useState(0);
   const [comment, setComment] = useState("");
-  const [rateState, setRateState] = useState(false);   //user에서 해당 제품을 평가했는지 확인 후 state에 넣을 예정 
-  const [clickRate, setClickRate] = useState(false);
-  const [hideButton, setHideButton] = useState(false);
+
+  const [rateState1, setRateState1] = useState<boolean>(user_has_rate); //true if user has rated product
+  const [rateState2, setRateState2] = useState<boolean>(user_has_rate);
+
+  const [question4, setQuestion4] = useState("");
+  const [question5, setQuestion5] = useState("");
+
+  //whenever there is change in product, find the appropriate question by subCategory
+  useEffect(() => {
+    for (const key in Object.keys(subCategoryQuestion)) {
+      if (subCategoryQuestion[key].subCategory === props.product.subCategory[0]) {
+        setQuestion4(subCategoryQuestion[key].question4);
+        setQuestion5(subCategoryQuestion[key].question5);
+      }
+    }
+  }, [props.product])
+
 
   const updateScore1 = (score: number): void => {
     setScore1(score)
@@ -48,79 +65,150 @@ function RatingForm(props: Props) {
     setScore5(score)
   }
 
-  const clickBackHandler = () => {
-    setRateState(false);
-    setClickRate(false);
-    setHideButton(false);
+
+  //below are the functions shown for each click of button in different state of rating form
+  //------when user has not rate the product--------state: rateState1 = false, rateState2 = false
+  const clickRateHandler = () => {
+    setRateState2(true);
+  }
+
+  // -----when user click 평가하러가기 button------------state: rateState1 = false, rateState2 = true
+  const clickBackToRateHandler = () => {
+    setRateState2(false);
   }
 
   const clickSaveHandler = async () => {
     const scores = [score1, score2, score3, score4, score5];
-
+    const rateData = {
+      user_id: props.user?.id!,
+      user_username: props.user?.username!,
+      product_id: props.product.id!,
+      scores: scores,
+      comment: comment,
+      picture: "picture",
+      likedCount: 0,
+      liked: false
+    }
+    const responseRate = await dispatch(createRate(rateData))
+    if (responseRate.type === `${createRate.typePrefix}/fulfilled`) {
+      setRateState1(true);
+      setRateState2(true);
+    }
   }
 
-  const clickRateHandler = () => {
-    setClickRate(true);
-    setHideButton(true);
+  //------when user has written rate-------state: rateState1 = true, rateState2 = true
+  const clickEditHandler = () => {
+    setRateState2(false);
   }
+
+  const clickDeleteHandler = async () => {
+    await dispatch(deleteRate(props.rate?.id!))
+    setRateState1(false);
+    setRateState2(false);
+  }
+
+
+  //------when user is in edit rate------state: rateState1 = true, rateState2 = false
+  const clickBackEditHandler = () => {
+    setRateState1(true);
+  }
+
+  const clickSaveEditHandler = async () => {
+    const scores = [score1, score2, score3, score4, score5];
+    const editedRateData = {
+      id: props.rate?.id!,
+      user_id: props.user?.id!,
+      user_username: props.user?.username!,
+      product_id: props.product.id!,
+      scores: scores,
+      comment: comment,
+      picture: "picture",
+      likedCount: props.rate?.likedCount!,
+      liked: props.rate?.liked!,
+    }
+    await dispatch(updateRate(editedRateData))
+    setRateState2(true)
+  }
+
 
   return (
     <div>
       <div className="rating_form">
-        <div id='rating_blank'>
-          {rateState === false && hideButton === false && 
+        <div className='rating_blank'>
+          {rateState1 === false && rateState2 === false &&
             <div className='rate_box'>
-              <button id="rate_button" hidden={hideButton} onClick={() => clickRateHandler()}>내 평가 남기러 가기</button>
+              <button className="rate_button" hidden={rateState2} onClick={() => clickRateHandler()}>내 평가 남기러 가기</button>
             </div>
-            }
-            {rateState === false && clickRate === true &&
-                  <div>
-                    <h2 className="rating_heading"> 리뷰 작성하기</h2>
-                    <button id='cancel_button' onClick={() => clickBackHandler()}>취소</button>
-                    <button id='save_button' onClick={() => clickSaveHandler()}>저장</button>
-                    <br></br>
-
-                    <div>맛 만족도 {<HeartRating score={score1} updateScore={updateScore1} />} </div>
-                    <div>가성비 {<HeartRating score={score2} updateScore={updateScore2} />}</div>
-                    <div>재구매 의사 {<HeartRating score={score3} updateScore={updateScore3} />}</div>
-
-                    <div>
-
-                      {<HeartRating score={score4} updateScore={updateScore4} />}
-                    </div>
-
-                    <div>
-
-                      {<HeartRating score={score5} updateScore={updateScore5} />}
-                    </div>
-
-                    <div>
-                      <div>한줄평</div>
-                      <input type="text" onChange={(event) => setComment(event.target.value)} />
-                    </div>
-                  </div>
-                }
+          }
+          {rateState1 === false && rateState2 === true &&
+            <div className='rate_box'>
+              <h2 className="rating_heading"> 리뷰 작성하기</h2>
+              <button id='button' onClick={() => clickBackToRateHandler()}>작성 취소</button>
+              <button id='button' onClick={() => clickSaveHandler()}>저장</button>
+              <br></br>
+              <div>맛 만족도 {<HeartRating score={score1} updateScore={updateScore1} />} </div>
+              <div>가성비 {<HeartRating score={score2} updateScore={updateScore2} />}</div>
+              <div>재구매 의사 {<HeartRating score={score3} updateScore={updateScore3} />}</div>
+              <div>
+                {question4}
+                {<HeartRating score={score4} updateScore={updateScore4} />}
+              </div>
+              <div>
+                {question5}
+                {<HeartRating score={score5} updateScore={updateScore5} />}
+              </div>
+              <div>
+                <div>한줄평</div>
+                <input type="text" onChange={(event) => setComment(event.target.value)} />
+              </div>
+            </div>
+          }
         </div>
-        {rateState === true &&
+        {rateState1 === true && rateState2 === true &&
           <div>
             <h2 className="rating_heading"> 내 리뷰</h2>
-            <div>맛 만족도 {<FixedHeartRating score={score1}/>} </div>
-                    <div>가성비 {<FixedHeartRating score={score2} />}</div>
-                    <div>재구매 의사 {<FixedHeartRating score={score3} />}</div>
-                    <div>
-                      {<FixedHeartRating score={score4}/>}
-                    </div>
-
-                    <div>
-                      {<FixedHeartRating score={score5}/>}
-                    </div>
-                    <div>
-                      <div>한줄평</div>
-                      <text> {comment}</text>
-                    </div>
+            <button id='button' onClick={() => clickEditHandler()}>수정</button>
+            <button id='button' onClick={() => clickDeleteHandler()}>삭제</button>
+            <div>맛 만족도 {<FixedHeartRating score={score1} />} </div>
+            <div>가성비 {<FixedHeartRating score={score2} />}</div>
+            <div>재구매 의사 {<FixedHeartRating score={score3} />}</div>
+            <div>
+              {question4}
+              {<FixedHeartRating score={score4} />}
+            </div>
+            <div>
+              {question5}
+              {<FixedHeartRating score={score5} />}
+            </div>
+            <div>
+              <div>한줄평</div>
+              <text> {comment}</text>
+            </div>
           </div>
         }
-
+        {rateState1 === true && rateState2 === false &&
+          <div className='rate_box'>
+            <h2 className="rating_heading"> 리뷰 작성하기</h2>
+            <button id='button' onClick={() => clickBackEditHandler()}>수정 취소</button>
+            <button id='button' onClick={() => clickSaveEditHandler()}>수정 저장</button>
+            <br></br>
+            <div>맛 만족도 {<HeartRating score={score1} updateScore={updateScore1} />} </div>
+            <div>가성비 {<HeartRating score={score2} updateScore={updateScore2} />}</div>
+            <div>재구매 의사 {<HeartRating score={score3} updateScore={updateScore3} />}</div>
+            <div>
+              {question4}
+              {<HeartRating score={score4} updateScore={updateScore4} />}
+            </div>
+            <div>
+              {question5}
+              {<HeartRating score={score5} updateScore={updateScore5} />}
+            </div>
+            <div>
+              <div>한줄평</div>
+              <input type="text" onChange={(event) => setComment(event.target.value)} />
+            </div>
+          </div>
+        }
         <div>
         </div>
       </div>
