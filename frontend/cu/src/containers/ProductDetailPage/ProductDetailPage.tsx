@@ -10,6 +10,7 @@ function ProductDetailPage() {
 
   //왼편에 product, 오른편에 rating, 아래에 totalScoreList, 맨 아래에는 reviewList.
 
+  //현재 로그인된 user_id, product의 subCategory를 element로 다 넘겨줘야된다. 
   return (
     <div className="productDetailPage">
       <Header />

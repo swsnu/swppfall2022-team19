@@ -25,8 +25,8 @@ export interface ProductState {
 //fetch all products by main category
 export const fetchProductByMainCategory= createAsyncThunk(
     'product/fetchProductByMainCategory',
-    async (params: ProductType['mainCategory']) => {
-      const response = await axios.get<ProductType[]>('/api/product/:mainCategory/all', { params })
+    async (mainCategory: ProductType['mainCategory']) => {
+      const response = await axios.get<ProductType[]>(`/api/product/${mainCategory}/all/`)
       return response.data
     }
   )
