@@ -1,0 +1,36 @@
+# CI Environment
+dist: bionic
+
+# Job Configurations
+jobs:
+  include:
+    -language: python
+      python: '3.9.6'
+      addons:
+        sonarcloud:
+          organization: "swsnu"
+          token:
+            secure: "iOLBWbS6FmjV0eANH7h8NKK1cyCq20CCicLBHN6yeDeuXXCHBEhu/q6T8ShynY/wsB9cQOWCgcnwnxtE0CPILNilUkmt+owIamGF2I4mB3z4nvDFqJ+W4toL7z/Gz/mMieuMdxBArq1vHW0bZqz27lb80LyRUF63MIV73sYkyFup/nQPIccUN0xOCf0ai8Rhwzdpbqll0NbmT1iLd7EqL1pZeFvlb8mNNH2l7q7qasZJmYFMNGJjaBgUb0t7/7jepiMxEveMXjk5Cn3OsvuNMx2IWzDB50rtPDQ+jZwoUh0xDccjIZ8tyoehapZUthv+2zkAEsOURvC4u7UTJgQE7HRU8I6vglJv1Si9T901+gWB5PelglIrk5ePqlEa3mNtjgRpKjP4TGs24bVYwhs5gnL24zW2JPtgxKFJJFAuHyOx0QY/7W9GFkZ1lbRX+LsBY+Wr+ccMEZglBgf+gj+btzCucoeFJYzv6U8wk812raA2X/rh5f8cG8D4+VwCEEYYqmH2V+HNWqJUZQVLa+yq12H/BQknqju9z5o9G//0x9+qve/J0JIa/IVRjm7xX5ZypmNLicoih42LCPzKb6cHXarU7tH3KuWG8KKqWUYyuCGt2LoW+FS+GvcRVtyaCYiMGOHil4gMHG9pUqf69rjhbLS6BmpYNS5dODatPmITcTU=" # encrypted value of your token
+      install:
+        - cd backend
+        - cd cu
+        - pip install -r requrements.txt
+      script:
+        - pylint **/*.py --load-plugins pylint_django
+        - coverage run --source='.' manage.py test
+        - coverage xml
+        - script:
+        - cd ../.. && sonar-scanner
+
+    - language: node_js
+      node_js: 14
+      python: "3.9.6"
+      install:
+        - cd frontend
+        - cd cu
+        - yarn install
+        - yarn yarn add redux react-redux @reduxjs/toolkit
+        - yarn add react-select 
+      script:
+        - ./node_modules/.bin/eslint src
+        - yarn test --coverage --watchAll=false

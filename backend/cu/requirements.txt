@@ -1,0 +1,4 @@
+django==4.1.2 > requirements.txt
+coverage==6.5 >> requirements.txt
+pylint==2.15.5 >> requirements.txt
+pylint-django==2.5.3 >> requirements.txt

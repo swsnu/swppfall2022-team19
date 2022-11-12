@@ -52,7 +52,7 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.31.10",
-    "typescript": "^4.8.4"
+    "typescript": "*"
   },
   "proxy": "http://localhost:8000"
 }
