@@ -17,7 +17,7 @@ import { AppDispatch } from '../../store';
 function ProductDetailPage() {
   const dispatch = useDispatch<AppDispatch>();
   const id = useParams().id as string
-  
+
   //왼편에 product, 오른편에 rating, 아래에 totalScoreList, 맨 아래에는 reviewList.
   //현재 로그인된 user_id, product의 subCategory를 element로 다 넘겨줘야된다. 
   const userState = useSelector(selectUser);
@@ -46,12 +46,12 @@ function ProductDetailPage() {
     <div className="productDetailPage">
       <Header />
       <div className="productRate">   
-        {<ProductBlock/>}
+        {<ProductBlock product_id={productState.selectedProduct?.id!}/>}
         {<RatingForm user={userState.selectedUser!} product={productState.selectedProduct!} rate={rate}/>}  {/*! -> tells that selectedUser can't be null*/}
       </div>
       <div className="scoresReviews">
-        {<TotalScoreList title={"전체 평점 및 항목별 평점"} />}
-        {<ReviewList title={"상품 후기"} />}
+        {<TotalScoreList product={productState.selectedProduct!}/>}
+        {<ReviewList product={productState.selectedProduct!} />}
       </div>
     </div>
   )

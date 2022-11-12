@@ -19,7 +19,7 @@ const Header = () => {
     const logo = require('../../Categoryicon/Logo.png')
 
     const username = useSelector((state: RootState) => state.user.selectedUser?.username);
-    const password = useSelector((state: RootState) => state.user.selectedUser?.username);
+    const password = useSelector((state: RootState) => state.user.selectedUser?.password);
 
     const [searchKey, setSearchKey] = useState<string>("");
     const [submitted, setSubmitted] = useState<boolean>(false);
