@@ -11,7 +11,6 @@ class Product(models.Model):
     imageUrl = models.URLField(blank = False, null=False)
     details = models.TextField(blank=False, null=False)
     price = models.IntegerField(blank = False, null=False)
-
     newProduct = models.BooleanField(default = False)
     tags = models.ManyToManyField(Tag, related_name = "products", blank=True)
     averageScore = models.FloatField(default = 0)
