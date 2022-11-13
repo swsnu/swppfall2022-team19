@@ -44,6 +44,7 @@ export const fetchQueryProducts = createAsyncThunk(
     }
   )
 
+
   //update information of score 
   export const updateProduct = createAsyncThunk(
     'product/updateProduct',

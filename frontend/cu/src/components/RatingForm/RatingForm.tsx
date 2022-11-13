@@ -68,16 +68,16 @@ function RatingForm(props: Props) {
 
   //below are the functions shown for each click of button in different state of rating form
   //------when user has not rate the product--------state: rateState1 = false, rateState2 = false
-  const clickRateHandler = () => {
+  const onclickRateHandler = () => {
     setRateState2(true);
   }
 
   // -----when user click 평가하러가기 button------------state: rateState1 = false, rateState2 = true
-  const clickBackToRateHandler = () => {
+  const onclickBackToRateHandler = () => {
     setRateState2(false);
   }
 
-  const clickSaveHandler = async () => {   //#TODO: need to update product average score
+  const onclickSaveHandler = async () => {   //#TODO: need to update product average score
     const scores = [score1, score2, score3, score4, score5];
     const rateData = {
       user_id: props.user?.id!,
@@ -96,11 +96,11 @@ function RatingForm(props: Props) {
   }
 
   //------when user has written rate-------state: rateState1 = true, rateState2 = true
-  const clickEditHandler = () => {
+  const onclickEditHandler = () => {
     setRateState2(false);
   }
 
-  const clickDeleteHandler = async () => {
+  const onclickDeleteHandler = async () => {
     await dispatch(deleteRate(props.rate?.id!))
     setRateState1(false);
     setRateState2(false);
@@ -108,11 +108,11 @@ function RatingForm(props: Props) {
 
 
   //------when user is in edit rate------state: rateState1 = true, rateState2 = false
-  const clickBackEditHandler = () => {
+  const onclickBackEditHandler = () => {
     setRateState1(true);
   }
 
-  const clickSaveEditHandler = async () => {   //#TODO: need to update product average score
+  const onclickSaveEditHandler = async () => {   //#TODO: need to update product average score
     const scores = [score1, score2, score3, score4, score5];
     const editedRateData = {
       id: props.rate?.id!,
@@ -135,14 +135,14 @@ function RatingForm(props: Props) {
         <div className='rating_blank'>
           {rateState1 === false && rateState2 === false &&
             <div className='rate_box'>
-              <button className="rate_button" hidden={rateState2} onClick={() => clickRateHandler()}>내 평가 남기러 가기</button>
+              <button className="rate_button" hidden={rateState2} onClick={() => onclickRateHandler()}>내 평가 남기러 가기</button>
             </div>
           }
           {rateState1 === false && rateState2 === true &&
             <div className='rate_box'>
               <h2 className="rating_heading"> 리뷰 작성하기</h2>
-              <button id='button' onClick={() => clickBackToRateHandler()}>작성 취소</button>
-              <button id='button' onClick={() => clickSaveHandler()}>저장</button>
+              <button id='button' onClick={() => onclickBackToRateHandler()}>작성 취소</button>
+              <button id='button' onClick={() => onclickSaveHandler()}>저장</button>
               <br></br>
               <div>맛 만족도 {<HeartRating score={score1} updateScore={updateScore1} />} </div>
               <div>가성비 {<HeartRating score={score2} updateScore={updateScore2} />}</div>
@@ -165,8 +165,8 @@ function RatingForm(props: Props) {
         {rateState1 === true && rateState2 === true &&
           <div>
             <h2 className="rating_heading"> 내 리뷰</h2>
-            <button id='button' onClick={() => clickEditHandler()}>수정</button>
-            <button id='button' onClick={() => clickDeleteHandler()}>삭제</button>
+            <button id='button' onClick={() => onclickEditHandler()}>수정</button>
+            <button id='button' onClick={() => onclickDeleteHandler()}>삭제</button>
             <div>맛 만족도 {<FixedHeartRating score={score1} />} </div>
             <div>가성비 {<FixedHeartRating score={score2} />}</div>
             <div>재구매 의사 {<FixedHeartRating score={score3} />}</div>
@@ -187,8 +187,8 @@ function RatingForm(props: Props) {
         {rateState1 === true && rateState2 === false &&
           <div className='rate_box'>
             <h2 className="rating_heading"> 리뷰 작성하기</h2>
-            <button id='button' onClick={() => clickBackEditHandler()}>수정 취소</button>
-            <button id='button' onClick={() => clickSaveEditHandler()}>수정 저장</button>
+            <button id='button' onClick={() => onclickBackEditHandler()}>수정 취소</button>
+            <button id='button' onClick={() => onclickSaveEditHandler()}>수정 저장</button>
             <br></br>
             <div>맛 만족도 {<HeartRating score={score1} updateScore={updateScore1} />} </div>
             <div>가성비 {<HeartRating score={score2} updateScore={updateScore2} />}</div>

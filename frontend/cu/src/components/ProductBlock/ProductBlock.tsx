@@ -3,19 +3,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../store'
 import "./ProductBlock.css";
 import { fetchProduct, selectProduct } from '../../store/slices/product';
+import { useParams } from 'react-router-dom';
 
 interface Props{
     product_id: number
 }
 
 const ProductBlock = (props: Props) => {
-    //const id = useParams().id as string
+    //const {id} = useParams();
     const dispatch = useDispatch<AppDispatch>()
     const productState = useSelector(selectProduct)
 
     useEffect(() => {
-        dispatch(fetchProduct(props.product_id))
-    }, [props.product_id, dispatch])
+         dispatch(fetchProduct(props.product_id))
+    }, []);
+
 
     let commaPrice = productState.selectedProduct?.price.toLocaleString('ko-KR');
     

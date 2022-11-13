@@ -16,7 +16,7 @@ function Category() {
     const navigate = useNavigate()
 
     const categoryHandler = () => {
-        navigate(`/2/productDetail`)
+        navigate(`/productDetail/1`)
     }
 
     useEffect(() => {
