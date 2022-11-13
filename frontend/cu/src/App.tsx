@@ -18,17 +18,18 @@ function App() {
     <div className="appTotal">
       <BrowserRouter>
         <Routes>
-          <Route path ="/"element={<Navigate replace to={"/login"} />}  />
+          <Route path="/" element={<Navigate replace to={"/login"} />} />
           <Route path='/login' element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path='/signup' element={<SignupSurvey />} />
           <Route path="/ProductDetail/:id/" element={<ProductDetailPage />} />
           <Route path="/category/:mainCategory" element={<Category/>} />
-
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
+
+// {/* <Route path="/productList/:companyID" element={<Category />} /> */}
 
 export default App;

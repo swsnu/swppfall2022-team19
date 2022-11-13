@@ -10,11 +10,12 @@ admin.site.register(Score)
 admin.site.register(Rate)
 admin.site.register(Tag)
 
-@admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + (
-        (" User Profile",
-            {"fields": ("gender", "age", "taste", "question"), },),)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['id', 'username', 'gender', 'age', 'taste', 'question']
+    search_fields = ['usrname']
+
+
+admin.site.register(User, UserAdmin)
 
 # class userAdmin(admin.ModelAdmin):
 # list_display('username', 'gender', 'age', 'taste', 'question')
