@@ -103,7 +103,7 @@ def signout(request):
             logout(request)
             return HttpResponse(status=204)
         else:
-            print("signout_GET이 요청되었고, request.user은 로그아웃 상태입니다")
+            # print("signout_GET이 요청되었고, request.user은 로그아웃 상태입니다")
             return HttpResponse(status=401)
     else:
         return HttpResponse(status=405)
@@ -142,7 +142,7 @@ def requestUser(request):
             # print(res)
             return JsonResponse(data=res, status=201)
         else:
-            print("request.user is logged out")
+            # print("request.user is logged out")
             return HttpResponse(status=204)
     else:
         return HttpResponseNotAllowed(["GET"])

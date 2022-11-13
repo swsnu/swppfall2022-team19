@@ -20,13 +20,12 @@ function App() {
     <div className="appTotal">
       <BrowserRouter>
         <Routes>
-          <Route path ="/"element={<Navigate replace to={"/login"} />}  />
+          <Route path="/" element={<Navigate replace to={"/login"} />} />
           <Route path='/login' element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path='/signup' element={<SignupSurvey />} />
           <Route path="/1/ProductDetail" element={<ProductDetailPage />} />
           <Route path="/2/ProductDetail" element={<ProductDetailPageSnack />} />
-          {/* <Route path="/productList/:companyID" element={<Category />} /> */}
           <Route path="/productList/1" element={<Category />} />
           <Route path="/productList/0" element={<Category1 />} />
         </Routes>
@@ -34,5 +33,7 @@ function App() {
     </div>
   );
 }
+
+// {/* <Route path="/productList/:companyID" element={<Category />} /> */}
 
 export default App;
