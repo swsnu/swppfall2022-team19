@@ -7,7 +7,6 @@ import { RootState } from "../../store";
 import './Login.css';
 
 
-
 export default function Login() {
   const userState = useSelector((state: RootState) => state.user.selectedUser?.loginState);
   const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
@@ -45,11 +44,11 @@ export default function Login() {
     dispatch(getUsers());
     const result = dispatch(getRequestUser());
     console.log(result);
-    if (userState === null || userState === undefined) {
-      console.log("userStateTemp is null");
+    if (selectedUserState === null || selectedUserState === undefined) {
+      console.log("userState is null");
     } else {
-      console.log("userStateTemp is already loggedIn");
-      moveTo(userState);
+      console.log("userState is already loggedIn");
+      moveTo(selectedUserState.loginState);
     }
   }, []);
 
