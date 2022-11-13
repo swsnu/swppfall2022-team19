@@ -1,21 +1,19 @@
-
-
 body {
-    background : #d7ddec;
+    background : #f6faf6;
 }
 
 .rating_form {
     /* position: relative; */
     right: -400px;
-    width: 500px;
+    width: 600px;
     height: 400px;
     top: 0px;
     vertical-align: auto;
-    border: 3px solid green;
+    border: 3px solid #9DC92A;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: white;
     padding: 0px 0 20px 0;
     margin-left: 6rem;
@@ -24,10 +22,13 @@ body {
 .rating_heading {
     font-size: 24px;
     color: #323357;
+<<<<<<< HEAD
 /*     font-family: "Muli"; */
     font-weight: 500;
+=======
+    font-weight: 400;
+>>>>>>> 34b190eaf4d2c8f906eb21840627edf9ebef1ebb
     text-align: center;
-    margin: 28px 0; 
 }
 
 #rate_button {
@@ -42,7 +43,7 @@ body {
     font-size: 0.9rem;
     font-weight: 700;
     line-height: 1;
-    margin: 150px;
+    margin: 175px;
     padding: 1rem 1.2rem;
     text-align: center;
     transition: box-shadow .2s, -webkit-box-shadow .2s;
@@ -53,7 +54,8 @@ body {
 }
 
 #rate_button:hover {
-    box-shadow: #121212 0 0 0 2px, transparent 0 0 0 0;
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
 }
 
 #cancel_button{
@@ -62,12 +64,10 @@ body {
     border-radius: 12px;
     color: #121212;
     cursor: pointer;
-    display: inline-flex;
-    font-family: Inter, sans-serif;
     font-size: 12px;
     line-height: 1;
-    margin: 10px;
-    padding: 5px 10px;
+    margin: 23px;
+    padding: 10px 20px;
     text-align: center;
     transition: box-shadow .2s, -webkit-box-shadow .2s;
     border: 0;
@@ -82,15 +82,13 @@ body {
     color: #121212;
     cursor: pointer;
     display: inline-flex;
-    font-family: Inter, sans-serif;
     font-size: 12px;
     line-height: 1;
-    margin: 10px;
-    padding: 5px 10px;
+    margin: 20px;
+    padding: 10px 20px;
     text-align: center;
     transition: box-shadow .2s, -webkit-box-shadow .2s;
     border: 0;
     touch-action: manipulation;
     right: 100px;
-
 }
