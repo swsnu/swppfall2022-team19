@@ -8,10 +8,19 @@
 
 
 # Frontend
-- $ yarn
-- $ yarn add redux react-redux @reduxjs/toolkit
-- $ yarn add react-select
+- yarn
+- yarn add redux react-redux @reduxjs/toolkit
+- yarn add react-select
+- yarn add --save @types/qs
 
+# Backend
+(once)
+- python -m pip install Pillow
+- pip install djangorestframework
+
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py runserver (0.0.0.0:8000)
 
 # docker
 docker run --rm -it \
