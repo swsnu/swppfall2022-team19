@@ -20,6 +20,8 @@ jobs:
         - pip --version
         - pip install -r backend/cu/requirements.txt
         - pip install coveralls
+        - python -m pip install Pillow
+        - pip install djangorestframework
         - yarn global add coveralls
         - gem install coveralls-lcov
         - cd frontend
