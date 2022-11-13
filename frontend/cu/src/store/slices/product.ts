@@ -25,18 +25,19 @@ export interface ProductState {
 }
 
 
-//fetch all products by main category
-export const fetchProductByMainCategory= createAsyncThunk(
-    'product/fetchProductByMainCategory',
-    async (mainCategory: ProductType['mainCategory']) => {
-      const response = await axios.get<ProductType[]>(`/api/product/${mainCategory}/all/`)
-      return response.data
-    }
-  )
-  
+//fetch all products by main category 
+export const fetchQueryProducts = createAsyncThunk(
+  'product/fetchProductByMainCategory',
+  async (params: { mainCategory?: string }) => {
+    const response = await axios.get<ProductType[]>('/api/product/', { params })
+    return response.data
+  }
+)
+
+
 //fetch product by id
   export const fetchProduct = createAsyncThunk(
-    'book/fetchProduct',
+    'product/fetchProduct',
     async (id: ProductType['id']) => {
       const response = await axios.get(`/api/product/${id}/`)
       return response.data
@@ -45,7 +46,7 @@ export const fetchProductByMainCategory= createAsyncThunk(
 
   //update information of score 
   export const updateProduct = createAsyncThunk(
-    'book/updateBook',
+    'product/updateProduct',
     async (product: Pick<ProductType, 'id'|'averageScore'>, { dispatch }) => { //only updates 
       const { id, averageScore } = product
       const response = await axios.put(`/api/product/${id}/`, averageScore)
@@ -73,7 +74,7 @@ export const fetchProductByMainCategory= createAsyncThunk(
           },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchProductByMainCategory.fulfilled, (state, action) => {
+        builder.addCase(fetchQueryProducts.fulfilled, (state, action) => {
           state.products = action.payload
         })
         builder.addCase(fetchProduct.fulfilled, (state, action) => {

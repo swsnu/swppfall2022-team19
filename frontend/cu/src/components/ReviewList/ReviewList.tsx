@@ -5,12 +5,16 @@ import "./ReviewList.css";
 import { AppDispatch } from "../../store";
 import Review from "../Review/Review";
 import { useEffect } from "react";
-import { fetchRates, selectRate } from "../../store/slices/rate";
+import { fetchRates, RateType, selectRate } from "../../store/slices/rate";
 import { ProductType } from "../../store/slices/product";
+import { UserType } from "../../store/slices/User";
 
 interface Props{
-    product: ProductType
+    user?: UserType,
+    product: ProductType,
+    rate: RateType | undefined
 }
+
 
 export default function ReviewList (props: Props){
     const dispatch = useDispatch<AppDispatch>();
@@ -32,14 +36,7 @@ export default function ReviewList (props: Props){
             <div className='reviews'>
                 {ratesState.rates.map( (rv) => {
                     const totalScore = (rv.scores[0] + rv.scores[1] + rv.scores[2] + rv.scores[3] + rv.scores[4])/5
-                    return (<Review 
-                        key={rv.id}
-                        user_id={rv.user_id}
-                        totalScore={totalScore}
-                        comment={rv.comment}
-                        likedCount={rv.likedCount}
-                        liked={rv.liked}
-                    />
+                    return (<Review user={props.user} product={props.product} rate={rv} totalScore={totalScore}/>
                 );})}
             </div>
         </div> 

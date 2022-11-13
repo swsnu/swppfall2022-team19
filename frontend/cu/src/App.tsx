@@ -23,7 +23,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path='/signup' element={<SignupSurvey />} />
           <Route path="/:id/ProductDetail" element={<ProductDetailPage />} />
-          <Route path="/productList/:categoryID" element={<Category/>} />
+          <Route path="/:mainCategory" element={<Category/>} />
 
         </Routes>
       </BrowserRouter>

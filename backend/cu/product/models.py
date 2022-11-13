@@ -1,7 +1,5 @@
 from django.db import models
 from user.models import User
-
-
 # Create your models here.
 
 class Tag(models.Model):
@@ -19,6 +17,9 @@ class Product(models.Model):
     newProduct = models.BooleanField(default = False)
     tags = models.ManyToManyField(Tag, related_name = "products")
     averageScore = models.FloatField(default = 0)
+        
+    def __str__(self):
+        return self.name
 
 class Score(models.Model):
     score1 = models.IntegerField(blank = False)
@@ -35,3 +36,6 @@ class Rate(models.Model):
     picture = models.ImageField(upload_to='%Y/%m/%d', blank=True)
     likedCount = models.IntegerField(default = 0)
     liked = models.BooleanField(default = False)
+
+
+

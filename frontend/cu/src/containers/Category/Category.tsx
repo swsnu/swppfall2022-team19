@@ -1,17 +1,27 @@
-import { useNavigate, useParams } from "react-router";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
+import { AppDispatch } from "../../store";
+import { fetchQueryProducts } from "../../store/slices/product";
 import Header from "../Header/Header"
 import "./Category.css"
+import QueryString from 'qs'
 
 
 function Category() {
-
+    const dispatch = useDispatch<AppDispatch>();
     const { id } = useParams(); // categoryID
+    const { search } = useLocation()
     const navigate = useNavigate()
 
     const categoryHandler = () => {
         navigate(`/2/productDetail`)
     }
+
+    useEffect(() => {
+        dispatch(fetchQueryProducts(QueryString.parse(search, { ignoreQueryPrefix: true })))
+      }, [search, dispatch])
 
     return (
         <div className="CategoryPage">

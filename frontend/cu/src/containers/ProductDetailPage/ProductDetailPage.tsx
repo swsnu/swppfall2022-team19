@@ -50,8 +50,8 @@ function ProductDetailPage() {
         {<RatingForm user={userState.selectedUser!} product={productState.selectedProduct!} rate={rate}/>}  {/*! -> tells that selectedUser can't be null*/}
       </div>
       <div className="scoresReviews">
-        {<TotalScoreList product={productState.selectedProduct!}/>}
-        {<ReviewList product={productState.selectedProduct!} />}
+        {<TotalScoreList user={userState.selectedUser!} product={productState.selectedProduct!} rate={rate}/>}
+        {<ReviewList user={userState.selectedUser!} product={productState.selectedProduct!} rate={rate}/>}
       </div>
     </div>
   )

@@ -33,7 +33,7 @@ const initialState: RateState = {
 export const fetchRates = createAsyncThunk(
     'product/fetchRates',
     async (id: ProductType['id']) => {
-        const response = await axios.get<RateType[]>(`/api/product/${id}/rates/`)  //id = productID
+        const response = await axios.get<RateType[]>(`/api/rate/`)  //id = productID
         return response.data
     }
 )
@@ -43,7 +43,7 @@ export const fetchRates = createAsyncThunk(
 export const createRate = createAsyncThunk(
     'product/createRate',
     async (data: Omit<RateType, 'id'>, { dispatch }) => {
-        const response = await axios.post(`/api/product/${data.product_id}/rate/`, data)  
+        const response = await axios.post(`/api/rate/`, data)  
         dispatch(rateActions.addRate(response.data))
         return response.data
     }
@@ -53,7 +53,7 @@ export const updateRate = createAsyncThunk(
     'product/updateRate',
     async (rate: RateType, { dispatch }) => {
         const { id, ...data } = rate
-        const response = await axios.put(`/api/product/rate/${id}/`, data)
+        const response = await axios.put(`/api/rate/${id}/`, data)  //id = rateID
         dispatch(rateActions.updateRate(response.data))
         return response.data
     }
@@ -64,7 +64,7 @@ export const updateRate = createAsyncThunk(
 export const deleteRate = createAsyncThunk(
     'product/deleteRate',
     async (id: RateType['id'], { dispatch }) => {
-        await axios.delete(`/api/product/rate/${id}/`)
+        await axios.delete(`/api/rate/${id}/`)
         dispatch(rateActions.deleteRate(id))
     }
 )
