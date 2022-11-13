@@ -18,7 +18,7 @@ function HeartRating(props: Props) {
                     <button
                         type="button"
                         key={index}
-                        className={index <= ((hover && hover) || hover) ? "on" : "off"}
+                        className={index <= (hover) ? "on" : "off"}
                         onClick={() => {setRating(index); props.updateScore(index)}}
                         onMouseEnter={() => setHover(index)}
                         onMouseLeave={() => setHover(rating)}

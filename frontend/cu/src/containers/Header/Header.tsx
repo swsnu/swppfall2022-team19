@@ -16,9 +16,14 @@ const Header = () => {
     const drink = require('../../Categoryicon/drink.png');
     const search = require('../../Categoryicon/search.png')
 
-    const username = useSelector((state: RootState) => state.user.selectedUser?.username);
-    const password = useSelector((state: RootState) => state.user.selectedUser?.username);
+    const logo = require('../../Categoryicon/Logo.png')
 
+<<<<<<< HEAD
+=======
+    const username = useSelector((state: RootState) => state.user.selectedUser?.username);
+    const password = useSelector((state: RootState) => state.user.selectedUser?.password);
+
+>>>>>>> 34b190eaf4d2c8f906eb21840627edf9ebef1ebb
     const [searchKey, setSearchKey] = useState<string>("");
     const [submitted, setSubmitted] = useState<boolean>(false);
 
@@ -26,89 +31,81 @@ const Header = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     const clickSearchHandler = () => {
-        setSubmitted(true);  
-        }
+        setSubmitted(true);
+    }
 
     const clickSignoutHandler = async () => {
         const result = await dispatch(signoutUser());
         if (result.type === `${signoutUser.typePrefix}/fulfilled`) {
-            alert("렛미씨유에서 또 만나요!")
-            navigate("/login")
-            }
+            alert("렛미씨유에서 또 만나요!");
+            navigate("/login");
+        }
         else {
-            alert("당신은 렛미씨유를 떠나지 못합니다.")
+            alert("당신은 렛미씨유를 떠나지 못합니다.");
+            // navigate("/login"); 
         }
     }
-    
-    
 
-    const categoryHandler = (categoryID : number) => {
-        navigate(`/productList/${categoryID}`)    
-        } 
 
-    if(submitted) {
-        return <Navigate to = "/home" />;
 
-    } else { return(
-        
-        <div className = "Header"  >
-        
-            <div className="Category">
-                <div className = "Meal" onClick={() => categoryHandler(0)} >
-                    <img className = "CategoryIcon" src={meal} alt="CategoryIcon"
-                    />
-                    {/* <p>간편식사</p> */}
+    const categoryHandler = (categoryID: number) => {
+        navigate(`/productList/${categoryID}`)
+    }
+
+    if (submitted) {
+        return <Navigate to="/home" />;
+    } else {
+        return (
+
+            <div className="header"  >
+                <div className="start-header">
+                    <img className="Logo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
+                    <nav>
+                        <div className="Category">
+                            <div className="CategoryMenu" onClick={() => categoryHandler(0)} >
+                                {/* <img className = "CategoryIcon" src={meal} alt="CategoryIcon"/> */}
+                                <p>간편식사</p>
+                            </div>
+
+                            <div className="CategoryMenu" onClick={() => categoryHandler(1)} >
+                                {/* <img className = "CategoryIcon"src={snack} alt="CategoryIcon" /> */}
+                                <p>과자류</p>
+                            </div>
+
+                            <div className="CategoryMenu" onClick={() => categoryHandler(2)} >
+                                {/* <img className = "CategoryIcon"src={icecream} alt="CategoryIcon"/> */}
+                                <p>아이스크림</p>
+                            </div>
+
+                            <div className="CategoryMenu" onClick={() => categoryHandler(3)} >
+                                {/* <img className = "CategoryIcon"src={food} alt="CategoryIcon" onClick={() => categoryHandler(3)} /> */}
+                                <p>식품</p>
+                            </div>
+
+                            <div className="CategoryMenu" onClick={() => categoryHandler(4)} >
+                                {/* <img className = "CategoryIcon"src={drink} alt="CategoryIcon"/> */}
+                                <p>음료</p>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
 
-            
+                <div className="SearchBox">
+                    <input className="SearchInput"
+                        type="text"
+                        value={searchKey}
+                        onChange={(event) => setSearchKey(event.target.value)} />
 
-            <div className = "Snacks" onClick={() => categoryHandler(1)} >
-                <img className = "CategoryIcon"src={snack} alt="CategoryIcon" 
-                />
-                {/* <p>과자류</p> */}
+                    <img className="SearchIcon" onClick={() => clickSearchHandler()} src={search} alt="SearchIcon" />
+                    {/* <button onClick={() => clickCreateHandler()}>찾아보기</button> */}
+                </div>
+
+                <div className="end-header">
+                    <button className="SignoutButton" onClick={() => clickSignoutHandler()}> 로그아웃</button>
+                </div>
             </div>
-
-            <div className = "Icecream" onClick={() => categoryHandler(2)} >
-                <img className = "CategoryIcon"src={icecream} alt="CategoryIcon"
-                />
-                {/* <p>아이스크림</p> */}
-            </div>
-
-            <div className = "Food" onClick={() => categoryHandler(3)} >
-                <img className = "CategoryIcon"src={food} alt="CategoryIcon"
-                onClick={() => categoryHandler(3)} 
-                />
-                {/* <p>식품</p> */}
-            </div>
-
-            <div className = "Drink" onClick={() => categoryHandler(4)} >
-                <img className = "CategoryIcon"src={drink} alt="CategoryIcon"
-                />
-                {/* <p>음료</p> */}
-            </div>
-            
-            </div>
-
-            <div className = "SearchBox">
-            
-                <input className = "SearchInput"
-                type="text"
-                value={searchKey}
-                onChange={(event) => setSearchKey(event.target.value)} />           
-                
-        
-
-            <img className = "SearchIcon" onClick={() => clickSearchHandler()} src= {search} alt="SearchIcon" />
-            {/* <button onClick={() => clickCreateHandler()}>찾아보기</button> */}
-            </div>
-
-            <button onClick = {()=> clickSignoutHandler()}> 로그아웃</button>
-                  
-
-        </div>
-        
-    );
-}
+        );
+    }
 }
 
 
