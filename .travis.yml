@@ -18,7 +18,7 @@ jobs:
         - source ~/virtualenv/python3.9.6/bin/activate
         - python --version
         - pip --version
-#         - pip install -r backend/requirements.txt
+        - pip install -r backend/cu/requirements.txt
         - pip install coveralls
         - yarn global add coveralls
         - gem install coveralls-lcov
@@ -31,7 +31,7 @@ jobs:
         - ./node_modules/.bin/eslint src
         - yarn test --coverage --watchAll=false
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
-        - cd ../backend/cu
+        - cd ../../backend/cu
         - black --check ./
         - coverage run --source='.' manage.py test
         - coverage xml
