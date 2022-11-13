@@ -1,0 +1,30 @@
+[
+    {
+        "subCategory": "도시락",
+        "question4": "반찬 양이 푸짐한가요?",
+        "question5": "반찬 종류가 다양한가요?"
+    },
+    {
+        "subCategory": "샌드위치",
+        "question4": "속 재료는 신선한가요?",
+        "question5": "속 재료는 푸짐한가요?"
+    },
+    {
+        "subCategory": "햄버거",
+        "question4": "양념은 충분한가요?",
+        "question5": "고기의 질은 좋은가요?"
+    },
+    {
+        "subCategory": "주먹밥",
+        "question4": "간은 잘 되었나요?",
+        "question5": "속 재료는 충분한가요?"
+    },
+    {
+        "subCategory": "김밥",
+        "question4": "속 재료가 조화롭나요?",
+        "question5": "속 재료는 푸짐한가요?"
+    }
+
+
+
+]
