@@ -1,9 +1,6 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.http.response import HttpResponseNotAllowed
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
-
-
-#
 from django.contrib.auth import authenticate, login, logout
 
 import json
@@ -25,8 +22,8 @@ def token(request):
 
 # 1. 회원가입 # register
 
+
 @csrf_exempt
-# @ensure_csrf_cookie
 def signup(request):
     if request.method == "GET":
         user_list = [user for user in User.objects.all().values()]
@@ -52,15 +49,15 @@ def signup(request):
             "taste": nowUser.taste,
             "question": nowUser.question,
         }
-        
 
-        return JsonResponse(res, status=201)
+        return JsonResponse(data=res, status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
 
 # 2. signin login
+
+
 @csrf_exempt
-# @ensure_csrf_cookie
 def signin(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
@@ -68,22 +65,12 @@ def signin(request):
         password = req_data['password']
 
         tempUser = authenticate(request, username=username, password=password)
-        
+
         if tempUser is not None:
-            # print("tempUser is not None")
-            # print(tempUser.is_authenticated)
-            # print("request.user")
-            # print(request.user.is_anonymous)
-            if request.user.is_anonymous :
+            if request.user.is_anonymous:
                 # User is logged-out
-                
                 login(request, tempUser)
-
-                
-
                 nowUser = User.objects.get(username=username)
-
-
                 res = {
                     "id": nowUser.pk,
                     "username": nowUser.username,
@@ -92,28 +79,74 @@ def signin(request):
                     "taste": nowUser.taste,
                     "question": nowUser.question,
                 }
-
                 return JsonResponse(res, status=201, safe=False)
                 # HttpResponse(status=204)
             else:
                 # User is already logged-in -> error
+                # print("request.user is already logged in")
+                # print(request.user)
+                # print(tempUser)
                 return HttpResponse(status=401)
         else:
+            # print("tempUser is None. 등록되지 않은 유저 정보")
             return HttpResponse(status=401)
     else:
         return HttpResponseNotAllowed(['POST'])
 
+# 3. signout 로그아웃
+
+
 @csrf_exempt
 def signout(request):
-    
     if request.method == 'GET':
         if request.user.is_authenticated:
             logout(request)
             return HttpResponse(status=204)
         else:
+            # print("signout_GET이 요청되었고, request.user은 로그아웃 상태입니다")
             return HttpResponse(status=401)
     else:
         return HttpResponse(status=405)
+
+# 4. userlist : 현재 등록된 userlist를 백엔드에서 프론트로 전달
+
+
+def userlist(request):
+    if (request.method) == "GET":
+        user_list = []
+        for user in User.objects.all():
+            user_dict = {"id": user.pk, "username": user.username, "password": "tempPassword", "gender": user.gender,
+                         "age": user.age, "taste": user.taste, "question": user.question, "loginState": user.is_authenticated}
+            user_list.append(user_dict)
+        return JsonResponse(user_list, safe=False, status=200)
+    else:
+        return HttpResponseNotAllowed(["GET"])
+
+# 5. requestUser : 현재 request.user의 정보를 userType에 맞추어 전달
+
+
+def requestUser(request):
+    if (request.method) == "GET":
+        if (request.user.is_authenticated):
+            # print("request.user is authenticated: username is " + request.user.username)
+            nowUser = request.user
+            res = {
+                "id": nowUser.pk,
+                "username": nowUser.username,
+                "password": "tempPassword",
+                "gender": nowUser.gender,
+                "age": nowUser.age,
+                "taste": nowUser.taste,
+                "question": nowUser.question,
+            }
+            # print(res)
+            return JsonResponse(data=res, status=201)
+        else:
+            # print("request.user is logged out")
+            return HttpResponse(status=204)
+    else:
+        return HttpResponseNotAllowed(["GET"])
+
 
 """
 @csrf_exempt
