@@ -22,16 +22,10 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path='/signup' element={<SignupSurvey />} />
-<<<<<<< HEAD
-          <Route path="/1/ProductDetail" element={<ProductDetailPage />} />
-          <Route path="/2/ProductDetail" element={<ProductDetailPageSnack />} />
-          <Route path="/productList/1" element={<Category />} />
-          <Route path="/productList/0" element={<Category1 />} />
-=======
           <Route path="/ProductDetail/:id/" element={<ProductDetailPage />} />
           <Route path="/category/:mainCategory" element={<Category/>} />
 
->>>>>>> 34b190eaf4d2c8f906eb21840627edf9ebef1ebb
+
         </Routes>
       </BrowserRouter>
     </div>

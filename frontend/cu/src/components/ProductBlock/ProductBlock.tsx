@@ -14,6 +14,7 @@ const ProductBlock = (props: Props) => {
     const dispatch = useDispatch<AppDispatch>()
     const productState = useSelector(selectProduct)
 
+    
     useEffect(() => {
          dispatch(fetchProduct(props.product_id))
     }, []);

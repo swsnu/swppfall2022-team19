@@ -77,7 +77,11 @@ function RatingForm(props: Props) {
     setRateState2(false);
   }
 
+<<<<<<< Updated upstream
   const onclickSaveHandler = async () => {   //#TODO: need to update product average score
+=======
+  const clickSaveHandler = async () => {   //#TODO: need to update product average score
+>>>>>>> Stashed changes
     const scores = [score1, score2, score3, score4, score5];
     const rateData = {
       user_id: props.user?.id!,
@@ -112,7 +116,11 @@ function RatingForm(props: Props) {
     setRateState1(true);
   }
 
+<<<<<<< Updated upstream
   const onclickSaveEditHandler = async () => {   //#TODO: need to update product average score
+=======
+  const clickSaveEditHandler = async () => {   //#TODO: need to update product average score
+>>>>>>> Stashed changes
     const scores = [score1, score2, score3, score4, score5];
     const editedRateData = {
       id: props.rate?.id!,

@@ -12,7 +12,7 @@ const Home = () => {
     const navigate = useNavigate()
 
     const categoryHandler = () => {
-        navigate(`/1/productDetail`)
+        navigate(`/productDetail/1`)
     }
 
 
