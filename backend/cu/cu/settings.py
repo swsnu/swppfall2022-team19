@@ -131,10 +131,11 @@ AUTH_USER_MODEL = 'user.User'
 CSRF_COOKIE_NAME = 'XSRF-TOKEN'
 CSRF_HEADER_NAME = 'X-XSRF-TOKEN'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 # ADD: GAON25
 # Django Session Timeout Code
 SESSION_COOKIE_AGE = 1200  # 20 min
 SESSION_SAVE_EVERY_REQUEST = True
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
