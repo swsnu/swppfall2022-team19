@@ -36,8 +36,9 @@ class ProductViewSet(viewsets.GenericViewSet):
     # GET /api/product/{product_id}
     @csrf_exempt
     def retrieve(self, request, pk=None):
-        product = Product.objects.get(id=pk)
-        return Response(self.get_queryset(product).data, status=200)
+        product = self.get_object()
+        #product = Product.objects.get(id=pk)
+        return Response(self.get_serializer(product).data, status=200)
 
     # PUT /api/product/{product_id}  
     @csrf_exempt

@@ -31,19 +31,19 @@ function Category() {
             </div>
             <div className="productBlocks" onClick={() => categoryHandler()}  >
                 {<ProductBlock product_id={1} />}
-                {<ProductBlock product_id={2} />}
+                {/* {<ProductBlock product_id={2} />}
                 {<ProductBlock product_id={3} />}
                 {<ProductBlock product_id={4} />}
-                {<ProductBlock product_id={5} />}
+                {<ProductBlock product_id={5} />} */}
             </div>
 
             <div className="productBlocks" onClick={() => categoryHandler()}  >
 
                 {<ProductBlock product_id={6} />}
-                {<ProductBlock product_id={7} />}
+                {/* {<ProductBlock product_id={7} />}
                 {<ProductBlock product_id={8} />}
                 {<ProductBlock product_id={9} />}
-                {<ProductBlock product_id={10} />}
+                {<ProductBlock product_id={10} />} */}
             </div>
 
 
