@@ -65,7 +65,7 @@ def signin(request):
         password = req_data['password']
 
         tempUser = authenticate(request, username=username, password=password)
-
+        
         if tempUser is not None:
             if request.user.is_anonymous:
                 # User is logged-out

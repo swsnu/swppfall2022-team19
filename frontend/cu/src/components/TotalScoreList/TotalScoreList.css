@@ -1,22 +1,62 @@
-.TotalScoreList {
-    background: white;
-    width: 1100px;
-    box-shadow: 0 3px 9px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
-    margin: auto; 
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .TotalScoreList .title {
-    padding: 1rem;
-    font-size: 1rem;
-    text-align: left;
-    font-weight: 400;
-    background: yellowgreen;
-    color: black;
-  }
+/*box-shadow: 0 3px 9px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);그림자 */ 
 
-  .TotalScoreList .views{
-    padding: 0.5rem;
-    justify-content:space-between;
-  }
+.ReviewList {
+  background: white;
+  width: 1100px;
+  margin: auto; 
+  margin-top: 0rem;
+  margin-bottom: 5rem;
+  border: 3px solid #9DC92A;
+  border-radius: 20px;
+}
+
+.ReviewList .title {
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 400;
+  background:#9DC92A;
+  color: black;
+  border-radius: 10px;
+}
+
+.ReviewList .fieldName {
+  
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-align: left;
+  display: flex;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}
+
+.ReviewList .fieldName_totalScore {
+  padding: 0rem;
+  margin-left: 2rem;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}
+
+.ReviewList .fieldName_comment {
+  padding: 0rem;
+  margin-left:9rem;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}
+
+.ReviewList .fieldName_like {
+  padding: 0rem;
+  margin-left: 43rem;
+  font-size: 1rem;
+  text-align: right;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}

@@ -1,40 +1,51 @@
-import { useNavigate, useParams } from "react-router";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
+import { AppDispatch } from "../../store";
+import { fetchQueryProducts } from "../../store/slices/product";
 import Header from "../Header/Header"
 import "./Category.css"
+import QueryString from 'qs'
 
 
 function Category() {
-
+    const dispatch = useDispatch<AppDispatch>();
     const { id } = useParams(); // categoryID
+    const { search } = useLocation()
     const navigate = useNavigate()
 
     const categoryHandler = () => {
-        navigate(`/2/productDetail`)
-        } 
+        navigate(`/productDetail/1`)
+    }
+
+    useEffect(() => {
+        dispatch(fetchQueryProducts(QueryString.parse(search, { ignoreQueryPrefix: true })))
+      }, [search, dispatch])
 
     return (
-        <div className = "CategoryPage">
-        <Header />
-        <div className = "animated-title">
-        <h1 className = "titles">과자와 간식</h1>
-        </div>
-        <div className="productBlocks" onClick = {()=> categoryHandler()}  >
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107031.jpg" name="대산)쿠키런빅별딸기스낵" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107024.jpg" name="대산)쿠키런빅별초코스낵" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801206003800.jpg" name="탑티어)에너지후르츠젤리" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801068408164.jpg" name="삼립)포켓몬딸기우유슈" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801068408157.jpg" name="삼립)포켓몬딸기바닐라컵" price={3500}></ProductBlock>
-        </div>
+        <div className="CategoryPage">
+            <Header />
+            <div className="animated-title">
+                <h1 className="titles">과자와 간식</h1>
+            </div>
+            <div className="productBlocks" onClick={() => categoryHandler()}  >
+                {<ProductBlock product_id={1} />}
+                {/* {<ProductBlock product_id={2} />}
+                {<ProductBlock product_id={3} />}
+                {<ProductBlock product_id={4} />}
+                {<ProductBlock product_id={5} />} */}
+            </div>
 
-        <div className="productBlocks" onClick = {()=> categoryHandler()}  >
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/9300605122994.jpg" name="네슬레)킷캣골드4핑거" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/6942836723811.jpg" name="롯데)허쉬코코아리치커피" price={1800}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/6942836723781.jpg" name="롯데)허쉬코코아카라멜" price={1800}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/6942836723767.jpg" name="롯데)허쉬코코아믹스베리" price={1800}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809841060615.jpg" name="나무)프린세스캔디" price={5000}></ProductBlock>
-        </div>
-        
+            <div className="productBlocks" onClick={() => categoryHandler()}  >
+
+                {<ProductBlock product_id={6} />}
+                {/* {<ProductBlock product_id={7} />}
+                {<ProductBlock product_id={8} />}
+                {<ProductBlock product_id={9} />}
+                {<ProductBlock product_id={10} />} */}
+            </div>
+
 
 
         </div>

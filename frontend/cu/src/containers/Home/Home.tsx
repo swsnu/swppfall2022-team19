@@ -12,49 +12,52 @@ const Home = () => {
     const navigate = useNavigate()
 
     const categoryHandler = () => {
-        navigate(`/1/productDetail`)
-        } 
+        navigate(`/productDetail/1`)
+    }
 
-    
+
     return (
 
         <div className="Home">
-        <Header />
-        <img className = "CenterLogo" onClick={() => navigate("/home")} src= {logo} alt="homeLogo" />
-
-        
-        <div className="BasicList">
-            
-        <div className = "animated-title">
-        <h1 className = "titles">오늘의 편의점</h1>
-        </div>
-        <div className="productBlocks"  onClick = {()=> categoryHandler()} > 
-
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809383957350.jpg" name="핫)미트칠리빅핫도그" price={3600}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809383957312.jpg" name="핫)스노잉치즈빅핫도그" price={3600}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809383957237.jpg" name="주)스팸데리마요밥바" price={1900}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809692953623.jpg" name="햄)청양마요너비아니버거" price={3500}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809453266634.jpg" name="주)참치마요&소고기더블" price={1900}></ProductBlock>
-        
-        </div>
+            <Header />
+            <img className="CenterLogo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
 
             <div className="BasicList">
 
-        <div className="UserList">
-    
-        <div className = "animated-title">
-        <h1 className = "titles"> 오늘의 추천 </h1>
-        </div>
-        <div className="productBlocks" onClick={()=> categoryHandler()} >
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107031.jpg" name="대산)쿠키런빅별딸기스낵" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801728107024.jpg" name="대산)쿠키런빅별초코스낵" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801206003800.jpg" name="탑티어)에너지후르츠젤리" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801068408164.jpg" name="삼립)포켓몬딸기우유슈" price={2000}></ProductBlock>
-            <ProductBlock imgLink="https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8801068408157.jpg" name="삼립)포켓몬딸기바닐라컵" price={3500}></ProductBlock>
-        </div>
-        </div>
-        </div>
-        </div>
+                <div className="animated-title">
+
+                    <h1 className="titles">오늘의 편의점</h1>
+                </div>
+                <div className="productBlocks" onClick={() => categoryHandler()} >
+
+                    {<ProductBlock product_id={1} />}
+                    {<ProductBlock product_id={2} />}
+                    {<ProductBlock product_id={3} />}
+                    {<ProductBlock product_id={4} />}
+                    {<ProductBlock product_id={5} />}
+
+                </div>
+
+                <div className="BasicList">
+
+                    <div className="UserList">
+
+                        <div className="animated-title">
+
+                            <h1 className="titles"> 오늘의 추천 </h1>
+                        </div>
+                        
+                        <div className="productBlocks" onClick={() => categoryHandler()} >
+
+                            {<ProductBlock product_id={6} />}
+                            {<ProductBlock product_id={7} />}
+                            {<ProductBlock product_id={8} />}
+                            {<ProductBlock product_id={9} />}
+                            {<ProductBlock product_id={10} />}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
