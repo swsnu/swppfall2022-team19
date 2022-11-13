@@ -34,10 +34,10 @@ class RateViewSet(viewsets.GenericViewSet):
     @csrf_exempt
     def create(self, request):
         data = request.data.copy()
-        score_data = data.pop("scores", [])
-        if not isinstance(score_data, list):
-            return Response(
-                {"error": "scores should be list"}, status=400)
+        # score_data = data.pop("scores", [])
+        # if not isinstance(score_data, list):
+        #     return Response(
+        #         {"error": "scores should be list"}, status=400)
         
         serializer = RateSerializer(data=data)    # all to dic format
         serializer.is_valid(raise_exception=True) # check before saving in db, if False 400 response

@@ -16,7 +16,6 @@ export interface RateType {
     comment: string,
     picture: string, //temp, need to change later
     likedCount: number,
-    liked: boolean
 }
 
 export interface RateState {

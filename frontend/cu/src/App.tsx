@@ -22,8 +22,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path='/signup' element={<SignupSurvey />} />
-          <Route path="/:id/ProductDetail" element={<ProductDetailPage />} />
-          <Route path="/:mainCategory" element={<Category/>} />
+          <Route path="/ProductDetail/:id/" element={<ProductDetailPage />} />
+          <Route path="/category/:mainCategory" element={<Category/>} />
 
         </Routes>
       </BrowserRouter>

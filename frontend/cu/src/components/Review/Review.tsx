@@ -45,8 +45,7 @@ export default function Review(props: IProps){
           scores: props.rate?.scores!,
           comment: props.rate?.comment!,
           picture: "picture",
-          likedCount: likedCount!,
-          liked: liked,
+          likedCount: likedCount!
         }
         await dispatch(updateRate(editedRateData))
       }

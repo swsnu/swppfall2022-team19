@@ -1,12 +1,14 @@
 from .models import User
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from product.models import Product, Score, Rate
+from product.models.productModel import Product, Tag
+from product.models.rateModel import Score, Rate
 
 # Register your models here.
 admin.site.register(Product)
 admin.site.register(Score)
 admin.site.register(Rate)
+admin.site.register(Tag)
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):

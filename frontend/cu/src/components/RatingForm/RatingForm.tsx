@@ -77,7 +77,7 @@ function RatingForm(props: Props) {
     setRateState2(false);
   }
 
-  const clickSaveHandler = async () => {
+  const clickSaveHandler = async () => {   //#TODO: need to update product average score
     const scores = [score1, score2, score3, score4, score5];
     const rateData = {
       user_id: props.user?.id!,
@@ -86,8 +86,7 @@ function RatingForm(props: Props) {
       scores: scores,
       comment: comment,
       picture: "picture",
-      likedCount: 0,
-      liked: false
+      likedCount: 0
     }
     const responseRate = await dispatch(createRate(rateData))
     if (responseRate.type === `${createRate.typePrefix}/fulfilled`) {
@@ -113,7 +112,7 @@ function RatingForm(props: Props) {
     setRateState1(true);
   }
 
-  const clickSaveEditHandler = async () => {
+  const clickSaveEditHandler = async () => {   //#TODO: need to update product average score
     const scores = [score1, score2, score3, score4, score5];
     const editedRateData = {
       id: props.rate?.id!,
@@ -123,8 +122,7 @@ function RatingForm(props: Props) {
       scores: scores,
       comment: comment,
       picture: "picture",
-      likedCount: props.rate?.likedCount!,
-      liked: props.rate?.liked!,
+      likedCount: props.rate?.likedCount!
     }
     await dispatch(updateRate(editedRateData))
     setRateState2(true)
