@@ -30,7 +30,7 @@ const SignupSurvey = () => {
     const [question, setQuestion] = useState<number>(0);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
-    
+
 
     const logo = require('../../Categoryicon/Logo.png')
 
@@ -46,21 +46,12 @@ const SignupSurvey = () => {
             setSubmitted(true);
             console.log("postUserHandler is called, username: " + username);
         } else {
-            alert("Error on post User");
+            alert("이미 중복된 ID입니다.");
+            console.log("Error on post User");
         }
     };
 
-    /*
-    const putSurveyHandler = async () => {
-        const data: surveyAnswer = { gender: gender, age: age, taste: taste, question:question };
-        const result = await dispatch(putSurvey(data));
-        if(result.type === `${putSurvey.typePrefix}/fulfilled`){
-            setSubmitted(true);
-        }else{
-            alert("Error on put user Survey Info");
-        }
-    };
-    */
+
 
     interface genderOptions {
         readonly value: number;
@@ -108,6 +99,7 @@ const SignupSurvey = () => {
 
 
     if (submitted) {
+        alert("회원가입 완료. 로그인 페이지로 이동합니다");
         return <Navigate to="/login" />;
     } else {
         return (
@@ -133,7 +125,7 @@ const SignupSurvey = () => {
                 <div className="SurveyBox">
                     <div className="SelectBox">
                         <div className="introBox">
-                        <img className = "CenterLogo" src= {logo} alt="homeLogo" />
+                            <img className="CenterLogo" src={logo} alt="homeLogo" />
 
                             <h4>사용자 정보를 입력하고 맞춤화 된 제품을 추천받자!</h4>
                         </div>
