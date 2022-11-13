@@ -38,7 +38,6 @@ export default function Review(props: IProps){
                 <div className = "review_user_id">{props.user_id}</div>
                 <div className = "review_totalScore">
                     {props.totalScore===5? '⭐⭐⭐⭐⭐': props.totalScore===4?'⭐⭐⭐⭐  ':props.totalScore===3?'⭐⭐⭐    ': props.totalScore===2?'⭐⭐      ': props.totalScore===1?'⭐        ':''}
-<!--                     <div className = "blank">{props.totalScore===5? '': props.totalScore===4? '..........................' :props.totalScore===3?'..........................': props.totalScore===2?'...................': props.totalScore===1?'..........................':'..........................'}</div> -->
                 </div>
                 <div className = "review_comment">{props.comment}</div> 
             </div>
