@@ -1,0 +1,2 @@
+python -m pip install Pillow
+pip3 install djangorestframework
