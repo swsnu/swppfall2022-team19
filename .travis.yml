@@ -35,7 +35,7 @@ jobs:
         - yarn test --coverage --watchAll=false
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
         - cd ../../backend/cu
-        - black --check ./
+        - black ./
         - coverage run --source='.' manage.py test
         - coverage xml
         - cd ../.. && sonar-scanner
