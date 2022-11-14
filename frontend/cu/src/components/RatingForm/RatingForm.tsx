@@ -41,7 +41,7 @@ function RatingForm(props: Props) {
   //whenever there is change in product, find the appropriate question by subCategory
   useEffect(() => {
     for (const key in Object.keys(subCategoryQuestion)) {
-      if (subCategoryQuestion[key].subCategory === props.product.subCategory[0]) {
+      if (props.product.subCategory.includes(subCategoryQuestion[key].subCategory)) {
         setQuestion4(subCategoryQuestion[key].question4);
         setQuestion5(subCategoryQuestion[key].question5);
       }

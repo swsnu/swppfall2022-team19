@@ -91,6 +91,14 @@ export const rateSlice = createSlice({
             state.selectedRate = null
         }
     },
+    extraReducers: (builder) => {
+        builder.addCase(fetchRates.fulfilled, (state, action) => {
+          state.rates = action.payload
+        })
+        builder.addCase(createRate.rejected, (_state, action) => {
+          console.error(action.error)
+        })
+      }
 
 })
 
