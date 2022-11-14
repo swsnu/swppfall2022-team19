@@ -29,7 +29,7 @@ function ProductDetailPage() {
 
   //fetch all the rates stored in particular product
   useEffect(() => {
-    dispatch(fetchRates(Number(id)))
+    dispatch(fetchRates())
 
     let rate;
     //find rate written by user
