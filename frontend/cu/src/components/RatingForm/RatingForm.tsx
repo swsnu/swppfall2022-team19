@@ -41,7 +41,7 @@ function RatingForm(props: Props) {
   //whenever there is change in product, find the appropriate question by subCategory
   useEffect(() => {
     for (const key in Object.keys(subCategoryQuestion)) {
-      if (subCategoryQuestion[key].subCategory === props.product.subCategory[0]) {
+      if (props.product.subCategory.includes(subCategoryQuestion[key].subCategory)) {
         setQuestion4(subCategoryQuestion[key].question4);
         setQuestion5(subCategoryQuestion[key].question5);
       }
@@ -77,11 +77,8 @@ function RatingForm(props: Props) {
     setRateState2(false);
   }
 
-<<<<<<< Updated upstream
   const onclickSaveHandler = async () => {   //#TODO: need to update product average score
-=======
-  const clickSaveHandler = async () => {   //#TODO: need to update product average score
->>>>>>> Stashed changes
+
     const scores = [score1, score2, score3, score4, score5];
     const rateData = {
       user_id: props.user?.id!,
@@ -116,11 +113,9 @@ function RatingForm(props: Props) {
     setRateState1(true);
   }
 
-<<<<<<< Updated upstream
+
   const onclickSaveEditHandler = async () => {   //#TODO: need to update product average score
-=======
-  const clickSaveEditHandler = async () => {   //#TODO: need to update product average score
->>>>>>> Stashed changes
+
     const scores = [score1, score2, score3, score4, score5];
     const editedRateData = {
       id: props.rate?.id!,

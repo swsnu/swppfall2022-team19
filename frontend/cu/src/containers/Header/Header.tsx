@@ -42,8 +42,8 @@ const Header = () => {
 
 
 
-    const categoryHandler = (categoryID: number) => {
-        navigate(`/productList/${categoryID}`)
+    const categoryHandler = (mainCategory: string) => {
+        navigate(`/category/${mainCategory}`)
     }
 
     if (submitted) {
@@ -56,27 +56,27 @@ const Header = () => {
                     <img className="Logo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
                     <nav>
                         <div className="Category">
-                            <div className="CategoryMenu" onClick={() => categoryHandler(0)} >
+                            <div className="CategoryMenu" onClick={() => categoryHandler("간편식사")} >
                                 {/* <img className = "CategoryIcon" src={meal} alt="CategoryIcon"/> */}
                                 <p>간편식사</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(1)} >
+                            <div className="CategoryMenu" onClick={() => categoryHandler("과자류")} >
                                 {/* <img className = "CategoryIcon"src={snack} alt="CategoryIcon" /> */}
                                 <p>과자류</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(2)} >
+                            <div className="CategoryMenu" onClick={() => categoryHandler("아이스크림")} >
                                 {/* <img className = "CategoryIcon"src={icecream} alt="CategoryIcon"/> */}
                                 <p>아이스크림</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(3)} >
+                            <div className="CategoryMenu" onClick={() => categoryHandler("식품")} >
                                 {/* <img className = "CategoryIcon"src={food} alt="CategoryIcon" onClick={() => categoryHandler(3)} /> */}
                                 <p>식품</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(4)} >
+                            <div className="CategoryMenu" onClick={() => categoryHandler("음료")} >
                                 {/* <img className = "CategoryIcon"src={drink} alt="CategoryIcon"/> */}
                                 <p>음료</p>
                             </div>
