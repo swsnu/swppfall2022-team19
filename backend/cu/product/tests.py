@@ -9,6 +9,12 @@ import json
 class BlogTestCase(TestCase):
     
     def setUp(self) -> None:
+        '''
+        newUser1
+        벌교꼬막비빔밥, 자이언트일품닭강정
+        newScore2
+        newRate2(newUser1, 자이언트일품닭강정,newScore2)
+        '''
 
         newUser1 = User.objects.create(
             username="newUser1", password="12345",
@@ -75,13 +81,16 @@ class BlogTestCase(TestCase):
         )
         
 
-
-    def test_product(self): # get(product list, a product) put(product avgScore)
+    # get(product list, a product) put(product avgScore)
+    def test_product_list(self):
         client = Client(enforce_csrf_checks=True)
 
         # (O)list - not intended(all products) /api/product/
         response = self.client.get('/api/product/', content_type='application/json') 
         self.assertEqual(response.status_code, 200)
+
+    def test_product_retrieve(self):
+        client = Client(enforce_csrf_checks=True)
 
         # (O)retrieve /api/product/{product_id}
         response = self.client.get('/api/product/1/',content_type='application/json') 
@@ -89,24 +98,34 @@ class BlogTestCase(TestCase):
         response = self.client.get('/api/product/2/',content_type='application/json') 
         self.assertEqual(response.status_code, 200)
 
+    def test_product_update_type_correct(self):
+        client = Client(enforce_csrf_checks=True)
+
         # (O)update /api/product/{product_id}
         response = self.client.put('/api/product/1/',{'averageScore':'1.0'},content_type='application/json') 
         self.assertEqual(response.status_code, 200)
         response = self.client.put('/api/product/2/',{'averageScore':'1.0'},content_type='application/json') 
         self.assertEqual(response.status_code, 200)
-        response = self.client.put('/api/product/1/',{'averageScore':'타입오류1'},content_type='application/json') 
+
+    def test_product_update_type_wrong(self):
+        client = Client(enforce_csrf_checks=True)
+
+        response = self.client.put('/api/product/1/',{'averageScore':'형식오류1'},content_type='application/json') 
         self.assertEqual(response.status_code, 400) # input format error
-        response = self.client.put('/api/product/2/',{'averageScore':'타입오류2'},content_type='application/json') 
+        response = self.client.put('/api/product/2/',{'averageScore':'형식오류2'},content_type='application/json') 
         self.assertEqual(response.status_code, 400) # input format error
 
-    
-    def test_rate(self): # get(list rates, retrieve rate) post(create rate) put(update rate) delete(destroy rate)
+
+    # get(list rates, retrieve rate) post(create rate) put(update rate) delete(destroy rate)
+    def test_rate_list(self): 
         client = Client(enforce_csrf_checks=True)
 
         # (O)list /api/rate/
         response = self.client.get('/api/rate/', content_type='application/json') 
         self.assertEqual(response.status_code, 200)
-        
+
+    def test_str(self): 
+        client = Client(enforce_csrf_checks=True)
         # (O)check setUp rate
         rate = Rate.objects.get(id=2)
         user = User.objects.get(username="newUser1")
@@ -124,21 +143,50 @@ class BlogTestCase(TestCase):
         self.assertEqual(str(newScore), newScore.name)
         self.assertEqual(str(rate), rate.product.name)
 
+    def test_rate_create(self): 
+        client = Client(enforce_csrf_checks=True)
+
         # (X)create /api/rate/
-        # response = self.client.post('/api/rate/', {},content_type='application/json') 
-        # self.assertEqual(response.status_code, 200)
-        # response = self.client.post('/api/rate/', {},content_type='application/json') 
-        # self.assertEqual(response.status_code, 400) # input format error
+        #response = self.client.post('/api/rate/',{
+        #    "user_id": 1,"product_id":1,"scores": [1,1,1,1,1],"comment": "맛나요",
+        #    "picture": "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff3f943a3-0d77-44d7-b73a-0a1243830899%2FKakaoTalk_20220316_175852217.jpg?table=block&id=01f83f77-659f-4ab1-89ce-4274b3259c64&spaceId=d465497d-101f-41ec-bff8-b1d0842c9d7f&width=2000&userId=8d67198c-a864-44f0-abdc-84d89cf29324&cache=v2"
+        #    },content_type='application/json') 
+        #self.assertEqual(response.status_code, 201)
+        
+        #response = self.client.post('/api/rate/', {'comment': 3, 'likedCount': 3},content_type='application/json') 
+        #self.assertEqual(response.status_code, 400) # input format error
+
+    def test_rate_retrieve(self): 
+        client = Client(enforce_csrf_checks=True)
 
         # (O)retrieve /api/rate/{rate_id}/
         response = self.client.get('/api/rate/2/',content_type='application/json') 
         self.assertEqual(response.status_code, 200)
+        response = self.client.get('/api/rate/10/',content_type='application/json') 
+        self.assertEqual(response.status_code, 404)
 
-        # (X)update /api/rate/{rate_id}/
-        # response = self.client.put('/api/rate/1/',{},content_type='application/json') 
-        # self.assertEqual(response.status_code, 200)
-        # response = self.client.put('/api/rate/1/',{},content_type='application/json') 
-        # self.assertEqual(response.status_code, 400) # input format error
+    def test_rate_update(self): 
+        client = Client(enforce_csrf_checks=True)
+
+        # (O)update /api/rate/{rate_id}/
+
+        response = self.client.put('/api/rate/2/',{
+            "scores": [1,2,3,4,5],
+            "comment": "",
+            "picture": "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff3f943a3-0d77-44d7-b73a-0a1243830899%2FKakaoTalk_20220316_175852217.jpg?table=block&id=01f83f77-659f-4ab1-89ce-4274b3259c64&spaceId=d465497d-101f-41ec-bff8-b1d0842c9d7f&width=2000&userId=8d67198c-a864-44f0-abdc-84d89cf29324&cache=v2",
+            "likedCount": 2
+        },content_type='application/json') 
+        self.assertEqual(response.status_code, 200)
+        
+        response = self.client.put('/api/rate/10/',{'comment': "좋다", 'likedCount': 3},content_type='application/json') #none exist 404
+        self.assertEqual(response.status_code, 404)
+        response = self.client.put('/api/rate/1/',{'comment': "좋다", 'likedCount': "형식오류"},content_type='application/json') #format error 400
+        self.assertEqual(response.status_code, 404)
+
+
+
+    def test_rate_destory(self): 
+        client = Client(enforce_csrf_checks=True)
 
         # (O)destroy /api/rate/{rate_id}/
         response = self.client.delete('/api/rate/2/',content_type='application/json') 
@@ -148,11 +196,9 @@ class BlogTestCase(TestCase):
 
     
         
-'''
     def tearDown(self):
         User.objects.all().delete()
         Product.objects.all().delete()
         Score.objects.all().delete()
         Rate.objects.all().delete()
         
-'''

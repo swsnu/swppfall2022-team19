@@ -3,7 +3,7 @@ from user.models import User
 from .productModel import Product
 
 class Score(models.Model):
-    name = models.CharField(max_length=100, default="a")
+    name = models.CharField(max_length=100, default="newScore")
     score1 = models.IntegerField(default=0)
     score2 = models.IntegerField(default=0)
     score3 = models.IntegerField(default=0)

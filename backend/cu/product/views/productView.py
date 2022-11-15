@@ -7,12 +7,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 '''
 /api/product/
-def list(self, request)
+def list(self, request) - product 전체 가져오기
 
 /api/product/{product_id}
-def list(self, request)
-def retrieve(self, request, pk)
-def update(self, request, pk)
+def retrieve(self, request, pk) - 특정 product 가져오기
+def update(self, request, pk) - avgScore 수정
 '''
 
 class ProductViewSet(viewsets.GenericViewSet):
@@ -28,7 +27,9 @@ class ProductViewSet(viewsets.GenericViewSet):
         return Response(data, status=200)   # json
 
     '''
-    def list(self, request):       # for search function
+    for search function
+
+    def list(self, request):       
         searchWord = request.GET.get("mainCategory", "")  
         #searchWord = request.data?
         products = (
