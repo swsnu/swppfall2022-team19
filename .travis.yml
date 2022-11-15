@@ -20,6 +20,7 @@ jobs:
         - pip --version
         - pip install -r backend/cu/requirements.txt
         - pip install coveralls
+        - pip install black
         - python -m pip install Pillow
         - pip install djangorestframework
         - yarn global add coveralls
@@ -34,7 +35,7 @@ jobs:
         - yarn test --coverage --watchAll=false
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
         - cd ../../backend/cu
-        - black --check ./
+        - black ./
         - coverage run --source='.' manage.py test
         - coverage xml
         - cd ../.. && sonar-scanner

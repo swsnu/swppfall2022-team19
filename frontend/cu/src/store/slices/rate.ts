@@ -31,7 +31,7 @@ const initialState: RateState = {
 
 export const fetchRates = createAsyncThunk(
     'product/fetchRates',
-    async (id: ProductType['id']) => {
+    async () => {
         const response = await axios.get<RateType[]>(`/api/rate/`)  //id = productID
         return response.data
     }
