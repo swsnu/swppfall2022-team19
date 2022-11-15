@@ -81,6 +81,9 @@ export const fetchQueryProducts = createAsyncThunk(
         builder.addCase(fetchProduct.fulfilled, (state, action) => {
           state.selectedProduct= action.payload
         })
+        builder.addCase(updateProduct.rejected, (_state, action) => {
+          console.error(action.error)
+        })
       }
   })
 

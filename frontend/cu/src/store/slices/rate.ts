@@ -31,7 +31,7 @@ const initialState: RateState = {
 
 export const fetchRates = createAsyncThunk(
     'product/fetchRates',
-    async () => {
+    async (id: ProductType['id']) => {
         const response = await axios.get<RateType[]>(`/api/rate/`)  //id = productID
         return response.data
     }
@@ -91,14 +91,6 @@ export const rateSlice = createSlice({
             state.selectedRate = null
         }
     },
-    extraReducers: (builder) => {
-        builder.addCase(fetchRates.fulfilled, (state, action) => {
-          state.rates = action.payload
-        })
-        builder.addCase(createRate.rejected, (_state, action) => {
-          console.error(action.error)
-        })
-      }
 
 })
 

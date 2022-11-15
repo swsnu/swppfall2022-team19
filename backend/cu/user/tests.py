@@ -160,8 +160,4 @@ class UserTestCase(TestCase):
         csrftoken = response.cookies['XSRF-TOKEN'].value
         response = client.delete(
             '/api/user/userlist/', HTTP_X_CSRFTOKEN=csrftoken)  # , HTTP_X_CSRFTOKEN=csrftoken
-<<<<<<< HEAD
         self.assertEqual(response.status_code, 403)  # 405
-=======
-        self.assertEqual(response.status_code, 403)  # 405
->>>>>>> main
