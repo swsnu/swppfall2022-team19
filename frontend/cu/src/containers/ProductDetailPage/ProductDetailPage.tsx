@@ -50,7 +50,7 @@ function ProductDetailPage() {
           />}
         </div>
         <div key={2}>
-          {<RatingForm user={userState.selectedUser!} product={selectedProduct!} rate={rateState.rates!} />}
+          {<RatingForm user={userState.selectedUser!} product={selectedProduct!} rate={rateState.rates}/>}
         </div>
 
       </div>

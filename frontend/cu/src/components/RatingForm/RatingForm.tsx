@@ -25,6 +25,8 @@ function RatingForm(props: Props) {
 
   let user_has_rate = (props.rate != undefined)   //check if user has rated the product or not
 
+  
+
   //update score for each question when the user clicks rating
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
@@ -43,23 +45,25 @@ function RatingForm(props: Props) {
 
   //whenever there is change in product, find the appropriate question by subCategory
   console.log("subcategoryName:" + props.product?.name);
-  if (props.rate && props.product) {
-    const singleRate = props.rate.filter((rate) => rate.product_id === props.product.id!).find((rate) => rate.user_id === props.user?.id!)
-    setRate(singleRate);
-    if (!singleRate) {
-      user_has_rate = false;
-    }
-    else {
-      user_has_rate = true;
-    }
-
-    for (const key in Object.keys(subCategoryQuestion)) {
-      if (props.product.subCategory.includes(subCategoryQuestion[key].subCategory)) {
-        setQuestion4(subCategoryQuestion[key].question4);
-        setQuestion5(subCategoryQuestion[key].question5);
+  useEffect(() =>{
+    if (props.rate && props.product) {
+      const singleRate = props.rate.filter((rate) => rate.product_id === props.product.id!).find((rate) => rate.user_id === props.user?.id!)
+      setRate(singleRate);
+      if (!singleRate) {
+        user_has_rate = false;
+      }
+      else {
+        user_has_rate = true;
+      }
+  
+      for (const key in Object.keys(subCategoryQuestion)) {
+        if (props.product.subCategory.includes(subCategoryQuestion[key].subCategory)) {
+          setQuestion4(subCategoryQuestion[key].question4);
+          setQuestion5(subCategoryQuestion[key].question5);
+        }
       }
     }
-  }
+  }, [])
 
   const updateScore1 = (score: number): void => {
     setScore1(score)
