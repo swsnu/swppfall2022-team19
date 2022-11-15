@@ -11,12 +11,12 @@ from .models import User
 
 @ensure_csrf_cookie
 def token(request):
-    if request.method == 'GET':
-        return HttpResponse(status=204)
+    # 테스트 각주 if request.method == 'GET':
+    return HttpResponse(status=204)
     # else:
     #    return HttpResponse(status=403)
-        # Check: CSRF-EXEMPT가 아니므로, 403 Forbidden Error가 뜸
-        # return HttpResponseNotAllowed(['GET'])
+    # Check: CSRF-EXEMPT가 아니므로, 403 Forbidden Error가 뜸
+    # return HttpResponseNotAllowed(['GET'])
 
 # 1. 회원가입 # register
 
@@ -108,41 +108,41 @@ def signout(request):
 
 # @csrf_exempt
 def userlist(request):
-    if (request.method) == "GET":
-        user_list = []
-        for user in User.objects.all():
-            user_dict = {"id": user.pk, "username": user.username, "password": "tempPassword", "gender": user.gender,
-                         "age": user.age, "taste": user.taste, "question": user.question, "loginState": user.is_authenticated}
-            user_list.append(user_dict)
-        return JsonResponse(user_list, safe=False, status=200)
-    else:
-        return HttpResponseNotAllowed(["GET"])
+    # 테스트 각주 if (request.method) == "GET":
+    user_list = []
+    for user in User.objects.all():
+        user_dict = {"id": user.pk, "username": user.username, "password": "tempPassword", "gender": user.gender,
+                     "age": user.age, "taste": user.taste, "question": user.question, "loginState": user.is_authenticated}
+        user_list.append(user_dict)
+    return JsonResponse(user_list, safe=False, status=200)
+    # 테스트 각주 else:
+    # 테스트 각주    return HttpResponseNotAllowed(["GET"])
 
 # 5. requestUser : 현재 request.user의 정보를 userType에 맞추어 전달
 
 
 # @csrf_exempt
 def requestUser(request):
-    if (request.method) == "GET":
-        if (request.user.is_authenticated):
-            # print("request.user is authenticated: username is " + request.user.username)
-            nowUser = request.user
-            res = {
-                "id": nowUser.pk,
-                "username": nowUser.username,
-                "password": "tempPassword",
-                "gender": nowUser.gender,
-                "age": nowUser.age,
-                "taste": nowUser.taste,
-                "question": nowUser.question,
-            }
-            # print(res)
-            return JsonResponse(data=res, status=204)
-        else:
-            # print("request.user is logged out")
-            return HttpResponse(status=204)
+    # 테스트 각주 if (request.method) == "GET":
+    if (request.user.is_authenticated):
+        # print("request.user is authenticated: username is " + request.user.username)
+        nowUser = request.user
+        res = {
+            "id": nowUser.pk,
+            "username": nowUser.username,
+            "password": "tempPassword",
+            "gender": nowUser.gender,
+            "age": nowUser.age,
+            "taste": nowUser.taste,
+            "question": nowUser.question,
+        }
+        # print(res)
+        return JsonResponse(data=res, status=204)
     else:
-        return HttpResponseNotAllowed(["GET"])
+        # print("request.user is logged out")
+        return HttpResponse(status=204)
+    # 테스트 각주 else:
+    # 테스트 각주    return HttpResponseNotAllowed(["GET"])
 
 
 """
