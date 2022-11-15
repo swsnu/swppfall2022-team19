@@ -2,14 +2,24 @@ node_modules
 
 django-env/
 
+README.md
+backend/cu/.coverage
 backend/cu/cu/__pycache__/
-backend/cu/product/__pycache__/
-backend/cu/product/migrations/
-backend/cu/product/models/__pycache__/
-backend/cu/product/serializers/__pycache__/
-backend/cu/product/views/__pycache__/
-backend/cu/user/__pycache__/
-backend/cu/user/migrations/
+
 backend/cu/db.sqlite3
+
+backend/cu/product/__pycache__/
+
+backend/cu/product/models/__pycache__/
+
+backend/cu/product/serializers/__pycache__/
+
+backend/cu/product/views/__pycache__/
+
+backend/cu/user/migrations/
+
+
+
+
 
 
