@@ -106,7 +106,7 @@ def signout(request):
 # 4. userlist : 현재 등록된 userlist를 백엔드에서 프론트로 전달
 
 
-@csrf_exempt
+# @csrf_exempt
 def userlist(request):
     if (request.method) == "GET":
         user_list = []
@@ -121,7 +121,7 @@ def userlist(request):
 # 5. requestUser : 현재 request.user의 정보를 userType에 맞추어 전달
 
 
-@csrf_exempt
+# @csrf_exempt
 def requestUser(request):
     if (request.method) == "GET":
         if (request.user.is_authenticated):

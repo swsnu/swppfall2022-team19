@@ -8,5 +8,5 @@ class User(AbstractUser):
     taste = models.CharField(max_length=10, default="")
     question = models.IntegerField(default=0)
 
-    # def __str__(self):
-    #    return self.username
+    # 테스트 각주 def __str__(self):
+    # 테스트 각주   return self.username

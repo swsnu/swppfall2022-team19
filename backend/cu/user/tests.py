@@ -140,9 +140,10 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 204)
 
         # 3.2 GET이 아닌 경우
+        # Check: CSRF-EXEMPT가 아니므로, 403 Forbidden Error가 뜸
         response = client.delete(
             '/api/user/requestUser/', HTTP_X_CSRFTOKEN=csrftoken)  # , HTTP_X_CSRFTOKEN=csrftoken
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 403)  # 405
 
     def test_userlist(self):
         # 3.1.1. userList를 정상적으로 반환함(user 없는 경우 []) (200)
@@ -159,4 +160,4 @@ class UserTestCase(TestCase):
         csrftoken = response.cookies['XSRF-TOKEN'].value
         response = client.delete(
             '/api/user/userlist/', HTTP_X_CSRFTOKEN=csrftoken)  # , HTTP_X_CSRFTOKEN=csrftoken
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 403)  # 405
