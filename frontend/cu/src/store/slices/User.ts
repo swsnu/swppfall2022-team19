@@ -5,8 +5,8 @@ import { RootState } from "..";
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-// axios.defaults.xsrfCookieName = 'XSRF-TOKEN'
-// axios.default.xsrfHeaderName = 'X-XSRF-TOKEN' 
+// axios.defaults.xsrfCookieName = 'XSRF-TOKEN';
+// axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
 
 export interface UserType {
   id: number;
