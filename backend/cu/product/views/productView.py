@@ -2,53 +2,68 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from product.models.productModel import Tag, Product
 from product.serializers.productSerializer import ProductSerializer
+#from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 
 '''
 /api/product/
-def list(request)
+def list(self, request) - product 전체 가져오기
 
 /api/product/{product_id}
-def retrieve(request, pk)
-def update(request, pk)
+def retrieve(self, request, pk) - 특정 product 가져오기
+def update(self, request, pk) - avgScore 수정
 '''
 
 class ProductViewSet(viewsets.GenericViewSet):
     queryset = Product.objects.all() 
     serializer_class = ProductSerializer
 
-    # GET /api/product/
+    # (O)GET /api/product/
     @csrf_exempt
-    def list(self, request):       # filter mainCategory
-        mainCategory = request.GET.get("mainCategory", "")  
-        products = (
-            self.get_queryset()
-            .filter(
-                mainCategoryicontains=mainCategory
-            )
-            .distinct()
-        )
-        products = products[:20]            # 20 product lists
-        serializer = self.get_queryset(products, many=True)
+    def list(self, request):
+        products = Product.objects.all()
+        serializer = self.get_serializer(products, many=True)
         data = serializer.data              # dictionary format not json yet
         return Response(data, status=200)   # json
 
-    # GET /api/product/{product_id}
+    '''
+    for search function
+
+    def list(self, request):       
+        searchWord = request.GET.get("mainCategory", "")  
+        #searchWord = request.data?
+        products = (
+            self.get_queryset()
+            .filter(
+                mainCategory=searchWord
+                #Q(mainCategory_icontains=searchWord)|
+                #Q(subCategory_icontains=searchWord)|
+                #Q(name_icontains=searchWord)
+            )
+            #.distinct()
+        )
+        #products = products[:5]            # 20 product lists
+        serializer = self.get_serializer(products, many=True)
+        data = serializer.data              # dictionary format not json yet
+        return Response(data, status=200)   # json
+    '''
+
+    # (O)GET /api/product/{product_id}
     @csrf_exempt
     def retrieve(self, request, pk=None):
         product = self.get_object()
-        #product = Product.objects.get(id=pk)
         return Response(self.get_serializer(product).data, status=200)
 
-    # PUT /api/product/{product_id}  
+    # (O)PUT /api/product/{product_id}  
     @csrf_exempt
     def update(self, request, pk=None):
-        product = Product.objects.get(id=pk)
+        product = self.get_object()
         data = request.data.copy()
         averageScoreData = data.pop("averageScore")
 
         # update, puts only the modifying field, partial true
-        serializer = self.get_queryset(product, data={'averageScore': averageScoreData}, partial=True)
+        serializer = self.get_serializer(product, data={'averageScore': averageScoreData}, partial=True)
+        # (O)bad request 400
         serializer.is_valid(raise_exception=True) # if False 400 response
         serializer.save()
 
