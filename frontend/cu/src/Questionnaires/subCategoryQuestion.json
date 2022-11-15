@@ -23,8 +23,72 @@
         "subCategory": "김밥",
         "question4": "속 재료가 조화롭나요?",
         "question5": "속 재료는 푸짐한가요?"
+    },
+    {
+        "subCategory": "스낵",
+        "question4": "당도는 괜찮나요?",
+        "question5": "양은 적당한가요?"
+    },
+    {
+        "subCategory": "비스켓",
+        "question4": "박삼함은 어떤가요?",
+        "question5": "한가요?"
+    },
+    {
+        "subCategory": "빵",
+        "question4": "촉촉 한가요?",
+        "question5": "속 재료는 충분한가요?"
+    },
+    {
+        "subCategory": "껌",
+        "question4": "당도는 어떤가요?",
+        "question5": "추천하시나요??"
+    },
+    {
+        "subCategory": "초콜릿",
+        "question4": "당도는 어떤가요?",
+        "question5": "추천하시나요?"
+    },
+    {
+        "subCategory": "캔디",
+        "question4": "당도는 어떤가요?",
+        "question5": "추천하시나요?"
+    },
+    {
+        "subCategory": "아이스크림",
+        "question4": "당도는 어떤가요?",
+        "question5": "추천하시나요?"
+    },
+    {
+        "subCategory": "가공식사",
+        "question4": "짠맛은 괜찮나요?",
+        "question5": "추천하시나요?"
+    },
+    {
+        "subCategory": "안주류",
+        "question4": "안주로 먹기에 적당한가요??",
+        "question5": "추천하시나요?"
+    },
+    {
+        "subCategory": "식재료",
+        "question4": "선선도는 어떤가요?",
+        "question5": "추천하시나요?"
+    },
+    {
+        "subCategory": "음료",
+        "question4": "당도는 어떤가요?",
+        "question5": "추천하시나요?"
+    },
+    {
+        "subCategory": "아이스드링크",
+        "question4": "맛 설명과 일치하나요?",
+        "question5": "추천하시나요?"
+    },
+    {
+        "subCategory": "유제품",
+        "question4": "맛이 풍부한가요?",
+        "question5": "추천하시나요?"
     }
-
 
 
 ]
