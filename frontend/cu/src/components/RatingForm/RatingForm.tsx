@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HeartRating from './HeartRating'
 import "./RatingForm.css"
 import { AppDispatch, RootState } from '../../store';
@@ -8,19 +8,20 @@ import FixedHeartRating from './FixedHeartRating';
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { createRate, deleteRate, fetchRates, RateType, updateRate } from '../../store/slices/rate';
 import { UserType } from '../../store/slices/User';
-import { ProductType } from '../../store/slices/product';
+import { ProductType, selectProduct, fetchProduct} from '../../store/slices/product';
 
 interface Props {
   user?: UserType,
   product: ProductType,
-  rate: RateType | undefined
+  rate: RateType[] | undefined
 }
 
 
 function RatingForm(props: Props) {
   const navigate = useNavigate();
+  const {id} = useParams();
   const dispatch = useDispatch<AppDispatch>();
-
+  const productState = useSelector(selectProduct);
 
   let user_has_rate = (props.rate != undefined)   //check if user has rated the product or not
 
@@ -37,16 +38,24 @@ function RatingForm(props: Props) {
 
   const [question4, setQuestion4] = useState("");
   const [question5, setQuestion5] = useState("");
+  const [rate, setRate] = useState<RateType>();
 
   //whenever there is change in product, find the appropriate question by subCategory
   useEffect(() => {
+
+    console.log("subcategory:" + productState.selectedProduct?.subCategory);
     for (const key in Object.keys(subCategoryQuestion)) {
       if (props.product.subCategory.includes(subCategoryQuestion[key].subCategory)) {
         setQuestion4(subCategoryQuestion[key].question4);
         setQuestion5(subCategoryQuestion[key].question5);
       }
     }
-  }, [props.product])
+
+      if(props.rate){
+        const singleRate = props.rate.filter((rate) => rate.product_id === props.product.id!).find((rate) => rate.user_id === props.user?.id!)
+        setRate(singleRate);
+      }
+  }, [])
 
 
   const updateScore1 = (score: number): void => {
@@ -102,7 +111,7 @@ function RatingForm(props: Props) {
   }
 
   const onclickDeleteHandler = async () => {
-    await dispatch(deleteRate(props.rate?.id!))
+    await dispatch(deleteRate(rate?.id!))
     setRateState1(false);
     setRateState2(false);
   }
@@ -118,14 +127,14 @@ function RatingForm(props: Props) {
 
     const scores = [score1, score2, score3, score4, score5];
     const editedRateData = {
-      id: props.rate?.id!,
+      id: rate?.id!,
       user_id: props.user?.id!,
       user_username: props.user?.username!,
       product_id: props.product.id!,
       scores: scores,
       comment: comment,
       picture: "picture",
-      likedCount: props.rate?.likedCount!
+      likedCount: rate?.likedCount!
     }
     await dispatch(updateRate(editedRateData))
     setRateState2(true)

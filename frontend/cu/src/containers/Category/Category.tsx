@@ -3,7 +3,7 @@ import { useDispatch, useSelector} from "react-redux";
 import { useLocation, useNavigate, useParams} from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
-import { fetchQueryProducts, selectProduct } from "../../store/slices/product";
+import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
 import Header from "../Header/Header"
 import "./Category.css"
 import QueryString from 'qs'
@@ -19,8 +19,8 @@ function Category() {
     const products = allProducts.products.filter(product => product.mainCategory === mainCategory)
     
 
-    const categoryHandler = () => {
-        navigate(`/ProductDetail/1`)
+    const onclickProductHandler = (product: ProductType) =>{
+        navigate(`/ProductDetail/${product.id}`)
     }
    
 
@@ -34,7 +34,7 @@ function Category() {
             <div className="animated-title">
                 <h1 className="titles">{mainCategory}</h1>
             </div>
-            <div className="productBlocks" onClick={() => categoryHandler()}  >
+            <div className="productBlocks">
                 {products.map(product => (
                     <div key={product.id}>
                         <ProductBlock
@@ -45,6 +45,7 @@ function Category() {
                             price = {product.price}
                             newProduct = {product.newProduct}
                             averageScore = {product.averageScore}
+                            clickProduct ={() => onclickProductHandler(product)}
                         />
                         </div>
                 ))}
