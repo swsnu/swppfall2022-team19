@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../store'
 import "./ProductBlock.css";
 import { fetchProduct, selectProduct } from '../../store/slices/product';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export interface Props{
     product_id: number,
@@ -12,25 +12,21 @@ export interface Props{
     details: string,
     price: number,
     newProduct: boolean,
-    averageScore: number
+    averageScore: number,
+    clickProduct?: () => void
 }
 
 const ProductBlock = (props: Props) => {
     //const {id} = useParams();
     const dispatch = useDispatch<AppDispatch>()
-    const productState = useSelector(selectProduct)
+    //const productState = useSelector(selectProduct)
 
 
-    // dispatch(fetchProduct(props.product_id))
-    // useEffect(() => {
-    //      dispatch(fetchProduct(props.product_id))
-    // }, []);
 
-
-    let commaPrice = productState.selectedProduct?.price.toLocaleString('ko-KR');
+    //let commaPrice = productState.selectedProduct?.price.toLocaleString('ko-KR');
     
     return (
-        <div className="productBlock">
+        <div className="productBlock" onClick={props.clickProduct!}>
             {/* <a className="productA" href={props.pageLink}> */}
                 <div className="productInfoBlock">
                     <div className="productImageBox">

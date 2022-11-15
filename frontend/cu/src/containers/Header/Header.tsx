@@ -42,6 +42,7 @@ const Header = () => {
     }
 
     if (submitted) {
+        //navigate('/home')
         return <Navigate to="/home" />;
     } else {
         return (

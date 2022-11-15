@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector} from "react-redux";
-import { useLocation, useNavigate, useParams} from "react-router";
+import { useLocation, useNavigate, useParams, Navigate} from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
-import { fetchQueryProducts, selectProduct } from "../../store/slices/product";
+import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
 import Header from "../Header/Header"
 import "./Category.css"
 import QueryString from 'qs'
@@ -19,6 +19,11 @@ function Category() {
     const products = allProducts.products.filter(product => product.mainCategory === mainCategory)
     
 
+    const onclickProductHandler = (product: ProductType) =>{
+        navigate(`/ProductDetail/${product.id}`)
+    }
+   
+
     useEffect(() => {
         dispatch(fetchQueryProducts(QueryString.parse(search, { ignoreQueryPrefix: true })))
       }, [search, dispatch])
@@ -29,8 +34,9 @@ function Category() {
             <div className="animated-title">
                 <h1 className="titles">{mainCategory}</h1>
             </div>
-            <div title="productBlocks" className="productBlocks" onClick={() => navigate(`/ProductDetail/1`)}  >
-                {products.map(product => ( <div title="product" key={product.id}>
+            <div className="productBlocks">
+                {products.map(product => (
+                    <div key={product.id}>
                         <ProductBlock
                             product_id = {product.id}
                             name = {product.name}
@@ -39,6 +45,7 @@ function Category() {
                             price = {product.price}
                             newProduct = {product.newProduct}
                             averageScore = {product.averageScore}
+                            clickProduct ={() => onclickProductHandler(product)}
                         />
                         </div>
                 ))}
