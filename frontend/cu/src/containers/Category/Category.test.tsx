@@ -104,7 +104,6 @@ describe("<Category />", () => {
     render(category);
     const products = screen.getAllByTestId("spyProduct");
     const product = products[0];
-    // eslint-disable-next-line testing-library/no-node-access
     const productClick = product.querySelector(".spyProduct");
     fireEvent.click(productClick!);
     expect(mockNavigate).toHaveBeenCalledTimes(1);
