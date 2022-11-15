@@ -9,25 +9,20 @@ from json.decoder import JSONDecodeError
 from .models import User
 
 
-def index(request):
-    return HttpResponse('Hello, world!\n')
-
-
 @ensure_csrf_cookie
 def token(request):
     if request.method == 'GET':
         return HttpResponse(status=204)
-    else:
-        return HttpResponseNotAllowed(['GET'])
+    # else:
+    #    return HttpResponse(status=403)
+        # Check: CSRF-EXEMPT가 아니므로, 403 Forbidden Error가 뜸
+        # return HttpResponseNotAllowed(['GET'])
 
 # 1. 회원가입 # register
 
 
 @csrf_exempt
 def signup(request):
-    if request.method == "GET":
-        user_list = [user for user in User.objects.all().values()]
-        return JsonResponse(user_list, safe=False)
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
         username = req_data['username']
@@ -65,7 +60,7 @@ def signin(request):
         password = req_data['password']
 
         tempUser = authenticate(request, username=username, password=password)
-        
+
         if tempUser is not None:
             if request.user.is_anonymous:
                 # User is logged-out
@@ -79,14 +74,14 @@ def signin(request):
                     "taste": nowUser.taste,
                     "question": nowUser.question,
                 }
-                return JsonResponse(res, status=201, safe=False)
+                return JsonResponse(res, status=204, safe=False)
                 # HttpResponse(status=204)
             else:
                 # User is already logged-in -> error
                 # print("request.user is already logged in")
                 # print(request.user)
                 # print(tempUser)
-                return HttpResponse(status=401)
+                return HttpResponse(status=401)  # check 401
         else:
             # print("tempUser is None. 등록되지 않은 유저 정보")
             return HttpResponse(status=401)
@@ -111,6 +106,7 @@ def signout(request):
 # 4. userlist : 현재 등록된 userlist를 백엔드에서 프론트로 전달
 
 
+@csrf_exempt
 def userlist(request):
     if (request.method) == "GET":
         user_list = []
@@ -125,6 +121,7 @@ def userlist(request):
 # 5. requestUser : 현재 request.user의 정보를 userType에 맞추어 전달
 
 
+@csrf_exempt
 def requestUser(request):
     if (request.method) == "GET":
         if (request.user.is_authenticated):
@@ -140,7 +137,7 @@ def requestUser(request):
                 "question": nowUser.question,
             }
             # print(res)
-            return JsonResponse(data=res, status=201)
+            return JsonResponse(data=res, status=204)
         else:
             # print("request.user is logged out")
             return HttpResponse(status=204)
