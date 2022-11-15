@@ -24,6 +24,8 @@ function App() {
           <Route path='/signup' element={<SignupSurvey />} />
           <Route path="/ProductDetail/:id/" element={<ProductDetailPage />} />
           <Route path="/category/:mainCategory" element={<Category/>} />
+
+
         </Routes>
       </BrowserRouter>
     </div>
