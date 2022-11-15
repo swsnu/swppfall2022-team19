@@ -4,6 +4,7 @@ class Tag(models.Model):
     name = models.CharField(max_length = 100)
     #subscribers = models.ManyToManyField( User, through="user.SubscribeTag", related_name="subscribeTags")
 
+
 class Product(models.Model):
     name = models.CharField(max_length = 300, blank=False, null=False)
     mainCategory = models.CharField(max_length = 100, blank=False, null=False)
