@@ -5,7 +5,7 @@ import "./ProductBlock.css";
 import { fetchProduct, selectProduct } from '../../store/slices/product';
 import { useNavigate, useParams } from 'react-router-dom';
 
-interface Props{
+export interface Props{
     product_id: number,
     name: string,
     imageUrl: string,

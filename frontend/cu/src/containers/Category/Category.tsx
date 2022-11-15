@@ -30,7 +30,7 @@ function Category() {
 
     return (
         <div className="CategoryPage">
-            <Header />
+            {/* <Header /> */}
             <div className="animated-title">
                 <h1 className="titles">{mainCategory}</h1>
             </div>

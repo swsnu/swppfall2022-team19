@@ -27,12 +27,13 @@ class RateViewSet(viewsets.GenericViewSet):
         return Response(serializer.data, status=200) 
 
 
-    # ()POST /api/rate/
+    # (X)POST /api/rate/
     @csrf_exempt
     def create(self, request):
         data = request.data.copy()
-        score_data = data.pop("scores")
+        
         '''
+        score_data = data.pop("scores")
         score_data = data.pop("scores", [])
         if not isinstance(score_data, list):
             return Response({"error": "scores should be list"}, status=400)
@@ -53,14 +54,47 @@ class RateViewSet(viewsets.GenericViewSet):
         comment = models.TextField(blank=True, null=False)
         picture = models.ImageField(upload_to='%Y/%m/%d', blank=True)
         likedCount = models.IntegerField(default = 0)
+
+        name = models.CharField(max_length = 300, blank=False, null=False)
+        mainCategory = models.CharField(max_length = 100, blank=False, null=False)
+        subCategory = models.CharField(max_length = 300, blank=False, null=False)
+        imageUrl = models.URLField(blank = False, null=False)
+        details = models.TextField(blank=False, null=False)
+        price = models.IntegerField(blank = False, null=False)
+
+        hw4 post article 
+        req_data = json.loads(request.body.decode())
+        title = req_data['title']
+        content = req_data['content']
+        article = Article(title=title, content=content, author=request.user)
+        article.save()
+        res_article = {'id': article.id, 'title': article.title, 'content': article.content, 'author': article.author.id}
+        return JsonResponse(res_article,status=201)
+            "id",
+            "user_id",
+            "username",
+            "product_id",
+            "scores",
+            "comment",
+            "picture",
+            "likedCount",
         '''
-        serializer = newRateSerializer(data=data)    # all to dic format
-        serializer.is_valid(raise_exception=True) # check before saving in db, if False 400 response
-        rate = serializer.save()
+        data = json.loads(request.body.decode())
+        scores = data['scores']
+        comment = data['comment']
+        picture = data['picture']
+        product = Product(name="상품명", mainCategory='간편식사', subCategory='도시락', imageUrl='https://tqklhszfkvzk6518638.cdn.ntruss.com/product/8809196616970.jpg', details='상세설명', price=5000)
+        product.save()
+        rate = Rate(user=request.user, product=product, scores=scores,comment=comment,picture=picture)
         rate.save()
+        res_rate = {'id':rate.id, 'user_id':rate.user, 'username': rate.user.username, 'product_id': rate.product, 'scores': [rate.scores.score1, rate.scores.score2, rate.scores.score3, rate.scores.score4, rate.scores.score5], 'comment': rate.comment, 'picture': rate.picture}  
+        #serializer = newRateSerializer(data=data)    # all to dic format
+        #serializer.is_valid(raise_exception=True) # check before saving in db, if False 400 response
+        #rate = serializer.save()
+        #rate.save()
 
-
-        return Response(serializer.data, status=201) # newly posted
+        #return Response(serializer.data, status=201) # newly posted
+        return JsonResponse(res_rate, status=201)
 
     
     # (O)GET /api/rate/{rate_id}/
@@ -70,7 +104,7 @@ class RateViewSet(viewsets.GenericViewSet):
 
 
 
-    # ()PUT /api/rate/{rate_id}/
+    # (X)PUT /api/rate/{rate_id}/
     @csrf_exempt
     def update(self, request, pk=None):
         rate = Rate.get_object()

@@ -1,8 +1,8 @@
 import ProductBlock from "../../components/ProductBlock/ProductBlock"
 // import product from '../../../../../Data/product_data.json';
 import "./Home.css"
-import Header from "../Header/Header"
-import { useLocation, useNavigate, Navigate } from "react-router-dom";
+// import Header from "../Header/Header"
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
 import QueryString from "qs";
@@ -33,7 +33,7 @@ const Home = () => {
     return (
 
         <div className="Home">
-            <Header />
+            {/* <Header /> */}
             <img className="CenterLogo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
             <div className="BasicList">
                 <div className="animated-title">
@@ -56,21 +56,20 @@ const Home = () => {
                     ))}
                 </div>
 
-                <div className="BasicList">
+                {/* <div className="BasicList">
 
-                    <div className="UserList">
+                    <div className="UserList"> */}
 
-                        <div className="animated-title">
-
+                        <div title = "animatedTitle" className="animated-title">
                             <h1 className="titles"> 오늘의 추천 </h1>
                         </div>
                         {/* <div className="productBlocks" onClick={() => categoryHandler()} >
 
                         </div> */}
                     </div>
-                </div>
-            </div>
-        </div>
+                // </div>
+            // </div>
+        
     )
 }
 
