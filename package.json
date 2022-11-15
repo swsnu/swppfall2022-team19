@@ -11,5 +11,13 @@
   },
   "devDependencies": {
     "jest": "^29.2.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/index.tsx",
+      "!src/test-utils/*"
+    ]
   }
+
 }

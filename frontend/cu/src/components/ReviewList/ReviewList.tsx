@@ -12,17 +12,17 @@ import { UserType } from "../../store/slices/User";
 interface Props{
     user?: UserType,
     product: ProductType,
-    rate: RateType | undefined
+    rate: RateType[] | undefined
 }
 
 
 export default function ReviewList (props: Props){
     const dispatch = useDispatch<AppDispatch>();
-    const ratesState = useSelector(selectRate);
+    //const ratesState = useSelector(selectRate);
 
-    useEffect(() =>{
-        dispatch(fetchRates(props.product.id))
-    })
+    // useEffect(() =>{
+    //     dispatch(fetchRates())
+    // })
 
     return (
         <div className="ReviewList"> 
@@ -34,7 +34,7 @@ export default function ReviewList (props: Props){
                 <div className="fieldName_like">좋아요 </div>
             </div>    
             <div className='reviews'>
-                {ratesState.rates.map( (rv) => {
+                {props.rate?.map( (rv) => {
                     const totalScore = (rv.scores[0] + rv.scores[1] + rv.scores[2] + rv.scores[3] + rv.scores[4])/5
                     return (<Review user={props.user} product={props.product} rate={rv} totalScore={totalScore}/>
                 );})}

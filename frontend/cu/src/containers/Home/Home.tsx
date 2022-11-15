@@ -1,67 +1,82 @@
 import ProductBlock from "../../components/ProductBlock/ProductBlock"
 // import product from '../../../../../Data/product_data.json';
 import "./Home.css"
-import Header from "../Header/Header"
-import { useNavigate } from "react-router-dom";
+// import Header from "../Header/Header"
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
+import QueryString from "qs";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../store";
 
 
 const Home = () => {
 
-    const logo = require('../../Categoryicon/Logo.png')
+    const logo = require('../../Categoryicon/Logo.png');
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const categoryHandler = () => {
-        navigate(`/productDetail/1`)
+    const onclickProductHandler = (product: ProductType) =>{
+        navigate(`/ProductDetail/${product.id}`)
     }
+
+    const dispatch = useDispatch<AppDispatch>();
+    const { search } = useLocation();
+    const allProducts = useSelector(selectProduct);
+
+
+    useEffect(() => {
+        dispatch(fetchQueryProducts(QueryString.parse(search, { ignoreQueryPrefix: true })))
+    }, [search, dispatch])
 
 
     return (
 
         <div className="Home">
-            <Header />
+            {/* <Header /> */}
             <img className="CenterLogo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
-
             <div className="BasicList">
-
                 <div className="animated-title">
-
                     <h1 className="titles">오늘의 편의점</h1>
                 </div>
-                <div className="productBlocks" onClick={() => categoryHandler()} >
-
-                    {<ProductBlock product_id={1} />}
-                    {<ProductBlock product_id={2} />}
-                    {<ProductBlock product_id={3} />}
-                    {<ProductBlock product_id={4} />}
-                    {<ProductBlock product_id={5} />}
-
+                <div className="productBlocks">
+                    {allProducts.products.map(product => (
+                        <div key={product.id}>
+                            <ProductBlock
+                                product_id={product.id}
+                                name={product.name}
+                                imageUrl={product.imageUrl}
+                                details={product.details}
+                                price={product.price}
+                                newProduct={product.newProduct}
+                                averageScore={product.averageScore}
+                                clickProduct ={() => onclickProductHandler(product)}
+                            />
+                        </div>
+                    ))}
                 </div>
 
-                <div className="BasicList">
+                {/* <div className="BasicList">
 
-                    <div className="UserList">
+                    <div className="UserList"> */}
 
-                        <div className="animated-title">
-
+                        <div title = "animatedTitle" className="animated-title">
                             <h1 className="titles"> 오늘의 추천 </h1>
                         </div>
-                        
-                        <div className="productBlocks" onClick={() => categoryHandler()} >
+                        {/* <div className="productBlocks" onClick={() => categoryHandler()} >
 
-                            {<ProductBlock product_id={6} />}
-                            {<ProductBlock product_id={7} />}
-                            {<ProductBlock product_id={8} />}
-                            {<ProductBlock product_id={9} />}
-                            {<ProductBlock product_id={10} />}
-                        </div>
+                        </div> */}
                     </div>
-                </div>
-            </div>
-        </div>
+                // </div>
+            // </div>
+        
     )
 }
 
 
 
 export default Home;
+
+// function dispatch(arg0: any) {
+//     throw new Error("Function not implemented.");
+// }

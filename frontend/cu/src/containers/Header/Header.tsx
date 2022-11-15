@@ -9,11 +9,6 @@ import { signoutUser } from "../../store/slices/User";
 
 const Header = () => {
 
-    const meal = require('../../Categoryicon/meal.png');
-    const snack = require('../../Categoryicon/snack.png');
-    const icecream = require('../../Categoryicon/icecream.png');
-    const food = require('../../Categoryicon/food.png');
-    const drink = require('../../Categoryicon/drink.png');
     const search = require('../../Categoryicon/search.png')
 
     const logo = require('../../Categoryicon/Logo.png')
@@ -22,31 +17,32 @@ const Header = () => {
     const [submitted, setSubmitted] = useState<boolean>(false);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>();
+    // const dispatch = useDispatch<AppDispatch>();
 
     const clickSearchHandler = () => {
         setSubmitted(true);
     }
 
     const clickSignoutHandler = async () => {
-        const result = await dispatch(signoutUser());
-        if (result.type === `${signoutUser.typePrefix}/fulfilled`) {
-            alert("렛미씨유에서 또 만나요!");
+        // const result = await dispatch(signoutUser());
+        // if (result.type === `${signoutUser.typePrefix}/fulfilled`) {
+            // alert("렛미씨유에서 또 만나요!");
             navigate("/login");
-        }
-        else {
-            alert("당신은 렛미씨유를 떠나지 못합니다.");
+        // }
+        // else {
+            // alert("당신은 렛미씨유를 떠나지 못합니다.");
             // navigate("/login"); 
-        }
+        // }
     }
 
 
 
-    const categoryHandler = (categoryID: number) => {
-        navigate(`/productList/${categoryID}`)
+    const categoryHandler = (mainCategory: string) => {
+        navigate(`/category/${mainCategory}`)
     }
 
     if (submitted) {
+        //navigate('/home')
         return <Navigate to="/home" />;
     } else {
         return (
@@ -56,28 +52,23 @@ const Header = () => {
                     <img className="Logo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
                     <nav>
                         <div className="Category">
-                            <div className="CategoryMenu" onClick={() => categoryHandler(0)} >
-                                {/* <img className = "CategoryIcon" src={meal} alt="CategoryIcon"/> */}
+                            <div title = "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("간편식사")} >
                                 <p>간편식사</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(1)} >
-                                {/* <img className = "CategoryIcon"src={snack} alt="CategoryIcon" /> */}
+                            <div title = "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("과자류")} >
                                 <p>과자류</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(2)} >
-                                {/* <img className = "CategoryIcon"src={icecream} alt="CategoryIcon"/> */}
+                            <div title = "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("아이스크림")} >
                                 <p>아이스크림</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(3)} >
-                                {/* <img className = "CategoryIcon"src={food} alt="CategoryIcon" onClick={() => categoryHandler(3)} /> */}
+                            <div title = "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("식품")} >
                                 <p>식품</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(4)} >
-                                {/* <img className = "CategoryIcon"src={drink} alt="CategoryIcon"/> */}
+                            <div title = "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("음료")} >
                                 <p>음료</p>
                             </div>
                         </div>
@@ -95,7 +86,7 @@ const Header = () => {
                 </div>
 
                 <div className="end-header">
-                    <button className="SignoutButton" onClick={() => clickSignoutHandler()}> 로그아웃</button>
+                    <button className="SignoutButton" onClick={() => clickSignoutHandler()}>로그아웃</button>
                 </div>
             </div>
         );
