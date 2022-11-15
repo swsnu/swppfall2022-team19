@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import productReducer from "./slices/product"
 import userReducer from "./slices/User";
 import rateReducer from "./slices/rate";
-import axios, getCookie from "axios";
+import axios from "axios";
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
