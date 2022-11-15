@@ -19,24 +19,18 @@ function Category() {
     const products = allProducts.products.filter(product => product.mainCategory === mainCategory)
     
 
-    const categoryHandler = () => {
-        navigate(`/ProductDetail/1`)
-    }
-   
-
     useEffect(() => {
         dispatch(fetchQueryProducts(QueryString.parse(search, { ignoreQueryPrefix: true })))
       }, [search, dispatch])
 
     return (
         <div className="CategoryPage">
-            <Header />
+            {/* <Header /> */}
             <div className="animated-title">
                 <h1 className="titles">{mainCategory}</h1>
             </div>
-            <div className="productBlocks" onClick={() => categoryHandler()}  >
-                {products.map(product => (
-                    <div key={product.id}>
+            <div title="productBlocks" className="productBlocks" onClick={() => navigate(`/ProductDetail/1`)}  >
+                {products.map(product => ( <div title="product" key={product.id}>
                         <ProductBlock
                             product_id = {product.id}
                             name = {product.name}

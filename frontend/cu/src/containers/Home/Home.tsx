@@ -1,7 +1,7 @@
 import ProductBlock from "../../components/ProductBlock/ProductBlock"
 // import product from '../../../../../Data/product_data.json';
 import "./Home.css"
-import Header from "../Header/Header"
+// import Header from "../Header/Header"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchQueryProducts, selectProduct } from "../../store/slices/product";
@@ -33,30 +33,26 @@ const Home = () => {
     return (
 
         <div className="Home">
-            <Header />
+            {/* <Header /> */}
             <img className="CenterLogo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
 
             <div className="BasicList">
 
-                <div className="animated-title">
-
+                <div title = "animatedTitle" className="animated-title">
                     <h1 className="titles">오늘의 편의점</h1>
                 </div>
-                <div className="productBlocks" onClick={() => categoryHandler()} >
-
 
                 </div>
 
-                <div className="BasicList">
+                {/* <div className="BasicList">
 
-                    <div className="UserList">
+                    <div className="UserList"> */}
 
-                        <div className="animated-title">
-
+                        <div title = "animatedTitle" className="animated-title">
                             <h1 className="titles"> 오늘의 추천 </h1>
                         </div>
 
-                        <div className="productBlocks" onClick={() => categoryHandler()} >
+                        <div title = "testProducts" className="productBlocks" onClick={() => categoryHandler()} >
                             {allProducts.products.map(product => (
                                 <div key={product.id}>
                                     <ProductBlock
@@ -73,9 +69,9 @@ const Home = () => {
 
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                // </div>
+            // </div>
+        
     )
 }
 
