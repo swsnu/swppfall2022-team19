@@ -60,7 +60,6 @@ describe("<Header />", () => {
   it("should handle clickLogo", () => {
     render(header);
     const logo = screen.getByAltText("homeLogo")
-    // eslint-disable-next-line testing-library/no-node-access
     fireEvent.click(logo!);
     expect(mockNavigate).toHaveBeenCalledTimes(1);
   });
@@ -68,7 +67,6 @@ describe("<Header />", () => {
   it("should handle clickSearch", () => {
     render(header);
     const search = screen.getByAltText("SearchIcon")
-    // eslint-disable-next-line testing-library/no-node-access
     fireEvent.click(search!);
     expect(mockNavigate).toHaveBeenCalledTimes(1);
   });
