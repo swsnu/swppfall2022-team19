@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useDispatch, useSelector } from "react-redux";
 import HeartRating from './HeartRating'
@@ -8,18 +8,18 @@ import FixedHeartRating from './FixedHeartRating';
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { createRate, deleteRate, fetchRates, RateType, updateRate } from '../../store/slices/rate';
 import { UserType } from '../../store/slices/User';
-import { ProductType, selectProduct, fetchProduct} from '../../store/slices/product';
+import { ProductType, selectProduct, fetchProduct } from '../../store/slices/product';
 
 interface Props {
-  user?: UserType,
+  user: UserType,
   product: ProductType,
-  rate: RateType[] | undefined
+  rate: RateType[] 
 }
 
 
 function RatingForm(props: Props) {
   const navigate = useNavigate();
-  const {id} = useParams();
+  //const {id} = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const productState = useSelector(selectProduct);
 
@@ -39,24 +39,27 @@ function RatingForm(props: Props) {
   const [question4, setQuestion4] = useState("");
   const [question5, setQuestion5] = useState("");
   const [rate, setRate] = useState<RateType>();
+  
 
   //whenever there is change in product, find the appropriate question by subCategory
-  useEffect(() => {
+  console.log("subcategoryName:" + props.product?.name);
+  if (props.rate && props.product) {
+    const singleRate = props.rate.filter((rate) => rate.product_id === props.product.id!).find((rate) => rate.user_id === props.user?.id!)
+    setRate(singleRate);
+    if (!singleRate) {
+      user_has_rate = false;
+    }
+    else {
+      user_has_rate = true;
+    }
 
-    console.log("subcategory:" + productState.selectedProduct?.subCategory);
     for (const key in Object.keys(subCategoryQuestion)) {
       if (props.product.subCategory.includes(subCategoryQuestion[key].subCategory)) {
         setQuestion4(subCategoryQuestion[key].question4);
         setQuestion5(subCategoryQuestion[key].question5);
       }
     }
-
-      if(props.rate){
-        const singleRate = props.rate.filter((rate) => rate.product_id === props.product.id!).find((rate) => rate.user_id === props.user?.id!)
-        setRate(singleRate);
-      }
-  }, [])
-
+  }
 
   const updateScore1 = (score: number): void => {
     setScore1(score)
@@ -192,7 +195,7 @@ function RatingForm(props: Props) {
             </div>
             <div>
               <div>한줄평</div>
-              <text> {comment}</text>
+              <div> {comment}</div>
             </div>
           </div>
         }
@@ -227,4 +230,4 @@ function RatingForm(props: Props) {
   )
 }
 
-export default RatingForm
+export default React.memo(RatingForm)

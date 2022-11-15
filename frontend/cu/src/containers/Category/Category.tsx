@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector} from "react-redux";
-import { useLocation, useNavigate, useParams} from "react-router";
+import { useLocation, useNavigate, useParams, Navigate} from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
 import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";

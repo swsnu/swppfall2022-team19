@@ -2,7 +2,7 @@ import ProductBlock from "../../components/ProductBlock/ProductBlock"
 // import product from '../../../../../Data/product_data.json';
 import "./Home.css"
 import Header from "../Header/Header"
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
 import QueryString from "qs";

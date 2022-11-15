@@ -19,7 +19,7 @@ interface Props{
 const ProductBlock = (props: Props) => {
     //const {id} = useParams();
     const dispatch = useDispatch<AppDispatch>()
-    const productState = useSelector(selectProduct)
+    //const productState = useSelector(selectProduct)
 
 
 
