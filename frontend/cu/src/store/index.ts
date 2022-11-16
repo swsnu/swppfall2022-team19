@@ -18,5 +18,28 @@ export const store = configureStore({
     }
 })
 
+export const productStore = configureStore({
+    reducer: {
+    product: productReducer,
+    }
+})
+
+
+// userStore
+
+export const userStore = configureStore({
+    reducer: {
+    user: userReducer,
+    }
+})
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type AppStore = typeof store;
+
+export type ProductStore = typeof productStore; 
+export type ProductRootState = ReturnType<typeof productStore.getState>;
+
+
+export type UserStore = typeof userStore; 
+export type UserRootState = ReturnType<typeof userStore.getState>;
