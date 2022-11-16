@@ -146,15 +146,13 @@ class BlogTestCase(TestCase):
     def test_rate_create(self): 
         client = Client(enforce_csrf_checks=True)
 
-        # (X)create /api/rate/
-        #response = self.client.post('/api/rate/',{
-        #    "user_id": 1,"product_id":1,"scores": [1,1,1,1,1],"comment": "맛나요",
-        #    "picture": "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff3f943a3-0d77-44d7-b73a-0a1243830899%2FKakaoTalk_20220316_175852217.jpg?table=block&id=01f83f77-659f-4ab1-89ce-4274b3259c64&spaceId=d465497d-101f-41ec-bff8-b1d0842c9d7f&width=2000&userId=8d67198c-a864-44f0-abdc-84d89cf29324&cache=v2"
-        #    },content_type='application/json') 
-        #self.assertEqual(response.status_code, 201)
+        # (O)create /api/rate/
+        response = self.client.post('/api/rate/',{
+            "user_id": 1,"product_id":1,"scores": [1,1,1,1,1],"comment": "맛나요",
+            "picture": "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff3f943a3-0d77-44d7-b73a-0a1243830899%2FKakaoTalk_20220316_175852217.jpg?table=block&id=01f83f77-659f-4ab1-89ce-4274b3259c64&spaceId=d465497d-101f-41ec-bff8-b1d0842c9d7f&width=2000&userId=8d67198c-a864-44f0-abdc-84d89cf29324&cache=v2"
+            },content_type='application/json') 
+        self.assertEqual(response.status_code, 201)
         
-        #response = self.client.post('/api/rate/', {'comment': 3, 'likedCount': 3},content_type='application/json') 
-        #self.assertEqual(response.status_code, 400) # input format error
 
     def test_rate_retrieve(self): 
         client = Client(enforce_csrf_checks=True)
@@ -178,9 +176,11 @@ class BlogTestCase(TestCase):
         },content_type='application/json') 
         self.assertEqual(response.status_code, 200)
         
-        response = self.client.put('/api/rate/10/',{'comment': "좋다", 'likedCount': 3},content_type='application/json') #none exist 404
-        self.assertEqual(response.status_code, 404)
-        response = self.client.put('/api/rate/1/',{'comment': "좋다", 'likedCount': "형식오류"},content_type='application/json') #format error 400
+        response = self.client.put('/api/rate/10/',{
+            "scores": [1,2,3,4,5],
+            "comment": "",            
+            "picture": "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff3f943a3-0d77-44d7-b73a-0a1243830899%2FKakaoTalk_20220316_175852217.jpg?table=block&id=01f83f77-659f-4ab1-89ce-4274b3259c64&spaceId=d465497d-101f-41ec-bff8-b1d0842c9d7f&width=2000&userId=8d67198c-a864-44f0-abdc-84d89cf29324&cache=v2",
+            "likedCount": 2},content_type='application/json') #none exist 404
         self.assertEqual(response.status_code, 404)
 
 
