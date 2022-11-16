@@ -1,83 +1,70 @@
 
 import "./Header.css"
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
-import { AppDispatch, RootState } from "../../store";
-import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../store";
+import { useDispatch } from "react-redux";
 import { signoutUser } from "../../store/slices/User";
 
 
 const Header = () => {
 
-    const meal = require('../../Categoryicon/meal.png');
-    const snack = require('../../Categoryicon/snack.png');
-    const icecream = require('../../Categoryicon/icecream.png');
-    const food = require('../../Categoryicon/food.png');
-    const drink = require('../../Categoryicon/drink.png');
     const search = require('../../Categoryicon/search.png')
 
     const logo = require('../../Categoryicon/Logo.png')
 
     const [searchKey, setSearchKey] = useState<string>("");
-    const [submitted, setSubmitted] = useState<boolean>(false);
+    
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
     const clickSearchHandler = () => {
-        setSubmitted(true);
+        navigate('/home');
     }
 
     const clickSignoutHandler = async () => {
         const result = await dispatch(signoutUser());
-        if (result.type === `${signoutUser.typePrefix}/fulfilled`) {
-            alert("렛미씨유에서 또 만나요!");
+        if (`${signoutUser.typePrefix}/fulfilled`) { 
             navigate("/login");
         }
-        else {
-            alert("당신은 렛미씨유를 떠나지 못합니다.");
-            // navigate("/login"); 
-        }
     }
 
 
 
-    const categoryHandler = (categoryID: number) => {
-        navigate(`/productList/${categoryID}`)
+    const categoryHandler = (mainCategory: string) => {
+        navigate(`/category/${mainCategory}`)
     }
 
-    if (submitted) {
-        return <Navigate to="/home" />;
-    } else {
-        return (
+    return (
 
             <div className="header"  >
                 <div className="start-header">
-                    <img className="Logo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
+                    <img title="logo" className="Logo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
                     <nav>
-                        <div className="Category">
-                            <div className="CategoryMenu" onClick={() => categoryHandler(0)} >
-                                {/* <img className = "CategoryIcon" src={meal} alt="CategoryIcon"/> */}
+                        <div  className="Category">
+                            <div title= "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("간편식사")} >
+                               
                                 <p>간편식사</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(1)} >
-                                {/* <img className = "CategoryIcon"src={snack} alt="CategoryIcon" /> */}
+                            <div title= "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("과자류")} >
+                               
                                 <p>과자류</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(2)} >
-                                {/* <img className = "CategoryIcon"src={icecream} alt="CategoryIcon"/> */}
+                            <div title= "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("아이스크림")} >
+                                
                                 <p>아이스크림</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(3)} >
-                                {/* <img className = "CategoryIcon"src={food} alt="CategoryIcon" onClick={() => categoryHandler(3)} /> */}
+                            <div title= "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("식품")} >
+                                
                                 <p>식품</p>
                             </div>
 
-                            <div className="CategoryMenu" onClick={() => categoryHandler(4)} >
-                                {/* <img className = "CategoryIcon"src={drink} alt="CategoryIcon"/> */}
+                            <div title= "CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("음료")} >
+                                
                                 <p>음료</p>
                             </div>
                         </div>
@@ -89,17 +76,15 @@ const Header = () => {
                         type="text"
                         value={searchKey}
                         onChange={(event) => setSearchKey(event.target.value)} />
-
-                    <img className="SearchIcon" onClick={() => clickSearchHandler()} src={search} alt="SearchIcon" />
-                    {/* <button onClick={() => clickCreateHandler()}>찾아보기</button> */}
+                    <img title = "searchIcon" className="SearchIcon" onClick={() => clickSearchHandler()} src={search} alt="SearchIcon" />
                 </div>
 
                 <div className="end-header">
-                    <button className="SignoutButton" onClick={() => clickSignoutHandler()}> 로그아웃</button>
+                    <button title="signoutButton" className="SignoutButton" onClick={() => clickSignoutHandler()}> 로그아웃</button>
                 </div>
             </div>
         );
-    }
+    
 }
 
 
