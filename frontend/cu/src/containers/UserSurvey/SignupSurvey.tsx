@@ -120,17 +120,17 @@ const SignupSurvey = () => {
                             <h4>사용자 정보를 입력하고 맞춤화 된 제품을 추천받자!</h4>
                         </div>
 
-                        <div title="questionBox"  className="questionBox">
+                        <div className="questionBox">
                             <h5> 당신의 성별을 알려주세요 </h5>
                             <Select className="genderDropdown" isClearable={false} options={genderList} onChange={(event) => event === null ? setGender(0) : setGender(event.value)} />
                         </div>
 
-                        <div title = "questionBox" className="questionBox">
+                        <div className="questionBox">
                             <h5> 당신의 연령대를 알려주세요 </h5>
                             <Select  className="ageDropDown" options={ageList} onChange={(event) => event === null ? setAge(0) : setAge(event.value)} />
                         </div>
 
-                        <div title="questionBox"className="questionBox">
+                        <div className="questionBox">
                             <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
                             <Select  className="tasteDropDown" isMulti defaultValue={[tasteList[0]]} components={animatedComponents} options={tasteList} onChange={(event) => {
                                 var getStr: string = "";
@@ -147,7 +147,7 @@ const SignupSurvey = () => {
                             />
                         </div>
 
-                        <div title="questionBox" className="questionBox">
+                        <div className="questionBox">
                             <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
                             <Select  className="questionDropDown" options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} />
                         </div>
