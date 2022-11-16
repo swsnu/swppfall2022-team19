@@ -14,6 +14,6 @@ describe("<HeartRating />", () =>{
             />);
         const rating = container.getElementsByClassName("heart");
         expect(rating.length).toBe(5);  
-
+    
     })
 })
