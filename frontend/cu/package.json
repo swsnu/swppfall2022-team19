@@ -55,5 +55,18 @@
     "eslint-plugin-react": "^7.31.10",
     "typescript": "^4.8.4"
   },
-  "proxy": "http://localhost:8000"
+  "proxy": "http://localhost:8000",
+  "jest": {
+    "collectCoverageFrom": [
+    "src/**/*.{js,jsx,ts,tsx}",
+    "!src/index.tsx",
+    "!src/components/Review/*",
+    "!src/components/ReviewList/*",
+    "!src/components/TotalScore/*",
+    "!src/components/TotalScoreList/*",
+    "!src/components/RatingForm/RatingForm.tsx",
+    "!src/test-utils/*",
+    "!src/reportWebVitals.ts"
+    ]
+  }
 }
