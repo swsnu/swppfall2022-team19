@@ -10,4 +10,3 @@ backend/cu/product/serializers/__pycache__/
 backend/cu/product/views/__pycache__/
 backend/cu/user/__pycache__/
 backend/cu/user/migrations/
-backend/cu/db.sqlite3
