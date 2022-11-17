@@ -11,7 +11,7 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cu.settings')
 django.setup()
 
-from product.models import Product,Tag
+from product.models.productModel import Product,Tag
 
 
 
@@ -21,7 +21,6 @@ with open("./product_data.csv") as in_file:
     for row in data_reader:
         print(row)
         if len(row) == 0 : continue
-
 
         product = Product.objects.create(
 
@@ -36,7 +35,11 @@ with open("./product_data.csv") as in_file:
         )
         i = 8
         while i < len(row):
-            tag = Tag.objects.create(name=row[i])
+
+            try:
+                tag = Tag.objects.get(name=row[i])
+            except:
+                tag = Tag.objects.create(name=row[i])
             product.tags.add(tag)
             i = i + 1
 
