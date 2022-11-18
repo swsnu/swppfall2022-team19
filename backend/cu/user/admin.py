@@ -2,13 +2,14 @@ from .models import User
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from product.models.productModel import Product, Tag
-from product.models.rateModel import Score, Rate
+from product.models.rateModel import Score, Rate, Like
 
 # Register your models here.
 admin.site.register(Product)
 admin.site.register(Score)
 admin.site.register(Rate)
 admin.site.register(Tag)
+admin.site.register(Like)
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'username', 'gender', 'age', 'taste', 'question']
