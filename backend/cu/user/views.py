@@ -74,16 +74,16 @@ def signin(request):
                     "taste": nowUser.taste,
                     "question": nowUser.question,
                 }
-                return JsonResponse(res, status=204, safe=False)
+                return JsonResponse(res, status=200, safe=False)
                 # HttpResponse(status=204)
             else:
                 # User is already logged-in -> error
-                # print("request.user is already logged in")
-                # print(request.user)
-                # print(tempUser)
+                print("request.user is already logged in")
+                print(request.user)
+                print(tempUser)
                 return HttpResponse(status=401)  # check 401
         else:
-            # print("tempUser is None. 등록되지 않은 유저 정보")
+            print("tempUser is None. 등록되지 않은 유저 정보")
             return HttpResponse(status=401)
     else:
         return HttpResponseNotAllowed(['POST'])
@@ -125,8 +125,10 @@ def userlist(request):
 def requestUser(request):
     # 테스트 각주 if (request.method) == "GET":
     if (request.user.is_authenticated):
-        # print("request.user is authenticated: username is " + request.user.username)
+        print("request.user is authenticated: username is " + request.user.username)
+        print(request.user.username)
         nowUser = request.user
+        print(nowUser.username)
         res = {
             "id": nowUser.pk,
             "username": nowUser.username,
@@ -136,11 +138,11 @@ def requestUser(request):
             "taste": nowUser.taste,
             "question": nowUser.question,
         }
-        # print(res)
-        return JsonResponse(data=res, status=204)
+        print(res)
+        return JsonResponse(res, status=200)
     else:
-        # print("request.user is logged out")
-        return HttpResponse(status=204)
+        print("request.user is logged out")
+        return HttpResponse({}, status=200)
     # 테스트 각주 else:
     # 테스트 각주    return HttpResponseNotAllowed(["GET"])
 

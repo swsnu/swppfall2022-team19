@@ -91,7 +91,7 @@ export const getUsers = createAsyncThunk(
   "user/getUsers",
   async (user: void, { dispatch }) => {
     const response = await axios.get("api/user/userlist/");
-    console.log(response);
+    console.log(response.data); // 문제! 여기서는 axios.get해서 userlist가 잘 반환됨
     dispatch(userActions.getUsers(response.data));
     return response.data ?? null;
   }
@@ -102,7 +102,7 @@ export const getRequestUser = createAsyncThunk(
   "user/getRequestUser",
   async (user: void, { dispatch }) => {
     const response = await axios.get("api/user/requestUser/");
-    console.log(response);
+    console.log(response); // 문제! 지금 여기서 axios.get의 값을 response.data에서 잘 못 받아오는 듯 
     console.log(response.data);
     dispatch(userActions.getRequestUser(response.data));
     return response.data ?? null;
@@ -116,21 +116,28 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     getRequestUser: (state, action: PayloadAction<UserType>) => {
-      // console.log("getRequestUser의 리듀서 실행됨");
-      // console.log(action.payload);
-      // console.log(state.selectedUser);
+      console.log("getRequestUser의 리듀서 실행됨. Action.payload -> state.selectedUser");
+      console.log(action.payload);
+      console.log(state.users);
+      console.log(state.selectedUser);
+
       if (action.payload === null || action.payload === undefined) {
         state.selectedUser = null;
-        // console.log("현재 로그인된 게 없어서 action.payload도 비어있어서 selectedUser에 null을 줌");
+        console.log("현재 로그인된 게 없어서 action.payload도 비어있어서 selectedUser에 null을 줌");
       } else {
-        const targetUser = state.users.find(
-          (user: UserType) => (user.username === action.payload.username)
-        );
+        const targetUser = state.users.find(function (user: UserType) {
+          return user.username === action.payload.username
+        });
+        console.log("targetUser를 찾는 함수 실행");
+        console.log(targetUser);
+
         if (targetUser) {
+          targetUser.loginState = true;
           state.selectedUser = targetUser;
-          // console.log("targetUser를 selectedUser로");
+          console.log("targetUser를 selectedUser로");
+          console.log(state.selectedUser);
         } else {
-          // console.log("targetUser가 undefined라 selectedUser는 null로");
+          console.log("targetUser가 undefined라 selectedUser는 null로");
           state.selectedUser = null;
         }
 
@@ -151,14 +158,26 @@ export const userSlice = createSlice({
         // 유저탈퇴 기능이 있다면 오류가 생길 수 있음
 
         state.users = user_list;
+        console.log("아래는 state.users를 getUsers에서 나타낸 것입니다");
+        console.log(state.users);
         console.log(user_list);
       }
     },
     loginUser: (state, action: PayloadAction<UserLoginRequest>) => {
-      const targetUser = state.users.find(
-        (user: UserType) => (user.username === action.payload.username)
-        // && (user.password === action.payload.password)
-      );
+      console.log("아래는 loginUser에서 작동한 내용입니다");
+      console.log(action.payload);
+      console.log(action.payload.username + " , " + action.payload.password);
+      const targetUser = state.users.find(function (user: UserType) {
+        console.log(user.username + "을 비교합니다 이것과: " + action.payload.username);
+        return user.username === action.payload.username;
+      });
+
+      console.log("TargetUser is");
+      console.log(targetUser);
+      // const targetUser = state.users.find(
+      //   (user: UserType) => (user.username === action.payload.username)
+      // && (user.password === action.payload.password)
+      // );
 
       if (targetUser) {
         targetUser.loginState = true;
