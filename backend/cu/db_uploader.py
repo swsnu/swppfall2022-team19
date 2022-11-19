@@ -15,9 +15,10 @@ from product.models.productModel import Product,Tag
 
 
 
-with open("./product_data.csv") as in_file:
+with open("./product_data.csv", encoding='UTF-8') as in_file:
     data_reader = csv.reader(in_file)
-    next(data_reader, None)
+    next(data_reader, None) # first row ignore
+    
     for row in data_reader:
         print(row)
         if len(row) == 0 : continue

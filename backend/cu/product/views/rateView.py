@@ -39,12 +39,16 @@ class RateViewSet(viewsets.GenericViewSet):
         scores = data['scores'] # list
         comment = data['comment']
         picture = data['picture']
+
         user = User.objects.get(id=user_id)
         product = Product.objects.get(id=product_id)
+
         scores = Score.objects.create(score1=scores[0], score2=scores[1], score3=scores[2], score4=scores[3], score5=scores[4])
         scores.save()
-        rate = Rate(user=user, product=product, scores=scores,comment=comment)
+        
+        rate = Rate.objects.create(user=user, product=product, scores=scores,comment=comment, picture=picture)
         rate.save()
+
         score_list = [rate.scores.score1, rate.scores.score2, rate.scores.score3, rate.scores.score4, rate.scores.score5]
         res_rate = {
             'user_id': rate.user.id,
@@ -52,7 +56,7 @@ class RateViewSet(viewsets.GenericViewSet):
             'product_id': rate.product.id,
             'scores': score_list,
             'comment': rate.comment,
-            #'picture': rate.picture,
+            'picture': str(rate.picture),
             'likedCount': rate.likedCount, #default 0
         }
         return JsonResponse(res_rate,status=201)
@@ -101,7 +105,7 @@ class RateViewSet(viewsets.GenericViewSet):
             'product_id': rate.product.id,
             'scores': score_list,
             'comment': rate.comment,
-            #'picture': rate.picture,
+            'picture': str(rate.picture),
             'likedCount': rate.likedCount
         }
         return JsonResponse(res_rate,status=200)
@@ -111,8 +115,10 @@ class RateViewSet(viewsets.GenericViewSet):
     @csrf_exempt
     def destroy(self, request, pk=None):
         try:
-            rate = Rate.objects.get()
+            rate = self.get_object()
         except Rate.DoesNotExist:
             return Response(status=404)        
-        rate.delete()
-        return Response(status=204)
+        else:
+            rate.scores.delete()
+            rate.delete()
+            return Response(status=204)
