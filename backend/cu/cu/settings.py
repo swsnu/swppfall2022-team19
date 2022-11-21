@@ -135,5 +135,6 @@ CSRF_HEADER_NAME = 'X-XSRF-TOKEN'
 SESSION_COOKIE_AGE = 1200  # 20 min
 SESSION_SAVE_EVERY_REQUEST = True
 
+#directory for uploading images 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -10,7 +10,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 export interface RateType {
     id: number,
     user_id: UserType['id'],
-    user_username: UserType['username'],
+    username: UserType['username'],
     product_id: ProductType['id'],
     scores: number[],
     comment: string,
@@ -86,7 +86,7 @@ export const rateSlice = createSlice({
         },
         deleteRate: (state, action: PayloadAction<RateType['id']>) => {
             state.rates = state.rates.filter(
-                rate => rate.id != action.payload
+                rate => rate.id !== action.payload
             )
             state.selectedRate = null
         }

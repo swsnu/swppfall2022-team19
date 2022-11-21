@@ -12,7 +12,7 @@ import { selectUser } from "../../store/slices/User"
 import { fetchProduct, selectProduct} from "../../store/slices/product"
 import { fetchRates, selectRate } from "../../store/slices/rate"
 import { AppDispatch } from '../../store';
-
+ 
 
 function ProductDetailPage() {
   //왼편에 product, 오른편에 rating, 아래에 totalScoreList, 맨 아래에는 reviewList.
@@ -24,16 +24,14 @@ function ProductDetailPage() {
   const rateState = useSelector(selectRate);
 
   //fetch all the rates stored in particular product
-  useEffect(() => {
+  useEffect(() => {  
     dispatch(fetchProduct(Number(id)));
-    //console.log("selectedProduct:" +selectedProduct?.name)
-    //console.log("username:" + userState.selectedUser?.username)
-  }, [id, dispatch])
-
-  useEffect(() => {
     dispatch(fetchRates())
-  }, [])
+  }, [id, dispatch]) //initial rendering이 안된다. 
 
+  // console.log("product id: "+selectedProduct?.id)
+    // console.log("user: " + userState.selectedUser?.username)
+    // console.log("product name: "+selectedProduct?.name)
   return (
     <div className="productDetailPage">
       <Header />

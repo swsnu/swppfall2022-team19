@@ -25,7 +25,7 @@ export interface ProductState {
 }
 
 
-//fetch all products by main category 
+//fetch all products by main category -- does not work
 export const fetchQueryProducts = createAsyncThunk(
   'product/fetchProductByMainCategory',
   async (params: { mainCategory?: string }) => {
