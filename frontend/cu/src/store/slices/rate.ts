@@ -10,7 +10,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 export interface RateType {
     id: number,
     user_id: UserType['id'],
-    username: UserType['username'],
+    user_username: UserType['username'],
     product_id: ProductType['id'],
     scores: number[],
     comment: string,
@@ -36,6 +36,7 @@ export const fetchRates = createAsyncThunk(
         return response.data
     }
 )
+
 
 
 

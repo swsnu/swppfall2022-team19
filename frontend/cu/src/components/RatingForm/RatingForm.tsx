@@ -8,6 +8,11 @@ import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { createRate, deleteRate, RateType, updateRate } from '../../store/slices/rate';
 import { UserType } from '../../store/slices/User';
 import { ProductType, selectProduct, updateProduct } from '../../store/slices/product';
+import axios from "axios";
+ 
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 interface Props {
   user: UserType,
@@ -47,7 +52,7 @@ function RatingForm(props: Props) {
     const singleRate = filterRate.find((rate) => rate.user_id === props.user?.id!);
 
     setRate(singleRate);
-    console.log(singleRate?.username)
+    console.log(singleRate?.user_username)
     if (singleRate === undefined) {
       setRateState1(false);
       setRateState2(false);
@@ -121,23 +126,35 @@ function RatingForm(props: Props) {
 
 
 
-  const onclickSaveHandler = async () => {   //#TODO: need to update product average score
+  const onclickSaveHandler = async () => {   
 
+    //postRate 
     const scores = [score1, score2, score3, score4, score5];
     const rateData = {
       user_id: props.user?.id!,
-      username: props.user?.username!,
+      user_username: props.user.username,
       product_id: props.product.id!,
       scores: scores,
       comment: comment,
       picture: image,
       likedCount: 0
     }
+    // const formData = new FormData()
+    // formData.append('user_id', props.user?.id!)
+    // formData.append('username', props.user?.username!)
+    // formData.append('product_id', props.product.id!)
+    // formData.append('scores', scores)
+    // formData.append('comment', comment)
+    // formData.append('picture', image);
+    // formData.append('likedCount', 0);
+
     const responseRate = await dispatch(createRate(rateData))
     if (responseRate.type === `${createRate.typePrefix}/fulfilled`) {
       setRateState1(true);
       setRateState2(true);
     }
+
+    //updateProduct's average score
     let averageScore = (score1 + score2 + score3 + score4+ score5)/5;
     let totalchange = (averageScore - props.product.averageScore)/(totalRateNum+1);
     let totalAverageScore = props.product.averageScore - totalchange;
@@ -172,7 +189,7 @@ function RatingForm(props: Props) {
     const editedRateData = {
       id: rate?.id!,
       user_id: props.user?.id!,
-      username: props.user?.username!,
+      user_username: props.user?.username!,
       product_id: props.product.id!,
       scores: scores,
       comment: comment,

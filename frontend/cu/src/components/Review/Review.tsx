@@ -40,7 +40,7 @@ export default function Review(props: IProps){
         const editedRateData = {
           id: props.rate?.id!,
           user_id: props.user?.id!,
-          username: props.user?.username!,
+          user_username: props.user?.username!,
           product_id: props.product.id!,
           scores: props.rate?.scores!,
           comment: props.rate?.comment!,

@@ -12,7 +12,11 @@ import { selectUser } from "../../store/slices/User"
 import { fetchProduct, selectProduct} from "../../store/slices/product"
 import { fetchRates, selectRate } from "../../store/slices/rate"
 import { AppDispatch } from '../../store';
+import axios from "axios";
  
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 function ProductDetailPage() {
   //왼편에 product, 오른편에 rating, 아래에 totalScoreList, 맨 아래에는 reviewList.
@@ -21,13 +25,14 @@ function ProductDetailPage() {
   const { id } = useParams();
   const userState = useSelector(selectUser);
   const selectedProduct = useSelector(selectProduct).selectedProduct;
-  const rateState = useSelector(selectRate);
-
+  const rateState = useSelector(selectRate); 
+  
+  //window.location.reload(); 
   //fetch all the rates stored in particular product
   useEffect(() => {  
     dispatch(fetchProduct(Number(id)));
     dispatch(fetchRates())
-  }, [id, dispatch]) //initial rendering이 안된다. 
+  }, [id, dispatch]) //initial rendering이 안된다.  
 
   // console.log("product id: "+selectedProduct?.id)
     // console.log("user: " + userState.selectedUser?.username)
@@ -37,18 +42,21 @@ function ProductDetailPage() {
       <Header />
       <div className="productRate">
         <div key={1}>
-          {<ProductBlock
-            product_id={selectedProduct?.id!}
-            name={selectedProduct?.name!}
-            imageUrl={selectedProduct?.imageUrl!}
-            details={selectedProduct?.details!}
-            price={selectedProduct?.price!}
-            newProduct={selectedProduct?.newProduct!}
-            averageScore={selectedProduct?.averageScore!}
-          />}
+          {selectedProduct && ( <ProductBlock
+            product_id={selectedProduct?.id}
+            name={selectedProduct?.name}
+            imageUrl={selectedProduct?.imageUrl}
+            details={selectedProduct?.details}
+            price={selectedProduct?.price}
+            newProduct={selectedProduct?.newProduct}
+            averageScore={selectedProduct?.averageScore}
+          />)}
         </div>
-        <div key={2}>
-          {<RatingForm user={userState.selectedUser!} product={selectedProduct!} rate={rateState.rates}/>}
+        <div key={2}> 
+          {
+            userState.selectedUser && selectedProduct && rateState.rates &&
+            <RatingForm user={userState.selectedUser} product={selectedProduct} rate={rateState.rates}/>
+          }
         </div>
 
       </div>

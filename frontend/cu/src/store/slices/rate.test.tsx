@@ -8,7 +8,7 @@ describe('book reducer', () => {
   const rate1 = {
     id: 2,
     user_id: 1,
-    username: "user1",
+    user_username: "user1",
     product_id: 1,
     scores: [3, 3, 3, 3, 3],
     comment: "comment1",
@@ -18,7 +18,7 @@ describe('book reducer', () => {
   const rate2 = {
     id: 2,
     user_id: 1,
-    username: "user1",
+    user_username: "user1",
     product_id: 1,
     scores: [5, 5, 5, 5, 5],
     comment: "comment2",
@@ -40,7 +40,7 @@ describe('book reducer', () => {
     const result = await store.dispatch(
       createRate({
         user_id: 1,
-        username: "user1",
+        user_username: "user1",
         product_id: 1,
         scores: [3, 3, 3, 3, 3],
         comment: "comment1",
@@ -66,7 +66,7 @@ describe('book reducer', () => {
     await store.dispatch(
       createRate({
         user_id: 1,
-        username: "user1",
+        user_username: "user1",
         product_id: 1,
         scores: [3, 3, 3, 3, 3],
         comment: "comment1",
@@ -78,7 +78,7 @@ describe('book reducer', () => {
     await store.dispatch(
         createRate({
             user_id: 1,
-            username: "user1",
+            user_username: "user1",
             product_id: 1,
             scores: [3, 3, 3, 3, 3],
             comment: "comment1",
@@ -99,7 +99,7 @@ describe('book reducer', () => {
     const result = await store.dispatch(
         createRate({
             user_id: 1,
-            username: "user1",
+            user_username: "user1",
             product_id: 1,
             scores: [3, 3, 3, 3, 3],
             comment: "comment1",
