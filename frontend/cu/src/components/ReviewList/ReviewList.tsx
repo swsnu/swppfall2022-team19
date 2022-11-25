@@ -29,7 +29,8 @@ export default function ReviewList (props: Props){
             </div>    
             <div className='reviews'>
                 {props.rate?.map( (rv) => {
-                    const totalScore = (rv.scores[0] + rv.scores[1] + rv.scores[2] + rv.scores[3] + rv.scores[4])/5
+                    const totalScore = (Number(rv.scores.charAt(0)) + Number(rv.scores.charAt(1))
+                     + Number(rv.scores.charAt(2)) + Number(rv.scores.charAt(3)) + Number(rv.scores.charAt(5)))/5
                     return (<Review user={props.user} product={props.product} rate={rv} totalScore={totalScore}/>
                 );})}
             </div>

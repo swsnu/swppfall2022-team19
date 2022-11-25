@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import HeartRating from './HeartRating'
+import HeartRating from './HeartRate/HeartRating'
 import "./RatingForm.css"
 import { AppDispatch } from '../../store';
-import FixedHeartRating from './FixedHeartRating';
+import FixedHeartRating from './FixedHeartRate/FixedHeartRating';
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { createRate, deleteRate, RateType, updateRate } from '../../store/slices/rate';
 import { UserType } from '../../store/slices/User';
 import { ProductType, selectProduct, updateProduct } from '../../store/slices/product';
-import axios from "axios";
- 
-
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+import BeforeRateForm from './BeforeRateForm/BeforeRateForm';
 
 interface Props {
   user: UserType,
   product: ProductType,
   rate: RateType[]
 }
-
 
 function RatingForm(props: Props) {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +26,8 @@ function RatingForm(props: Props) {
   const [score4, setScore4] = useState(0);
   const [score5, setScore5] = useState(0);
   const [comment, setComment] = useState("");
-  const [image, setImage] = useState<string>("");
+  const [image, setImage] = useState<File | null>(null);
+  const [showImage, setShowImage] = useState<string>("");
 
   const [rateState1, setRateState1] = useState<boolean>(false); //true if user has rated product
   const [rateState2, setRateState2] = useState<boolean>(false);
@@ -60,16 +56,16 @@ function RatingForm(props: Props) {
     else {
       setRateState1(true);
       setRateState2(true);
-      var scores = singleRate.scores; //number[] {score1: 4, score2: 5, score3: 5, score4: 3, score5: 5} !!!
+      const scores = singleRate.scores; 
       // const num1 = scores.toString();
       // console.log("string: " + num1);
-      setScore1(1);
-      setScore2(2);
-      setScore3(3);
-      setScore4(4);
-      setScore5(5);
+      setScore1(Number(scores.charAt(0)));
+      setScore2(Number(scores.charAt(1)));
+      setScore3(Number(scores.charAt(2)));
+      setScore4(Number(scores.charAt(3)));
+      setScore5(Number(scores.charAt(4)));
       setComment(singleRate.comment);
-      setImage(singleRate.picture);
+      setShowImage(singleRate.picture);
     }
 
     for (const key in Object.keys(subCategoryQuestion)) {
@@ -96,19 +92,11 @@ function RatingForm(props: Props) {
     setScore5(score)
   }
 
-  function convertFile(files: FileList | null) {  //https://github.com/bocacode/react-image-upload
-    if (files) {
-      const fileRef = files[0] || ""
-      const fileType: string = fileRef.type || ""
-      console.log("This file upload is of type:", fileType)
-      const reader = new FileReader()
-      reader.readAsBinaryString(fileRef)
-      reader.onload = (ev: any) => {
-        // convert it to base64
-        setImage(`data:${fileType};base64,${btoa(ev.target.result)}`)
-        console.log(image);
-      }
-    }
+  const updateRateState2 = (state: boolean) : void => {
+    setRateState2(state)
+  }
+  const updateRateState1 = (state: boolean) : void => {
+    setRateState1(state)
   }
 
 
@@ -123,40 +111,32 @@ function RatingForm(props: Props) {
     setRateState2(false);
   }
 
+  const onclickDeleteImageHandler = () =>{
+    setImage(null);
+  }
 
+  const onclickSaveHandler = async () => {
 
-
-  const onclickSaveHandler = async () => {   
-
-    //postRate 
-    const scores = [score1, score2, score3, score4, score5];
-    const rateData = {
-      user_id: props.user?.id!,
-      user_username: props.user.username,
-      product_id: props.product.id!,
-      scores: scores,
-      comment: comment,
-      picture: image,
-      likedCount: 0
+    const scores = ""+score1+score2+score3+score4+score5;
+    const formData = new FormData()
+    formData.append('user_id', String(props.user?.id!))
+    formData.append('user_username', props.user?.username!)
+    formData.append('product_id', String(props.product.id!))
+    formData.append('scores', scores)
+    formData.append('comment', comment)
+    if(image){
+      formData.append('picture', image);
     }
-    // const formData = new FormData()
-    // formData.append('user_id', props.user?.id!)
-    // formData.append('username', props.user?.username!)
-    // formData.append('product_id', props.product.id!)
-    // formData.append('scores', scores)
-    // formData.append('comment', comment)
-    // formData.append('picture', image);
-    // formData.append('likedCount', 0);
-
-    const responseRate = await dispatch(createRate(rateData))
+    
+    const responseRate = await dispatch(createRate(formData))
     if (responseRate.type === `${createRate.typePrefix}/fulfilled`) {
       setRateState1(true);
       setRateState2(true);
     }
 
     //updateProduct's average score
-    let averageScore = (score1 + score2 + score3 + score4+ score5)/5;
-    let totalchange = (averageScore - props.product.averageScore)/(totalRateNum+1);
+    let averageScore = (score1 + score2 + score3 + score4 + score5) / 5;
+    let totalchange = (averageScore - props.product.averageScore) / (totalRateNum + 1);
     let totalAverageScore = props.product.averageScore - totalchange;
     const dataUpdate = {
       id: props.product.id,
@@ -180,26 +160,27 @@ function RatingForm(props: Props) {
   //------when user is in edit rate------state: rateState1 = true, rateState2 = false
   const onclickBackEditHandler = () => {
     setRateState2(true);
+
   }
 
 
   const onclickSaveEditHandler = async () => {   //#TODO: need to update product average score
 
-    const scores = [score1, score2, score3, score4, score5];
-    const editedRateData = {
-      id: rate?.id!,
-      user_id: props.user?.id!,
-      user_username: props.user?.username!,
-      product_id: props.product.id!,
-      scores: scores,
-      comment: comment,
-      picture: image,
-      likedCount: rate?.likedCount!
+    const scores = ""+score1+score2+score3+score4+score5;
+    const formData = new FormData()
+    formData.append('id', String(rate?.id))
+    formData.append('user_id', String(props.user?.id!))
+    formData.append('user_username', props.user?.username!)
+    formData.append('product_id', String(props.product.id!))
+    formData.append('scores', scores)
+    formData.append('comment', comment)
+    if(image){
+      formData.append('picture', image);
     }
-    await dispatch(updateRate(editedRateData))
+    await dispatch(updateRate(formData))
 
-    let averageScore = (score1 + score2 + score3 + score4+ score5)/5;
-    let totalchange = (averageScore - props.product.averageScore)/(totalRateNum+1);
+    let averageScore = (score1 + score2 + score3 + score4 + score5) / 5;
+    let totalchange = (averageScore - props.product.averageScore) / (totalRateNum + 1);
     let totalAverageScore = props.product.averageScore - totalchange;
     const dataUpdate = {
       id: props.product.id,
@@ -214,11 +195,7 @@ function RatingForm(props: Props) {
     <div>
       <div className="rating_form">
         <div className='rating_blank'>
-          {rateState1 === false && rateState2 === false &&
-            <div className='rate_box'>
-              <button className="rate_button" hidden={rateState2} onClick={() => onclickRateHandler()}>내 평가 남기러 가기</button>
-            </div>
-          }
+          {rateState1 === false && rateState2 === false && <BeforeRateForm updateState2={updateRateState2}/>}
           {rateState1 === false && rateState2 === true &&
             <div className='rate_box'>
               <h2 className="rating_heading"> 리뷰 작성하기</h2>
@@ -238,14 +215,26 @@ function RatingForm(props: Props) {
               </div>
               <div className="comment">
                 <label>한줄평</label>
-                <textarea onChange={(event) => setComment(event.target.value)} />
+                <textarea value={comment} onChange={(event) => setComment(event.target.value)} />
               </div>
               <div className='picture'>
-                <label>사진</label>
-                <input type='file' multiple accept='image/*' onChange={(e) => convertFile(e.target.files)} />
-                {image && (image.indexOf("image/") > -1) &&
-                  <img src={image} width={300} />
-                }
+                <label>사진 </label>
+                {image && (
+                  <div>
+                    <img alt='Image Not Found' width={'300px'} src={URL.createObjectURL(image)} />
+                  </div>
+                )}
+                <br />
+                <input
+                  type='file'
+                  accept="image/*"
+                  onChange={(event) => {
+                    if (event.target?.files) {
+                      setImage(event.target?.files[0])
+                    }
+                  }}
+                />
+                <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
               </div>
 
             </div>
@@ -273,13 +262,13 @@ function RatingForm(props: Props) {
             </div>
             <div className='picture'>
               <label>사진</label>
-              <img src={image} width={300} />
+              <img src={showImage} width={300} />
             </div>
           </div>
         }
         {rateState1 === true && rateState2 === false &&
           <div className='rate_box'>
-            <h2 className="rating_heading"> 리뷰 작성하기</h2>
+            <h2 className="rating_heading"> 리뷰 수정하기</h2>
             <button id='button' onClick={() => onclickBackEditHandler()}>수정 취소</button>
             <button id='button' onClick={() => onclickSaveEditHandler()}>수정 저장</button>
             <br></br>
@@ -300,10 +289,22 @@ function RatingForm(props: Props) {
             </div>
             <div className='picture'>
               <label>사진</label>
-              <input type='file' multiple accept='image/*' onChange={(e) => convertFile(e.target.files)} />
-              {image && (image.indexOf("image/") > -1) &&
-                <img src={image} width={300} />
-              }
+              {image && (
+                  <div>
+                    <img alt='Image Not Found' width={'300px'} src={URL.createObjectURL(image)} />
+                  </div>
+                )}
+                <br />
+                <input
+                  type='file'
+                  accept="image/*"
+                  onChange={(event) => {
+                    if (event.target?.files) {
+                      setImage(event.target?.files[0])
+                    }
+                  }}
+                />
+                <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
             </div>
           </div>
         }

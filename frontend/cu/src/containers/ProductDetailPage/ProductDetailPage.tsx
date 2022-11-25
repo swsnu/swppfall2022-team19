@@ -12,11 +12,8 @@ import { selectUser } from "../../store/slices/User"
 import { fetchProduct, selectProduct} from "../../store/slices/product"
 import { fetchRates, selectRate } from "../../store/slices/rate"
 import { AppDispatch } from '../../store';
-import axios from "axios";
+import RatingLayout from '../../components/RatingForm/RatingLayout';
  
-
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 function ProductDetailPage() {
   //왼편에 product, 오른편에 rating, 아래에 totalScoreList, 맨 아래에는 reviewList.
@@ -55,7 +52,7 @@ function ProductDetailPage() {
         <div key={2}> 
           {
             userState.selectedUser && selectedProduct && rateState.rates &&
-            <RatingForm user={userState.selectedUser} product={selectedProduct} rate={rateState.rates}/>
+            <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates}/>
           }
         </div>
 

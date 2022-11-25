@@ -1,7 +1,7 @@
 import "./FixedHeartRating.css"
 
 interface Props{
-    score: number
+    score: number|String
 }
 
 function FixedHeartRating(props: Props) {

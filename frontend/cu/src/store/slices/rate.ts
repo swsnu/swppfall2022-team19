@@ -10,7 +10,7 @@ export interface RateType {
     user_id: UserType['id'],
     user_username: UserType['username'],
     product_id: ProductType['id'],
-    scores: number[],
+    scores: string,  //number[]--> string, 
     comment: string,
     picture: string, //temp, need to change later
     likedCount: number,
@@ -40,8 +40,8 @@ export const fetchRates = createAsyncThunk(
 
 export const createRate = createAsyncThunk(
     'product/createRate',
-    async (data: Omit<RateType, 'id'>, { dispatch }) => {
-        const response = await client.post(`/api/rate/`, data)  
+    async (data: FormData, { dispatch }) => {
+        const response = await client.post(`/api/rate/`, data)
         dispatch(rateActions.addRate(response.data))
         return response.data
     }
@@ -49,8 +49,9 @@ export const createRate = createAsyncThunk(
 
 export const updateRate = createAsyncThunk(
     'product/updateRate',
-    async (rate: RateType, { dispatch }) => {
-        const { id, ...data } = rate
+    async (rate: FormData, { dispatch }) => {
+        const id = rate.get('id')
+        const { ...data } = rate
         const response = await client.put(`/api/rate/${id}/`, data)  //id = rateID
         dispatch(rateActions.updateRate(response.data))
         return response.data
@@ -74,14 +75,26 @@ export const rateSlice = createSlice({
     initialState,
     reducers: {
         addRate: (state, action: PayloadAction<RateType>) => {
-            const newRate = { ...action.payload }
+            const newRate = {
+                id: state.rates.length + 1,
+                user_id: Number(action.payload.user_id),
+                user_username: action.payload.user_username,
+                product_id: Number(action.payload.product_id),
+                scores: action.payload.scores,
+                comment: action.payload.comment,
+                picture: action.payload.picture,
+                likedCount: 0
+            }
             state.rates.push(newRate)
             state.selectedRate = newRate
         },
         updateRate: (state, action: PayloadAction<RateType>) => {
-            state.rates = state.rates.map(
-                rate => (rate.id === action.payload.id) ? action.payload : rate
-            )
+            const rate = state.rates.find(rate => (rate.id === Number(action.payload.id)))
+            if (rate) {
+                rate.scores = action.payload.scores
+                rate.comment = action.payload.comment
+                rate.picture = action.payload.picture
+            }
         },
         deleteRate: (state, action: PayloadAction<RateType['id']>) => {
             state.rates = state.rates.filter(
@@ -92,12 +105,12 @@ export const rateSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchRates.fulfilled, (state, action) => {
-          state.rates = action.payload
+            state.rates = action.payload
         })
         builder.addCase(createRate.rejected, (_state, action) => {
-          console.error(action.error)
+            console.error(action.error)
         })
-      }
+    }
 
 })
 

@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -22,7 +23,7 @@ def destroy(request,pk) - rate 삭제
 def list(request) - rates, a by specific user
 
 '''
-
+@method_decorator(csrf_exempt, name='dispatch')
 class RateViewSet(viewsets.GenericViewSet):
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
@@ -36,6 +37,7 @@ class RateViewSet(viewsets.GenericViewSet):
 
 
     # (O)POST /api/rate/ hmm without picture..
+    @csrf_exempt
     def create(self, request):
         data = json.loads(request.body.decode())
         user_id = data['user_id']
@@ -63,6 +65,7 @@ class RateViewSet(viewsets.GenericViewSet):
 
 
     # (O)GET /api/rate/{rate_id}/ hmm without picture..
+    @csrf_exempt
     def retrieve(self, request, pk=None):
         try:
             rate = self.get_object()
@@ -71,6 +74,7 @@ class RateViewSet(viewsets.GenericViewSet):
         return Response(self.get_serializer(rate).data, status=200)
 
     # (O)PUT /api/rate/{rate_id}/
+    @csrf_exempt
     def update(self, request, pk=None):
         try:
             rate = self.get_object()
@@ -102,6 +106,7 @@ class RateViewSet(viewsets.GenericViewSet):
     
 
     # (O)DELETE /api/rate/{rate_id}/
+    @csrf_exempt
     def destroy(self, request, pk=None):
         try:
             rate = self.get_object()
@@ -113,6 +118,7 @@ class RateViewSet(viewsets.GenericViewSet):
 
 
     # GET /api/rate/user/
+    @csrf_exempt
     @action(detail=False, methods=["GET"])
     def userRates(self, request):
         user_id = request.GET.get("user_id","")
