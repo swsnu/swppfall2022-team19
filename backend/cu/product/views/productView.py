@@ -18,7 +18,6 @@ class ProductViewSet(viewsets.GenericViewSet):
     serializer_class = ProductSerializer
 
     # (O)GET /api/product/
-    @csrf_exempt
     def list(self, request):
         products = Product.objects.all()
         serializer = self.get_serializer(products, many=True)
@@ -48,13 +47,11 @@ class ProductViewSet(viewsets.GenericViewSet):
     '''
 
     # (O)GET /api/product/{product_id}
-    @csrf_exempt
     def retrieve(self, request, pk=None):
         product = self.get_object()
         return Response(self.get_serializer(product).data, status=200)
 
     # (O)PUT /api/product/{product_id}  
-    @csrf_exempt
     def update(self, request, pk=None):
         product = self.get_object()
         data = request.data.copy()

@@ -243,7 +243,7 @@ function RatingForm(props: Props) {
               <div className='picture'>
                 <label>사진</label>
                 <input type='file' multiple accept='image/*' onChange={(e) => convertFile(e.target.files)} />
-                {(image.indexOf("image/") > -1) &&
+                {image && (image.indexOf("image/") > -1) &&
                   <img src={image} width={300} />
                 }
               </div>
@@ -301,7 +301,7 @@ function RatingForm(props: Props) {
             <div className='picture'>
               <label>사진</label>
               <input type='file' multiple accept='image/*' onChange={(e) => convertFile(e.target.files)} />
-              {(image.indexOf("image/") > -1) &&
+              {image && (image.indexOf("image/") > -1) &&
                 <img src={image} width={300} />
               }
             </div>

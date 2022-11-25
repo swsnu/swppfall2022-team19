@@ -31,7 +31,6 @@ class RateViewSet(viewsets.GenericViewSet):
 
 
     # (O)POST /api/rate/ hmm without picture..
-    @csrf_exempt
     def create(self, request):
         data = json.loads(request.body.decode())
         user_id = data['user_id']
@@ -72,7 +71,6 @@ class RateViewSet(viewsets.GenericViewSet):
         return Response(self.get_serializer(rate).data, status=200)
 
     # (O)PUT /api/rate/{rate_id}/
-    @csrf_exempt
     def update(self, request, pk=None):
         try:
             rate = self.get_object()
@@ -112,7 +110,6 @@ class RateViewSet(viewsets.GenericViewSet):
     
 
     # (O)DELETE /api/rate/{rate_id}/
-    @csrf_exempt
     def destroy(self, request, pk=None):
         try:
             rate = self.get_object()

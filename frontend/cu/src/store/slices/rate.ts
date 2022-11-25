@@ -1,11 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import client from '../api/client';
 import { RootState } from "..";
 import { UserType } from "./User"
 import { ProductType } from "./product";
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export interface RateType {
     id: number,
@@ -32,7 +30,7 @@ const initialState: RateState = {
 export const fetchRates = createAsyncThunk(
     'product/fetchRates',
     async () => {
-        const response = await axios.get<RateType[]>(`/api/rate/`)  //id = productID
+        const response = await client.get<RateType[]>(`/api/rate/`)  //id = productID
         return response.data
     }
 )
@@ -43,7 +41,7 @@ export const fetchRates = createAsyncThunk(
 export const createRate = createAsyncThunk(
     'product/createRate',
     async (data: Omit<RateType, 'id'>, { dispatch }) => {
-        const response = await axios.post(`/api/rate/`, data)  
+        const response = await client.post(`/api/rate/`, data)  
         dispatch(rateActions.addRate(response.data))
         return response.data
     }
@@ -53,7 +51,7 @@ export const updateRate = createAsyncThunk(
     'product/updateRate',
     async (rate: RateType, { dispatch }) => {
         const { id, ...data } = rate
-        const response = await axios.put(`/api/rate/${id}/`, data)  //id = rateID
+        const response = await client.put(`/api/rate/${id}/`, data)  //id = rateID
         dispatch(rateActions.updateRate(response.data))
         return response.data
     }
@@ -64,7 +62,7 @@ export const updateRate = createAsyncThunk(
 export const deleteRate = createAsyncThunk(
     'product/deleteRate',
     async (id: RateType['id'], { dispatch }) => {
-        await axios.delete(`/api/rate/${id}/`)
+        await client.delete(`/api/rate/${id}/`)
         dispatch(rateActions.deleteRate(id))
     }
 )

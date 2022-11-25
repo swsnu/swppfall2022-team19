@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useParams } from 'react-router'
 
@@ -29,7 +29,7 @@ function ProductDetailPage() {
   
   //window.location.reload(); 
   //fetch all the rates stored in particular product
-  useEffect(() => {  
+  useLayoutEffect(() => {  
     dispatch(fetchProduct(Number(id)));
     dispatch(fetchRates())
   }, [id, dispatch]) //initial rendering이 안된다.  
