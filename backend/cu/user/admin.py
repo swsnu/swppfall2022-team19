@@ -2,11 +2,10 @@ from .models import User
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from product.models.productModel import Product, Tag
-from product.models.rateModel import Score, Rate, Like
+from product.models.rateModel import Rate, Like
 
 # Register your models here.
 admin.site.register(Product)
-admin.site.register(Score)
 admin.site.register(Rate)
 admin.site.register(Tag)
 admin.site.register(Like)

@@ -2,11 +2,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.decorators import action
 import json
 from user.models import User
-from product.models.rateModel import Score, Rate
+from product.models.rateModel import Rate
 from product.models.productModel import Product
-from product.serializers.rateSerializer import RateSerializer, newRateSerializer
+from product.serializers.rateSerializer import RateSerializer
 
 '''
 /api/rate/
@@ -16,6 +17,10 @@ def list(request) - rates
 def retrieve(request,pk) - 특정 rate 가져오기
 def update(request,pk) - rate 수정
 def destroy(request,pk) - rate 삭제
+
+/api/rate/{user_id}/?
+def list(request) - rates, a by specific user
+
 '''
 
 class RateViewSet(viewsets.GenericViewSet):
@@ -35,25 +40,20 @@ class RateViewSet(viewsets.GenericViewSet):
         data = json.loads(request.body.decode())
         user_id = data['user_id']
         product_id = data['product_id']
-        scores = data['scores'] # list
+        scores = data['scores'] # string
         comment = data['comment']
         picture = data['picture']
 
-        user = User.objects.get(id=user_id)
-        product = Product.objects.get(id=product_id)
-
-        scores = Score.objects.create(score1=scores[0], score2=scores[1], score3=scores[2], score4=scores[3], score5=scores[4])
-        scores.save()
-        
-        rate = Rate.objects.create(user=user, product=product, scores=scores,comment=comment, picture=picture)
+        user = User.objects.get(id=int(user_id))
+        product = Product.objects.get(id=int(product_id))        
+        rate = Rate.objects.create(user=user, product=product, scores=scores, comment=comment, picture=picture)
         rate.save()
 
-        score_list = [rate.scores.score1, rate.scores.score2, rate.scores.score3, rate.scores.score4, rate.scores.score5]
         res_rate = {
             'user_id': rate.user.id,
-            'user_username': rate.user.username,
+            'username': rate.user.username,
             'product_id': rate.product.id,
-            'scores': score_list,
+            'scores': rate.scores,
             'comment': rate.comment,
             'picture': str(rate.picture),
             'likedCount': rate.likedCount, #default 0
@@ -78,20 +78,12 @@ class RateViewSet(viewsets.GenericViewSet):
             return Response(status=404)
         
         data = json.loads(request.body.decode())
-        updatedScores = data['scores'] # list
+        updatedScores = data['scores'] # string
         updatedComment = data['comment']
         updatedPicture = data['picture']
         updatedLikedCount = data['likedCount']
 
-        score = Score.objects.get(id=rate.scores.id)
-        score.score1 = updatedScores[0]
-        score.score2 = updatedScores[1]
-        score.score3 = updatedScores[2]
-        score.score4 = updatedScores[3]
-        score.score5 = updatedScores[4]
-        score.save()
-        score_list = [rate.scores.score1, rate.scores.score2, rate.scores.score3, rate.scores.score4, rate.scores.score5]
-
+        rate.scores = updatedScores
         rate.comment = updatedComment
         rate.picture = updatedPicture
         rate.likedCount = updatedLikedCount
@@ -99,9 +91,9 @@ class RateViewSet(viewsets.GenericViewSet):
 
         res_rate = {
             'user_id': rate.user.id,
-            'user_username': rate.user.username,
+            'username': rate.user.username,
             'product_id': rate.product.id,
-            'scores': score_list,
+            'scores': rate.scores,
             'comment': rate.comment,
             'picture': str(rate.picture),
             'likedCount': rate.likedCount
@@ -116,6 +108,32 @@ class RateViewSet(viewsets.GenericViewSet):
         except Rate.DoesNotExist:
             return Response(status=404)        
         else:
-            rate.scores.delete()
             rate.delete()
             return Response(status=204)
+
+
+    # GET /api/rate/user/
+    @action(detail=False, methods=["GET"])
+    def userRates(self, request):
+        user_id = request.GET.get("user_id","")
+        rates = (
+            Rate.objects.filter(user_id=user_id)
+        )
+        serializer = RateSerializer(rates,many=True)
+        return Response(serializer.data, status=200)
+
+
+
+
+    '''
+    export const fetchQueryTags = createAsyncThunk(
+        'rate/userRates',
+        async (params: { user_id: number }) => {
+            const response = await axios.get<RateType[]>('/api/rate/user/', { params })
+            return response.data
+        }
+    )
+    '''
+    
+    
+    
