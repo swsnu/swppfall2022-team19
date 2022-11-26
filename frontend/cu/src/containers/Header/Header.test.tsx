@@ -66,7 +66,12 @@ describe("<Header />", () => {
     expect(mockNavigate).toHaveBeenCalledTimes(1);
   });
 
-
+  it("should handle clickSearch", () => {
+    render(header);
+    const search = screen.getByTitle("searchIcon")
+    fireEvent.click(search!);
+    expect(mockNavigate).toHaveBeenCalledTimes(0);
+  });
 
   it("should handle clickSignout", () => {
     render(header);
