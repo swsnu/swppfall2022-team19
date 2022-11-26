@@ -4,6 +4,7 @@ from product.models.productModel import Tag, Product
 from product.serializers.productSerializer import ProductSerializer
 #from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 '''
 /api/product/
@@ -68,3 +69,15 @@ class ProductViewSet(viewsets.GenericViewSet):
         serializer.save()
 
         return Response(serializer.data, status=200)
+
+    # def searchName(self, request, searchKey):
+    #     products = [Product.objects.filter(Q(name__contains=searchKey))]
+    #     serializer = self.get_serializer(products, many=True)
+    #     data = serializer.data              # dictionary format not json yet
+    #     return Response(data, status=200)   # json
+
+    # def searchTag(self, request, searchTag):
+    #     products = [product for product in Product.objects.all() if searchTag in product.tags]
+    #     serializer = self.get_serializer(products, many=True)
+    #     # data = serializer.data              # dictionary format not json yet
+    #     return Response(data, status=200)   # json
