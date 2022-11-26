@@ -22,6 +22,7 @@ jobs:
         - pip install coveralls
         - pip install black
         - python -m pip install Pillow
+        - python -m pip install django-cors-headers
         - pip install djangorestframework
         - yarn global add coveralls
         - gem install coveralls-lcov
