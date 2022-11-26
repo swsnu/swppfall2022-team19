@@ -64,7 +64,9 @@
       "!src/components/ReviewList/*",
       "!src/components/TotalScore/*",
       "!src/components/TotalScoreList/*",
-      "!src/components/RatingForm/RatingForm.tsx",
+      "!src/components/RatingForm/AfterRateForm/*",
+      "!src/components/RatingForm/EditRateForm/*",
+      "!src/components/RatingForm/CreateRateForm/*",
       "!src/test-utils/*",
       "!src/reportWebVitals.ts"
     ]
