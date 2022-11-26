@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "./RatingForm.css"
+import "./RatingLayout.css"
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { RateType} from '../../store/slices/rate';
 import { UserType } from '../../store/slices/User';
