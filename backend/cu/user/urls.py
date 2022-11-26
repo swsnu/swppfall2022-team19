@@ -7,7 +7,7 @@ urlpatterns = [
     path('signout/', views.signout, name='signout'),
     path('signup/', views.signup, name='signup'),
     path('token/', views.token, name='token'),
-    path('newSurvey/<int:user_id>', views.changeSurvey, name="changeSurvey"),
+    path('newSurvey/<int:user_id>/', views.changeSurvey, name="changeSurvey"),
     path('requestUser/', views.requestUser, name="requestUser"),
     path('userlist/', views.userlist, name="userlist"),
 ]
