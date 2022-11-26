@@ -3,7 +3,7 @@ import { AnyAction, configureStore, EnhancedStore, isAsyncThunkAction } from "@r
 import axios from "axios";
 import { ThunkMiddleware } from "@reduxjs/toolkit";
 import reducer, { UserState } from './User';
-import { postUser, loginUser, signoutUser, getUsers, getRequestUser } from './User';
+import { postUser, loginUser, signoutUser, getUsers, getRequestUser, putSurvey } from './User';
 
 jest.mock("axios");
 
@@ -16,6 +16,8 @@ describe("User reducer", () => {
     const wrongUserInput = { 'username': 'wrong', 'password': 'wrong' };
     const fakeUserList1 = [fakeUser1, fakeUser2];
     const fakeUserList2 = [fakeUser1, fakeUser2, fakeUser3];
+    const changeSurvey1 = { id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2 };
+    const changedFakeUser1 = { id: 1, 'username': 'fakeUser1', 'password': '12345', 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2, 'loginState': false };
 
     beforeAll(() => {
         store = configureStore(
@@ -106,6 +108,27 @@ describe("User reducer", () => {
         });
         await store.dispatch(postUser({ 'username': 'fakeUser1', 'password': '12345', 'gender': 1, 'age': 1, 'taste': 'AB', 'question': 1 }));
         expect(mockConsoleError).toBeCalled();
-    })
+    });
+    it("should handle putSurvey - null", async () => {
+        jest.spyOn(axios, "put").mockResolvedValue({
+            data: changeSurvey1
+        })
+        await store.dispatch(
+            putSurvey({ id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2 })
+        );
+        expect(store.getState().userState.users).toEqual(changedFakeUser1);
+    });
+    it("should handle putSurvey - not null", async () => {
+        axios.get = jest.fn().mockResolvedValue({ data: fakeUser1 });
+        await store.dispatch(getRequestUser());
+
+        jest.spyOn(axios, "put").mockResolvedValue({
+            data: changeSurvey1
+        })
+        await store.dispatch(
+            putSurvey({ id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2 })
+        );
+        expect(store.getState().userState.users).toEqual(changedFakeUser1);
+    });
 
 }); // end describe
