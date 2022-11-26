@@ -58,7 +58,7 @@ function CreateRateForm(props: Props) {
         const scores = "" + score1 + score2 + score3 + score4 + score5;
         const formData = new FormData()
         formData.append('user_id', String(props.user?.id!))
-        formData.append('user_username', props.user?.username!)
+        formData.append('username', props.user?.username!)
         formData.append('product_id', String(props.product.id!))
         formData.append('scores', scores)
         formData.append('comment', comment)

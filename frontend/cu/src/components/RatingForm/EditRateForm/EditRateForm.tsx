@@ -57,7 +57,7 @@ function EditRateForm(props: Props) {
         const formData = new FormData()
         formData.append('id', String(props.rate?.id))
         formData.append('user_id', String(props.user?.id!))
-        formData.append('user_username', props.user?.username!)
+        formData.append('username', props.user?.username!)
         formData.append('product_id', String(props.product.id!))
         formData.append('scores', scores)
         formData.append('comment', comment)
