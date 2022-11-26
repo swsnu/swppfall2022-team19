@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { ProductState } from "../../store/slices/product";
 import { getMockProductStore } from "../../test-utils/mock_JH";
-import Category from "./Category";
+import SearchResult from "./SearchResult";
 import { Props as ProductProps } from "../../components/ProductBlock/ProductBlock";
 
 jest.mock("../../components/ProductBlock/ProductBlock", () => (props: ProductProps) => (
@@ -66,15 +66,15 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
-describe("<Category />", () => {
-  let category: JSX.Element;
+describe("<SearchResult />", () => {
+  let searchResult: JSX.Element;
   beforeEach(() => {
     jest.clearAllMocks();
-    category = (
+    searchResult = (
       <Provider store={mockStore}>
         <MemoryRouter>
           <Routes>
-            <Route path="/" element={<Category />} />
+            <Route path="/" element={<SearchResult />} />
           </Routes>
         </MemoryRouter>
       </Provider>
@@ -82,27 +82,27 @@ describe("<Category />", () => {
   });
 
   it("should render animated Title", () => {
-    render(category);
+    render(searchResult);
     const products = screen.getAllByTitle("animatedTitle");
     expect(products).toHaveLength(1);
   });
 
-  it("should render Category", () => {
-    const { container } = render(category);
+  it("should render SearchResult", () => {
+    const { container } = render(searchResult);
     expect(container).toBeTruthy();
   });
 
   it("should render products", () => {
-    render(category);
+    render(searchResult);
     const products = screen.getAllByTitle("productBlocks");
     expect(products).toHaveLength(1);
   });
 
   it("should handle clickProduct", () => {
-    render(category);
+    render(searchResult);
     const products = screen.getAllByTitle("productBlocks")[0];
-    const title = products.querySelector(".productInfoBlock");
-    fireEvent.click(title!);
+    // const title = products.querySelector(".productInfoBlock");
+    fireEvent.click(products!);
     expect(mockNavigate).toHaveBeenCalledTimes(1);
   });
 

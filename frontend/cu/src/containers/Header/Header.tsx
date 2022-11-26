@@ -1,27 +1,52 @@
 
 import "./Header.css"
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector} from "react-redux";
 import { useState } from 'react';
 import { AppDispatch } from "../../store";
-import { useDispatch } from "react-redux";
+
+import { getRequestUser } from "../../store/slices/User";
 import { signoutUser } from "../../store/slices/User";
+import { fetchSearchProducts } from "../../store/slices/product";
+import { RootState } from "../../store";
+
+
 
 
 const Header = () => {
 
-    const search = require('../../Categoryicon/search.png')
-
-    const logo = require('../../Categoryicon/Logo.png')
+    const search = require('../../Categoryicon/search.png');
+    
+    const logo = require('../../Categoryicon/Logo.png');
 
     const [searchKey, setSearchKey] = useState<string>("");
-    
 
+    const myPage = require('../../Categoryicon/myPage.png');
+
+
+    const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
+    
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+// urls 에 새로운 /searchProduct 추가하기 
 
-    const clickSearchHandler = () => {
-        navigate('/home');
+    const clickSearchHandler = async () => {
+        const result = await dispatch(fetchSearchProducts({name: searchKey!}));
+        if (`${fetchSearchProducts.typePrefix}/fulfilled`) { 
+            navigate(`/searchProduct/${searchKey}`);
+            console.log("searchKey", searchKey);
+        }
     }
+
+    const clickMyPageHandler = async () => {
+        
+        const id =  selectedUserState?.id
+        navigate("/user/:id"); 
+        console.log("userid", id);
+    }
+
+
+
 
     const clickSignoutHandler = async () => {
         const result = await dispatch(signoutUser());
@@ -77,10 +102,13 @@ const Header = () => {
                         value={searchKey}
                         onChange={(event) => setSearchKey(event.target.value)} />
                     <img title = "searchIcon" className="SearchIcon" onClick={() => clickSearchHandler()} src={search} alt="SearchIcon" />
-                </div>
+                    </div>
+
 
                 <div className="end-header">
+                <img title = "myPageIcon" className="MyPageIcon" onClick={() => clickMyPageHandler()} src={myPage} alt="MyPageIcon" />
                     <button title="signoutButton" className="SignoutButton" onClick={() => clickSignoutHandler()}> 로그아웃</button>
+
                 </div>
             </div>
         );

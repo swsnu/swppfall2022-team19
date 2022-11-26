@@ -22,9 +22,9 @@ const ProductBlock = (props: Props) => {
                     <div className="productTextBlock">
                         <p className="productName">{props.name}</p>
                         <span title="price" className="productPrice">{props.price}원</span>
-                        {props.details !== "null" &&
+                        {/* {props.details !== "null" &&
                             <span title="detail" className='productDetail'>설명:{props.details}</span>
-                        }
+                        } */}
                         <span title="score" className='productAverageScore'>평균점수: {props.averageScore}</span>
                     </div>
                 </div>

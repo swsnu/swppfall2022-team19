@@ -1,10 +1,25 @@
 .productBlocks{
-    display: flex;
-    justify-content: center;  
+    
+    display: flexbox;
+    max-width: 100%;
+    
+    padding: 3%;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+    flex-wrap: wrap;
+    flex-direction:row;
+
+    
+    
+
 }
 
 .CategoryPage{
-    text-align: center;
+
+    
+    width: 100%;
+    flex-wrap: wrap;
+
 }
 
 .titles {

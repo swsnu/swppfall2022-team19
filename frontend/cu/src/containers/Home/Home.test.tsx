@@ -49,6 +49,8 @@ const stubInitialState: ProductState = {
     
   ],
   selectedProduct: null,
+  tags: [],
+  
 };
 const mockStore = getMockProductStore({ product: stubInitialState
 });

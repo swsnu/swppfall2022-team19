@@ -2,60 +2,69 @@
 
 .header {
     /* position: fixed; */
-    max-width: 100%;
+    width: 100%;
     max-height: 60px;
-    display: flex;
-    align-items: center;
-    padding: 1%;
+    display:inline-flex;
+    
+    padding-top: 2%;
+    padding-bottom: 2%;
+
     border-color:rgb(157, 201, 42);
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0);
+    gap: 3rem;
   }
 
   .Logo {
-    padding: 10px;
-    width: 200px;
-    height: 60px;
-    margin: 10px;
-    margin-right: 20px;
+    max-width: 190px;
+    max-height: 60px;
+
     
   }
 
   .start-header {
     display: flex;
+    gap: 3rem;
+    
   }
 
   .SearchInput{
-    margin-left: 50px;
-    width:500px;
+    
+    max-width:600px;
+    min-width:500px;
     height: 50px;
     /* border: 0.5px; */
     border: solid;
     border-radius: 10px;
 
-    /* font-size: 1.5rem; */
+    font-size: 3rem;
 
     color: rgb(157, 201, 42);
     
-
     
   }
 
   .SearchIcon {
-    width: 60px;
-    height: 60px;
+    max-width: 60px;
+    max-height: 60px;
+  }
 
-    
-    
+  .MyPageIcon {
+    max-width: 60px;
+    max-height: 60px;
   }
 
 .SearchBox {
     align-items: center;
     display: flex;
-    margin-right: 30px;
+
 }
 
   .Category {
     display: inline-flex;
+    min-width: 300px;
+    gap: 5rem;
+    align-self: center;
+  
 
   }
 
@@ -66,8 +75,13 @@
 
   .CategoryMenu {
     text-align: center;
-    padding: 10px;
-    width: 100px;
-    height: 50px;
-    margin: 10px;
+    max-width: 100px;
+    max-height: 50px;
+  }
+
+  .end-header {
+    display: flex;
+    float:right;
+
+    
   }

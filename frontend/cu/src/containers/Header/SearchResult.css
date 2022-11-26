@@ -1,34 +1,10 @@
 .productBlocks{
-    
-    display: grid;
-    width: max-content;
-    
-    padding: 3%;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    grid-gap: 1rem;
-    
-
-    
-    align-items: center;
-    
-
+    display: flex;
+    justify-content: center;  
 }
-.BasicList {
+
+.CategoryPage{
     text-align: center;
-}
-
-
-.CenterLogo {
-margin-top: 50px;
-margin-bottom: 20px;
-display: inline-block;
-
-}
-
-.Home {
-    align-items: center;
-    text-align: center;
-    vertical-align:middle;
 }
 
 .titles {
