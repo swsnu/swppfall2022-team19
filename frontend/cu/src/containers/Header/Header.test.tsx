@@ -79,4 +79,12 @@ describe("<Header />", () => {
     fireEvent.click(signout!);
     expect(mockNavigate).toHaveBeenCalledTimes(0);
   });
+
+
+  it("should handle clickMyPage", () => {
+    render(header);
+    const myPage = screen.getByTitle("myPageIcon")
+    fireEvent.click(myPage!);
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
+  });
 });
