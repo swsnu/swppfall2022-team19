@@ -11,8 +11,40 @@ import Home from './containers/Home/Home'
 import Category from './containers/Category/Category'
 import SearchResult from "./containers/Header/SearchResult";
 import MyPage from "./containers/MyPage/MyPage";
+import { useEffect } from "react"; //local
+import { getRequestUser, selectUser } from "./store/slices/User";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./store";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 function App() {
+
+  const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const moveToLogin = ((loggedin: boolean) => {
+    console.log("moveToLogin is activated");
+
+    if (!loggedin) {
+      return <Navigate to="/login"></Navigate>
+    } else {
+      console.log("is loggeed in");
+    }
+  });
+
+  useEffect(() => {
+    console.log(localStorage.getItem('localStorage: loginUser'));
+    if (localStorage.getItem('loginUser') === null) {
+      console.log("localStorage.getItem('loginUser')===null");
+      moveToLogin(false);
+    } else {
+      dispatch(getRequestUser());
+      console.log("selectedUser: " + selectedUserState?.username);
+    }
+  }, []);
+
+
   return (
     <div className="appTotal">
       <BrowserRouter>
@@ -22,9 +54,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path='/signup' element={<SignupSurvey />} />
           <Route path="/ProductDetail/:id/" element={<ProductDetailPage />} />
-          <Route path="/category/:mainCategory" element={<Category/>} />
-          <Route path="/searchProduct/:searchKey" element={<SearchResult/>} />
-          <Route path ="/user/:id" element = {<MyPage/>} />
+          <Route path="/category/:mainCategory" element={<Category />} />
+          <Route path="/searchProduct/:searchKey" element={<SearchResult />} />
+          <Route path="/user/:id" element={<MyPage />} />
         </Routes>
       </BrowserRouter>
     </div>

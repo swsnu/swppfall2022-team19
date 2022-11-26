@@ -46,11 +46,11 @@ INSTALLED_APPS = [
 # ASGI_APPLICATION = 'cu.asgi.application'
 
 MIDDLEWARE = [
-    #'corsheaders.middleware.CorsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -129,10 +129,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#for security
+# for security
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = ["http://localhost:8000/", "http://localhost"]
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000",
+                        "http://127.0.0.1:3000", "http://localhost"]
 
 # Added - Custom User model
 AUTH_USER_MODEL = 'user.User'
@@ -145,8 +146,29 @@ CSRF_HEADER_NAME = 'X-XSRF-TOKEN'
 SESSION_COOKIE_AGE = 1200  # 20 min
 SESSION_SAVE_EVERY_REQUEST = True
 
-#directory for uploading images 
+# directory for uploading images
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'
+
+# pip install djangorestframework-simplejwt
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': True,
+    # 'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
+}

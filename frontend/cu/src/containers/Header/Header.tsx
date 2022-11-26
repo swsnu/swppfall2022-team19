@@ -8,51 +8,23 @@ import { useState, useEffect } from 'react';
 import { AppDispatch } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { signoutUser } from "../../store/slices/User";
-import { UserType, loginUser, getRequestUser, getUsers } from "../../store/slices/User"; // Login
+import { UserType, loginUser, getRequestUser, getUsers, selectUser } from "../../store/slices/User"; // Login
 import { RootState } from "../../store"; // Login
 
 const Header = () => {
-    // Login
-    const users = useSelector((state: RootState) => state.user.users); // login
-    const userState = useSelector((state: RootState) => state.user.selectedUser?.loginState); // login
-    const selectedUserState = useSelector((state: RootState) => state.user.selectedUser); // login
+
+    const selectedUserState = useSelector(selectUser); // login
     const [searchKey, setSearchKey] = useState<string>("");
-    const [checkStateFlag, setStateFlag] = useState<number>(0);
+    // const [checkStateFlag, setStateFlag] = useState<number>(0);
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-    // var effectAlertFlag = 0;
-    // var checkStateFlag = 0;
+    /*
     const effectAlert = (() => {
         alert("로그인 해야 접근 가능한 페이지입니다.");
         // effectAlertFlag++;
         return <Navigate to="/login"></Navigate>;
     });
-
-    useEffect(() => {
-        dispatch(getUsers()).then(() => dispatch(getRequestUser())).then(() => {
-            console.log(selectedUserState);
-            // effectAlert(selectedUserState);
-            setStateFlag(checkStateFlag + 1);
-            //console.log("checkStateFlag: " + checkStateFlag);
-        });
-        // dispatch(getUsers());
-        // dispatch(getRequestUser());
-    }, [dispatch]);
-
-
-    useEffect(() => {
-        console.log("새로운 useEffect: checkStateFlag: " + checkStateFlag);
-        if (checkStateFlag === 2) {
-            console.log("checkStateFlag가2입니다");
-            if ((selectedUserState === null || selectedUserState === undefined)) {
-                effectAlert();
-            }
-            setStateFlag(0);
-        }
-    }, [checkStateFlag]);
-
-
 
     const moveTo = ((userState: boolean) => {
         if (userState === false) {
@@ -61,30 +33,30 @@ const Header = () => {
             console.log("Dont' need to move");
         }
     });
-
+    */
 
     const search = require('../../Categoryicon/search.png');
-    
+
     const logo = require('../../Categoryicon/Logo.png');
 
     const myPage = require('../../Categoryicon/myPage.png');
 
 
     const clickSearchHandler = async () => {
-        const result = await dispatch(fetchSearchProducts({name: searchKey? searchKey : "_"}));
-        if (`${fetchSearchProducts.typePrefix}/fulfilled`) { 
+        const result = await dispatch(fetchSearchProducts({ name: searchKey ? searchKey : "_" }));
+        if (`${fetchSearchProducts.typePrefix}/fulfilled`) {
             if (searchKey == "")
                 navigate(`/searchProduct/BLANK`);
-            else 
+            else
                 navigate(`/searchProduct/${searchKey}`);
             console.log("searchKey", searchKey);
         }
     }
 
     const clickMyPageHandler = async () => {
-        
-        const id =  selectedUserState?.id
-        navigate("/user/:id"); 
+
+        const id = selectedUserState?.selectedUser?.id
+        navigate("/user/:id");
         console.log("userid", id);
     }
 
@@ -132,23 +104,23 @@ const Header = () => {
                             <p>음료</p>
                         </div>
                     </div>
-                    </nav>
-                </div>
+                </nav>
+            </div>
 
-                <div className="SearchBox">
-                    <input className="SearchInput"
-                        type="text"
-                        value={searchKey}
-                        onChange={(event) => setSearchKey(event.target.value)} />
-                    <img title = "searchIcon" className="SearchIcon" onClick={() => clickSearchHandler()} src={search} alt="SearchIcon" />
-                    </div>
+            <div className="SearchBox">
+                <input className="SearchInput"
+                    type="text"
+                    value={searchKey}
+                    onChange={(event) => setSearchKey(event.target.value)} />
+                <img title="searchIcon" className="SearchIcon" onClick={() => clickSearchHandler()} src={search} alt="SearchIcon" />
+            </div>
 
 
-                <div className="end-header">
-                <img title = "myPageIcon" className="MyPageIcon" onClick={() => clickMyPageHandler()} src={myPage} alt="MyPageIcon" />
-                    <button title="signoutButton" className="SignoutButton" onClick={() => clickSignoutHandler()}> 로그아웃</button>
+            <div className="end-header">
+                <img title="myPageIcon" className="MyPageIcon" onClick={() => clickMyPageHandler()} src={myPage} alt="MyPageIcon" />
+                <button title="signoutButton" className="SignoutButton" onClick={() => clickSignoutHandler()}> 로그아웃</button>
 
-                </div>
+            </div>
         </div>
     );
 
