@@ -43,13 +43,12 @@ const Header = () => {
 
 
     const clickSearchHandler = async () => {
-        const result = await dispatch(fetchSearchProducts({ name: searchKey ? searchKey : "_" }));
+        
+    
+        const result = await dispatch(fetchSearchProducts({ name: searchKey }));
+     
         if (`${fetchSearchProducts.typePrefix}/fulfilled`) {
-            if (searchKey == "")
-                navigate(`/searchProduct/BLANK`);
-            else
-                navigate(`/searchProduct/${searchKey}`);
-            console.log("searchKey", searchKey);
+            navigate(`/searchProduct/${searchKey}`);
         }
     }
 
@@ -67,6 +66,7 @@ const Header = () => {
         const result = await dispatch(signoutUser());
         if (`${signoutUser.typePrefix}/fulfilled`) {
             navigate("/login");
+            console.log("logout 작동했음")
         }
     }
 
