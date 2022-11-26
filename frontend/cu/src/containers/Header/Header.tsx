@@ -71,9 +71,12 @@ const Header = () => {
 
 
     const clickSearchHandler = async () => {
-        const result = await dispatch(fetchSearchProducts({name: searchKey!}));
+        const result = await dispatch(fetchSearchProducts({name: searchKey? searchKey : "_"}));
         if (`${fetchSearchProducts.typePrefix}/fulfilled`) { 
-            navigate(`/searchProduct/${searchKey}`);
+            if (searchKey == "")
+                navigate(`/searchProduct/BLANK`);
+            else 
+                navigate(`/searchProduct/${searchKey}`);
             console.log("searchKey", searchKey);
         }
     }

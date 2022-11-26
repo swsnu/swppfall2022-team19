@@ -20,7 +20,12 @@ function SearchResult() {
     let products = allProducts.products.filter(product => product.name.includes(searchKey!))
     if (products.length == 0) {
         message = "찾으시는 상품과 일치하는 상품이 없습니다. 이런 제품은 어떠신가요?"
-        products = allProducts.products.filter(product => (product.id%10 == 1))
+        const m = Math.floor(Math.random() * 13) + 2
+        const r = Math.floor(Math.random() * (m-1))
+        const showProducts = allProducts.products.filter(product => (product.id % m == r))
+        const showLength = Math.floor(Math.random()*(showProducts.length - 5))
+        products = showProducts.slice(showLength, showLength + 5)
+
     } else {
         message = "찾으시는 상품은 다음과 같습니다."
     }
