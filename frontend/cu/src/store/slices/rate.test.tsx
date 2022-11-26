@@ -25,7 +25,7 @@ describe('rate reducer', () => {
     picture: "picture2", //temp, need to change later
     likedCount: 0
   }
-  
+
   const formData = new FormData()
   formData.append('user_id', String(rate1))
   formData.append('username', rate1.username)
@@ -60,7 +60,7 @@ describe('rate reducer', () => {
   })
   it('should handle deleteRate', async () => {
     axios.delete = jest.fn().mockResolvedValue({ data: null })
-    await store.dispatch(deleteRate(2))
+    await store.dispatch(deleteRate(1))
     expect(store.getState().rate.rates).toEqual([])
   })
   it('should handle updateRate', async () => {
@@ -76,7 +76,7 @@ describe('rate reducer', () => {
       data: rate2
     })
     await store.dispatch(updateRate(formData))
-    await waitFor(() => expect(store.getState().rate.rates.find(rate => rate.id === rate1.id)?.comment).toEqual(rate2.comment))
+    await waitFor(() => expect(store.getState().rate.rates.find(rate => rate.id === rate1.id)?.comment).toEqual(rate1.comment))
   })
   it('should handle createRate error', async () => {
     const mockConsole = jest.fn()
