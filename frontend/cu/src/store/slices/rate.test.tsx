@@ -3,31 +3,32 @@ import { waitFor } from '@testing-library/react'
 import axios from 'axios'
 import reducer, { RateState, createRate, deleteRate, fetchRates, updateRate} from './rate'
 
-describe('book reducer', () => {
+describe('rate reducer', () => {
   let store: EnhancedStore<{ rate: RateState }, AnyAction, [ThunkMiddleware<{ rate: RateState }, AnyAction, undefined>]>
   const rate1 = {
-    id: 2,
+    id: 1,
     user_id: 1,
-    user_username: "user1",
+    username: "user1",
     product_id: 1,
     scores: "33333",
     comment: "comment1",
     picture: "picture1", //temp, need to change later
-    likedCount: 1
+    likedCount: 0
   }
   const rate2 = {
     id: 2,
     user_id: 1,
-    user_username: "user1",
+    username: "user1",
     product_id: 1,
     scores: "55555",
     comment: "comment2",
     picture: "picture2", //temp, need to change later
-    likedCount: 2
+    likedCount: 0
   }
+  
   const formData = new FormData()
   formData.append('user_id', String(rate1))
-  formData.append('username', rate1.user_username)
+  formData.append('username', rate1.username)
   formData.append('product_id', String(rate1.product_id))
   formData.append('scores', rate1.scores)
   formData.append('comment', rate1.comment)
@@ -42,6 +43,7 @@ describe('book reducer', () => {
       selectedRate: null
     })
   })
+
   it('should handle createRate', async () => {
     jest.spyOn(axios, 'post').mockResolvedValue({ data: rate1 })
     const result = await store.dispatch(
@@ -50,6 +52,7 @@ describe('book reducer', () => {
     expect(result.type).toBe(`${createRate.typePrefix}/fulfilled`)
     expect(store.getState().rate.rates.length).toEqual(1)
   })
+
   it('should handle fetchRates', async () => {
     axios.get = jest.fn().mockResolvedValue({ data: [rate1] })
     await store.dispatch(fetchRates())  //id = product ID
