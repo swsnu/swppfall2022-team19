@@ -19,11 +19,9 @@ describe("<ProductBlock />", () => {
             clickProduct={jest.fn()} 
             />);
         const productName = screen.getByText("product1");
-        const productDetail = screen.getByTitle("detail");
         const productPrice = screen.getByTitle("price");
         const productScore = screen.getByTitle("score");
         expect(productName).toBeInTheDocument();
-        expect(productDetail).toBeInTheDocument();
         expect(productPrice).toBeInTheDocument();
         expect(productScore).toBeInTheDocument();
     });
