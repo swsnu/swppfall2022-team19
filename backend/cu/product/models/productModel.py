@@ -2,7 +2,7 @@ from django.db import models
 
 class Tag(models.Model):
     name = models.CharField(max_length = 100)
-    #subscribers = models.ManyToManyField( User, through="user.SubscribeTag", related_name="subscribeTags")
+
     def __str__(self):
         return self.name
 

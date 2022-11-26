@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 import { RootState } from "..";
+import client from '../api/client';
 
-
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export interface ProductType {
     id: number,
@@ -32,11 +29,11 @@ export interface ProductState {
 }
 
 
-//fetch all products by main category 
+//fetch all products by main category -- does not work
 export const fetchQueryProducts = createAsyncThunk(
   'product/fetchProductByMainCategory',
   async (params: { mainCategory?: string }) => {
-    const response = await axios.get<ProductType[]>('/api/product/', { params })
+    const response = await client.get<ProductType[]>('/api/product/', { params })
     return response.data
   }
 )
@@ -45,7 +42,7 @@ export const fetchQueryProducts = createAsyncThunk(
 export const fetchSearchProducts = createAsyncThunk(
   'product/fetchSearchProducts', 
   async (params: { name: string }) => { 
-    const response = await axios.get<ProductType[]>('/api/product/', { params }) 
+    const response = await client.get<ProductType[]>('/api/product/', { params }) 
     return response.data
   }
 )
@@ -57,7 +54,7 @@ export const fetchSearchProducts = createAsyncThunk(
   export const fetchProduct = createAsyncThunk(
     'product/fetchProduct',
     async (id: ProductType['id']) => {
-      const response = await axios.get(`/api/product/${id}/`)
+      const response = await client.get(`/api/product/${id}/`)
       return response.data
     }
   )
@@ -68,7 +65,7 @@ export const fetchSearchProducts = createAsyncThunk(
     'product/updateProduct',
     async (product: Pick<ProductType, 'id'|'averageScore'>, { dispatch }) => { //only updates 
       const { id, averageScore } = product
-      const response = await axios.put(`/api/product/${id}/`, averageScore)
+      const response = await client.put(`/api/product/${id}/`, averageScore)
       dispatch(productActions.updateProduct(response.data))
       return response.data
     }

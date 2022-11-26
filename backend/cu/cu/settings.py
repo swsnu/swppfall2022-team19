@@ -26,11 +26,12 @@ SECRET_KEY = 'django-insecure-9v6cx(2nfme!d4e@x@h^t_#ahd6cr^y!d9i8xpjb&uz2p8ua@4
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
-
+#ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,11 +42,15 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
 ]
 
+# REDIS_HOST = os.environ.get("REDIS_HOST")
+# ASGI_APPLICATION = 'cu.asgi.application'
+
 MIDDLEWARE = [
+    #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -124,6 +129,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#for security
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8000/", "http://localhost"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost"]
+
 # Added - Custom User model
 AUTH_USER_MODEL = 'user.User'
 
@@ -135,5 +145,8 @@ CSRF_HEADER_NAME = 'X-XSRF-TOKEN'
 SESSION_COOKIE_AGE = 1200  # 20 min
 SESSION_SAVE_EVERY_REQUEST = True
 
+#directory for uploading images 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'

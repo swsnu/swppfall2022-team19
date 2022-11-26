@@ -8,6 +8,7 @@ import './Login.css';
 
 
 export default function Login() {
+  const users = useSelector((state: RootState) => state.user.users);
   const userState = useSelector((state: RootState) => state.user.selectedUser?.loginState);
   const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
   const [username, setUsername] = useState<string>("");
@@ -39,18 +40,21 @@ export default function Login() {
     }
   });
 
+
   useEffect(() => {
-    // console.log(userState);
-    dispatch(getUsers());
-    const result = dispatch(getRequestUser());
-    console.log(result);
-    if (selectedUserState === null || selectedUserState === undefined) {
-      console.log("userState is null");
-    } else {
-      console.log("userState is already loggedIn");
-      moveTo(selectedUserState.loginState);
-    }
-  }, []);
+    dispatch(getUsers()).then(() => dispatch(getRequestUser())).then(() => {
+      // console.log(selectedUserState);
+      if (selectedUserState === null || selectedUserState === undefined) {
+        console.log("userState is null");
+      } else {
+        console.log("userState is already loggedIn");
+        moveTo(selectedUserState.loginState);
+      }
+    });
+    // dispatch(getUsers());
+    // dispatch(getRequestUser());
+  }, [dispatch]);
+
 
   if (userState === true) {
     console.log("userState === true가 참입니다!!");

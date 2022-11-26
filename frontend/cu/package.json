@@ -58,15 +58,15 @@
   "proxy": "http://localhost:8000",
   "jest": {
     "collectCoverageFrom": [
-    "src/**/*.{js,jsx,ts,tsx}",
-    "!src/index.tsx",
-    "!src/components/Review/*",
-    "!src/components/ReviewList/*",
-    "!src/components/TotalScore/*",
-    "!src/components/TotalScoreList/*",
-    "!src/components/RatingForm/RatingForm.tsx",
-    "!src/test-utils/*",
-    "!src/reportWebVitals.ts"
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/index.tsx",
+      "!src/components/Review/*",
+      "!src/components/ReviewList/*",
+      "!src/components/TotalScore/*",
+      "!src/components/TotalScoreList/*",
+      "!src/components/RatingForm/RatingForm.tsx",
+      "!src/test-utils/*",
+      "!src/reportWebVitals.ts"
     ]
   }
 }

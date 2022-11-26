@@ -10,7 +10,7 @@ describe('book reducer', () => {
     user_id: 1,
     user_username: "user1",
     product_id: 1,
-    scores: [3, 3, 3, 3, 3],
+    scores: "33333",
     comment: "comment1",
     picture: "picture1", //temp, need to change later
     likedCount: 1
@@ -20,14 +20,21 @@ describe('book reducer', () => {
     user_id: 1,
     user_username: "user1",
     product_id: 1,
-    scores: [5, 5, 5, 5, 5],
+    scores: "55555",
     comment: "comment2",
     picture: "picture2", //temp, need to change later
     likedCount: 2
   }
+  const formData = new FormData()
+  formData.append('user_id', String(rate1))
+  formData.append('username', rate1.user_username)
+  formData.append('product_id', String(rate1.product_id))
+  formData.append('scores', rate1.scores)
+  formData.append('comment', rate1.comment)
+
   beforeAll(() => {
     store = configureStore({ reducer: { rate: reducer } })
-  })
+})
 
   it('should handle initial state', () => {
     expect(reducer(undefined, { type: 'unknown' })).toEqual({
@@ -38,15 +45,7 @@ describe('book reducer', () => {
   it('should handle createRate', async () => {
     jest.spyOn(axios, 'post').mockResolvedValue({ data: rate1 })
     const result = await store.dispatch(
-      createRate({
-        user_id: 1,
-        user_username: "user1",
-        product_id: 1,
-        scores: [3, 3, 3, 3, 3],
-        comment: "comment1",
-        picture: "picture1", //temp, need to change later
-        likedCount: 1
-      })
+      createRate(formData)
     )
     expect(result.type).toBe(`${createRate.typePrefix}/fulfilled`)
     expect(store.getState().rate.rates.length).toEqual(1)
@@ -64,32 +63,16 @@ describe('book reducer', () => {
   it('should handle updateRate', async () => {
     jest.spyOn(axios, 'post').mockResolvedValue({ data: rate1 })
     await store.dispatch(
-      createRate({
-        user_id: 1,
-        user_username: "user1",
-        product_id: 1,
-        scores: [3, 3, 3, 3, 3],
-        comment: "comment1",
-        picture: "picture1", //temp, need to change later
-        likedCount: 1
-      })
+      createRate(formData)
     )
     jest.spyOn(axios, 'post').mockResolvedValue({ data: { ...rate1, id: 2 } })
     await store.dispatch(
-        createRate({
-            user_id: 1,
-            user_username: "user1",
-            product_id: 1,
-            scores: [3, 3, 3, 3, 3],
-            comment: "comment1",
-            picture: "picture1", //temp, need to change later
-            likedCount: 1
-          })
+        createRate(formData)
     )
     jest.spyOn(axios, 'put').mockResolvedValue({
       data: rate2
     })
-    await store.dispatch(updateRate(rate2))
+    await store.dispatch(updateRate(formData))
     await waitFor(() => expect(store.getState().rate.rates.find(rate => rate.id === rate1.id)?.comment).toEqual(rate2.comment))
   })
   it('should handle createRate error', async () => {
@@ -97,15 +80,7 @@ describe('book reducer', () => {
     window.console.error = mockConsole
     jest.spyOn(axios, 'post').mockRejectedValue({ data: null })
     const result = await store.dispatch(
-        createRate({
-            user_id: 1,
-            user_username: "user1",
-            product_id: 1,
-            scores: [3, 3, 3, 3, 3],
-            comment: "comment1",
-            picture: "picture1", //temp, need to change later
-            likedCount: 1
-          })
+        createRate(formData)
     )
     expect(result.type).toBe(`${createRate.typePrefix}/rejected`)
   })

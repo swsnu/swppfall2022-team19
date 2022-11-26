@@ -1,28 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import HeartRating from './HeartRating'
+import HeartRating from './HeartRate/HeartRating'
 import "./RatingForm.css"
-import { AppDispatch} from '../../store';
-import FixedHeartRating from './FixedHeartRating';
+import { AppDispatch } from '../../store';
+import FixedHeartRating from './FixedHeartRate/FixedHeartRating';
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { createRate, deleteRate, RateType, updateRate } from '../../store/slices/rate';
 import { UserType } from '../../store/slices/User';
-import { ProductType, selectProduct} from '../../store/slices/product';
+import { ProductType, selectProduct, updateProduct } from '../../store/slices/product';
+import BeforeRateForm from './BeforeRateForm/BeforeRateForm';
 
 interface Props {
   user: UserType,
   product: ProductType,
-  rate: RateType[] 
+  rate: RateType[]
 }
-
 
 function RatingForm(props: Props) {
   const dispatch = useDispatch<AppDispatch>();
-  const productState = useSelector(selectProduct);
-
-  let user_has_rate = (props.rate != undefined)   //check if user has rated the product or not
-
-  
 
   //update score for each question when the user clicks rating
   const [score1, setScore1] = useState(0);
@@ -31,36 +26,55 @@ function RatingForm(props: Props) {
   const [score4, setScore4] = useState(0);
   const [score5, setScore5] = useState(0);
   const [comment, setComment] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [showImage, setShowImage] = useState<string>("");
 
-  const [rateState1, setRateState1] = useState<boolean>(user_has_rate); //true if user has rated product
-  const [rateState2, setRateState2] = useState<boolean>(user_has_rate);
+  const [rateState1, setRateState1] = useState<boolean>(false); //true if user has rated product
+  const [rateState2, setRateState2] = useState<boolean>(false);
 
-  const [question4, setQuestion4] = useState("");
-  const [question5, setQuestion5] = useState("");
+  const [question4, setQuestion4] = useState("만족하시나요?");
+  const [question5, setQuestion5] = useState("추천하시나요?");
   const [rate, setRate] = useState<RateType>();
-  
+  const [totalRateNum, setTotalRateNum] = useState<number>(0);
 
   //whenever there is change in product, find the appropriate question by subCategory
-  //console.log("subcategoryName:" + props.product?.name);
-  useEffect(() =>{
-    if (props.rate && props.product) {
-      const singleRate = props.rate.filter((rate) => rate.product_id === props.product.id!).find((rate) => rate.user_id === props.user?.id!)
-      setRate(singleRate);
-      if (!singleRate) {
-        user_has_rate = false;
-      }
-      else {
-        user_has_rate = true;
-      }
-  
-      for (const key in Object.keys(subCategoryQuestion)) {
-        if (props.product.subCategory.includes(subCategoryQuestion[key].subCategory)) {
-          setQuestion4(subCategoryQuestion[key].question4);
-          setQuestion5(subCategoryQuestion[key].question5);
-        }
+  //(O)user있고, product 있을때, fetchRates() 잘 작동한다. 
+  useEffect(() => {
+    console.log("subcategoryName:" + props.product?.name + " id: " + props.product?.id);
+    console.log("username " + props.user?.username!)
+
+    const filterRate = props.rate.filter((rate) => rate.product_id === props.product.id!);
+    setTotalRateNum(filterRate.length);
+    const singleRate = filterRate.find((rate) => rate.user_id === props.user?.id!);
+
+    setRate(singleRate);
+    console.log(singleRate?.user_username)
+    if (singleRate === undefined) {
+      setRateState1(false);
+      setRateState2(false);
+    }
+    else {
+      setRateState1(true);
+      setRateState2(true);
+      const scores = singleRate.scores; 
+      // const num1 = scores.toString();
+      // console.log("string: " + num1);
+      setScore1(Number(scores.charAt(0)));
+      setScore2(Number(scores.charAt(1)));
+      setScore3(Number(scores.charAt(2)));
+      setScore4(Number(scores.charAt(3)));
+      setScore5(Number(scores.charAt(4)));
+      setComment(singleRate.comment);
+      setShowImage(singleRate.picture);
+    }
+
+    for (const key in Object.keys(subCategoryQuestion)) {
+      if (props.product.subCategory.includes(subCategoryQuestion[key].subCategory)) {
+        setQuestion4(subCategoryQuestion[key].question4);
+        setQuestion5(subCategoryQuestion[key].question5);
       }
     }
-  }, [])
+  }, [props.product])
 
   const updateScore1 = (score: number): void => {
     setScore1(score)
@@ -78,6 +92,13 @@ function RatingForm(props: Props) {
     setScore5(score)
   }
 
+  const updateRateState2 = (state: boolean) : void => {
+    setRateState2(state)
+  }
+  const updateRateState1 = (state: boolean) : void => {
+    setRateState1(state)
+  }
+
 
   //below are the functions shown for each click of button in different state of rating form
   //------when user has not rate the product--------state: rateState1 = false, rateState2 = false
@@ -90,23 +111,38 @@ function RatingForm(props: Props) {
     setRateState2(false);
   }
 
-  const onclickSaveHandler = async () => {   //#TODO: need to update product average score
+  const onclickDeleteImageHandler = () =>{
+    setImage(null);
+  }
 
-    const scores = [score1, score2, score3, score4, score5];
-    const rateData = {
-      user_id: props.user?.id!,
-      user_username: props.user?.username!,
-      product_id: props.product.id!,
-      scores: scores,
-      comment: comment,
-      picture: "picture",
-      likedCount: 0
+  const onclickSaveHandler = async () => {
+
+    const scores = ""+score1+score2+score3+score4+score5;
+    const formData = new FormData()
+    formData.append('user_id', String(props.user?.id!))
+    formData.append('user_username', props.user?.username!)
+    formData.append('product_id', String(props.product.id!))
+    formData.append('scores', scores)
+    formData.append('comment', comment)
+    if(image){
+      formData.append('picture', image);
     }
-    const responseRate = await dispatch(createRate(rateData))
+    
+    const responseRate = await dispatch(createRate(formData))
     if (responseRate.type === `${createRate.typePrefix}/fulfilled`) {
       setRateState1(true);
       setRateState2(true);
     }
+
+    //updateProduct's average score
+    let averageScore = (score1 + score2 + score3 + score4 + score5) / 5;
+    let totalchange = (averageScore - props.product.averageScore) / (totalRateNum + 1);
+    let totalAverageScore = props.product.averageScore - totalchange;
+    const dataUpdate = {
+      id: props.product.id,
+      averageScore: totalAverageScore
+    }
+    dispatch(updateProduct(dataUpdate))
   }
 
   //------when user has written rate-------state: rateState1 = true, rateState2 = true
@@ -123,24 +159,34 @@ function RatingForm(props: Props) {
 
   //------when user is in edit rate------state: rateState1 = true, rateState2 = false
   const onclickBackEditHandler = () => {
-    setRateState1(true);
+    setRateState2(true);
+
   }
 
 
   const onclickSaveEditHandler = async () => {   //#TODO: need to update product average score
 
-    const scores = [score1, score2, score3, score4, score5];
-    const editedRateData = {
-      id: rate?.id!,
-      user_id: props.user?.id!,
-      user_username: props.user?.username!,
-      product_id: props.product.id!,
-      scores: scores,
-      comment: comment,
-      picture: "picture",
-      likedCount: rate?.likedCount!
+    const scores = ""+score1+score2+score3+score4+score5;
+    const formData = new FormData()
+    formData.append('id', String(rate?.id))
+    formData.append('user_id', String(props.user?.id!))
+    formData.append('user_username', props.user?.username!)
+    formData.append('product_id', String(props.product.id!))
+    formData.append('scores', scores)
+    formData.append('comment', comment)
+    if(image){
+      formData.append('picture', image);
     }
-    await dispatch(updateRate(editedRateData))
+    await dispatch(updateRate(formData))
+
+    let averageScore = (score1 + score2 + score3 + score4 + score5) / 5;
+    let totalchange = (averageScore - props.product.averageScore) / (totalRateNum + 1);
+    let totalAverageScore = props.product.averageScore - totalchange;
+    const dataUpdate = {
+      id: props.product.id,
+      averageScore: totalAverageScore
+    }
+    await dispatch(updateProduct(dataUpdate))
     setRateState2(true)
   }
 
@@ -149,11 +195,7 @@ function RatingForm(props: Props) {
     <div>
       <div className="rating_form">
         <div className='rating_blank'>
-          {rateState1 === false && rateState2 === false &&
-            <div className='rate_box'>
-              <button className="rate_button" hidden={rateState2} onClick={() => onclickRateHandler()}>내 평가 남기러 가기</button>
-            </div>
-          }
+          {rateState1 === false && rateState2 === false && <BeforeRateForm updateState2={updateRateState2}/>}
           {rateState1 === false && rateState2 === true &&
             <div className='rate_box'>
               <h2 className="rating_heading"> 리뷰 작성하기</h2>
@@ -171,10 +213,30 @@ function RatingForm(props: Props) {
                 {question5}
                 {<HeartRating score={score5} updateScore={updateScore5} />}
               </div>
-              <div>
-                <div>한줄평</div>
-                <input type="text" onChange={(event) => setComment(event.target.value)} />
+              <div className="comment">
+                <label>한줄평</label>
+                <textarea value={comment} onChange={(event) => setComment(event.target.value)} />
               </div>
+              <div className='picture'>
+                <label>사진 </label>
+                {image && (
+                  <div>
+                    <img alt='Image Not Found' width={'300px'} src={URL.createObjectURL(image)} />
+                  </div>
+                )}
+                <br />
+                <input
+                  type='file'
+                  accept="image/*"
+                  onChange={(event) => {
+                    if (event.target?.files) {
+                      setImage(event.target?.files[0])
+                    }
+                  }}
+                />
+                <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
+              </div>
+
             </div>
           }
         </div>
@@ -198,11 +260,15 @@ function RatingForm(props: Props) {
               <div>한줄평</div>
               <div> {comment}</div>
             </div>
+            <div className='picture'>
+              <label>사진</label>
+              <img src={showImage} width={300} />
+            </div>
           </div>
         }
         {rateState1 === true && rateState2 === false &&
           <div className='rate_box'>
-            <h2 className="rating_heading"> 리뷰 작성하기</h2>
+            <h2 className="rating_heading"> 리뷰 수정하기</h2>
             <button id='button' onClick={() => onclickBackEditHandler()}>수정 취소</button>
             <button id='button' onClick={() => onclickSaveEditHandler()}>수정 저장</button>
             <br></br>
@@ -220,6 +286,25 @@ function RatingForm(props: Props) {
             <div>
               <div>한줄평</div>
               <input type="text" onChange={(event) => setComment(event.target.value)} />
+            </div>
+            <div className='picture'>
+              <label>사진</label>
+              {image && (
+                  <div>
+                    <img alt='Image Not Found' width={'300px'} src={URL.createObjectURL(image)} />
+                  </div>
+                )}
+                <br />
+                <input
+                  type='file'
+                  accept="image/*"
+                  onChange={(event) => {
+                    if (event.target?.files) {
+                      setImage(event.target?.files[0])
+                    }
+                  }}
+                />
+                <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
             </div>
           </div>
         }

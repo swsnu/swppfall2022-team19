@@ -163,7 +163,7 @@ export const userSlice = createSlice({
       if (targetUser) {
         targetUser.loginState = true;
         state.selectedUser = targetUser;
-        // console.log("Logged_in User: " + targetUser.username);
+         console.log("Logged_in User: " + targetUser.username);
       }
       else {
         console.log("Username or password is wrong");

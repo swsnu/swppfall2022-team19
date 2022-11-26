@@ -14,7 +14,6 @@ def list(self, request) - product 전체 가져오기
 def retrieve(self, request, pk) - 특정 product 가져오기
 def update(self, request, pk) - avgScore 수정
 '''
-
 class ProductViewSet(viewsets.GenericViewSet):
     queryset = Product.objects.all() 
     serializer_class = ProductSerializer
@@ -55,8 +54,8 @@ class ProductViewSet(viewsets.GenericViewSet):
         product = self.get_object()
         return Response(self.get_serializer(product).data, status=200)
 
-    # (O)PUT /api/product/{product_id}  
-    @csrf_exempt
+    # (O)PUT /api/product/{product_id} 
+    @csrf_exempt 
     def update(self, request, pk=None):
         product = self.get_object()
         data = request.data.copy()
