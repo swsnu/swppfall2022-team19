@@ -17,7 +17,7 @@ describe("User reducer", () => {
     const fakeUserList1 = [fakeUser1, fakeUser2];
     const fakeUserList2 = [fakeUser1, fakeUser2, fakeUser3];
     const changeSurvey1 = { id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2 };
-    const changedFakeUser1 = { id: 1, 'username': 'fakeUser1', 'password': '12345', 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2, 'loginState': false };
+    const changedFakeUser1 = { id: 1, 'username': 'fakeUser1', 'password': '12345', 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2, 'loginState': true };
 
     beforeAll(() => {
         store = configureStore(
@@ -32,7 +32,16 @@ describe("User reducer", () => {
             selectedUser: null,
         });
     });
-
+    it("should handle putSurvey - null", async () => {
+        reducer(undefined, { type: "unknown" });
+        jest.spyOn(axios, "put").mockResolvedValue({
+            data: changeSurvey1
+        })
+        await store.dispatch(
+            putSurvey({ id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2 })
+        );
+        expect(store.getState().userState.selectedUser).toEqual(null);
+    });
     it("should handle getUsers_no users(null)", async () => {
         axios.get = jest.fn().mockResolvedValue({ data: null });
         await store.dispatch(getUsers());
@@ -109,15 +118,7 @@ describe("User reducer", () => {
         await store.dispatch(postUser({ 'username': 'fakeUser1', 'password': '12345', 'gender': 1, 'age': 1, 'taste': 'AB', 'question': 1 }));
         expect(mockConsoleError).toBeCalled();
     });
-    it("should handle putSurvey - null", async () => {
-        jest.spyOn(axios, "put").mockResolvedValue({
-            data: changeSurvey1
-        })
-        await store.dispatch(
-            putSurvey({ id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2 })
-        );
-        expect(store.getState().userState.users).toEqual(changedFakeUser1);
-    });
+
     it("should handle putSurvey - not null", async () => {
         axios.get = jest.fn().mockResolvedValue({ data: fakeUser1 });
         await store.dispatch(getRequestUser());
@@ -128,7 +129,7 @@ describe("User reducer", () => {
         await store.dispatch(
             putSurvey({ id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2 })
         );
-        expect(store.getState().userState.users).toEqual(changedFakeUser1);
+        expect(store.getState().userState.selectedUser).toEqual(changedFakeUser1);
     });
 
 }); // end describe
