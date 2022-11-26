@@ -1,29 +1,33 @@
 import Header from "../Header/Header"
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { ProductType, selectProduct } from "../../store/slices/product";
-import { fetchRates, selectRate } from '../../store/slices/rate';
+import { fetchRates, fetchUserRate, selectRate } from '../../store/slices/rate';
 import { useEffect } from "react";
 import { useState } from "react";
 import makeAnimated from 'react-select/animated';
 import SurveyModal from '../UserSurvey/SurveyModal';
+import { selectUser } from "../../store/slices/User";
 
 
 const MyPage = () => {
     const [modalOn, setModalOn] = useState(false);
-    // const navigate = useNavigate();
-    // const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
-    // const logo = require('../../Categoryicon/Logo.png');
+    
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+
+    const selectedUserState = useSelector(selectUser);
+    const logo = require('../../Categoryicon/Logo.png');
+
 
     const onOpenModal = () => {
         setModalOn(!modalOn);
     }
-    // const allRates = useSelector(selectRate)
-    // console.log("Allrate,",  allRates)
 
-    // useEffect(() => {
-    //     dispatch(fetchRates())})
+    useEffect(() => {
+        const result = dispatch(fetchUserRate(selectedUserState.selectedUser!.id));
+    })
 
 
     return (
@@ -39,21 +43,4 @@ const MyPage = () => {
 
 export default MyPage;
 
-/* 
-<img title="logo" className="CenterLogo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
-    <div>
-        My user name is {selectedUserState?.username}
-    </div>
-    <div className="ratedProduct">
-
-
-
-    </div>
-
-    <div className="likedComments">
-
-
-
-    </div> 
-*/
 
