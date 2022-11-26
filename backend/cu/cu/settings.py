@@ -152,6 +152,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'
 
+'''
 # pip install djangorestframework-simplejwt
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -172,3 +173,4 @@ JWT_AUTH = {
     # 'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
 }
+'''
