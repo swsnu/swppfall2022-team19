@@ -2,11 +2,15 @@ from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.http.response import HttpResponseNotAllowed
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-
+from django.shortcuts import get_object_or_404
 import json
 from json.decoder import JSONDecodeError
 
 from .models import User
+import jwt
+
+# pip install djangorestframework djangorestframework-jwt
+SECRET_KEY = "3317532339f80334c99fff3da3394177af76b44ee337cfa8f69f8c00742915b04c6c95b8b42d0706934b1da2f509a4e209dcdf7622ed45093c11d742176d3b8c"
 
 
 @ensure_csrf_cookie
@@ -35,14 +39,18 @@ def signup(request):
         # age 등
         nowUser = User.objects.create_user(username=username, password=password,
                                            age=age, gender=gender, taste=taste, question=question)
+
+        access_token = jwt.encode(
+            {'id': nowUser.id}, SECRET_KEY, algorithm="HS256")
+        access_token = access_token.decode('utf-8')
         res = {
             "id": nowUser.pk,
             "username": nowUser.username,
-            "password": password,
             "gender": nowUser.gender,
             "age": nowUser.age,
             "taste": nowUser.taste,
             "question": nowUser.question,
+            "access_token": access_token
         }
 
         return JsonResponse(data=res, status=201)
@@ -147,74 +155,41 @@ def requestUser(request):
     # 테스트 각주    return HttpResponseNotAllowed(["GET"])
 
 
-"""
 @csrf_exempt
-def user_info(request): # login 
-    if request.method == 'PUT':
+def changeSurvey(request, user_id):
+    print(user_id)
+    if request.method == "PUT":
+        if (not request.user.is_authenticated):
+            print("로그인되지 않은 사용자입니다")
+            return HttpResponse(status=401)
 
-        body = request.body.decode()
-        username = json.loads(body)['username']
-        password = json.loads(body)['password']
+        nowUser = request.user
 
-        user = [user for user in User.objects.filter(username = username)]
+        req_data = json.loads(request.body.decode())
+        numberId = req_data['id']
+        age = req_data['age']
+        gender = req_data['gender']
+        taste = req_data['taste']
+        question = req_data['question']
 
-        if len(user) == 0 :
-            return JsonResponse(None, safe = False) 
+        selectedUser = get_object_or_404(User, id=numberId)  # user_id
+        if (request.user.id != selectedUser.id):
+            return HttpResponse(status=403)
 
-        else: 
-            user = user[0]
-            # password is wrong, not logged in. 
-            if user.password == password : 
-                user.loginState = True
-                user.save()
-                return JsonResponse({
-        "username": user.username, "password": user.password,
-        # "age": user.age, "gender": user.gender, "taste": user.taste, "question": user.question,
-        "loginState": user.loginState
-         })
-            else : JsonResponse(None, safe = False)  
+        selectedUser.age = age
+        selectedUser.gender = gender
+        selectedUser.taste = taste
+        selectedUser.question = question
+        selectedUser.save()
+
+        res = {
+            "gender": nowUser.gender,
+            "age": nowUser.age,
+            "taste": nowUser.taste,
+            "question": nowUser.question,
+        }
+
+        return JsonResponse(res, status=200)
+
     else:
         return HttpResponseNotAllowed(['PUT'])
-
-@csrf_exempt
-def user_list(request): # register
-    if request.method == "GET":
-        user_list = [user for user in User.objects.all().values()]
-        return JsonResponse(user_list, safe=False)
-
-    elif request.method == "POST":
-        try:
-            body = request.body.decode()
-            username = json.loads(body)['username']
-            password = json.loads(body)['password']
-            # age = json.loads(body)['age']
-            # gender = json.loads(body)['gender']
-            # taste = json.loads(body)['taste']
-            # question = json.loads(body)['question']
-            # loginState = json.loads(body)['loginState']
-
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest()
-
-        user = [user for user in User.objects.filter(username = username)]
-        if len(user) == 0 :
-            user = User(
-            username=username, password=password,
-            # age=age, gender=gender, taste=taste, question=question,
-            loginState=False
-            )
-
-            user.save()
-            response_dict = {"id": user.id, 
-            "username": user.username, "password": user.password,
-            # "age": user.age, "gender": user.gender, "taste": user.taste, "question": user.question,
-            "loginState": user.loginState
-            }
-
-            return JsonResponse(response_dict, status=201)      
-        else: 
-            return JsonResponse(None, safe = False)
-    else:
-        return HttpResponseNotAllowed(['GET', 'POST'])
-        
-"""

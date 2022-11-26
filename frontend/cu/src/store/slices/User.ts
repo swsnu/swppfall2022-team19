@@ -31,14 +31,14 @@ export interface UserSignupRequest {
   question: number;
 }
 
-/*
+
 export interface SurveyRequest {
   gender: number;
   age: number;
   taste: string;
   question: number;
 }
-*/
+
 
 export interface UserState {
   users: UserType[];
@@ -69,6 +69,7 @@ export const loginUser = createAsyncThunk(
   async (user: Pick<UserLoginRequest, "username" | "password">, { dispatch }) => {
     const response = await axios.post("api/user/signin/", user);
     dispatch(userActions.loginUser(response.data));
+    localStorage.setItem('loginUser', JSON.stringify(response.data));
   }
 )
 
@@ -82,6 +83,7 @@ export const signoutUser = createAsyncThunk(
     dispatch(userActions.signoutUser(response.data));
     // 그런데 로그인의 경우 로그인 실패 시 에러가 발생할 수도 있음
     // 에러 HttpResponse(status=401)인데, 로그인 오류 시 alert 
+    localStorage.clear();
 
   }
 )
@@ -108,8 +110,14 @@ export const getRequestUser = createAsyncThunk(
     return response.data ?? null;
   }
 )
-
-
+export const putSurvey = createAsyncThunk(
+  "user/newSurvey",
+  async (user: Pick<UserType, "id" | "age" | "gender" | "taste" | "question">, { dispatch }) => {
+    const response = await axios.put(`/api/user/newSurvey/${user.id}`, user);
+    console.log(response);
+    dispatch(userActions.putSurvey(response.data));
+  }
+)
 
 export const userSlice = createSlice({
   name: "user",
@@ -128,7 +136,8 @@ export const userSlice = createSlice({
         );
         if (targetUser) {
           state.selectedUser = targetUser;
-          // console.log("targetUser를 selectedUser로");
+          console.log(targetUser);
+          console.log(state.selectedUser);
         } else {
           // console.log("targetUser가 undefined라 selectedUser는 null로");
           state.selectedUser = null;
@@ -163,7 +172,7 @@ export const userSlice = createSlice({
       if (targetUser) {
         targetUser.loginState = true;
         state.selectedUser = targetUser;
-         console.log("Logged_in User: " + targetUser.username);
+        console.log("Logged_in User: " + targetUser.username);
       }
       else {
         console.log("Username or password is wrong");
@@ -198,6 +207,16 @@ export const userSlice = createSlice({
       state.users.push(newUser);
 
     },
+    putSurvey: (state, action: PayloadAction<SurveyRequest>) => {
+      if (state.selectedUser == null) {
+        console.log("state.selectedUser is null");
+      } else {
+        state.selectedUser.gender = action.payload.gender;
+        state.selectedUser.age = action.payload.age;
+        state.selectedUser.taste = action.payload.taste;
+        state.selectedUser.question = action.payload.question;
+      }
+    },
   },
 
   extraReducers: (builder) => {
@@ -216,7 +235,7 @@ export const userSlice = createSlice({
 export const userActions = userSlice.actions;
 export const selectUser = (state: RootState) => state.user;
 export const userList = (state: RootState) => state.user.users;
-
+export const selectedUser = (state: RootState) => state.user.selectedUser;
 export default userSlice.reducer;
 
 

@@ -18,8 +18,16 @@ from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('product.urls')),
-    path('api/user/', include('user.urls'))
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/user/', include('user.urls')),
+    path('user/api/user/', include('user.urls')),  # 추후 삭제 필요
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
