@@ -6,23 +6,6 @@ import { getMockProductStore } from "../../test-utils/mock_JH";
 import Home from "./Home";
 import { Props as ProductProps } from "../../components/ProductBlock/ProductBlock";
 
-jest.mock("../../components/ProductBlock/ProductBlock", () => (props: ProductProps) => (
-  <div title="spyProduct">
-    <div className="productInfoBlock" onClick={props.clickProduct} >
-                    <div className="productImageBox">
-                      </div>
-                    <img className="productImage" src={props.imageUrl} alt="Product"/>
-                    </div>
-                    <div className="productTextBlock">
-                        <p className="productName">{props.name}</p>
-                        <span className="productPrice">{props.price}원</span>
-                        {props.details !== "null" &&
-                            <span className='productDetail'>설명:{props.details}</span>
-                        }
-                        <span className='productAverageScore'>평균점수: {props.averageScore}</span>
-                    </div>
-                </div>
-));
 
 const stubInitialState: ProductState = {
   products: [
@@ -87,26 +70,12 @@ describe("<Home />", () => {
     expect(container).toBeTruthy();
   });
 
-  it("should render products", () => {
-    render(home);
-    const products = screen.getAllByTitle("spyProduct");
-    expect(products).toHaveLength(2);
-  });
-
   it("should render animated Title", () => {
     render(home);
     const products = screen.getAllByTitle("animatedTitle");
     expect(products).toHaveLength(2);
   });
 
-  it("should handle clickProduct", () => {
-    render(home);
-    const products = screen.getAllByTitle("spyProduct");
-    const product = products[0];
-    const title = product.querySelector(".productInfoBlock");
-    fireEvent.click(title!);
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-  });
 
   it("should handle clickLogo", () => {
     render(home);
