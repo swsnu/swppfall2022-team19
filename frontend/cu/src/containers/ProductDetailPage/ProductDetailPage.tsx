@@ -23,6 +23,7 @@ function ProductDetailPage() {
   const userState = useSelector(selectUser);
   const selectedProduct = useSelector(selectProduct).selectedProduct;
   const rateState = useSelector(selectRate); 
+  const selectedRate = useSelector(selectRate).selectedRate;
   
   //window.location.reload(); 
   //fetch all the rates stored in particular product
@@ -32,8 +33,8 @@ function ProductDetailPage() {
   }, [id, dispatch]) //initial rendering이 안된다.  
 
   // console.log("product id: "+selectedProduct?.id)
-    // console.log("user: " + userState.selectedUser?.username)
-    // console.log("product name: "+selectedProduct?.name)
+  // console.log("user: " + userState.selectedUser?.username)
+  // console.log("product name: "+selectedProduct?.name)
   return (
     <div className="productDetailPage">
       <Header />
@@ -57,12 +58,14 @@ function ProductDetailPage() {
         </div>
 
       </div>
-      {/* <div className="scoresReviews">
+      { <div className="scoresReviews">
         <div key={3}>
-          {<TotalScoreList user={userState.selectedUser!} product={selectedProduct!} rate={rateState.rates} />}</div>
+          { userState.selectedUser && selectedProduct && 
+            <TotalScoreList user={userState .selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
         <div key={4}>
-          {<ReviewList user={userState.selectedUser!} product={selectedProduct!} rate={rateState.rates} />}</div>
-      </div> */}
+          { userState.selectedUser && selectedProduct &&
+            <ReviewList user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
+      </div> }
     </div>
   )
 }

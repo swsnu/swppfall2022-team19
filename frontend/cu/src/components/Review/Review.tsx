@@ -14,10 +14,9 @@ import { AppDispatch } from "../../store";
 
 
 interface IProps {
-    user?: UserType,
+    user: UserType,
     product: ProductType,
-    rate: RateType | undefined,
-    totalScore: number
+    rate: RateType
 }
 
 export default function Review(props: IProps) {
@@ -37,33 +36,32 @@ export default function Review(props: IProps) {
                 setLikedCount(likedCount! - 1)
             }
         }
-        const editedRateData = {
-          id: props.rate?.id!,
-            user_id: props.user?.id!,
-            user_username: props.user?.username!,
-            product_id: props.product.id!,
-            scores: props.rate?.scores!,
-            comment: props.rate?.comment!,
-            picture: "picture",
-            likedCount: likedCount!
-        }
+
+        const scores = props.rate.scores;
+        const comment = props.rate.comment;
         const formData = new FormData()
         formData.append('likedCount', String(likedCount))
-        // formData.append('id', String(props.rate?.id!))
-        // formData.append('user_id', String(props.user?.id!))
-        // formData.append('user_username', props.user?.username!)
-        // formData.append('product_id', String(props.product.id!))
-        // formData.append('scores', scores)
-        // formData.append('comment', comment)
+        formData.append('id', String(props.rate?.id!))
+        formData.append('user_id', String(props.user?.id!))
+        formData.append('username', props.user?.username!)
+        formData.append('product_id', String(props.product.id!))
+        formData.append('scores', scores)
+        formData.append('comment', comment)
         await dispatch(updateRate(formData))
     }
+
+    var totalScore=0;
+    for( var i=0; i<5; i++){
+        totalScore+=Number(props.rate?.scores[i]);
+    }
+    totalScore/=5;
 
     return (
         <article className='Review'>
             <div className='review_button_except'>
-                <div className="review_user_username">{props.user?.username}</div>
+                <div className="review_user_username">{props.rate.username}</div>
                 <div className="review_totalScore">
-                    {props.totalScore === 5 ? '⭐⭐⭐⭐⭐' : props.totalScore === 4 ? '⭐⭐⭐⭐  ' : props.totalScore === 3 ? '⭐⭐⭐    ' : props.totalScore === 2 ? '⭐⭐      ' : props.totalScore === 1 ? '⭐        ' : ''}
+                    {totalScore === 5 ? '⭐⭐⭐⭐⭐' : totalScore >= 4 ? '⭐⭐⭐⭐' : totalScore >= 3 ? '⭐⭐⭐' : totalScore >= 2 ? '⭐⭐' : totalScore >= 1 ? '⭐' : ''}
                 </div>
                 <div className="review_comment">{props.rate?.comment}</div>
             </div>

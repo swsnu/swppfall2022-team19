@@ -8,7 +8,7 @@ import { ProductType } from "./product";
 export interface RateType {
     id: number,
     user_id: UserType['id'],
-    user_username: UserType['username'],
+    username: UserType['username'],
     product_id: ProductType['id'],
     scores: string,  //number[]--> string, 
     comment: string,
@@ -78,7 +78,7 @@ export const rateSlice = createSlice({
             const newRate = {
                 id: state.rates.length + 1,
                 user_id: Number(action.payload.user_id),
-                user_username: action.payload.user_username,
+                username: action.payload.username,
                 product_id: Number(action.payload.product_id),
                 scores: action.payload.scores,
                 comment: action.payload.comment,

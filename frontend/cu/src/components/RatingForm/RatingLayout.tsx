@@ -37,7 +37,7 @@ function RatingLayout(props: Props) {
         const singleRate = filterRate.find((rate) => rate.user_id === props.user?.id!);
 
         setRate(singleRate);
-        console.log(singleRate?.user_username)
+        console.log(singleRate?.username)
         if (singleRate === undefined) {
             setRateState1(false);
             setRateState2(false);

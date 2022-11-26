@@ -10,22 +10,21 @@ import { useEffect } from "react";
 
 const MyPage = () => {
 
-    const navigate = useNavigate();
-    const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
-    const logo = require('../../Categoryicon/Logo.png');
+    // const navigate = useNavigate();
+    // const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
+    // const logo = require('../../Categoryicon/Logo.png');
 
 
-    const allRates = useSelector(selectRate)
-    console.log("Allrate,",  allRates)
+    // const allRates = useSelector(selectRate)
+    // console.log("Allrate,",  allRates)
 
     // useEffect(() => {
     //     dispatch(fetchRates())})
-        
-
+    
 
     return (
         <div className="MyPage">
-            <Header />
+            {/* <Header />
             <img title="logo" className="CenterLogo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
             <div>
                 My user name is {selectedUserState?.username}
@@ -40,14 +39,10 @@ const MyPage = () => {
 
 
 
-            </div>
+            </div> */}
 
             </div>
     )
 }
 
 export default MyPage;
-
-function dispatch(arg0: any) {
-    throw new Error("Function not implemented.");
-}
