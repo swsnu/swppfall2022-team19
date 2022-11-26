@@ -60,13 +60,13 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/index.tsx",
-      "!src/components/Review/*",
-      "!src/components/ReviewList/*",
       "!src/components/TotalScore/*",
       "!src/components/TotalScoreList/*",
       "!src/components/RatingForm/AfterRateForm/*",
       "!src/components/RatingForm/EditRateForm/*",
       "!src/components/RatingForm/CreateRateForm/*",
+      "!src/components/RatingForm/RatingLayout.tsx",
+      "!src/containers/ProductDetailPage/*",
       "!src/test-utils/*",
       "!src/reportWebVitals.ts"
     ]
