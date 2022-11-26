@@ -26,7 +26,7 @@ const MyPage = () => {
     }
 
     useEffect(() => {
-        const result = dispatch(fetchUserRate(selectedUserState.selectedUser!.id));
+        const result = selectedUserState.selectedUser && dispatch(fetchUserRate(selectedUserState.selectedUser.id));
     })
 
 
