@@ -2,7 +2,9 @@ import Header from "../Header/Header"
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
 import { RootState } from "../../store";
-import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
+import { ProductType, selectProduct } from "../../store/slices/product";
+import { fetchRates, selectRate } from '../../store/slices/rate';
+import { useEffect } from "react";
 
 
 
@@ -13,10 +15,12 @@ const MyPage = () => {
     const logo = require('../../Categoryicon/Logo.png');
 
 
-    const allProducts = useSelector(selectProduct);
+    const allRates = useSelector(selectRate)
+    console.log("Allrate,",  allRates)
 
-    
-    
+    // useEffect(() => {
+    //     dispatch(fetchRates())})
+        
 
 
     return (
@@ -27,6 +31,7 @@ const MyPage = () => {
                 My user name is {selectedUserState?.username}
             </div>
             <div className ="ratedProduct">
+
 
 
             </div>
@@ -42,3 +47,7 @@ const MyPage = () => {
 }
 
 export default MyPage;
+
+function dispatch(arg0: any) {
+    throw new Error("Function not implemented.");
+}

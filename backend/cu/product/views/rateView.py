@@ -121,9 +121,8 @@ class RateViewSet(viewsets.GenericViewSet):
     @csrf_exempt
     @action(detail=False, methods=["GET"])
     def userRates(self, request):
-        user_id = request.GET.get("user_id","")
         rates = (
-            Rate.objects.filter(user_id=user_id)
+            Rate.objects.filter(user_id=request.user.id)
         )
         serializer = RateSerializer(rates,many=True)
         return Response(serializer.data, status=200)
