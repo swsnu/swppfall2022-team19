@@ -18,29 +18,12 @@ describe('<BeforeRateForm >', () => {
     });
 
     it('when clicks rating button, change rate State to true', () => {
-        //user.click(screen.getByRole('button', { name: 'rate_button' }));
-        // fireEvent.click(screen.getByRole('button', { name: 'rate_button' }));
-        //const onClickRateHandler = jest.fn();
-        // const rate = '내 평가 남기러 가기';
-        // const {container} = render( 
-        //     <BeforeRateForm updateState2={updateState}/>
-        //     );
-
-        // const rate_button = container.getElementsByClassName('rate_button');
-        // expect(rate_button).toBeInTheDocument();
-        // expect(rate_button).toBeCalled();
-
         render( 
             <BeforeRateForm updateState2={updateState}/>
             );
-        const rate_button = screen.getByTestId('rate_button');
-        fireEvent.click(rate_button);
-        expect(rate_button).toBeInTheDocument();
-        expect(rate_button).toBeCalled();
-
-        //     expect(updateState).toBeCalledTimes(1);
-        // expect(updateState.mockReturnValue(true));
-        // expect(updateState).toHaveBeenCalled();
+        const button = screen.getByTitle('rate_button');
+        fireEvent.click(button);
+        expect(button).toBeCalled();
     });
 
 })

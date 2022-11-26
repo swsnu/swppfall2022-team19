@@ -12,7 +12,7 @@ function BeforeHeartRate(props: Props) {
     return (
         <div>
             <div className='rate_box' data-testid='rate_button'>
-                <button className="rate_button" onClick={() => onclickRateHandler()}>내 평가 남기러 가기</button>
+                <button className="rate_button"  title='rate_button' onClick={() => onclickRateHandler()}>내 평가 남기러 가기</button>
             </div>
         </div>
     )
