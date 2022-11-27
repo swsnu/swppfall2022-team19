@@ -85,6 +85,6 @@ describe("<Header />", () => {
     render(header);
     const myPage = screen.getByTitle("myPageIcon")
     fireEvent.click(myPage!);
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockNavigate).toHaveBeenCalledTimes(0);
   });
 });

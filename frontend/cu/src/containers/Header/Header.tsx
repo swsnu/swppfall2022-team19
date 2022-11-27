@@ -66,7 +66,6 @@ const Header = () => {
         const result = await dispatch(signoutUser());
         if (`${signoutUser.typePrefix}/fulfilled`) {
             navigate("/login");
-            console.log("logout 작동했음")
         }
     }
 

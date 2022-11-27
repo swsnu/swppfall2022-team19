@@ -131,13 +131,14 @@ export const rateSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchRates.fulfilled, (state, action) => {
-            state.rates = action.payload
+            state.rates = action.payload;
+            state.selectedRates = action.payload;
         })
         builder.addCase(createRate.rejected, (_state, action) => {
-            console.error(action.error)
+            console.error(action.error);
         })
         builder.addCase(fetchUserRate.fulfilled, (state, action) => {
-            state.rates = action.payload
+            state.rates = action.payload;
             state.selectedRates = action.payload;
         })
     }

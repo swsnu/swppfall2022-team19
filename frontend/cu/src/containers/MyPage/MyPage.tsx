@@ -24,12 +24,13 @@ const MyPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [modalOn, setModalOn] = useState(false);
 
-    const rates = useSelector(selectRate).selectedRates; 
+    
 
     useEffect( ()=>{
         dispatch(fetchUserRate({user_id : Number(user_id) }));
     }, [user_id])
 
+    const rates = useSelector(selectRate).selectedRates; 
 
     const allProducts = useSelector(selectProduct);
 
