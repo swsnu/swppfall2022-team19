@@ -30,14 +30,14 @@ const MyPage = () => {
         dispatch(fetchUserRate({user_id : Number(user_id) }));
     }, [user_id])
 
-    const rates = useSelector(selectRate).selectedRates; 
+    const rates = useSelector(selectRate);
 
     const allProducts = useSelector(selectProduct);
 
 
     let products: ProductType[] = [];
-    for (let index = 0; index < rates.length; index++) {
-        const product = allProducts.products.find(product => product.id == rates[index].product_id)!;
+    for (let index = 0; index < rates.selectedRates.length; index++) {
+        const product = allProducts.products.find(product => product.id == rates.selectedRates[index].product_id)!;
         
         products.push(product);
     }
