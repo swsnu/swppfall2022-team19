@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { ProductState } from "../../store/slices/product";
@@ -96,14 +96,6 @@ describe("<SearchResult />", () => {
     render(searchResult);
     const products = screen.getAllByTitle("productBlocks");
     expect(products).toHaveLength(1);
-  });
-
-  it("should handle clickProduct", () => {
-    render(searchResult);
-    const products = screen.getAllByTitle("productBlocks")[0];
-    // const title = products.querySelector(".productInfoBlock");
-    fireEvent.click(products!);
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
   });
 
 

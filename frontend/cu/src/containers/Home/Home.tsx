@@ -3,7 +3,7 @@ import "./Home.css"
 
 import Header from "../Header/Header"
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
 import QueryString from "qs";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ const Home = () => {
     const showProducts = allProducts.products.filter(product => (product.id % m == r))
     const showLength = Math.floor(Math.random()*(showProducts.length - 5))
     const showProducts5 = showProducts.slice(showLength, showLength + 5)
-    console.log(m, r, showProducts5)
+    
 
     // randomly all the time 
     // product nums == 78
@@ -41,7 +41,7 @@ const Home = () => {
     // get 5 elements , 
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {  // 두번 뜹니다 
         dispatch(fetchQueryProducts(QueryString.parse(search, { ignoreQueryPrefix: true })))
     }, [search, dispatch])
 

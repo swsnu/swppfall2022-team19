@@ -12,12 +12,12 @@ import QueryString from 'qs'
 function SearchResult() {
     const dispatch = useDispatch<AppDispatch>();
     const { searchKey } = useParams();
-    console.log("params", searchKey);
+
     const navigate = useNavigate();
     let message = ""
 
     const allProducts = useSelector(selectProduct)
-    let products = allProducts.products.filter(product => product.name.includes(searchKey!))
+    let products = allProducts.products.filter(product => product.name.includes(searchKey? searchKey : " "))
     if (products.length == 0) {
         message = "찾으시는 상품과 일치하는 상품이 없습니다. 이런 제품은 어떠신가요?"
         const m = Math.floor(Math.random() * 13) + 2
@@ -29,7 +29,6 @@ function SearchResult() {
     } else {
         message = "찾으시는 상품은 다음과 같습니다."
     }
-    console.log("searchKey", searchKey)
     
 
     const onclickProductHandler = (product: ProductType) =>{

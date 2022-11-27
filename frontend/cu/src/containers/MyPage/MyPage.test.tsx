@@ -3,15 +3,32 @@ import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { ProductState } from "../../store/slices/product";
 import { getMockProductStore } from "../../test-utils/mock_JH";
-import Home from "./Home";
+import MyPage from "./MyPage";
 import { Props as ProductProps } from "../../components/ProductBlock/ProductBlock";
 
+jest.mock("../../components/ProductBlock/ProductBlock", () => (props: ProductProps) => (
+  <div title="spyProduct">
+    <div className="productInfoBlock" onClick={props.clickProduct} >
+                    <div className="productImageBox">
+                      </div>
+                    <img className="productImage" src={props.imageUrl} alt="Product"/>
+                    </div>
+                    <div className="productTextBlock">
+                        <p className="productName">{props.name}</p>
+                        <span className="productPrice">{props.price}원</span>
+                        {props.details !== "null" &&
+                            <span className='productDetail'>설명:{props.details}</span>
+                        }
+                        <span className='productAverageScore'>평균점수: {props.averageScore}</span>
+                    </div>
+                </div>
+));
 
 const stubInitialState: ProductState = {
   products: [
     {    id:1,
       name: "TEST1",
-      mainCategory: "MainCategory",
+      mainCategory: undefined!,
       subCategory: "SubCategory", 
       imageUrl: "IMAGE1",
       details: "DETAIL INFO",
@@ -21,7 +38,7 @@ const stubInitialState: ProductState = {
       averageScore: 5 },
       {    id: 2,
         name: "TEST2",
-        mainCategory: "MainCategory",
+        mainCategory: undefined!,
         subCategory: "SubCategory", 
         imageUrl: "IMAGE2",
         details: "DETAIL INFO",
@@ -33,7 +50,6 @@ const stubInitialState: ProductState = {
   ],
   selectedProduct: null,
   tags: [],
-  
 };
 const mockStore = getMockProductStore({ product: stubInitialState
 });
@@ -50,38 +66,29 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
-describe("<Home />", () => {
-  let home: JSX.Element;
+describe("<MyPage />", () => {
+  let myPage: JSX.Element;
   beforeEach(() => {
     jest.clearAllMocks();
-    home = (
+    myPage = (
       <Provider store={mockStore}>
         <MemoryRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<MyPage />} />
           </Routes>
         </MemoryRouter>
       </Provider>
     );
   });
 
-  it("should render Home", () => {
-    const { container } = render(home);
+
+
+  it("should render MyPage", () => {
+    const { container } = render(myPage);
     expect(container).toBeTruthy();
   });
 
-  it("should render animated Title", () => {
-    render(home);
-    const products = screen.getAllByTitle("animatedTitle");
-    expect(products).toHaveLength(2);
-  });
+  
 
-
-  it("should handle clickLogo", () => {
-    render(home);
-    const logo = screen.getAllByTitle("logo")[1]
-    fireEvent.click(logo!);
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-  });
 
 });

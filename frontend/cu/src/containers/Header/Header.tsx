@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signoutUser } from "../../store/slices/User";
 import { UserType, loginUser, getRequestUser, getUsers, selectUser } from "../../store/slices/User"; // Login
 import { RootState } from "../../store"; // Login
+import { fetchUserRate } from "../../store/slices/rate";
 
 const Header = () => {
 
@@ -43,21 +44,19 @@ const Header = () => {
 
 
     const clickSearchHandler = async () => {
-        const result = await dispatch(fetchSearchProducts({ name: searchKey ? searchKey : "_" }));
+        
+    
+        const result = await dispatch(fetchSearchProducts({ name: searchKey }));
+     
         if (`${fetchSearchProducts.typePrefix}/fulfilled`) {
-            if (searchKey == "")
-                navigate(`/searchProduct/BLANK`);
-            else
-                navigate(`/searchProduct/${searchKey}`);
-            console.log("searchKey", searchKey);
+            navigate(`/searchProduct/${searchKey}`);
         }
     }
 
     const clickMyPageHandler = async () => {
 
-        const id = selectedUserState?.selectedUser?.id
-        navigate("/user/:id");
-        console.log("userid", id);
+        const id = selectedUserState.selectedUser!.id;
+        navigate(`/user/${id}`);
     }
 
 
@@ -67,6 +66,7 @@ const Header = () => {
         const result = await dispatch(signoutUser());
         if (`${signoutUser.typePrefix}/fulfilled`) {
             navigate("/login");
+            console.log("logout 작동했음")
         }
     }
 

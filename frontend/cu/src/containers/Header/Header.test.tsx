@@ -70,7 +70,7 @@ describe("<Header />", () => {
     render(header);
     const search = screen.getByTitle("searchIcon")
     fireEvent.click(search!);
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockNavigate).toHaveBeenCalledTimes(0);
   });
 
   it("should handle clickSignout", () => {
@@ -78,5 +78,13 @@ describe("<Header />", () => {
     const signout = screen.getByTitle("signoutButton")
     fireEvent.click(signout!);
     expect(mockNavigate).toHaveBeenCalledTimes(0);
+  });
+
+
+  it("should handle clickMyPage", () => {
+    render(header);
+    const myPage = screen.getByTitle("myPageIcon")
+    fireEvent.click(myPage!);
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
   });
 });
