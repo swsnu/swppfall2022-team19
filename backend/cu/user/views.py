@@ -7,10 +7,10 @@ import json
 from json.decoder import JSONDecodeError
 
 from .models import User
-import jwt
+# import jwt
 
 # pip install djangorestframework djangorestframework-jwt
-SECRET_KEY = "3317532339f80334c99fff3da3394177af76b44ee337cfa8f69f8c00742915b04c6c95b8b42d0706934b1da2f509a4e209dcdf7622ed45093c11d742176d3b8c"
+# SECRET_KEY = "3317532339f80334c99fff3da3394177af76b44ee337cfa8f69f8c00742915b04c6c95b8b42d0706934b1da2f509a4e209dcdf7622ed45093c11d742176d3b8c"
 
 
 @ensure_csrf_cookie
@@ -40,9 +40,9 @@ def signup(request):
         nowUser = User.objects.create_user(username=username, password=password,
                                            age=age, gender=gender, taste=taste, question=question)
 
-        access_token = jwt.encode(
-            {'id': nowUser.id}, SECRET_KEY, algorithm="HS256")
-        access_token = access_token.decode('utf-8')
+        # access_token = jwt.encode(
+        #    {'id': nowUser.id}, SECRET_KEY, algorithm="HS256")
+        # access_token = access_token.decode('utf-8')
         res = {
             "id": nowUser.pk,
             "username": nowUser.username,
@@ -50,7 +50,7 @@ def signup(request):
             "age": nowUser.age,
             "taste": nowUser.taste,
             "question": nowUser.question,
-            "access_token": access_token
+            # "access_token": access_token
         }
 
         return JsonResponse(data=res, status=201)
@@ -150,46 +150,41 @@ def requestUser(request):
         return JsonResponse(res, status=200)
     else:
         print("request.user is logged out")
-        return HttpResponse({}, status=200)
+        return HttpResponse({}, status=401)
     # 테스트 각주 else:
     # 테스트 각주    return HttpResponseNotAllowed(["GET"])
 
 
 @csrf_exempt
 def changeSurvey(request, user_id):
-    print(user_id)
-    if request.method == "PUT":
-        if (not request.user.is_authenticated):
-            print("로그인되지 않은 사용자입니다")
-            return HttpResponse(status=401)
+    if (not request.user.is_authenticated):
+        print("로그인되지 않은 사용자입니다")
+        return HttpResponse(status=401)
 
-        nowUser = request.user
+    nowUser = request.user
 
-        req_data = json.loads(request.body.decode())
-        numberId = req_data['id']
-        age = req_data['age']
-        gender = req_data['gender']
-        taste = req_data['taste']
-        question = req_data['question']
+    req_data = json.loads(request.body.decode())
+    numberId = req_data['id']
+    age = req_data['age']
+    gender = req_data['gender']
+    taste = req_data['taste']
+    question = req_data['question']
 
-        selectedUser = get_object_or_404(User, id=numberId)  # user_id
-        if (request.user.id != selectedUser.id):
-            return HttpResponse(status=403)
+    selectedUser = get_object_or_404(User, id=user_id)  # user_id
+    if (request.user.id != selectedUser.id):
+        return HttpResponse(status=403)
 
-        selectedUser.age = age
-        selectedUser.gender = gender
-        selectedUser.taste = taste
-        selectedUser.question = question
-        selectedUser.save()
+    selectedUser.age = age
+    selectedUser.gender = gender
+    selectedUser.taste = taste
+    selectedUser.question = question
+    selectedUser.save()
 
-        res = {
-            "gender": nowUser.gender,
-            "age": nowUser.age,
-            "taste": nowUser.taste,
-            "question": nowUser.question,
-        }
+    res = {
+        "gender": nowUser.gender,
+        "age": nowUser.age,
+        "taste": nowUser.taste,
+        "question": nowUser.question,
+    }
 
-        return JsonResponse(res, status=200)
-
-    else:
-        return HttpResponseNotAllowed(['PUT'])
+    return JsonResponse(res, status=200)

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { ProductType, selectProduct } from "../../store/slices/product";
 import { fetchRates, fetchUserRate, selectRate } from '../../store/slices/rate';
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import makeAnimated from 'react-select/animated';
 import SurveyModal from '../UserSurvey/SurveyModal';

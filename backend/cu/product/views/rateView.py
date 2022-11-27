@@ -23,7 +23,6 @@ def destroy(request,pk) - rate 삭제
 def list(request) - rates, a by specific user
 
 '''
-@method_decorator(csrf_exempt, name='dispatch')
 class RateViewSet(viewsets.GenericViewSet):
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
