@@ -36,12 +36,14 @@ const MyPage = () => {
 
 
     let products: ProductType[] = [];
+
+    if (rates.selectedRates != undefined) {
     for (let index = 0; index < rates.selectedRates.length; index++) {
         const product = allProducts.products.find(product => product.id == rates.selectedRates[index].product_id)!;
         
         products.push(product);
     }
-
+}
 
     const logo = require('../../Categoryicon/Logo.png');
 

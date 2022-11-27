@@ -51,7 +51,7 @@ const stubInitialState: ProductState = {
   selectedProduct: null,
   tags: [],
 };
-const mockStore = getMockProductStore({ product: stubInitialState
+const mockStore = getMockProductStore({ product: stubInitialState,
 });
 
 const mockNavigate = jest.fn();
