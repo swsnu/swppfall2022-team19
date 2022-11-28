@@ -30,7 +30,12 @@ class RateViewSet(viewsets.GenericViewSet):
     # (O)GET /api/rate/
     @csrf_exempt
     def list(self, request):
-        rates = Rate.objects.all()
+        user_id=request.GET.get("user_id")
+        if user_id is None:
+            rates = Rate.objects.all()
+        else: 
+            rates = (
+            Rate.objects.filter(user_id=user_id))
         serializer = RateSerializer(rates, many=True)
         return Response(serializer.data, status=200) 
 
@@ -115,29 +120,30 @@ class RateViewSet(viewsets.GenericViewSet):
             rate.delete()
             return Response(status=204)
 
+    
+    
+
 
     # GET /api/rate/user/
     @csrf_exempt
     @action(detail=False, methods=["GET"])
-    def userRates(self, request):
+    def user(self, request):
+
+        user_id=request.GET.get("user_id")
         rates = (
-            Rate.objects.filter(user_id=request.user.id)
+            Rate.objects.filter(user_id=user_id)
         )
         serializer = RateSerializer(rates,many=True)
         return Response(serializer.data, status=200)
 
+        # GET /api/rate/user/
+    @csrf_exempt
+    @action(detail=False, methods=["GET"])
+    def user(self, request):
 
-
-
-    '''
-    export const fetchQueryTags = createAsyncThunk(
-        'rate/userRates',
-        async (params: { user_id: number }) => {
-            const response = await axios.get<RateType[]>('/api/rate/user/', { params })
-            return response.data
-        }
-    )
-    '''
-    
-    
-    
+        user_id=request.GET.get("user_id")
+        rates = (
+            Rate.objects.filter(user_id=user_id)
+        )
+        serializer = RateSerializer(rates,many=True)
+        return Response(serializer.data, status=200)

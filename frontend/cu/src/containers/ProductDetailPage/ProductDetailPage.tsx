@@ -2,7 +2,7 @@ import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 import { useParams } from 'react-router'
 
-import RatingForm from '../../components/RatingForm/RatingForm';
+
 import TotalScoreList from '../../components/TotalScoreList/TotalScoreList';
 import ReviewList from '../../components/ReviewList/ReviewList';
 import ProductBlock from '../../components/ProductBlock/ProductBlock';

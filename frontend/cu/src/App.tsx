@@ -57,7 +57,6 @@ function App() {
           <Route path="/category/:mainCategory" element={<Category />} />
           <Route path="/searchProduct/:searchKey" element={<SearchResult />} />
           <Route path="/searchProduct/" element={<SearchResult />} />
-
           <Route path="/user/:id" element={<MyPage />} />
         </Routes>
       </BrowserRouter>

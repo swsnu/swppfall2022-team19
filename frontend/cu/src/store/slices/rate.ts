@@ -19,13 +19,35 @@ export interface RateType {
 
 export interface RateState {
     rates: RateType[],
+    selectedRates: RateType[],
     selectedRate: RateType | null
 }
 
 const initialState: RateState = {
     rates: [],
+    selectedRates: [],
     selectedRate: null
 }
+
+
+// export const fetchUserRate = createAsyncThunk(
+//     'rate/user/',
+//     async (userID: RateType['user_id']) => {
+//         const response = await client.get<RateType[]>(`/api/rate/user`)
+//         return response.data
+//     }
+// )
+
+
+
+export const fetchUserRate = createAsyncThunk(
+    'rate/userRates',
+    async (params: { user_id: number }) => {
+        const response = await axios.get<RateType[]>('/api/rate/user/', { params })
+        return response.data
+    }
+)
+
 
 
 export const fetchRates = createAsyncThunk(
@@ -35,6 +57,8 @@ export const fetchRates = createAsyncThunk(
         return response.data
     }
 )
+
+
 
 
 
@@ -107,10 +131,14 @@ export const rateSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchRates.fulfilled, (state, action) => {
-            state.rates = action.payload
+            state.rates = action.payload;
         })
         builder.addCase(createRate.rejected, (_state, action) => {
-            console.error(action.error)
+            console.error(action.error);
+        })
+        builder.addCase(fetchUserRate.fulfilled, (state, action) => {
+            state.rates = action.payload;
+            state.selectedRates = action.payload;
         })
     }
 
