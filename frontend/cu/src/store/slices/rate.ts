@@ -3,7 +3,7 @@ import client from '../api/client';
 import { RootState } from "..";
 import { UserType } from "./User"
 import { ProductType } from "./product";
-import axios from 'axios'
+// import axios from "axios";
 
 
 export interface RateType {
@@ -43,7 +43,7 @@ const initialState: RateState = {
 export const fetchUserRate = createAsyncThunk(
     'rate/userRates',
     async (params: { user_id: number }) => {
-        const response = await axios.get<RateType[]>('/api/rate/user/', { params })
+        const response = await client.get<RateType[]>('/api/rate/user/', { params })
         return response.data
     }
 )
@@ -53,7 +53,7 @@ export const fetchUserRate = createAsyncThunk(
 export const fetchRates = createAsyncThunk(
     'product/fetchRates',
     async () => {
-        const response = await axios.get<RateType[]>(`/api/rate/`)  //id = productID
+        const response = await client.get<RateType[]>(`/api/rate/`)  //id = productID
         return response.data
     }
 )
@@ -66,7 +66,7 @@ export const fetchRates = createAsyncThunk(
 export const createRate = createAsyncThunk(
     'product/createRate',
     async (data: FormData, { dispatch }) => {
-        const response = await axios.post(`/api/rate/`, data)
+        const response = await client.post(`/api/rate/`, data)
         dispatch(rateActions.addRate(response.data))
         return response.data
     }
@@ -77,7 +77,7 @@ export const updateRate = createAsyncThunk(
     async (rate: FormData, { dispatch }) => {
         const id = rate.get('id')
         const { ...data } = rate
-        const response = await axios.put(`/api/rate/${id}/`, data)  //id = rateID
+        const response = await client.put(`/api/rate/${id}/`, data)  //id = rateID
         dispatch(rateActions.updateRate(response.data))
         return response.data
     }
@@ -88,7 +88,7 @@ export const updateRate = createAsyncThunk(
 export const deleteRate = createAsyncThunk(
     'product/deleteRate',
     async (id: RateType['id'], { dispatch }) => {
-        await axios.delete(`/api/rate/${id}/`)
+        await client.delete(`/api/rate/${id}/`)
         dispatch(rateActions.deleteRate(id))
     }
 )

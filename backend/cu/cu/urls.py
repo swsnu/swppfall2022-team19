@@ -1,5 +1,4 @@
 """cu URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
 Examples:
@@ -23,11 +22,14 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from user.views import token
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('product.urls')),
     path('api/user/', include('user.urls')),
     path('user/api/user/', include('user.urls')),  # 추후 삭제 필요
+    path('api/csrf-token/', token), # token 함수!
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

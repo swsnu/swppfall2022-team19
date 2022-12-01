@@ -50,6 +50,12 @@ function EditRateForm(props: Props) {
 
     }
 
+    setScore1(Number(props.rate.scores.charAt(0)))
+    setScore2(Number(props.rate.scores.charAt(1)))
+    setScore3(Number(props.rate.scores.charAt(2)))
+    setScore4(Number(props.rate.scores.charAt(3)))
+    setScore5(Number(props.rate.scores.charAt(4)))
+
 
     const onclickSaveEditHandler = async () => {   //#TODO: need to update product average score
 

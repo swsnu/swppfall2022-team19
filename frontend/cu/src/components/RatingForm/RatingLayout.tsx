@@ -27,7 +27,6 @@ function RatingLayout(props: Props) {
     const [totalRateNum, setTotalRateNum] = useState<number>(0);
 
     //whenever there is change in product, find the appropriate question by subCategory
-    //(O)user있고, product 있을때, fetchRates() 잘 작동한다. 
     useEffect(() => {
         console.log("subcategoryName:" + props.product?.name + " id: " + props.product?.id);
         console.log("username " + props.user?.username!)
@@ -55,6 +54,13 @@ function RatingLayout(props: Props) {
         }
     }, [props.product])
 
+    useEffect(() =>{
+        const filterRate = props.rate.filter((rate) => rate.product_id === props.product.id!);
+        setTotalRateNum(filterRate.length);
+        const singleRate = filterRate.find((rate) => rate.user_id === props.user?.id!);
+        setRate(singleRate);
+    },[rateState1, rateState2])
+
     const updateRateState2 = (state: boolean): void => {
         setRateState2(state)
     }
@@ -66,13 +72,16 @@ function RatingLayout(props: Props) {
         <div>
             <div className='rating_form'>
                 {rateState1 === false && rateState2 === false && <BeforeRateForm updateState2={updateRateState2} />}
+
                 {rateState1 === false && rateState2 === true && <CreateRateForm user={props.user} product={props.product}
                     question4={question4} question5={question5}
                     updateState1={updateRateState1} updateState2={updateRateState2} />
                 }
+
                 {rateState1 === true && rateState2 === true && rate && <AfterRateForm user={props.user} product={props.product}
                     rate={rate} question4={question4} question5={question5}
                     updateState1={updateRateState1} updateState2={updateRateState2} />}
+
                 {rateState1 === true && rateState2 === false && rate && <EditRateForm user={props.user} product={props.product}
                     rate={rate} question4={question4} question5={question5}
                     updateState1={updateRateState1} updateState2={updateRateState2} />}

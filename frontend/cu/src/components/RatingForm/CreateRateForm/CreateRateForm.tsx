@@ -27,6 +27,7 @@ function CreateRateForm(props: Props) {
     const [comment, setComment] = useState("");
     const [image, setImage] = useState<File | null>(null);
 
+
     const updateScore1 = (score: number): void => {
         setScore1(score)
     }
@@ -58,7 +59,6 @@ function CreateRateForm(props: Props) {
         const scores = "" + score1 + score2 + score3 + score4 + score5;
         const formData = new FormData()
         formData.append('user_id', String(props.user?.id!))
-        formData.append('username', props.user?.username!)
         formData.append('product_id', String(props.product.id!))
         formData.append('scores', scores)
         formData.append('comment', comment)
@@ -68,6 +68,7 @@ function CreateRateForm(props: Props) {
 
         const responseRate = await dispatch(createRate(formData))
         if (responseRate.type === `${createRate.typePrefix}/fulfilled`) {
+            console.log('post succeeded')
             props.updateState1(true);
             props.updateState2(true);
         }

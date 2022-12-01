@@ -20,6 +20,7 @@ interface Props {
 function AfterRateForm(props: Props) {
     const dispatch = useDispatch<AppDispatch>();
 
+    console.log(props.rate.scores)
     const score1 = props.rate.scores.charAt(0);
     const score2 = props.rate.scores.charAt(1);
     const score3 = props.rate.scores.charAt(2);
@@ -28,13 +29,13 @@ function AfterRateForm(props: Props) {
 
     const onclickEditHandler = () => {
         props.updateState2(false);
-      }
-    
-      const onclickDeleteHandler = async () => {
+    }
+
+    const onclickDeleteHandler = async () => {
         await dispatch(deleteRate(props.rate?.id!))
         props.updateState1(false);
         props.updateState2(false);
-      }
+    }
 
     return (
         <div>
@@ -57,10 +58,12 @@ function AfterRateForm(props: Props) {
                     <div>한줄평</div>
                     <div> {props.rate.comment}</div>
                 </div>
-                <div className='picture'>
-                    <label>사진</label>
-                    <img src={props.rate.picture} width={300} />
-                </div>
+                {props.rate.picture != null &&
+                    <div className='picture'>
+                        <label>사진</label>
+                        <img src={props.rate.picture} width={300} />
+                    </div>
+                }
             </div>
         </div>
     )
