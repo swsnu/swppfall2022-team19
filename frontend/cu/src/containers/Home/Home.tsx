@@ -8,6 +8,7 @@ import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slic
 import QueryString from "qs";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
+import Recommendation from './Recommendation';
 
 
 
@@ -82,6 +83,7 @@ const Home = () => {
 
                             <h1 title="animatedTitle" className="titles"> 오늘의 추천 </h1>
                         </div>
+                        <Recommendation></Recommendation>
                     </div>
                 </div>
             </div>
