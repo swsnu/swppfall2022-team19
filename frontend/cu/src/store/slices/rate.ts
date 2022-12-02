@@ -3,7 +3,6 @@ import client from '../api/client';
 import { RootState } from "..";
 import { UserType } from "./User"
 import { ProductType } from "./product";
-// import axios from "axios";
 
 
 export interface RateType {
@@ -39,7 +38,6 @@ const initialState: RateState = {
 // )
 
 
-
 export const fetchUserRate = createAsyncThunk(
     'rate/userRates',
     async (params: { user_id: number }) => {
@@ -59,10 +57,6 @@ export const fetchRates = createAsyncThunk(
 )
 
 
-
-
-
-
 export const createRate = createAsyncThunk(
     'product/createRate',
     async (data: FormData, { dispatch }) => {
@@ -76,8 +70,7 @@ export const updateRate = createAsyncThunk(
     'product/updateRate',
     async (rate: FormData, { dispatch }) => {
         const id = rate.get('id')
-        const { ...data } = rate
-        const response = await client.put(`/api/rate/${id}/`, data)  //id = rateID
+        const response = await client.put(`/api/rate/${id}/`, rate)  //id = rateID
         dispatch(rateActions.updateRate(response.data))
         return response.data
     }
@@ -101,21 +94,13 @@ export const rateSlice = createSlice({
     reducers: {
         addRate: (state, action: PayloadAction<RateType>) => {
             const newRate = { ...action.payload }
-            // const newRate = {
-            //     id: state.rates.length + 1,
-            //     user_id: Number(action.payload.user_id),
-            //     username: action.payload.username,
-            //     product_id: Number(action.payload.product_id),
-            //     scores: action.payload.scores,
-            //     comment: action.payload.comment,
-            //     picture: action.payload.picture,
-            //     likedCount: 0
-            // }
             state.rates.push(newRate)
             state.selectedRate = newRate
         },
         updateRate: (state, action: PayloadAction<RateType>) => {
+            console.log("rate update")
             const rate = state.rates.find(rate => (rate.id === Number(action.payload.id)))
+            console.log("rate's id " + rate?.id)
             if (rate) {
                 rate.scores = action.payload.scores
                 rate.comment = action.payload.comment

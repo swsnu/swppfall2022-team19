@@ -62,6 +62,7 @@ function EditRateForm(props: Props) {
             formData.append('picture', image);
         }
         formData.append('likedCount', String(props.rate?.likedCount))
+        console.log("rate id: " + props.rate.id + " commment: " + comment)
         await dispatch(updateRate(formData))
 
         let averageScore = (score1 + score2 + score3 + score4 + score5) / 5;

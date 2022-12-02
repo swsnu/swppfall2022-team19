@@ -1,3 +1,4 @@
+import json
 from rest_framework import viewsets
 from rest_framework.response import Response
 from product.models.productModel import Tag, Product
@@ -58,7 +59,7 @@ class ProductViewSet(viewsets.GenericViewSet):
 
     def update(self, request, pk=None):
         product = self.get_object()
-        data = request.data.copy()
+        data = json.loads(request.body.decode('utf-8'))
         averageScoreData = data.pop("averageScore")
 
         # update, puts only the modifying field, partial true
