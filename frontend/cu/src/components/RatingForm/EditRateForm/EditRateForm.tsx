@@ -47,29 +47,21 @@ function EditRateForm(props: Props) {
 
     const onclickBackEditHandler = () => {
         props.updateState2(true);
-
     }
 
-    setScore1(Number(props.rate.scores.charAt(0)))
-    setScore2(Number(props.rate.scores.charAt(1)))
-    setScore3(Number(props.rate.scores.charAt(2)))
-    setScore4(Number(props.rate.scores.charAt(3)))
-    setScore5(Number(props.rate.scores.charAt(4)))
 
 
-    const onclickSaveEditHandler = async () => {   //#TODO: need to update product average score
+    const onclickSaveEditHandler = async () => {  
 
         const scores = "" + score1 + score2 + score3 + score4 + score5;
         const formData = new FormData()
         formData.append('id', String(props.rate?.id))
-        formData.append('user_id', String(props.user?.id!))
-        formData.append('username', props.user?.username!)
-        formData.append('product_id', String(props.product.id!))
         formData.append('scores', scores)
         formData.append('comment', comment)
         if (image) {
             formData.append('picture', image);
         }
+        formData.append('likedCount', String(props.rate?.likedCount))
         await dispatch(updateRate(formData))
 
         let averageScore = (score1 + score2 + score3 + score4 + score5) / 5;

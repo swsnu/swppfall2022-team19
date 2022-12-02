@@ -58,7 +58,7 @@ function AfterRateForm(props: Props) {
                     <div>한줄평</div>
                     <div> {props.rate.comment}</div>
                 </div>
-                {props.rate.picture != null &&
+                {props.rate.picture != undefined &&
                     <div className='picture'>
                         <label>사진</label>
                         <img src={props.rate.picture} width={300} />
