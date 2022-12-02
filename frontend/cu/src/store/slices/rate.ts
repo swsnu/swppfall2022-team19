@@ -47,6 +47,15 @@ export const fetchUserRate = createAsyncThunk(
 )
 
 
+export const addUserRate = createAsyncThunk(
+    'rate/addUserRates',
+    async (params: { user_id: number }) => {
+        const response = await client.get<RateType[]>('/api/rate/user/', { params })
+        return response.data
+    }
+)
+
+
 
 export const fetchRates = createAsyncThunk(
     'product/fetchRates',
@@ -122,8 +131,12 @@ export const rateSlice = createSlice({
             console.error(action.error);
         })
         builder.addCase(fetchUserRate.fulfilled, (state, action) => {
-            state.rates = action.payload;
             state.selectedRates = action.payload;
+        })
+        builder.addCase(addUserRate.fulfilled, (state, action) => {
+            action.payload.forEach(element => {
+                state.selectedRates.push(element)                
+            });
         })
     }
 
