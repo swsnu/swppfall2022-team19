@@ -4,7 +4,6 @@ from product.models.rateModel import Rate
         
 class RateSerializer(serializers.ModelSerializer): 
     username = serializers.ReadOnlyField(source="user.username")
-    image = serializers.ImageField(allow_empty_file=True, required=False)
     
     class Meta:
         model = Rate
