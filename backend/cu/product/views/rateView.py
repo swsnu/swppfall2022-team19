@@ -1,16 +1,3 @@
-from datetime import timezone, datetime
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import action
-import json
-from user.models import User
-from product.models.rateModel import Rate
-from product.models.productModel import Product
-from product.serializers.rateSerializer import RateSerializer
-from product.models.rateModel import Like
 
 '''
 /api/rate/
@@ -21,18 +8,32 @@ def retrieve(request,pk) - 특정 rate 가져오기
 def update(request,pk) - rate 수정
 def destroy(request,pk) - rate 삭제
 
-/api/rate/{user_id}/?
-def list(request) - rates, a by specific user
+/api/rate/user/
+def list(request) - rates, by a specific user
+
+/api/rate/liked/ - rates, liked by a specific user
 
 '''
 
+from datetime import timezone, datetime
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import action
+import json
+from user.models import User
+from product.models.rateModel import Rate, Like
+from product.models.productModel import Product
+from product.serializers.rateSerializer import RateSerializer
+from product.models.rateModel import Like
 
 class RateViewSet(viewsets.GenericViewSet):
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
 
     # (O)GET /api/rate/
-
     def list(self, request):
         user_id = request.GET.get("user_id")
         if user_id is None:
@@ -43,8 +44,7 @@ class RateViewSet(viewsets.GenericViewSet):
         serializer = RateSerializer(rates, many=True)
         return Response(serializer.data, status=200)
 
-    # (O)POST /api/rate/ hmm without picture..
-
+    # (O)POST /api/rate/
     def create(self, request):
         post = Rate()
         user_id = request.POST['user_id']
@@ -73,8 +73,7 @@ class RateViewSet(viewsets.GenericViewSet):
         }
         return JsonResponse(res_rate, status=201)
 
-    # (O)GET /api/rate/{rate_id}/ hmm without picture..
-
+    # (O)GET /api/rate/{rate_id}/
     def retrieve(self, request, pk=None):
         try:
             rate = self.get_object()
@@ -84,7 +83,6 @@ class RateViewSet(viewsets.GenericViewSet):
 
 
     # (O)PUT /api/rate/{rate_id}/
-
     def update(self, request, pk=None):
         try:
             rate_id = request.POST.get('id')
@@ -140,7 +138,6 @@ class RateViewSet(viewsets.GenericViewSet):
         return JsonResponse(res_rate,status=200)
 
     # (O)DELETE /api/rate/{rate_id}/
-
     def destroy(self, request, pk=None):
         try:
             rate = self.get_object()
@@ -151,10 +148,8 @@ class RateViewSet(viewsets.GenericViewSet):
             return Response(status=204)
 
     # GET /api/rate/user/
-
     @action(detail=False, methods=["GET"])
     def user(self, request):
-
         user_id = request.GET.get("user_id")
         rates = (
             Rate.objects.filter(user_id=user_id)
@@ -162,13 +157,18 @@ class RateViewSet(viewsets.GenericViewSet):
         serializer = RateSerializer(rates, many=True)
         return Response(serializer.data, status=200)
 
-        # GET /api/rate/user/
+    # GET /api/rate/liked/
     @action(detail=False, methods=["GET"])
-    def user(self, request):
-
+    def liked(self, request):
         user_id = request.GET.get("user_id")
-        rates = (
-            Rate.objects.filter(user_id=user_id)
+        
+        likes = (
+            Like.objects.filter(user_id=user_id)
         )
+        rates=[]
+
+        for i in likes:
+            rates.append(i.rate)
+
         serializer = RateSerializer(rates, many=True)
         return Response(serializer.data, status=200)

@@ -1,62 +1,52 @@
-import json
-from rest_framework import viewsets
-from rest_framework.response import Response
-from product.models.productModel import Tag, Product
-from product.serializers.productSerializer import ProductSerializer
-#from django.db.models import Q
-from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Q
-
 '''
 /api/product/
-def list(self, request) - product 전체 가져오기
+def list(self, request) - products 가져오기
 
-/api/product/{product_id}
+/api/product/mainCategory/
+def list(self, request) - 특정 mainCategory products 가져오기
+
+/api/product/{product_id}/
 def retrieve(self, request, pk) - 특정 product 가져오기
 def update(self, request, pk) - avgScore 수정
 '''
+
+import json
+from rest_framework import viewsets
+from rest_framework.response import Response
+from product.models.productModel import Product
+from product.serializers.productSerializer import ProductSerializer
+#from django.views.decorators.csrf import csrf_exempt
+#from django.db.models import Q
+from rest_framework.decorators import action
+
 class ProductViewSet(viewsets.GenericViewSet):
     queryset = Product.objects.all() 
     serializer_class = ProductSerializer
 
     # (O)GET /api/product/
-
     def list(self, request):
         products = Product.objects.all()
         serializer = self.get_serializer(products, many=True)
         data = serializer.data              # dictionary format not json yet
         return Response(data, status=200)   # json
 
-    '''
-    for search function
 
-    def list(self, request):       
-        searchWord = request.GET.get("mainCategory", "")  
-        #searchWord = request.data?
-        products = (
-            self.get_queryset()
-            .filter(
-                mainCategory=searchWord
-                #Q(mainCategory_icontains=searchWord)|
-                #Q(subCategory_icontains=searchWord)|
-                #Q(name_icontains=searchWord)
-            )
-            #.distinct()
+    # ()GET /api/product/mainCategory/
+    @action(detail=False, methods=["GET"])
+    def mainCategory(self, request):
+        mainCategory=request.GET.get("mainCategory")
+        rates = (
+            Product.objects.filter(mainCategory=mainCategory)
         )
-        #products = products[:5]            # 20 product lists
-        serializer = self.get_serializer(products, many=True)
-        data = serializer.data              # dictionary format not json yet
-        return Response(data, status=200)   # json
-    '''
+        serializer = ProductSerializer(rates,many=True)
+        return Response(serializer.data, status=200)
 
-    # (O)GET /api/product/{product_id}
-
+    # (O)GET /api/product/{product_id}/
     def retrieve(self, request, pk=None):
         product = self.get_object()
         return Response(self.get_serializer(product).data, status=200)
 
     # (O)PUT /api/product/{product_id} 
-
     def update(self, request, pk=None):
         product = self.get_object()
         data = json.loads(request.body.decode('utf-8'))

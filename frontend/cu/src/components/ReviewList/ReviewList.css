@@ -28,6 +28,8 @@
   font-weight: 400;
   background: rgb(246, 249, 224);
   color: black;
+  border-radius: 20px;
+
 }
 .ReviewList .fieldName_ID {
   padding: 0rem;
