@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
 import client from '../api/client';
-// import axios from "axios";
 
 
 export interface ProductType {
@@ -66,7 +65,8 @@ export const fetchSearchProducts = createAsyncThunk(
     'product/updateProduct',
     async (product: Pick<ProductType, 'id'|'averageScore'>, { dispatch }) => { //only updates 
       const { id, averageScore } = product
-      const response = await client.put(`/api/product/${id}/`, averageScore)
+
+      const response = await client.put(`/api/product/${id}/`, product)
       dispatch(productActions.updateProduct(response.data))
       return response.data
     }

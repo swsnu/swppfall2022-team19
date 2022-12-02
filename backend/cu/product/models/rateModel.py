@@ -18,6 +18,5 @@ class Rate(models.Model):
         return self.product.name
 
 class Like(models.Model):
-    
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     rate = models.ForeignKey(Rate, on_delete = models.CASCADE)
