@@ -47,6 +47,16 @@ export const fetchSearchProducts = createAsyncThunk(
   }
 )
 
+// fetch products matching searching string key
+export const fetchAllProducts = createAsyncThunk(
+  'product/fetchAllProducts', 
+  async () => { 
+    const response = await client.get<ProductType[]>('/api/product/') 
+    return response.data
+  }
+)
+
+
 
 
 
@@ -147,6 +157,9 @@ export const fetchSearchProducts = createAsyncThunk(
         })
         builder.addCase(fetchProduct.fulfilled, (state, action) => {
           state.selectedProduct= action.payload
+        })
+        builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
+          state.products = action.payload
         })
       }
   })

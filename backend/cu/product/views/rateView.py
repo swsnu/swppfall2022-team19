@@ -42,6 +42,7 @@ class RateViewSet(viewsets.GenericViewSet):
             rates = (
                 Rate.objects.filter(user_id=user_id))
         serializer = RateSerializer(rates, many=True)
+        print("/api/rate")
         return Response(serializer.data, status=200)
 
     # (O)POST /api/rate/
