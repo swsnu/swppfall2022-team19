@@ -58,8 +58,6 @@ class RateViewSet(viewsets.GenericViewSet):
         post.comment = request.POST['comment']
         if 'picture' in request.FILES:
             post.picture = request.FILES['picture']
-        else:
-            post.picture = False
         post.save()
 
         res_rate = {
@@ -73,7 +71,7 @@ class RateViewSet(viewsets.GenericViewSet):
         }
         return JsonResponse(res_rate, status=201)
 
-    # (O)GET /api/rate/{rate_id}/ hmm without picture..
+    # (O)GET /api/rate/{rate_id}/ 
 
     def retrieve(self, request, pk=None):
         try:
@@ -104,13 +102,11 @@ class RateViewSet(viewsets.GenericViewSet):
 
         before_like_count = rate.likedCount
         print("previous likes: ", before_like_count)
-
+        print("previous comment: " + rate.comment)
         rate.scores = request.POST['scores']
         rate.comment = request.POST['comment']
         if 'picture' in request.FILES:
             rate.picture = request.FILES['picture']
-        else:
-            rate.picture = False
 
         # update likedCount and save updatedRate
         rate.likedCount = request.POST['likedCount']
@@ -127,6 +123,8 @@ class RateViewSet(viewsets.GenericViewSet):
         elif int(before_like_count)>int(after_like_count) : # if disliked -> delete object
             delete_like = Like.objects.filter(user = user) & Like.objects.filter(rate = rate)
             delete_like.delete()
+
+        print("updated comment:" + rate.comment)
 
         res_rate = {
             'user_id': rate.user.id,
@@ -162,13 +160,13 @@ class RateViewSet(viewsets.GenericViewSet):
         serializer = RateSerializer(rates, many=True)
         return Response(serializer.data, status=200)
 
-        # GET /api/rate/user/
-    @action(detail=False, methods=["GET"])
-    def user(self, request):
+    #     # GET /api/rate/user/
+    # @action(detail=False, methods=["GET"])
+    # def user(self, request):
 
-        user_id = request.GET.get("user_id")
-        rates = (
-            Rate.objects.filter(user_id=user_id)
-        )
-        serializer = RateSerializer(rates, many=True)
-        return Response(serializer.data, status=200)
+    #     user_id = request.GET.get("user_id")
+    #     rates = (
+    #         Rate.objects.filter(user_id=user_id)
+    #     )
+    #     serializer = RateSerializer(rates, many=True)
+    #     return Response(serializer.data, status=200)
