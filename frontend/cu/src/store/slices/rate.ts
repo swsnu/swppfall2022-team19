@@ -114,14 +114,9 @@ export const rateSlice = createSlice({
             state.selectedRate = newRate
         },
         updateRate: (state, action: PayloadAction<RateType>) => {
-            console.log("rate update")
-            const rate = state.rates.find(rate => (rate.id === Number(action.payload.id)))
-            console.log("rate's id " + rate?.id)
-            if (rate) {
-                rate.scores = action.payload.scores
-                rate.comment = action.payload.comment
-                rate.picture = action.payload.picture
-            }
+            state.rates = state.rates.map(
+                rate => (rate.id === Number(action.payload.id)) ? action.payload : rate)
+
         },
         deleteRate: (state, action: PayloadAction<RateType['id']>) => {
             state.rates = state.rates.filter(

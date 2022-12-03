@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HeartRating from '../HeartRate/HeartRating'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from '../../../store';
-import { createRate, RateType, updateRate } from '../../../store/slices/rate';
+import { createRate, fetchRates, RateType, selectRate, updateRate } from '../../../store/slices/rate';
 import { UserType } from '../../../store/slices/User';
 import { ProductType, updateProduct } from '../../../store/slices/product';
 
@@ -28,6 +28,7 @@ function EditRateForm(props: Props) {
     const [comment, setComment] = useState("");
     const [image, setImage] = useState<File | null>(null);
     const [totalRateNum, setTotalRateNum] = useState<number>(0);
+    const rateState = useSelector(selectRate);
 
     const updateScore1 = (score: number): void => {
         setScore1(score)
@@ -51,7 +52,7 @@ function EditRateForm(props: Props) {
 
 
 
-    const onclickSaveEditHandler = async () => {  
+    const onclickSaveEditHandler = async () => {
 
         const scores = "" + score1 + score2 + score3 + score4 + score5;
         const formData = new FormData()
@@ -65,20 +66,31 @@ function EditRateForm(props: Props) {
         console.log("rate id: " + props.rate.id + " commment: " + comment)
         await dispatch(updateRate(formData))
 
-        let averageScore = (score1 + score2 + score3 + score4 + score5) / 5;
-        let totalchange = (averageScore - props.product.averageScore) / (totalRateNum + 1);
-        let totalAverageScore = props.product.averageScore - totalchange;
+
+
+        //calculating updated product review score
+        await dispatch(fetchRates())
+        const filteredRates = rateState.rates.filter((rate) => rate.product_id === props.product.id);
+        let totalScore = 0;
+        filteredRates.map((rv) => {
+            for (var i = 0; i < 5; i++) {
+                totalScore += Number(rv.scores.charAt(i));
+            }
+        })
+        if (totalScore !== 0) totalScore /= 5 * filteredRates.length;
+        totalScore.toFixed(2);
+        console.log("average score: " + totalScore)
         const dataUpdate = {
             id: props.product.id,
-            averageScore: totalAverageScore
+            averageScore: totalScore
         }
         await dispatch(updateProduct(dataUpdate))
         props.updateState2(true);
     }
 
-    const onclickDeleteImageHandler = () =>{
+    const onclickDeleteImageHandler = () => {
         setImage(null);
-      }
+    }
 
 
     return (
