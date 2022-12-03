@@ -1,7 +1,3 @@
-// Review
-// Review contains 'user_id' 'totalScore' 'comment' 'likedCount' 'liked'
-// Review.ts slice has 'clickLike' reducer  to change the state of 'liked' attribute for all te Reviews.                    
-
 import "./Review.css"
 import { useState } from 'react';
 import { UserType } from "../../store/slices/User";
@@ -15,6 +11,8 @@ interface IProps {
     product: ProductType,
     rate: RateType
 }
+
+
 const Review = (props: IProps) => {
     /*
     [liked, setLiked] = useState<boolean>(HERE)
@@ -27,17 +25,7 @@ const Review = (props: IProps) => {
     const dispatch = useDispatch<AppDispatch>();
 
     const likeClick = async () => {
-        console.log("Before"+likedCount)
-        if(liked){ // 좋아요 -> 해제
-            setLiked(false)
-            setLikedCount(likedCount - 1)
-            
-        }
-        else{ // 없음 -> 좋아요
-            setLiked(true)
-            setLikedCount(likedCount + 1)
-        }
-        console.log("After:"+likedCount)
+        //console.log("Before"+likedCount)
 
         const scores = props.rate.scores;
         const comment = props.rate.comment;
@@ -48,9 +36,23 @@ const Review = (props: IProps) => {
         formData.append('product_id', String(props.product.id!))
         formData.append('scores', scores)
         formData.append('comment', comment)
-        formData.append('likedCount', String(likedCount)) // 변경된 likedCount 반영한다. 
+
+        if(liked){ // 좋아요 -> 해제
+            setLiked(false)
+            setLikedCount(likedCount - 1)
+            formData.append('likedCount', String(likedCount-1)) 
+        }
+        else{ // 없음 -> 좋아요
+            setLiked(true)
+            setLikedCount(likedCount + 1)
+            formData.append('likedCount', String(likedCount+1)) 
+        }
+        //console.log("After:"+likedCount)
+
         await dispatch(updateRate(formData))
     }
+
+    console.log("rates' likedCount: "+likedCount)
 
     var totalScore=0;
     for( var i=0; i<5; i++){
