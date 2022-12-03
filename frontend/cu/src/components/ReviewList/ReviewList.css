@@ -11,7 +11,7 @@
 
 .ReviewList .title {
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-align: left;
   font-weight: 400;
   background: yellowgreen;
@@ -21,7 +21,7 @@
 
 .ReviewList .fieldName {
   
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 1rem;
   text-align: left;
   display: flex;
@@ -34,7 +34,7 @@
 .ReviewList .fieldName_ID {
   padding: 0rem;
   margin-left: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-align: left;
   font-weight: 400;
   background: rgb(246, 249, 224);
@@ -43,9 +43,8 @@
 
 .ReviewList .fieldName_totalScore {
   padding: 0rem;
-  margin-left: 2rem;
-  font-size: 1rem;
-  text-align: left;
+  margin-left: 5rem;
+  font-size: 1.5rem;
   font-weight: 400;
   background: rgb(246, 249, 224);
   color: black;
@@ -54,8 +53,7 @@
 .ReviewList .fieldName_comment {
   padding: 0rem;
   margin-left:9rem;
-  font-size: 1rem;
-  text-align: left;
+  font-size: 1.5rem;
   font-weight: 400;
   background: rgb(246, 249, 224);
   color: black;
@@ -63,8 +61,8 @@
 
 .ReviewList .fieldName_like {
   padding: 0rem;
-  margin-left: 43rem;
-  font-size: 1rem;
+  margin-left: 35rem;
+  font-size: 1.5rem;
   text-align: right;
   font-weight: 400;
   background: rgb(246, 249, 224);

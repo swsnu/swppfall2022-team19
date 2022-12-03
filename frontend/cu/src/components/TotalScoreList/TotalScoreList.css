@@ -13,10 +13,19 @@
 
 .TotalScoreList .title {
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-align: left;
   font-weight: 400;
   background:#9DC92A;
+  color: black;
+  border-radius: 10px;
+}
+
+.TotalScoreList .total {
+  padding: 1rem;
+  margin-left: 2rem;
+  font-size: 1.5rem;
+  font-weight: 400;
   color: black;
   border-radius: 10px;
 }

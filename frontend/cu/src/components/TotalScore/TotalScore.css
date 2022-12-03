@@ -5,20 +5,18 @@
   transition: all 0.15s;  
 }
   
-.TotalScore .totalScoreTitle{
-  font-size: 1.1rem;
+.totalScoreTitle{
+  font-size: 1.5rem;
   font-weight: 400;
   padding: 0.1rem;
-  transition: all 0.15s;
   margin-left: 2.1rem;
 }
 
-.TotalScore .totalScoreScore{
-  font-size: 1.1rem;
+.totalScoreScore{
+  font-size: 1.5rem;
   margin-left: 1rem;
   font-weight: 400;
   padding: 0.1rem;
-  transition: all 0.15s;
   margin-right: 2.1rem;
 }
   
