@@ -13,7 +13,7 @@
 
 .TotalScoreList .title {
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-align: left;
   font-weight: 400;
   background:#9DC92A;
@@ -21,12 +21,22 @@
   border-radius: 10px;
 }
 
-.TotalScoreList .view {
-  padding: 0rem;
+.TotalScoreList .total {
+  padding: 1rem;
   margin-left: 2rem;
-  font-size: 1rem;
-  text-align: left;
+  font-size: 1.5rem;
   font-weight: 400;
-  background: rgb(246, 249, 224);
   color: black;
+  border-radius: 10px;
 }
+
+.TotalScoreList .scores {
+  padding: 1rem;
+  margin-left: 2rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: black;
+  border-radius: 10px;
+}
+
+

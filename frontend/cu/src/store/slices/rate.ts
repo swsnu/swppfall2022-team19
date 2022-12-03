@@ -46,6 +46,13 @@ export const fetchUserRate = createAsyncThunk(
     }
 )
 
+export const fetchUserLikedRate = createAsyncThunk(
+    'rate/userLikedRates',
+    async (params: { user_id: number }) => {
+        const response = await client.get<RateType[]>('/api/rate/liked/', { params })
+        return response.data
+    }
+)
 
 export const addUserRate = createAsyncThunk(
     'rate/addUserRates',

@@ -1,9 +1,9 @@
 // ReviewList
 
-import { useDispatch} from "react-redux";
+//import { useDispatch} from "react-redux";
 import React, { useState, useEffect } from 'react';
 import "./ReviewList.css";
-import { AppDispatch } from "../../store";
+//import { AppDispatch } from "../../store";
 import Review from "../Review/Review";
 import Rate, { RateType } from "../../store/slices/rate";
 import { ProductType } from "../../store/slices/product";
@@ -17,7 +17,7 @@ interface Props{
 
 
 export default function ReviewList (props: Props){
-    const dispatch = useDispatch<AppDispatch>();
+    const [likedCount, setLikedCount] = useState();
     const filteredRates = props.rate.filter((rate) => rate.product_id === props.product.id);
     
     return (
@@ -30,9 +30,10 @@ export default function ReviewList (props: Props){
                 <div className="fieldName_like">좋아요 </div>
             </div>    
             <div className='reviews'>
-                {   filteredRates.map( (rv) => {
+                {  filteredRates.map( (rv) => {
                     return (<Review user={props.user} product={props.product} rate={rv}/>
                 );})}
+                { filteredRates.length===0 && <div className='no_review'>첫 평가를 남겨주세요</div>}
             </div>
         </div> 
     )
