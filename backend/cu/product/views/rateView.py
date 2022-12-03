@@ -98,7 +98,7 @@ class RateViewSet(viewsets.GenericViewSet):
         print("user:", user)
 
         # temp user to make like object with postman
-        user = rate.user
+        # user = rate.user
 
         before_like_count = rate.likedCount
         print("previous likes: ", before_like_count)
