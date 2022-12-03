@@ -69,10 +69,15 @@ function BestandMost() {
                         </div>
 
                     <div className="BestPRoductComment">
-                        "
-                        {bestProductComment.comment}
-                        "
+                        <h1>인기댓글</h1>
+                        "{bestProductComment.comment}"
+                        
+                        <h1>상품설명</h1>
+                        {bestProduct.details}
+
+
                     </div>
+
             
             </div>
         </div>
