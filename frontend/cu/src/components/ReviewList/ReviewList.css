@@ -3,7 +3,6 @@
   width: 1100px;
   box-shadow: 0 3px 9px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
   margin: auto; 
-  margin-top: 0rem;
   margin-bottom: 5rem;
   border: 3px solid #9DC92A;
   border-radius: 20px;
@@ -11,7 +10,7 @@
 
 .ReviewList .title {
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-align: left;
   font-weight: 400;
   background: yellowgreen;
@@ -21,18 +20,20 @@
 
 .ReviewList .fieldName {
   
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 1rem;
   text-align: left;
   display: flex;
   font-weight: 400;
   background: rgb(246, 249, 224);
   color: black;
+  border-radius: 20px;
+
 }
 .ReviewList .fieldName_ID {
   padding: 0rem;
   margin-left: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-align: left;
   font-weight: 400;
   background: rgb(246, 249, 224);
@@ -41,9 +42,8 @@
 
 .ReviewList .fieldName_totalScore {
   padding: 0rem;
-  margin-left: 2rem;
-  font-size: 1rem;
-  text-align: left;
+  margin-left: 5rem;
+  font-size: 1.5rem;
   font-weight: 400;
   background: rgb(246, 249, 224);
   color: black;
@@ -52,8 +52,7 @@
 .ReviewList .fieldName_comment {
   padding: 0rem;
   margin-left:9rem;
-  font-size: 1rem;
-  text-align: left;
+  font-size: 1.5rem;
   font-weight: 400;
   background: rgb(246, 249, 224);
   color: black;
@@ -61,10 +60,19 @@
 
 .ReviewList .fieldName_like {
   padding: 0rem;
-  margin-left: 43rem;
-  font-size: 1rem;
+  margin-left: 35rem;
+  font-size: 1.5rem;
   text-align: right;
   font-weight: 400;
   background: rgb(246, 249, 224);
+  color: black;
+}
+
+
+.ReviewList .no_review{
+  padding: 2rem;
+  margin-left:2rem;
+  font-size: 1.5rem;
+  font-weight: 400;
   color: black;
 }

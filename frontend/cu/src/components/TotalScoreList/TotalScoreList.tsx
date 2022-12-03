@@ -188,17 +188,16 @@ export default function TotalScoreList(props: Props){
     return (
         <div className="TotalScoreList"> 
             <div className='title'>전체 평점 및 항목별 평점</div>
-            <div className='views'>
                 <div className='total'>총점 {totalScore}</div>
-                {totalScores.map( (ts) => {
-                    return (
-                    <TotalScore key={ts.id}
-                        title={ts.title}
-                        score={ts.score}
-                    />
-                );})}
-
-            </div>
+                    <div className='scores'>
+                        {totalScores.map( (ts) => {
+                            return (
+                            <TotalScore key={ts.id}
+                                title={ts.title}
+                                score={ts.score}
+                            />
+                        );})}
+                    </div>
         </div> 
     )
 }
