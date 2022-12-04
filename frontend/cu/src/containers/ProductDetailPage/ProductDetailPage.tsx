@@ -8,38 +8,61 @@ import ProductBlock from '../../components/ProductBlock/ProductBlock';
 import "./ProductDetailPage.css"
 import Header from '../Header/Header'
 import { selectUser } from "../../store/slices/User"
-import { fetchProduct, selectProduct} from "../../store/slices/product"
-import { fetchRates, selectRate } from "../../store/slices/rate"
+import { fetchProduct, selectProduct, updateProduct } from "../../store/slices/product"
+import { fetchRates, RateType, selectRate } from "../../store/slices/rate"
 import { AppDispatch } from '../../store';
 import RatingLayout from '../../components/RatingForm/RatingLayout';
- 
+
 
 function ProductDetailPage() {
   //왼편에 product, 오른편에 rating, 아래에 totalScoreList, 맨 아래에는 reviewList.
-  //현재 로그인된 user_id, product의 subCategory를 element로 다 넘겨줘야된다. 
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
   const userState = useSelector(selectUser);
   const selectedProduct = useSelector(selectProduct).selectedProduct;
-  const rateState = useSelector(selectRate); 
-  const selectedRate = useSelector(selectRate).selectedRate;
-  
-  //window.location.reload(); 
+  const rateState = useSelector(selectRate);
+  const [callRate1, setCallRate1] = useState<boolean>();
+  const [callRate2, setCallRate2] = useState<boolean>();
+  const [rate, setRate] = useState<RateType>();
+
   //fetch all the rates stored in particular product
-  useLayoutEffect(() => {  
+  useLayoutEffect(() => {
+    console.log("initial fetch rates")
+    dispatch(fetchProduct(Number(id)));
+    dispatch(fetchRates());
+
+    // const filterRate = rateState.rates.filter((rate) => rate.product_id === selectedProduct?.id!).find((rate) => rate.user_id === userState.selectedUser?.id!);
+    // setRate(filterRate);
+    // if (rate === undefined) {
+    //     setCallRate1(false);
+    //     setCallRate2(false);
+    // }
+    // else {
+    //     setCallRate1(true);
+    //     setCallRate2(true);
+    // }
+  }, [id, dispatch])
+
+  useLayoutEffect(() => {
+    console.log("re fetchRates")
     dispatch(fetchProduct(Number(id)));
     dispatch(fetchRates())
-  }, [id, dispatch]) //initial rendering이 안된다.  
+  }, [callRate1,callRate2])  //needed to update Review in Review list and product
 
-  // console.log("product id: "+selectedProduct?.id)
-  // console.log("user: " + userState.selectedUser?.username)
-  // console.log("product name: "+selectedProduct?.name)
+
+  const updateRecall1 = (state: boolean): void => {  //if any state changes in RatingLayout, this is updated. 
+    setCallRate1(state)
+  }
+  const updateRecall2 = (state: boolean): void => {
+    setCallRate2(state)
+  }
+
   return (
     <div className="productDetailPage">
       <Header />
       <div className="productRate">
         <div key={1}>
-          {selectedProduct && ( <ProductBlock
+          {selectedProduct && (<ProductBlock
             product_id={selectedProduct?.id}
             name={selectedProduct?.name}
             imageUrl={selectedProduct?.imageUrl}
@@ -49,22 +72,22 @@ function ProductDetailPage() {
             averageScore={selectedProduct?.averageScore}
           />)}
         </div>
-        <div key={2}> 
+        <div key={2}>
           {
-            userState.selectedUser && selectedProduct && rateState.rates &&
-            <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates}/>
+            userState.selectedUser && selectedProduct &&
+            <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} recallRateState1={updateRecall1} recallRateState2={updateRecall2}/>
           }
         </div>
 
       </div>
-      { <div className="scoresReviews">
+      {<div className="scoresReviews">
         <div key={3}>
-          { userState.selectedUser && selectedProduct && 
-            <TotalScoreList user={userState .selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
+          {userState.selectedUser && selectedProduct &&
+            <TotalScoreList user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
         <div key={4}>
-          { userState.selectedUser && selectedProduct &&
+          {userState.selectedUser && selectedProduct &&
             <ReviewList user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
-      </div> }
+      </div>}
     </div>
   )
 }

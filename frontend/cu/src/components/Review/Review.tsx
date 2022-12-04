@@ -65,9 +65,10 @@ const Review = (props: IProps) => {
         <article className='Review'>
             <div className='review_picutre_except'>
                 <div className='review_button_except'>
+                    <td> { props.rate.created_at} </td>
                     <div className="review_user_username">{props.rate.username}</div>
                     <div className="review_totalScore" style={{color: "green"}}>
-                        {totalScore === 5 ? '★★★★★' : totalScore >= 4 ? '☆★★★★' : totalScore >= 3 ? '☆☆★★★' : totalScore >= 2 ? '☆☆☆★★' : totalScore >= 1 ? '☆☆☆☆★' : '☆☆☆☆☆'}
+                        {totalScore === 5 ? '★★★★★' : totalScore >= 4 ? '★★★★☆' : totalScore >= 3 ? '★★★☆☆' : totalScore >= 2 ? '★★☆☆☆' : totalScore >= 1 ? '★☆☆☆☆' : '☆☆☆☆☆'}
                     </div>
                     <div className="review_comment">{props.rate?.comment}</div>
                 </div>

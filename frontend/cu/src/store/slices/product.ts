@@ -13,7 +13,8 @@ export interface ProductType {
     price: number,
     newProduct: boolean,
     tags: string[],
-    averageScore: number
+    averageScore: number,
+    //rateCount: number,
 }
 
 export interface TagType{

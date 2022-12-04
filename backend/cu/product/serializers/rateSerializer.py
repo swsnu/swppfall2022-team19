@@ -16,4 +16,5 @@ class RateSerializer(serializers.ModelSerializer):
             "comment",
             "picture",
             "likedCount",
+            "created_at",
         )
