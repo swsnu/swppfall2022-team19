@@ -20,15 +20,13 @@ interface Props {
 
 function EditRateForm(props: Props) {
     const dispatch = useDispatch<AppDispatch>();
-    const [score1, setScore1] = useState(0);
-    const [score2, setScore2] = useState(0);
-    const [score3, setScore3] = useState(0);
-    const [score4, setScore4] = useState(0);
-    const [score5, setScore5] = useState(0);
+    const [score1, setScore1] = useState(Number(props.rate.scores[0]));
+    const [score2, setScore2] = useState(Number(props.rate.scores[1]));
+    const [score3, setScore3] = useState(Number(props.rate.scores[2]));
+    const [score4, setScore4] = useState(Number(props.rate.scores[3]));
+    const [score5, setScore5] = useState(Number(props.rate.scores[4]));
     const [comment, setComment] = useState("");
     const [image, setImage] = useState<File | null>(null);
-    const [totalRateNum, setTotalRateNum] = useState<number>(0);
-    const rateState = useSelector(selectRate);
 
     const updateScore1 = (score: number): void => {
         setScore1(score)
@@ -57,6 +55,7 @@ function EditRateForm(props: Props) {
         const scores = "" + score1 + score2 + score3 + score4 + score5;
         const formData = new FormData()
         formData.append('id', String(props.rate?.id))
+        formData.append('product_id', String(props.product.id))
         formData.append('scores', scores)
         formData.append('comment', comment)
         if (image) {
@@ -65,26 +64,6 @@ function EditRateForm(props: Props) {
         formData.append('likedCount', String(props.rate?.likedCount))
         console.log("rate id: " + props.rate.id + " commment: " + comment)
         await dispatch(updateRate(formData))
-
-
-
-        //calculating updated product review score
-        await dispatch(fetchRates())
-        const filteredRates = rateState.rates.filter((rate) => rate.product_id === props.product.id);
-        let totalScore = 0;
-        filteredRates.map((rv) => {
-            for (var i = 0; i < 5; i++) {
-                totalScore += Number(rv.scores.charAt(i));
-            }
-        })
-        if (totalScore !== 0) totalScore /= 5 * filteredRates.length;
-        totalScore.toFixed(2);
-        console.log("average score: " + totalScore)
-        const dataUpdate = {
-            id: props.product.id,
-            averageScore: totalScore
-        }
-        await dispatch(updateProduct(dataUpdate))
         props.updateState2(true);
     }
 

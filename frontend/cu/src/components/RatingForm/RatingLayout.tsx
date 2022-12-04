@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import "./RatingLayout.css"
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { RateType} from '../../store/slices/rate';
@@ -14,7 +14,7 @@ interface Props {
     product: ProductType,
     rate: RateType[],
     recallRateState1: (arg: boolean) => void,
-    recallRateState2: (arg: boolean) => void
+    recallRateState2: (arg: boolean) => void,
 }
 
 
@@ -28,10 +28,9 @@ function RatingLayout(props: Props) {
     const [rate, setRate] = useState<RateType>();
 
     //whenever there is change in product, find the appropriate question by subCategory
-    useEffect(() => {
-        const filterRate = props.rate.filter((rate) => rate.product_id === props.product.id!);
-        const singleRate = filterRate.find((rate) => rate.user_id === props.user?.id!);
-        setRate(singleRate);
+    useLayoutEffect(() => {
+        const filterRate = props.rate.filter((rate) => rate.product_id === props.product.id!).find((rate) => rate.user_id === props.user?.id!);
+        setRate(filterRate);
 
         if (rate === undefined) {
             setRateState1(false);
@@ -49,14 +48,6 @@ function RatingLayout(props: Props) {
             }
         }
     }, [props.product, props.recallRateState1, props.recallRateState2])
-
-    //when parent's state changes, find the updated rate again 
-    // useEffect(()=>{
-    //     const filterRate = props.rate.filter((rate) => rate.product_id === props.product.id!);
-    //     const singleRate = filterRate.find((rate) => rate.user_id === props.user?.id!);
-    //     setRate(singleRate);
-    //     console.log("get single rate: " + singleRate?.comment)
-    // }, [props.recallRateState1, props.recallRateState2]) 
 
 
     const updateRateState2 = (state: boolean): void => {

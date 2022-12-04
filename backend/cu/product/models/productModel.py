@@ -16,6 +16,7 @@ class Product(models.Model):
     newProduct = models.BooleanField(default = False)
     tags = models.ManyToManyField(Tag, related_name = "products", blank=True)
     averageScore = models.FloatField(default = 0)
+    rateCount = models.IntegerField(default = 0)
 
     def __str__(self):
         return self.name

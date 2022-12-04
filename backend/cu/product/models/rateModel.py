@@ -8,6 +8,7 @@ class Rate(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
     scores = models.CharField(max_length=100, blank=False, null=False)
+    averageScore = models.FloatField(default = 0)
     comment = models.TextField(blank=True, null=False)
     picture = models.ImageField(upload_to='%Y/%m/%d', blank=True, null=True)
     likedCount = models.IntegerField(default = 0)

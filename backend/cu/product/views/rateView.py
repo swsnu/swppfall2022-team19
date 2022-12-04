@@ -55,11 +55,16 @@ class RateViewSet(viewsets.GenericViewSet):
         post.user = user
         post.product = product
         post.scores = request.POST['scores']
+        post.averageScore = round((int(post.scores[0]) + int(post.scores[1])  + int(post.scores[2])  + int(post.scores[3])  + int(post.scores[4]) )/5,2)
         post.comment = request.POST['comment']
         if 'picture' in request.FILES:
             post.picture = request.FILES['picture']
         post.save()
 
+        #update product's average score & increase rateCount by 1
+        product.averageScore = round(((product.rateCount * product.averageScore) + post.averageScore)/(product.rateCount + 1),2)
+        product.rateCount += 1
+        product.save()
         res_rate = {
             'user_id': post.user.id,
             'username': post.user.username,
@@ -88,6 +93,14 @@ class RateViewSet(viewsets.GenericViewSet):
         except Rate.DoesNotExist:
             return Response(status=404)
         
+        #update product averageScore
+        product_id = request.POST.get('product_id')
+        product = Product.objects.get(id=int(product_id))
+        newScores = request.POST.get('scores')
+        newScore = round((int(newScores[0]) + int(newScores[1])  + int(newScores[2])  + int(newScores[3])  + int(newScores[4]) ) / 5, 2)
+        product.averageScore = round(((product.rateCount * product.averageScore) - rate.averageScore + newScore) / (product.rateCount), 2)
+        product.save()
+
         # check rate <- rater name, product name
         print("rater:", rate.user.username, rate.product.name)
         
@@ -102,6 +115,7 @@ class RateViewSet(viewsets.GenericViewSet):
         print("previous likes: ", before_like_count)
         print("previous comment: " + rate.comment)
         rate.scores = request.POST['scores']
+        rate.averageScore = newScore
         rate.comment = request.POST['comment']
         if 'picture' in request.FILES:
             rate.picture = request.FILES['picture']
@@ -142,7 +156,17 @@ class RateViewSet(viewsets.GenericViewSet):
         except Rate.DoesNotExist:
             return Response(status=404)
         else:
+            product_id = rate.product.id
+            #request.POST.get('product_id')
+            product = Product.objects.get(id=int(product_id))
+            if(product.rateCount == 1):
+                product.averageScore = 0
+            else:
+                product.averageScore = round(((product.rateCount * product.averageScore) - rate.averageScore)/(product.rateCount - 1), 2)
+            product.rateCount -= 1
+            product.save()
             rate.delete()
+            
             return Response(status=204)
 
     # GET /api/rate/user/

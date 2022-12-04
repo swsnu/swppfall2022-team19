@@ -8,7 +8,7 @@ import ProductBlock from '../../components/ProductBlock/ProductBlock';
 import "./ProductDetailPage.css"
 import Header from '../Header/Header'
 import { selectUser } from "../../store/slices/User"
-import { fetchProduct, selectProduct } from "../../store/slices/product"
+import { fetchProduct, selectProduct, updateProduct } from "../../store/slices/product"
 import { fetchRates, RateType, selectRate } from "../../store/slices/rate"
 import { AppDispatch } from '../../store';
 import RatingLayout from '../../components/RatingForm/RatingLayout';
@@ -21,22 +21,33 @@ function ProductDetailPage() {
   const userState = useSelector(selectUser);
   const selectedProduct = useSelector(selectProduct).selectedProduct;
   const rateState = useSelector(selectRate);
-  const [callRate1, setCallRate1] = useState<Boolean>(false);
-  const [callRate2, setCallRate2] = useState<Boolean>(false);
+  const [callRate1, setCallRate1] = useState<boolean>();
+  const [callRate2, setCallRate2] = useState<boolean>();
   const [rate, setRate] = useState<RateType>();
 
   //fetch all the rates stored in particular product
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log("initial fetch rates")
     dispatch(fetchProduct(Number(id)));
-    dispatch(fetchRates())
+    dispatch(fetchRates());
+
+    // const filterRate = rateState.rates.filter((rate) => rate.product_id === selectedProduct?.id!).find((rate) => rate.user_id === userState.selectedUser?.id!);
+    // setRate(filterRate);
+    // if (rate === undefined) {
+    //     setCallRate1(false);
+    //     setCallRate2(false);
+    // }
+    // else {
+    //     setCallRate1(true);
+    //     setCallRate2(true);
+    // }
   }, [id, dispatch])
 
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log("re fetchRates")
+    dispatch(fetchProduct(Number(id)));
     dispatch(fetchRates())
-  }, [callRate1, callRate2])  //needed to update Review in Review list
+  }, [callRate1,callRate2])  //needed to update Review in Review list and product
 
 
   const updateRecall1 = (state: boolean): void => {  //if any state changes in RatingLayout, this is updated. 
@@ -63,8 +74,8 @@ function ProductDetailPage() {
         </div>
         <div key={2}>
           {
-            userState.selectedUser && selectedProduct && 
-            <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} recallRateState1={updateRecall1} recallRateState2={updateRecall2} />
+            userState.selectedUser && selectedProduct &&
+            <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} recallRateState1={updateRecall1} recallRateState2={updateRecall2}/>
           }
         </div>
 
