@@ -23,27 +23,16 @@ function ProductDetailPage() {
   const rateState = useSelector(selectRate);
   const [callRate1, setCallRate1] = useState<boolean>();
   const [callRate2, setCallRate2] = useState<boolean>();
-  const [rate, setRate] = useState<RateType>();
+
 
   //fetch all the rates stored in particular product
-  useLayoutEffect(() => {
+  useEffect(() => {
     console.log("initial fetch rates")
     dispatch(fetchProduct(Number(id)));
     dispatch(fetchRates());
-
-    // const filterRate = rateState.rates.filter((rate) => rate.product_id === selectedProduct?.id!).find((rate) => rate.user_id === userState.selectedUser?.id!);
-    // setRate(filterRate);
-    // if (rate === undefined) {
-    //     setCallRate1(false);
-    //     setCallRate2(false);
-    // }
-    // else {
-    //     setCallRate1(true);
-    //     setCallRate2(true);
-    // }
   }, [id, dispatch])
 
-  useLayoutEffect(() => {
+  useEffect(() => {  //this is called again on click edit, on click create rate 
     console.log("re fetchRates")
     dispatch(fetchProduct(Number(id)));
     dispatch(fetchRates())
