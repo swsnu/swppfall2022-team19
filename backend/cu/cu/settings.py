@@ -135,12 +135,6 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:3000",
 # Added - Custom User model
 AUTH_USER_MODEL = 'user.User'
 
-
-# ADD: GAON25
-# Django Session Timeout Code
-SESSION_COOKIE_AGE = 1200  # 20 min
-SESSION_SAVE_EVERY_REQUEST = True
-
 # directory for uploading images
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mediafiles")
