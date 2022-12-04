@@ -38,6 +38,8 @@ function BestandMost() {
 
     const bestProductComment = bestProductComments[0]
 
+    
+
     copyAllRates.sort((a: RateType, b: RateType): number => {
         return a.product_id - b.product_id
     })

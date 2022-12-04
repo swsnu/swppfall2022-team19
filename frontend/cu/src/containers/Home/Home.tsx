@@ -38,7 +38,7 @@ const Home = () => {
         dispatch(fetchRates())
 
     
-    }, [search, dispatch])
+    })
 
 
     const allProducts = useSelector(selectProduct);
@@ -66,12 +66,7 @@ const Home = () => {
         <div className="Home">
             <Header />
             <img title="logo" className="CenterLogo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
-            <div className="BestandMost">
-                <div className="animated-title">
-                    <h1 title="animatedTitle"  className="titles">주목받은 상품</h1>
-                </div>
-                <BestandMost></BestandMost>
-            </div>
+
 
             <div className="BasicList">
                 <div className="animated-title">
@@ -95,7 +90,12 @@ const Home = () => {
                     ))}
                 </div>
 
-                <div className="BasicList">
+                <div className="BestandMost">
+                <div className="animated-title">
+                    <h1 title="animatedTitle"  className="titles">주목받은 상품</h1>
+                </div>
+                <BestandMost></BestandMost>
+            </div>
 
                     
 
@@ -109,7 +109,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </div>
+     
     )
 }
 
