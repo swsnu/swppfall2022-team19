@@ -4,7 +4,8 @@ import TotalScore from "../TotalScore/TotalScore";
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { ProductType } from '../../store/slices/product';
 import { UserType } from '../../store/slices/User';
-import rate, { RateType } from '../../store/slices/rate';
+import { RateType } from '../../store/slices/rate';
+import DonutScore from './DonutScore';
 
 interface Props{
     user: UserType,
@@ -197,6 +198,13 @@ export default function TotalScoreList(props: Props){
                                 score={ts.score}
                             />
                         );})}
+                    </div>
+                    <div className="DonutTest">
+                        <DonutScore scoreCnt={scoreCnt1} legendCheck={true} />
+                        <DonutScore scoreCnt={scoreCnt2} legendCheck={false} />
+                        <DonutScore scoreCnt={scoreCnt3} legendCheck={false} />
+                        <DonutScore scoreCnt={scoreCnt4} legendCheck={false} />
+                        <DonutScore scoreCnt={scoreCnt5} legendCheck={false} />
                     </div>
         </div> 
     )

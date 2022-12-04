@@ -1,12 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+// 테스팅 각주 import axios from "axios";
+import client from '../api/client';
 import { RootState } from "..";
 
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-
-// axios.defaults.xsrfCookieName = 'XSRF-TOKEN';
-// axios.defaults.xsrfHeaderName = 'X-XSRF-TOKEN';
+// axios.defaults.xsrfCookieName = 'csrftoken';
+// axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export interface UserType {
   id: number;
@@ -57,7 +55,7 @@ const initialState: UserState = {
 export const postUser = createAsyncThunk( // signup
   "user/postUser",
   async (user: Pick<UserSignupRequest, "username" | "password" | "age" | "gender" | "question" | "taste">, { dispatch }) => {
-    const response = await axios.post("api/user/signup/", user);
+    const response = await client.post("api/user/signup/", user);
 
     dispatch(userActions.addUser(response.data));
   }
@@ -67,7 +65,7 @@ export const postUser = createAsyncThunk( // signup
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (user: Pick<UserLoginRequest, "username" | "password">, { dispatch }) => {
-    const response = await axios.post("api/user/signin/", user);
+    const response = await client.post("/api/user/signin/", user);
     dispatch(userActions.loginUser(response.data));
     localStorage.setItem('loginUser', JSON.stringify(response.data));
   }
@@ -78,7 +76,7 @@ export const signoutUser = createAsyncThunk(
   "user/signoutUser",
   async (user: void, { dispatch }) => {
     // console.log("user ", user.username , user.password )
-    const response = await axios.get("api/user/signout/");
+    const response = await client.get("/api/user/signout/");
 
     dispatch(userActions.signoutUser(response.data));
     // 그런데 로그인의 경우 로그인 실패 시 에러가 발생할 수도 있음
@@ -92,7 +90,7 @@ export const signoutUser = createAsyncThunk(
 export const getUsers = createAsyncThunk(
   "user/getUsers",
   async (user: void, { dispatch }) => {
-    const response = await axios.get("api/user/userlist/");
+    const response = await client.get("/api/user/userlist/");
     console.log(response);
     dispatch(userActions.getUsers(response.data));
     return response.data ?? null;
@@ -103,9 +101,15 @@ export const getUsers = createAsyncThunk(
 export const getRequestUser = createAsyncThunk(
   "user/getRequestUser",
   async (user: void, { dispatch }) => {
-    const response = await axios.get("api/user/requestUser/");
+    const response = await client.get("/api/user/requestUser/");
     console.log(response);
     console.log(response.data);
+    if (response.data != null) {
+      localStorage.setItem('loginUser', JSON.stringify(response.data));
+    } else {
+      localStorage.clear();
+      window.location.replace('/login');
+    }
     dispatch(userActions.getRequestUser(response.data));
     return response.data ?? null;
   }
@@ -113,8 +117,10 @@ export const getRequestUser = createAsyncThunk(
 export const putSurvey = createAsyncThunk(
   "user/newSurvey",
   async (user: Pick<UserType, "id" | "age" | "gender" | "taste" | "question">, { dispatch }) => {
-    const response = await axios.put(`/api/user/newSurvey/${user.id}`, user);
-    console.log(response);
+    console.log(">user!");
+    console.log(user);
+    const response = await client.put(`/api/user/newSurvey/${user.id}/`, user);
+    console.log(response.data);
     dispatch(userActions.putSurvey(response.data));
   }
 )
@@ -124,12 +130,12 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     getRequestUser: (state, action: PayloadAction<UserType>) => {
-      // console.log("getRequestUser의 리듀서 실행됨");
-      // console.log(action.payload);
-      // console.log(state.selectedUser);
+      console.log("> getRequestUser의 리듀서 실행됨");
+      console.log(action.payload);
+      console.log(state.selectedUser);
       if (action.payload === null || action.payload === undefined) {
         state.selectedUser = null;
-        // console.log("현재 로그인된 게 없어서 action.payload도 비어있어서 selectedUser에 null을 줌");
+        console.log("현재 로그인된 게 없어서 action.payload도 비어있어서 selectedUser에 null을 줌");
       } else {
         const targetUser = state.users.find(
           (user: UserType) => (user.username === action.payload.username)
@@ -139,7 +145,7 @@ export const userSlice = createSlice({
           console.log(targetUser);
           console.log(state.selectedUser);
         } else {
-          // console.log("targetUser가 undefined라 selectedUser는 null로");
+          console.log("targetUser가 undefined라 selectedUser는 null로");
           state.selectedUser = null;
         }
 
@@ -208,6 +214,9 @@ export const userSlice = createSlice({
 
     },
     putSurvey: (state, action: PayloadAction<SurveyRequest>) => {
+      console.log(">>putSurvey의 PayloadAction");
+      console.log(action.payload);
+
       if (state.selectedUser == null) {
         console.log("state.selectedUser is null");
       } else {
@@ -215,6 +224,11 @@ export const userSlice = createSlice({
         state.selectedUser.age = action.payload.age;
         state.selectedUser.taste = action.payload.taste;
         state.selectedUser.question = action.payload.question;
+
+        state.users[state.selectedUser.id] = state.selectedUser;
+        console.log(">>PutSurvey 이후 변화");
+        console.log(state.selectedUser.taste);
+        console.log(state.users[state.selectedUser.id].taste);
       }
     },
   },

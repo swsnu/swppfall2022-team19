@@ -1,28 +1,25 @@
-import onOpenModal from "../MyPage/MyPage";
 import "./SurveyModal.css";
 import React, { useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { postUser } from "../../store/slices/User";
-import Header from "../Header/Header";
 import { RootState } from '../../store';
 import { putSurvey } from '../../store/slices/User';
 
+import { useEffect, useLayoutEffect } from 'react';
+type Props = {
+    setModalOn: (modalOn: boolean) => void;
+}
 
-
-
-export default function SurveyModal() {
+const SurveyModal = (props: Props) => {
 
     const animatedComponents = makeAnimated();
     const nowUser = useSelector((state: RootState) => state.user.selectedUser!);
     const [gender, setGender] = useState<number>(nowUser === null ? 0 : nowUser.gender);
     const [age, setAge] = useState<number>(nowUser === null ? 0 : nowUser.age); // -1 means initialState
-    const [taste, setTaste] = useState<string>("");
+    const [taste, setTaste] = useState<string>(nowUser === null ? "" : nowUser.taste);
     const [question, setQuestion] = useState<number>(nowUser === null ? 0 : nowUser.question);
-    const [submitted, setSubmitted] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
 
 
@@ -70,9 +67,12 @@ export default function SurveyModal() {
         { value: 3, label: "재구매 의사" }
     ]
 
-    console.log(nowUser);
+
     var defaultTaste: tasteOptions[] = [];
+    console.log("defaultTaste가 초기화되는 시점");
     for (var tasteElement of nowUser.taste) {
+        console.log("defaultTaste가 다시 부활!");
+        console.log(nowUser.taste);
         if (tasteElement === 'A') {
             defaultTaste.push(tasteList[0]);
         } else if (tasteElement === 'B') {
@@ -86,6 +86,11 @@ export default function SurveyModal() {
         }
     }
 
+    useEffect(() => {
+        console.log("현재 taste는 " + taste);
+    }, [taste]);
+
+
     const putSurveyHandler = async () => {
         const data = { id: nowUser.id, age: age, gender: gender, taste: taste, question: question };
 
@@ -95,6 +100,8 @@ export default function SurveyModal() {
         if (result.type === `${putSurvey.typePrefix}/fulfilled`) {
             // setSubmitted(true);
             console.log("putSurveyHandler is called");
+            console.log(nowUser);
+            props.setModalOn(false);
         } else {
             alert("Error on putSurvey");
         }
@@ -121,15 +128,21 @@ export default function SurveyModal() {
                     <div className="questionBox">
                         <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
                         <Select className="tasteDropDown" isMulti defaultValue={defaultTaste} components={animatedComponents} options={tasteList} onChange={(event) => {
+                            console.log("event입니다");
+                            console.log(event);
+
                             var getStr: string = "";
                             var temp: string[] = [];
                             temp = event.map((element) => {
                                 return element.value;
                             });
-
+                            temp.sort();
+                            console.log("temp:");
+                            console.log(temp);
                             for (let value of temp) {
                                 getStr = getStr + value;
                             }
+                            console.log("getStr: " + getStr);
                             setTaste(getStr);
                         }}
                         />
@@ -148,3 +161,4 @@ export default function SurveyModal() {
 
 }
 
+export default SurveyModal;

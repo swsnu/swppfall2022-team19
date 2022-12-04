@@ -3,12 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import { ProductType, selectProduct } from "../../store/slices/product";
+
 import { fetchRates, fetchUserLikedRate, fetchUserRate, RateType, selectRate } from '../../store/slices/rate';
 import { useEffect, useState } from "react";
 
 import SurveyModal from '../UserSurvey/SurveyModal';
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
+
 import CommentBlock from "../../components/Comment/CommentBlock";
+
+
+
 
 
 import "./MyPage.css"
@@ -22,8 +27,8 @@ const MyPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const [modalOn, setModalOn] = useState(false);
+    const selectedUserState = useSelector(selectUser);
 
-    
 
     useEffect(()=>{
         dispatch(fetchUserRate({user_id : Number(user_id) }));
@@ -32,6 +37,7 @@ const MyPage = () => {
         return () => {
             dispatch(fetchRates())
         }
+
     }, [user_id])
 
     const rates = useSelector(selectRate);
@@ -42,13 +48,13 @@ const MyPage = () => {
     let products: ProductType[] = [];
 
     if (rates.selectedRates != undefined) {
+
     for (let index = 0; index < rates.selectedRates.length; index++) {
         if (!products.find(product => product.id === rates.selectedRates[index].product_id)){
             const product = allProducts.products.find(product => product.id == rates.selectedRates[index].product_id)!;
             products.push(product);
         }
     }
-}
 
     const comments: RateType[] = rates.likedRates
     
@@ -65,8 +71,9 @@ const MyPage = () => {
         <div className="MyPage">
             <Header />
             <button className="modalOpenButton" onClick={onOpenModal}>사용자 정보 수정하기</button> {
-                modalOn ? <SurveyModal /> : ''
+                modalOn ? <SurveyModal setModalOn={setModalOn} /> : ''
             }
+
 
         <div className = "ratedProducts">
             <h1>내가 평가한 제품들</h1>
@@ -101,6 +108,7 @@ const MyPage = () => {
                 ))}
                 </div>
              </div>
+
 
         </div>
     )
