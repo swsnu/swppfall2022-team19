@@ -31,7 +31,8 @@ jobs:
         - cd cu
         - yarn install
         - yarn add redux react-redux @reduxjs/toolkit
-        - yarn add react-select 
+        - yarn add @nivo/core @nivo/pie
+        - yarn add react-select
       script:
         - ./node_modules/.bin/eslint src
         - yarn test --coverage --watchAll=false
@@ -42,5 +43,3 @@ jobs:
         - coverage xml
         - cd ../.. && sonar-scanner
         - cd backend/cu && coveralls --merge=../../frontend/cu/coverage.json
-
-            

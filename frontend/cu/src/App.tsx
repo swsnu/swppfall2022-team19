@@ -1,48 +1,31 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import ProductDetailPage from './containers/ProductDetailPage/ProductDetailPage';
-import React from 'react';
-
-// for debug (Minji) 아직 페이지 따로 안 만들어서 컴포넌트 별로 확인하려고 넣음
-// have to install 'yarn add react-select' for Survey
-
+import React, { useLayoutEffect }  from 'react';
 import Login from './containers/UserSurvey/Login'
 import SignupSurvey from './containers/UserSurvey/SignupSurvey'
 import Home from './containers/Home/Home'
 import Category from './containers/Category/Category'
 import SearchResult from "./containers/Header/SearchResult";
 import MyPage from "./containers/MyPage/MyPage";
-import { useEffect } from "react"; //local
-import { getRequestUser, selectUser } from "./store/slices/User";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "./store";
-import { useSelector } from "react-redux";
-import { RootState } from "./store";
+import { getRequestUser, getUsers } from "./store/slices/User";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./store";
 
 function App() {
 
-  const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
   const dispatch = useDispatch<AppDispatch>();
+  const selectedUser = (state: RootState) => state.user.selectedUser;
+  const selectedUserState = useSelector(selectedUser);
 
-  const moveToLogin = ((loggedin: boolean) => {
-    console.log("moveToLogin is activated");
-
-    if (!loggedin) {
-      return <Navigate to="/login"></Navigate>
-    } else {
-      console.log("is loggeed in");
-    }
-  });
-
-  useEffect(() => {
-    console.log(localStorage.getItem('localStorage: loginUser'));
+  useLayoutEffect(() => {
+    console.log(localStorage.getItem('loginUser'));
     if (localStorage.getItem('loginUser') === null) {
-      console.log("localStorage.getItem('loginUser')===null");
-      moveToLogin(false);
+      console.log("> localStorage.getItem('loginUser')===null입니다");
     } else {
-      dispatch(getRequestUser());
+      dispatch(getUsers()).then(() => dispatch(getRequestUser()));
       console.log("selectedUser: " + selectedUserState?.username);
     }
-  }, []);
+  });
 
 
   return (
@@ -58,6 +41,7 @@ function App() {
           <Route path="/searchProduct/:searchKey" element={<SearchResult />} />
           <Route path="/searchProduct/" element={<SearchResult />} />
           <Route path="/user/:id" element={<MyPage />} />
+          <Route path="*" element={<Navigate replace to={"/login"} />} />
         </Routes>
       </BrowserRouter>
     </div>
