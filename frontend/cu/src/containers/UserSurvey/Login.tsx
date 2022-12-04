@@ -5,8 +5,6 @@ import { AppDispatch } from "../../store";
 import { loginUser, getRequestUser, getUsers, selectUser } from "../../store/slices/User";
 import { RootState } from "../../store";
 import './Login.css';
-import { fetchAllProducts } from "../../store/slices/product";
-import { fetchRates } from "../../store/slices/rate";
 
 export default function Login() {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,28 +36,7 @@ export default function Login() {
       window.location.replace('/home');
     }
 
-  });
-
-
-  useEffect(() => {
-    dispatch(getUsers()).then(() => dispatch(getRequestUser())).then(() => {
-      // console.log(selectedUserState);
-      if (selectedUserState === null || selectedUserState === undefined) {
-        console.log("userState is null");
-      } else {
-        console.log("userState is already loggedIn");
-        moveTo(selectedUserState.loginState);
-      }
-    });
-    console.log("useEffect Login")
-    // dispatch(getUsers());
-    // dispatch(getRequestUser());
   }, [dispatch]);
-  
-  useEffect(() => {
-      dispatch(fetchAllProducts())
-    dispatch(fetchRates())
-    }, [dispatch]);
 
   const clickCreateHandler = () => {
     navigate("/signup");

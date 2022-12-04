@@ -17,6 +17,7 @@ import CommentBlock from "../../components/Comment/CommentBlock";
 
 
 import "./MyPage.css"
+import { selectUser } from "../../store/slices/User";
 
 
 
@@ -54,6 +55,7 @@ const MyPage = () => {
             const product = allProducts.products.find(product => product.id == rates.selectedRates[index].product_id)!;
             products.push(product);
         }
+    }
     }
 
     const comments: RateType[] = rates.likedRates
