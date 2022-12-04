@@ -25,7 +25,7 @@ function App() {
       dispatch(getUsers()).then(() => dispatch(getRequestUser()));
       console.log("selectedUser: " + selectedUserState?.username);
     }
-  });
+  }, []);
 
 
   return (
