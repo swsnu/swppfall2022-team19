@@ -17,6 +17,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "./store";
 import { useSelector } from "react-redux";
 import { RootState } from "./store";
+import { fetchAllProducts } from "./store/slices/product";
+import { fetchRates } from "./store/slices/rate";
 
 function App() {
 
@@ -42,6 +44,10 @@ function App() {
       dispatch(getRequestUser());
       console.log("selectedUser: " + selectedUserState?.username);
     }
+    dispatch(fetchAllProducts())
+    dispatch(fetchRates())
+    console.log("useEffect in App")
+
   }, []);
 
 

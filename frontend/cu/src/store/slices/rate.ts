@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import client from '../api/client';
 import { RootState } from "..";
-import { UserType } from "./User"
+import { UserType } from './User';
 import { ProductType } from "./product";
 
 
@@ -20,13 +20,15 @@ export interface RateType {
 export interface RateState {
     rates: RateType[],
     selectedRates: RateType[],
-    selectedRate: RateType | null
+    selectedRate: RateType | null,
+    likedRates: RateType[],
 }
 
 const initialState: RateState = {
     rates: [],
     selectedRates: [],
-    selectedRate: null
+    selectedRate: null,
+    likedRates: [],
 }
 
 
@@ -53,6 +55,7 @@ export const fetchUserLikedRate = createAsyncThunk(
         const response = await client.get<RateType[]>('/api/rate/liked/', { params })
         return response.data
     }
+    
 )
 
 export const addUserRate = createAsyncThunk(
@@ -134,12 +137,15 @@ export const rateSlice = createSlice({
             console.error(action.error);
         })
         builder.addCase(fetchUserRate.fulfilled, (state, action) => {
-            state.selectedRates = action.payload;
+            state.selectedRates = action.payload; // my page user review 
         })
         builder.addCase(addUserRate.fulfilled, (state, action) => {
             action.payload.forEach(element => {
                 state.selectedRates.push(element)                
             });
+        })
+        builder.addCase(fetchUserLikedRate.fulfilled, (state, action) => {
+            state.likedRates = action.payload // liked rates temp 
         })
     }
 
