@@ -14,6 +14,7 @@ export interface RateType {
     comment: string,
     picture: string, //temp, need to change later
     likedCount: number,
+    created_at: number,
 }
 
 export interface RateState {

@@ -35,9 +35,6 @@ function AfterRateForm(props: Props) {
         await dispatch(deleteRate(props.rate.id!))
         props.updateState1(false);
         props.updateState2(false);
-
-
-        //update product score by removing the current score
     }
 
     return (

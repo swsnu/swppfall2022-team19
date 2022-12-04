@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import "./RatingLayout.css"
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { RateType} from '../../store/slices/rate';
@@ -14,7 +14,7 @@ interface Props {
     product: ProductType,
     rate: RateType[],
     recallRateState1: (arg: boolean) => void,
-    recallRateState2: (arg: boolean) => void
+    recallRateState2: (arg: boolean) => void,
 }
 
 
@@ -29,9 +29,8 @@ function RatingLayout(props: Props) {
 
     //whenever there is change in product, find the appropriate question by subCategory
     useEffect(() => {
-        const filterRate = props.rate.filter((rate) => rate.product_id === props.product.id!);
-        const singleRate = filterRate.find((rate) => rate.user_id === props.user?.id!);
-        setRate(singleRate);
+        const filterRate = props.rate.filter((rate) => rate.product_id === props.product.id!).find((rate) => rate.user_id === props.user?.id!);
+        setRate(filterRate);
 
         if (rate === undefined) {
             setRateState1(false);
@@ -50,22 +49,21 @@ function RatingLayout(props: Props) {
         }
     }, [props.product, props.recallRateState1, props.recallRateState2])
 
-    //when parent's state changes, find the updated rate again 
-    // useEffect(()=>{
-    //     const filterRate = props.rate.filter((rate) => rate.product_id === props.product.id!);
-    //     const singleRate = filterRate.find((rate) => rate.user_id === props.user?.id!);
-    //     setRate(singleRate);
-    //     console.log("get single rate: " + singleRate?.comment)
-    // }, [props.recallRateState1, props.recallRateState2]) 
 
-
-    const updateRateState2 = (state: boolean): void => {
+    const updateRateStateParent2 = (state: boolean): void => {
         setRateState2(state)
         props.recallRateState1(state);
     }
-    const updateRateState1 = (state: boolean): void => {
+    const updateRateStateParent1 = (state: boolean): void => {
         setRateState1(state)
         props.recallRateState2(state);
+    }
+
+    const updateRateState2 = (state: boolean): void => {
+        setRateState2(state)
+    }
+    const updateRateState1 = (state: boolean): void => {
+        setRateState1(state)
     }
 
     return (
@@ -75,7 +73,7 @@ function RatingLayout(props: Props) {
 
                 {rateState1 === false && rateState2 === true && <CreateRateForm user={props.user} product={props.product}
                     question4={question4} question5={question5}
-                    updateState1={updateRateState1} updateState2={updateRateState2} />
+                    updateState1={updateRateStateParent1} updateState2={updateRateStateParent2} />
                 }
 
                 {rateState1 === true && rateState2 === true && rate && <AfterRateForm user={props.user} product={props.product}
@@ -85,7 +83,7 @@ function RatingLayout(props: Props) {
 
                 {rateState1 === true && rateState2 === false && rate && <EditRateForm user={props.user} product={props.product}
                     rate={rate} question4={question4} question5={question5}
-                    updateState1={updateRateState1} updateState2={updateRateState2} />}
+                    updateState1={updateRateStateParent1} updateState2={updateRateStateParent2} />}
 
             </div>
         </div>

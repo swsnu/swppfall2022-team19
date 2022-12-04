@@ -8,7 +8,7 @@ import ProductBlock from '../../components/ProductBlock/ProductBlock';
 import "./ProductDetailPage.css"
 import Header from '../Header/Header'
 import { selectUser } from "../../store/slices/User"
-import { fetchProduct, selectProduct } from "../../store/slices/product"
+import { fetchProduct, selectProduct, updateProduct } from "../../store/slices/product"
 import { fetchRates, RateType, selectRate } from "../../store/slices/rate"
 import { AppDispatch } from '../../store';
 import RatingLayout from '../../components/RatingForm/RatingLayout';
@@ -21,22 +21,22 @@ function ProductDetailPage() {
   const userState = useSelector(selectUser);
   const selectedProduct = useSelector(selectProduct).selectedProduct;
   const rateState = useSelector(selectRate);
-  const [callRate1, setCallRate1] = useState<Boolean>(false);
-  const [callRate2, setCallRate2] = useState<Boolean>(false);
-  const [rate, setRate] = useState<RateType>();
+  const [callRate1, setCallRate1] = useState<boolean>();
+  const [callRate2, setCallRate2] = useState<boolean>();
+
 
   //fetch all the rates stored in particular product
   useEffect(() => {
     console.log("initial fetch rates")
     dispatch(fetchProduct(Number(id)));
-    dispatch(fetchRates())
+    dispatch(fetchRates());
   }, [id, dispatch])
 
-
-  useEffect(() => {
+  useEffect(() => {  //this is called again on click edit, on click create rate 
     console.log("re fetchRates")
+    dispatch(fetchProduct(Number(id)));
     dispatch(fetchRates())
-  }, [callRate1, callRate2])  //needed to update Review in Review list
+  }, [callRate1,callRate2])  //needed to update Review in Review list and product
 
 
   const updateRecall1 = (state: boolean): void => {  //if any state changes in RatingLayout, this is updated. 
@@ -63,8 +63,8 @@ function ProductDetailPage() {
         </div>
         <div key={2}>
           {
-            userState.selectedUser && selectedProduct && 
-            <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} recallRateState1={updateRecall1} recallRateState2={updateRecall2} />
+            userState.selectedUser && selectedProduct &&
+            <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} recallRateState1={updateRecall1} recallRateState2={updateRecall2}/>
           }
         </div>
 
