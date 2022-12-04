@@ -43,7 +43,6 @@ class RateViewSet(viewsets.GenericViewSet):
             rates = (
                 Rate.objects.filter(user_id=user_id))
         serializer = RateSerializer(rates, many=True)
-        print("/api/rate")
         return Response(serializer.data, status=200)
 
     # (O)POST /api/rate/
@@ -102,7 +101,8 @@ class RateViewSet(viewsets.GenericViewSet):
         product = Product.objects.get(id=int(product_id))
         newScores = request.POST.get('scores')
         newScore = round((int(newScores[0]) + int(newScores[1])  + int(newScores[2])  + int(newScores[3])  + int(newScores[4]) ) / 5, 2)
-        product.averageScore = round(((product.rateCount * product.averageScore) - rate.averageScore + newScore) / (product.rateCount), 2)
+        if product.rateCount != 0:
+            product.averageScore = round(((product.rateCount * product.averageScore) - rate.averageScore + newScore) / (product.rateCount), 2)
         product.save()
 
         # check rate <- rater name, product name

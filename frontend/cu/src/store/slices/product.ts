@@ -14,7 +14,7 @@ export interface ProductType {
     newProduct: boolean,
     tags: string[],
     averageScore: number,
-    //rateCount: number,
+    rateCount: number,
 }
 
 export interface TagType{

@@ -3,15 +3,14 @@ import "./Home.css"
 
 import Header from "../Header/Header"
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useLayoutEffect } from "react";
-import { fetchAllProducts, fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
-import QueryString from "qs";
+import { useLayoutEffect } from "react";
+import { fetchAllProducts, ProductType, selectProduct } from "../../store/slices/product";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import Recommendation from './Recommendation';
 import BestandMost from './BestandMost';
 import { fetchRates } from '../../store/slices/rate';
-
 
 
 const Home = () => {
@@ -32,16 +31,17 @@ const Home = () => {
     const { search } = useLocation();
 
     useLayoutEffect(() => {  // 두번 뜹니다 
-        // dispatch(fetchQueryProducts(QueryString.parse(search, { ignoreQueryPrefix: true })))
-        // dispatch(fetchRates())
+
         dispatch(fetchAllProducts())
         dispatch(fetchRates())
+        console.log("useEffect in Home")
 
-    
-    })
+    }, [search]);
+
 
 
     const allProducts = useSelector(selectProduct);
+    
 
     const m = Math.floor(Math.random() * 13) + 2
     const r = Math.floor(Math.random() * (m-1))
