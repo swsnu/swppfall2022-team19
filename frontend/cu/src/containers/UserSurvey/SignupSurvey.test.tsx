@@ -22,7 +22,7 @@ jest.mock("react-redux", () => ({
 const mockStore = getMockStore({
     user: { users: [], selectedUser: null },
     product: { products: [], selectedProduct: null, tags: [] },
-    rate: { rates: [], selectedRates: [], selectedRate: null },
+    rate: { rates: [], selectedRates: [], selectedRate: null, likedRates: [] },
 });
 
 describe('<SignupSurvey />', () => {

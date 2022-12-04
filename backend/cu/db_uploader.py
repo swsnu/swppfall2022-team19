@@ -33,6 +33,7 @@ with open("./product_data.csv", encoding='UTF-8') as in_file:
             price = row[5],
             newProduct = row[6],            
             averageScore = row[7], 
+            rateCount = 0,
         )
         i = 8
         while i < len(row):

@@ -7,9 +7,17 @@ import Home from './containers/Home/Home'
 import Category from './containers/Category/Category'
 import SearchResult from "./containers/Header/SearchResult";
 import MyPage from "./containers/MyPage/MyPage";
-import { getRequestUser, getUsers } from "./store/slices/User";
+
+import { useEffect } from "react"; //local
+import { getRequestUser, getUsers, selectUser } from "./store/slices/User";
+
+
+import { fetchAllProducts } from "./store/slices/product";
+import { fetchRates } from "./store/slices/rate";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./store";
+
 
 function App() {
 
@@ -25,6 +33,10 @@ function App() {
       dispatch(getUsers()).then(() => dispatch(getRequestUser()));
       console.log("selectedUser: " + selectedUserState?.username);
     }
+    dispatch(fetchAllProducts())
+    dispatch(fetchRates())
+    console.log("useEffect in App")
+
   }, []);
 
 
