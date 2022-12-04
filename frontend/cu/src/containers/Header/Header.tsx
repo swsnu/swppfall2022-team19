@@ -3,38 +3,29 @@ import "./Header.css"
 
 import { fetchSearchProducts } from "../../store/slices/product";
 
-import { useNavigate, Navigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useState, useLayoutEffect } from 'react';
 import { AppDispatch } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
-import { signoutUser } from "../../store/slices/User";
-import { UserType, loginUser, getRequestUser, getUsers, selectUser } from "../../store/slices/User"; // Login
-import { RootState } from "../../store"; // Login
-import { fetchUserRate } from "../../store/slices/rate";
+import { signoutUser, selectUser } from "../../store/slices/User"; // Login
+
 
 const Header = () => {
 
     const selectedUserState = useSelector(selectUser); // login
     const [searchKey, setSearchKey] = useState<string>("");
-    // const [checkStateFlag, setStateFlag] = useState<number>(0);
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-    /*
-    const effectAlert = (() => {
-        alert("로그인 해야 접근 가능한 페이지입니다.");
-        // effectAlertFlag++;
-        return <Navigate to="/login"></Navigate>;
-    });
 
-    const moveTo = ((userState: boolean) => {
-        if (userState === false) {
-            return <Navigate to="/login"></Navigate>;
+
+    useLayoutEffect(() => {
+        if (localStorage.getItem('loginUser') === null) {
+            window.location.replace('/login');
         } else {
-            console.log("Dont' need to move");
+            console.log("is loggeed in");
         }
-    });
-    */
+    }, []);
 
     const search = require('../../Categoryicon/search.png');
 
@@ -44,10 +35,8 @@ const Header = () => {
 
 
     const clickSearchHandler = async () => {
-        
-    
         const result = await dispatch(fetchSearchProducts({ name: searchKey }));
-     
+
         if (`${fetchSearchProducts.typePrefix}/fulfilled`) {
             navigate(`/searchProduct/${searchKey}`);
         }
@@ -59,17 +48,13 @@ const Header = () => {
         navigate(`/user/${id}`);
     }
 
-
-
-
     const clickSignoutHandler = async () => {
         const result = await dispatch(signoutUser());
         if (`${signoutUser.typePrefix}/fulfilled`) {
+            localStorage.clear();
             navigate("/login");
         }
     }
-
-
 
     const categoryHandler = (mainCategory: string) => {
         navigate(`/category/${mainCategory}`)

@@ -1,32 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { loginUser, getRequestUser, getUsers } from "../../store/slices/User";
+import { loginUser, getRequestUser, getUsers, selectUser } from "../../store/slices/User";
 import { RootState } from "../../store";
 import './Login.css';
 import { fetchAllProducts } from "../../store/slices/product";
 import { fetchRates } from "../../store/slices/rate";
 
-
 export default function Login() {
-  const users = useSelector((state: RootState) => state.user.users);
-  const userState = useSelector((state: RootState) => state.user.selectedUser?.loginState);
-  const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
+
+
+  const users = useSelector((state: RootState) => state.user.users);
+  const userState = useSelector((state: RootState) => state.user.selectedUser?.loginState);
+  const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
 
   const logo = require('../../Categoryicon/Logo.png')
 
   const loginUserHandler = async () => {
     const data = { username: username, password: password };
-    // const result_temp = await dispatch(signoutUser()); // temp
     const result = await dispatch(loginUser(data));
-    // console.log("Login.tsx result ")
-    // console.log(result)
     if (result.type === `${loginUser.typePrefix}/fulfilled`) {
       setSubmitted(true);
     } else {
@@ -34,12 +32,12 @@ export default function Login() {
     }
   };
 
-  const moveTo = ((userState: boolean) => {
-    if (userState === true) {
-      return <Navigate to="/home"></Navigate>
-    } else {
-      console.log("Dont' need to move");
+  useLayoutEffect(() => {
+    console.log(localStorage.getItem('loginUser'));
+    if (localStorage.getItem('loginUser') != null) {
+      window.location.replace('/home');
     }
+
   });
 
 
@@ -56,15 +54,12 @@ export default function Login() {
     console.log("useEffect Login")
     // dispatch(getUsers());
     // dispatch(getRequestUser());
-    dispatch(fetchAllProducts())
-    dispatch(fetchRates())
   }, [dispatch]);
-
-
-  if (userState === true) {
-    console.log("userState === true가 참입니다!!");
-    return <Navigate to="/home"></Navigate> // check
-  }
+  
+  useEffect(() => {
+      dispatch(fetchAllProducts())
+    dispatch(fetchRates())
+    }, [dispatch]);
 
   const clickCreateHandler = () => {
     navigate("/signup");
@@ -72,7 +67,9 @@ export default function Login() {
 
 
   if (submitted) {
-    return <Navigate to="/home" />; // to home, temp hero
+    window.location.replace('/home');
+    return null;
+    //return <Navigate to="/home" />; // to home, temp hero
   } else {
     return (
       <div className="Login">
