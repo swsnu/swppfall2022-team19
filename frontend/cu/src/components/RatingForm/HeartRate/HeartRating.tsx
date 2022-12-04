@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./HeartRating.css"
 
 interface Props{
@@ -9,6 +9,11 @@ interface Props{
 function HeartRating(props: Props) {
     const [hover, setHover] = useState(0);
     const [rating, setRating] = useState(0);
+
+    useEffect(()=>{
+        setRating(props.score)
+        setHover(props.score)
+    },[])
 
     return (
         <div className="heart-rating">

@@ -25,8 +25,8 @@ function EditRateForm(props: Props) {
     const [score3, setScore3] = useState(Number(props.rate.scores[2]));
     const [score4, setScore4] = useState(Number(props.rate.scores[3]));
     const [score5, setScore5] = useState(Number(props.rate.scores[4]));
-    const [comment, setComment] = useState("");
-    const [image, setImage] = useState<File | null>(null);
+    const [comment, setComment] = useState(props.rate.comment);
+    const [image, setImage] = useState<File | null>();
 
     const updateScore1 = (score: number): void => {
         setScore1(score)
@@ -92,7 +92,7 @@ function EditRateForm(props: Props) {
                 </div>
                 <div>
                     <div>한줄평</div>
-                    <input type="text" onChange={(event) => setComment(event.target.value)} />
+                    <input type="text" value={comment} onChange={(event) => setComment(event.target.value)} />
                 </div>
                 <div className='picture'>
                     <label>사진</label>
