@@ -22,8 +22,6 @@ false: there is no such an object
 */
 
 const Review = (props: IProps) => {
-
-
     const [liked, setLiked] = useState<boolean>(false);
     const [likedCount, setLikedCount] = useState(props.rate.likedCount);
     const dispatch = useDispatch<AppDispatch>();
@@ -65,15 +63,15 @@ const Review = (props: IProps) => {
         <article className='Review'>
             <div className='review_picutre_except'>
                 <div className='review_button_except'>
-                    <td> { props.rate.created_at} </td>
-                    <div className="review_user_username">{props.rate.username}</div>
+                    <div className="review_date"> { props.rate.created_at.toString().split('T')[0].replaceAll("-",".")} </div>
+                    <div className="review_username">{props.rate.username}</div>
                     <div className="review_totalScore" style={{color: "green"}}>
                         {totalScore === 5 ? '★★★★★' : totalScore >= 4 ? '★★★★☆' : totalScore >= 3 ? '★★★☆☆' : totalScore >= 2 ? '★★☆☆☆' : totalScore >= 1 ? '★☆☆☆☆' : '☆☆☆☆☆'}
                     </div>
                     <div className="review_comment">{props.rate?.comment}</div>
                 </div>
                 <div className="like_set">
-                        {likedCount}
+                        {props.rate.likedCount}
                     <div className="like_button" onClick={() =>likeClick()}> 
                         {liked? (<div>❤️</div>): (<div>🤍</div>)}
                     </div>
@@ -85,4 +83,3 @@ const Review = (props: IProps) => {
 };
 
 export default Review;
-

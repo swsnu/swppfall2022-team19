@@ -8,6 +8,38 @@
   border-radius: 20px;
 }
 
+.ReviewList .likeButton {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  margin-left: 32rem;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+  border-radius: 10px;
+}
+
+.ReviewList .recentButton {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-left: 2rem;
+  background: rgb(246, 249, 224);
+  color: black;
+  border-radius: 10px;
+}
+
+.ReviewList .pictureButton {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-left: 2rem;
+  background: rgb(246, 249, 224);
+  color: black;
+  border-radius: 10px;
+}
+
+
+
 .ReviewList .title {
   padding: 1rem;
   font-size: 1.5rem;
@@ -19,7 +51,6 @@
 }
 
 .ReviewList .fieldName {
-  
   padding: 1rem;
   font-size: 1rem;
   text-align: left;
@@ -30,9 +61,19 @@
   border-radius: 20px;
 
 }
-.ReviewList .fieldName_ID {
+
+.ReviewList .fieldName_date{
   padding: 0rem;
-  margin-left: 0.5rem;
+  margin-left: 0.8rem;
+  font-size: 1.5rem;
+  text-align: left;
+  font-weight: 400;
+  background: rgb(246, 249, 224);
+  color: black;
+}
+.ReviewList .fieldName_user{
+  padding: 0rem;
+  margin-left: 2.1rem;
   font-size: 1.5rem;
   text-align: left;
   font-weight: 400;
@@ -42,7 +83,7 @@
 
 .ReviewList .fieldName_totalScore {
   padding: 0rem;
-  margin-left: 5rem;
+  margin-left: 3.4rem;
   font-size: 1.5rem;
   font-weight: 400;
   background: rgb(246, 249, 224);
@@ -51,7 +92,7 @@
 
 .ReviewList .fieldName_comment {
   padding: 0rem;
-  margin-left:9rem;
+  margin-left:12rem;
   font-size: 1.5rem;
   font-weight: 400;
   background: rgb(246, 249, 224);
@@ -60,7 +101,7 @@
 
 .ReviewList .fieldName_like {
   padding: 0rem;
-  margin-left: 35rem;
+  margin-left: 21rem;
   font-size: 1.5rem;
   text-align: right;
   font-weight: 400;
