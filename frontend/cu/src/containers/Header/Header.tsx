@@ -60,6 +60,10 @@ const Header = () => {
         navigate(`/category/${mainCategory}`)
     }
 
+    const issueHandler = () => {
+        navigate(`/issue`)
+    }
+
     return (
 
         <div className="header"  >
@@ -87,6 +91,11 @@ const Header = () => {
                         <div title="CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("음료")} >
                             <p>음료</p>
                         </div>
+
+                        <div title="CategoryMenu" className="CategoryMenu" onClick={() => issueHandler()} >
+                            <p>이슈</p>
+                        </div>
+
                     </div>
                 </nav>
             </div>

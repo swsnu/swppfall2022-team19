@@ -89,14 +89,6 @@ const Home = () => {
                         </div>
                     ))}
                 </div>
-
-                <div className="BestandMost">
-                <div className="animated-title">
-                    <h1 title="animatedTitle"  className="titles">주목받은 상품</h1>
-                </div>
-                <BestandMost></BestandMost>
-            </div>
-
                     
 
                     <div className="UserList">

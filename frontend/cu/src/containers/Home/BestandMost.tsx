@@ -1,12 +1,13 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import {  ProductType, selectProduct } from "../../store/slices/product";
+import { ProductType, selectProduct, fetchAllProducts } from '../../store/slices/product';
 import { RateType, selectRate, fetchUserRate, fetchRates } from '../../store/slices/rate';
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import "./BestandMost.css"
 import { AppDispatch } from '../../store/index';
 import { useEffect } from 'react';
+import Header from '../Header/Header';
 
 
 
@@ -18,6 +19,7 @@ function BestandMost() {
 
     useEffect(()=>{
         dispatch(fetchRates());
+        dispatch(fetchAllProducts());
     }, [])
     
     const navigate = useNavigate();
@@ -64,6 +66,12 @@ function BestandMost() {
 
     return (
         <div className="BestandMostPage">
+
+                <div className="animated-title">
+                    <h1 title="animatedTitle"  className="titles">주목받은 상품</h1>
+                </div>
+
+            <Header></Header>
 
             <div title = "Best" className="Best">
 

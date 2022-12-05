@@ -17,6 +17,7 @@ import { fetchRates } from "./store/slices/rate";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./store";
+import BestandMost from "./containers/Home/BestandMost";
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path='/signup' element={<SignupSurvey />} />
           <Route path="/ProductDetail/:id/" element={<ProductDetailPage />} />
           <Route path="/category/:mainCategory" element={<Category />} />
+          <Route path="/issue" element= {<BestandMost />} />
           <Route path="/searchProduct/:searchKey" element={<SearchResult />} />
           <Route path="/searchProduct/" element={<SearchResult />} />
           <Route path="/user/:id" element={<MyPage />} />

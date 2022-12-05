@@ -15,8 +15,10 @@ from .models import User
 
 @ensure_csrf_cookie
 def token(request):
-    # 테스트 각주 if request.method == 'GET':
-    return HttpResponse(status=204)
+    if request.method == 'GET':  # 테스트 각주 if request.method == 'GET':
+        return HttpResponse(status=204)
+    else:
+        return HttpResponseNotAllowed(['GET'])
     # else:
     #    return HttpResponse(status=403)
     # Check: CSRF-EXEMPT가 아니므로, 403 Forbidden Error가 뜸
@@ -84,12 +86,8 @@ def signin(request):
                 # HttpResponse(status=204)
             else:
                 # User is already logged-in -> error
-                print("request.user is already logged in")
-                print(request.user)
-                print(tempUser)
                 return HttpResponse(status=401)  # check 401
         else:
-            print("tempUser is None. 등록되지 않은 유저 정보")
             return HttpResponse(status=401)
     else:
         return HttpResponseNotAllowed(['POST'])
@@ -106,7 +104,7 @@ def signout(request):
             # print("signout_GET이 요청되었고, request.user은 로그아웃 상태입니다")
             return HttpResponse(status=401)
     else:
-        return HttpResponse(status=405)
+        return HttpResponseNotAllowed(['GET'])
 
 # 4. userlist : 현재 등록된 userlist를 백엔드에서 프론트로 전달
 
@@ -114,12 +112,15 @@ def signout(request):
 #
 def userlist(request):
     # 테스트 각주 if (request.method) == "GET":
-    user_list = []
-    for user in User.objects.all():
-        user_dict = {"id": user.pk, "username": user.username, "password": "tempPassword", "gender": user.gender,
-                     "age": user.age, "taste": user.taste, "question": user.question, "loginState": user.is_authenticated}
-        user_list.append(user_dict)
-    return JsonResponse(user_list, safe=False, status=200)
+    if request.method == "GET":
+        user_list = []
+        for user in User.objects.all():
+            user_dict = {"id": user.pk, "username": user.username, "password": "tempPassword", "gender": user.gender,
+                         "age": user.age, "taste": user.taste, "question": user.question, "loginState": user.is_authenticated}
+            user_list.append(user_dict)
+        return JsonResponse(user_list, safe=False, status=200)
+    else:
+        return HttpResponseNotAllowed(['GET'])
     # 테스트 각주 else:
     # 테스트 각주    return HttpResponseNotAllowed(["GET"])
 
@@ -129,65 +130,58 @@ def userlist(request):
 #
 def requestUser(request):
     # 테스트 각주 if (request.method) == "GET":
-    if (request.user.is_authenticated):
-        print("request.user is authenticated: username is " + request.user.username)
-        print(request.user.username)
-        nowUser = request.user
-        print(nowUser.username)
-        res = {
-            "id": nowUser.pk,
-            "username": nowUser.username,
-            "password": "tempPassword",
-            "gender": nowUser.gender,
-            "age": nowUser.age,
-            "taste": nowUser.taste,
-            "question": nowUser.question,
-        }
-        print(res)
-        return JsonResponse(res, status=200)
+    if (request.method == "GET"):
+        if (request.user.is_authenticated):
+            nowUser = request.user
+            res = {
+                "id": nowUser.pk,
+                "username": nowUser.username,
+                "password": "tempPassword",
+                "gender": nowUser.gender,
+                "age": nowUser.age,
+                "taste": nowUser.taste,
+                "question": nowUser.question,
+            }
+            return JsonResponse(res, status=200)
+        else:
+            return HttpResponse({}, status=204)
+        # 테스트 각주 else:
+        # 테스트 각주    return HttpResponseNotAllowed(["GET"])
     else:
-        print("request.user is logged out")
-        return HttpResponse({}, status=401)
-    # 테스트 각주 else:
-    # 테스트 각주    return HttpResponseNotAllowed(["GET"])
+        return HttpResponseNotAllowed(['GET'])
 
 
 def changeSurvey(request, user_id):
-    if (not request.user.is_authenticated):
-        print("로그인되지 않은 사용자입니다")
-        return HttpResponse(status=401)
+    if (request.method == "PUT"):
+        if (not request.user.is_authenticated):
+            return HttpResponse(status=401)
 
-    print("변경 전")
-    print(request.user.taste)
+        req_data = json.loads(request.body.decode())
+        numberId = req_data['id']
+        age = req_data['age']
+        gender = req_data['gender']
+        taste = req_data['taste']
+        question = req_data['question']
 
-    req_data = json.loads(request.body.decode())
-    numberId = req_data['id']
-    age = req_data['age']
-    gender = req_data['gender']
-    taste = req_data['taste']
-    question = req_data['question']
-    print("taste: " + taste)
+        selectedUser = get_object_or_404(User, id=user_id)  # user_id
+        if (request.user.id != numberId):
+            return HttpResponse(status=403)
 
-    selectedUser = get_object_or_404(User, id=user_id)  # user_id
-    if (request.user.id != numberId):
-        return HttpResponse(status=403)
+        selectedUser.age = age
+        selectedUser.gender = gender
+        selectedUser.taste = taste
+        selectedUser.question = question
+        selectedUser.save()
 
-    selectedUser.age = age
-    selectedUser.gender = gender
-    selectedUser.taste = taste
-    selectedUser.question = question
-    selectedUser.save()
+        selectedUser = get_object_or_404(User, id=user_id)
 
-    print("변경 후")
-    print(request.user.taste)
-    selectedUser = get_object_or_404(User, id=user_id)
-    print(selectedUser.taste)
+        res = {
+            "gender": selectedUser.gender,
+            "age": selectedUser.age,
+            "taste": selectedUser.taste,
+            "question": selectedUser.question,
+        }
 
-    res = {
-        "gender": selectedUser.gender,
-        "age": selectedUser.age,
-        "taste": selectedUser.taste,
-        "question": selectedUser.question,
-    }
-
-    return JsonResponse(res, status=200)
+        return JsonResponse(res, status=200)
+    else:
+        return HttpResponseNotAllowed(['PUT'])
