@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import "./RatingLayout.css"
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
-import { RateType} from '../../store/slices/rate';
+import { fetchRates, RateType} from '../../store/slices/rate';
 import { UserType } from '../../store/slices/User';
-import { ProductType, } from '../../store/slices/product';
+import { fetchProduct, ProductType, } from '../../store/slices/product';
 import BeforeRateForm from './BeforeRateForm/BeforeRateForm';
 import CreateRateForm from './CreateRateForm/CreateRateForm';
 import AfterRateForm from './AfterRateForm/AfterRateForm';
 import EditRateForm from './EditRateForm/EditRateForm';
+import { AppDispatch } from '../../store';
+import { useDispatch } from 'react-redux';
 
 interface Props {
     user: UserType,
@@ -19,7 +21,7 @@ interface Props {
 
 
 function RatingLayout(props: Props) {
-
+    const dispatch = useDispatch<AppDispatch>();
     const [rateState1, setRateState1] = useState<boolean>(); //true if user has rated product
     const [rateState2, setRateState2] = useState<boolean>(); 
 
@@ -52,11 +54,11 @@ function RatingLayout(props: Props) {
 
     const updateRateStateParent2 = (state: boolean): void => {
         setRateState2(state)
-        props.recallRateState1(state);
+        props.recallRateState2(state);
     }
     const updateRateStateParent1 = (state: boolean): void => {
         setRateState1(state)
-        props.recallRateState2(state);
+        props.recallRateState1(state);
     }
 
     const updateRateState2 = (state: boolean): void => {

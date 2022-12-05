@@ -32,12 +32,6 @@ function ProductDetailPage() {
     dispatch(fetchRates());
   }, [id, dispatch])
 
-  useEffect(() => {  //this is called again on click edit, on click create rate 
-    console.log("re fetchRates")
-    dispatch(fetchProduct(Number(id)));
-    dispatch(fetchRates())
-  }, [callRate1,callRate2])  //needed to update Review in Review list and product
-
 
   const updateRecall1 = (state: boolean): void => {  //if any state changes in RatingLayout, this is updated. 
     setCallRate1(state)

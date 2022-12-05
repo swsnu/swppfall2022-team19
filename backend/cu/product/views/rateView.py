@@ -104,26 +104,25 @@ class RateViewSet(viewsets.GenericViewSet):
         product.averageScore = round(((product.rateCount * product.averageScore) - rate.averageScore + newScore) / (product.rateCount), 2)
         product.save()
 
-        # check rate <- rater name, product name
-        print("rater:", rate.user.username, rate.product.name)
-        
         # check current user
         user = request.user
-        print("user:", user)
 
         # store all the previous attributes
         previous_scores = rate.scores
         previous_comment = rate.comment
         previous_picture = rate.picture
         previous_like_count = rate.likedCount
-        print("previous comment: " + rate.comment)
         
         # update infos
         rate.scores = request.POST['scores']
         rate.averageScore = newScore
         rate.comment = request.POST['comment']
-        if 'picture' in request.FILES:
+        if 'picture' in request.FILES:   #if file is uploaded, change rate.picture to updated picture
             rate.picture = request.FILES['picture']
+        elif 'picture' in request.POST:  #if string is uploaded, it means rate.picture stays the same. 
+            rate.picture
+        else:
+            rate.picture = None
         rate.likedCount = request.POST['likedCount']
         rate.save()
 

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import HeartRating from '../HeartRate/HeartRating'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from '../../../store';
-import { createRate } from '../../../store/slices/rate';
+import { createRate, fetchRates } from '../../../store/slices/rate';
 import { UserType } from '../../../store/slices/User';
-import { ProductType } from '../../../store/slices/product';
+import { fetchProduct, ProductType } from '../../../store/slices/product';
 
 
 interface Props {
@@ -72,6 +72,8 @@ function CreateRateForm(props: Props) {
             props.updateState1(true);
             props.updateState2(true);
         }
+        dispatch(fetchProduct(props.product.id))
+        dispatch(fetchRates())
     }
 
 

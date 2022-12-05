@@ -61,7 +61,7 @@ function AfterRateForm(props: Props) {
                 {props.rate.picture != undefined &&
                     <div className='picture'>
                         <label>사진</label>
-                        <img src={props.rate.picture} width={300} />
+                        <img src={props.rate.picture} width={250} />
                     </div>
                 }
             </div>

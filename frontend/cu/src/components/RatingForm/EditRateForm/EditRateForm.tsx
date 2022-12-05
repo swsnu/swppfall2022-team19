@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from '../../../store';
 import { createRate, fetchRates, RateType, selectRate, updateRate } from '../../../store/slices/rate';
 import { UserType } from '../../../store/slices/User';
-import { ProductType, updateProduct } from '../../../store/slices/product';
+import { fetchProduct, ProductType, updateProduct } from '../../../store/slices/product';
 
 
 interface Props {
@@ -27,6 +27,7 @@ function EditRateForm(props: Props) {
     const [score5, setScore5] = useState(Number(props.rate.scores[4]));
     const [comment, setComment] = useState(props.rate.comment);
     const [image, setImage] = useState<File | null>();
+    const [previousImage, setPreviousImage] = useState<string | null>(props.rate.picture);
 
     const updateScore1 = (score: number): void => {
         setScore1(score)
@@ -58,17 +59,28 @@ function EditRateForm(props: Props) {
         formData.append('product_id', String(props.product.id))
         formData.append('scores', scores)
         formData.append('comment', comment)
-        if (image) {
+        if (image !== null && image !== undefined) {   //if null or undefined, no picture is posted
             formData.append('picture', image);
         }
+        else if(previousImage !== null){  //if did not change previous picture, then previous picture is posted
+            console.log("previous image is not null")
+            formData.append('picture', previousImage)
+        }
         formData.append('likedCount', String(props.rate?.likedCount))
-        console.log("rate id: " + props.rate.id + " commment: " + comment)
+        //console.log("rate id: " + props.rate.id + " commment: " + comment)
         await dispatch(updateRate(formData))
+
+        dispatch(fetchProduct(props.product.id))
+        dispatch(fetchRates())
+
         props.updateState2(true);
     }
 
     const onclickDeleteImageHandler = () => {
+        console.log("Previous image: " + previousImage)
         setImage(null);
+        setPreviousImage(null);
+        console.log("image: " + image)
     }
 
 
@@ -96,9 +108,11 @@ function EditRateForm(props: Props) {
                 </div>
                 <div className='picture'>
                     <label>사진</label>
+                    {previousImage && 
+                        <img src={previousImage} width={250} />}
                     {image && (
                         <div>
-                            <img alt='Image Not Found' width={'300px'} src={URL.createObjectURL(image)} />
+                            <img alt='Image Not Found' width={'250px'} src={URL.createObjectURL(image)} />
                         </div>
                     )}
                     <br />
@@ -109,6 +123,7 @@ function EditRateForm(props: Props) {
                             if (event.target?.files) {
                                 setImage(event.target?.files[0])
                             }
+                            setPreviousImage(null)
                         }}
                     />
                     <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>

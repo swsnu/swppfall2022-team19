@@ -12,7 +12,7 @@ export interface RateType {
     product_id: ProductType['id'],
     scores: string,  //number[]--> string, 
     comment: string,
-    picture: string, //temp, need to change later
+    picture: string, 
     likedCount: number,
     created_at: number,
 }
