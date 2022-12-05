@@ -3,16 +3,19 @@ import "./Home.css"
 
 import Header from "../Header/Header"
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useLayoutEffect } from "react";
-import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
-import QueryString from "qs";
+import { useLayoutEffect } from "react";
+import { fetchAllProducts, ProductType, selectProduct } from "../../store/slices/product";
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import Recommendation from './Recommendation';
-
+import BestandMost from './BestandMost';
+import { fetchRates } from '../../store/slices/rate';
 
 
 const Home = () => {
+
+
 
     const logo = require('../../Categoryicon/Logo.png');
 
@@ -23,8 +26,22 @@ const Home = () => {
     }
 
     const dispatch = useDispatch<AppDispatch>();
+
+    
     const { search } = useLocation();
+
+    useLayoutEffect(() => {  // 두번 뜹니다 
+
+        dispatch(fetchAllProducts())
+        dispatch(fetchRates())
+        console.log("useEffect in Home")
+
+    }, [search]);
+
+
+
     const allProducts = useSelector(selectProduct);
+    
 
     const m = Math.floor(Math.random() * 13) + 2
     const r = Math.floor(Math.random() * (m-1))
@@ -42,9 +59,6 @@ const Home = () => {
     // get 5 elements , 
 
 
-    useLayoutEffect(() => {  // 두번 뜹니다 
-        dispatch(fetchQueryProducts(QueryString.parse(search, { ignoreQueryPrefix: true })))
-    }, [search, dispatch])
 
 
     return (
@@ -52,12 +66,13 @@ const Home = () => {
         <div className="Home">
             <Header />
             <img title="logo" className="CenterLogo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
+
+
             <div className="BasicList">
                 <div className="animated-title">
                     <h1 title="animatedTitle"  className="titles">오늘의 편의점</h1>
                 </div>
                 <div className="productBlocks">
-                    {/* {allProducts.products.map(product => ( */}
                     {showProducts5.map(product => (
 
                         <div key={product.id}>
@@ -75,7 +90,14 @@ const Home = () => {
                     ))}
                 </div>
 
-                <div className="BasicList">
+                <div className="BestandMost">
+                <div className="animated-title">
+                    <h1 title="animatedTitle"  className="titles">주목받은 상품</h1>
+                </div>
+                <BestandMost></BestandMost>
+            </div>
+
+                    
 
                     <div className="UserList">
 
@@ -87,7 +109,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </div>
+     
     )
 }
 

@@ -25,7 +25,6 @@ def token(request):
 # 1. 회원가입 # register
 
 
-@csrf_exempt
 def signup(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
@@ -60,7 +59,6 @@ def signup(request):
 # 2. signin login
 
 
-@csrf_exempt
 def signin(request):
     if request.method == 'POST':
         req_data = json.loads(request.body.decode())
@@ -99,7 +97,6 @@ def signin(request):
 # 3. signout 로그아웃
 
 
-@csrf_exempt
 def signout(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
@@ -114,7 +111,7 @@ def signout(request):
 # 4. userlist : 현재 등록된 userlist를 백엔드에서 프론트로 전달
 
 
-# @csrf_exempt
+#
 def userlist(request):
     # 테스트 각주 if (request.method) == "GET":
     user_list = []
@@ -129,7 +126,7 @@ def userlist(request):
 # 5. requestUser : 현재 request.user의 정보를 userType에 맞추어 전달
 
 
-# @csrf_exempt
+#
 def requestUser(request):
     # 테스트 각주 if (request.method) == "GET":
     if (request.user.is_authenticated):
@@ -155,13 +152,13 @@ def requestUser(request):
     # 테스트 각주    return HttpResponseNotAllowed(["GET"])
 
 
-@csrf_exempt
 def changeSurvey(request, user_id):
     if (not request.user.is_authenticated):
         print("로그인되지 않은 사용자입니다")
         return HttpResponse(status=401)
 
-    nowUser = request.user
+    print("변경 전")
+    print(request.user.taste)
 
     req_data = json.loads(request.body.decode())
     numberId = req_data['id']
@@ -169,9 +166,10 @@ def changeSurvey(request, user_id):
     gender = req_data['gender']
     taste = req_data['taste']
     question = req_data['question']
+    print("taste: " + taste)
 
     selectedUser = get_object_or_404(User, id=user_id)  # user_id
-    if (request.user.id != selectedUser.id):
+    if (request.user.id != numberId):
         return HttpResponse(status=403)
 
     selectedUser.age = age
@@ -180,11 +178,16 @@ def changeSurvey(request, user_id):
     selectedUser.question = question
     selectedUser.save()
 
+    print("변경 후")
+    print(request.user.taste)
+    selectedUser = get_object_or_404(User, id=user_id)
+    print(selectedUser.taste)
+
     res = {
-        "gender": nowUser.gender,
-        "age": nowUser.age,
-        "taste": nowUser.taste,
-        "question": nowUser.question,
+        "gender": selectedUser.gender,
+        "age": selectedUser.age,
+        "taste": selectedUser.taste,
+        "question": selectedUser.question,
     }
 
     return JsonResponse(res, status=200)

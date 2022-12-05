@@ -1,0 +1,53 @@
+import { fireEvent, render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { MemoryRouter, Route, Routes } from "react-router";
+import { getMockProductStore } from "../../test-utils/mock_JH";
+import { AnyAction, configureStore, EnhancedStore, isAsyncThunkAction } from "@reduxjs/toolkit";
+import axios from "axios";
+import { ThunkMiddleware } from "@reduxjs/toolkit";
+import SurveyModal from "./SurveyModal";
+import { getMockStore } from "../../test-utils/mock_MJ";
+
+const mockNavigate = jest.fn()
+jest.mock('react-router', () => ({
+    ...jest.requireActual('react-router'),
+    useNavigate: () => mockNavigate
+}));
+
+
+const mockDispatch = jest.fn();
+jest.mock("react-redux", () => ({
+    ...jest.requireActual("react-redux"),
+    useDispatch: () => mockDispatch,
+}));
+
+
+const mockStore = getMockStore({
+    user: { users: [], selectedUser: null },
+    product: { products: [], selectedProduct: null, tags: [] },
+    rate: { rates: [], selectedRates: [], selectedRate: null },
+});
+
+describe("<SurveyModal />", () => {
+    // let store: EnhancedStore<{ userState: UserState }, AnyAction, [ThunkMiddleware<{ userState: UserState }, AnyAction, undefined>]>;
+    const fakeUser1 = { id: 1, 'username': 'fakeUser1', 'password': '12345', 'gender': 1, 'age': 1, 'taste': 'AB', 'question': 1, 'loginState': false };
+    const changeSurvey1 = { id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2 };
+    const changedFakeUser1 = { id: 1, 'username': 'fakeUser1', 'password': '12345', 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2, 'loginState': false };
+
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it("should render SurveyModal without erros", () => {
+        const { container } = render(<SurveyModal />);
+        expect(container).toBeTruthy;
+    });
+    it("should handle click change", async () => {
+        // jest.spyOn(axios, "put");
+        render(<SurveyModal />);
+        const changedButton = await screen.findByText("수정하기");
+        fireEvent.click(changedButton);
+        expect(mockDispatch).toBeCalled();
+    });
+})
