@@ -7,10 +7,10 @@ import { useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { postUser } from "../../store/slices/User";
-
+import { getRequestUserAtLogin, getUsers } from '../../store/slices/User';
+import { useLayoutEffect } from 'react';
 
 const animatedComponents = makeAnimated();
-
 
 interface genderOptions {
     readonly value: number;
@@ -70,18 +70,25 @@ const SignupSurvey = () => {
     const [submitted, setSubmitted] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
 
+    useLayoutEffect(() => {
+        dispatch(getUsers()).then(() => dispatch(getRequestUserAtLogin()));
+
+    }, []);
+
     const logo = require('../../Categoryicon/Logo.png')
 
     const postUserHandler = async () => {
         const data = { username: username, password: password, age: age, gender: gender, taste: taste, question: question };
         const result = await dispatch(postUser(data));
-        // if (result.type === `${postUser.typePrefix}/fulfilled`) {
-        if (`${postUser.typePrefix}/fulfilled`) {
+        console.log("result.type: " + result.type);
+        console.log(`${postUser.typePrefix}/fulfilled`);
 
+        if (result.type === `${postUser.typePrefix}/fulfilled`) {
             setSubmitted(true);
             console.log("postUserHandler is called, username: " + username);
+            alert("회원가입 완료. 로그인 페이지로 이동합니다");
         } else {
-            alert("이미 중복된 ID입니다.");
+            alert("중복된 ID입니다. 비밀번호는 4자리 이상 작성해주세요.");
             console.log("Error on post User");
         }
     };
@@ -89,26 +96,27 @@ const SignupSurvey = () => {
 
 
     if (submitted) {
-        alert("회원가입 완료. 로그인 페이지로 이동합니다");
-        return <Navigate to="/login" />;
+        // alert("회원가입 완료. 로그인 페이지로 이동합니다");
+        window.location.replace('/login');
+        return null;
     } else {
         return (
             <div className="signUpAndSurvey">
                 <div className="SignupBox">
                     <h1>Register</h1>
                     <label>ID
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(event) => setUsername(event.target.value)}
-                    /></label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(event) => setUsername(event.target.value)}
+                        /></label>
 
                     <label>Password
-                    <input
-                        type="text"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                    /></label>
+                        <input
+                            type="text"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                        /></label>
 
                 </div>
 
@@ -127,12 +135,12 @@ const SignupSurvey = () => {
 
                         <div className="questionBox">
                             <h5> 당신의 연령대를 알려주세요 </h5>
-                            <Select  className="ageDropDown" options={ageList} onChange={(event) => event === null ? setAge(0) : setAge(event.value)} />
+                            <Select className="ageDropDown" options={ageList} onChange={(event) => event === null ? setAge(0) : setAge(event.value)} />
                         </div>
 
                         <div className="questionBox">
                             <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
-                            <Select  className="tasteDropDown" isMulti defaultValue={[tasteList[0]]} components={animatedComponents} options={tasteList} onChange={(event) => {
+                            <Select className="tasteDropDown" isMulti defaultValue={[tasteList[0]]} components={animatedComponents} options={tasteList} onChange={(event) => {
                                 var getStr: string = "";
                                 var temp: string[] = [];
                                 temp = event.map((element) => {
@@ -149,7 +157,7 @@ const SignupSurvey = () => {
 
                         <div className="questionBox">
                             <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
-                            <Select  className="questionDropDown" options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} />
+                            <Select className="questionDropDown" options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} />
                         </div>
 
                     </div>

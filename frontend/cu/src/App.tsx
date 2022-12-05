@@ -1,17 +1,12 @@
-import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProductDetailPage from './containers/ProductDetailPage/ProductDetailPage';
-import React, { useLayoutEffect }  from 'react';
+import React, { useLayoutEffect } from 'react';
 import Login from './containers/UserSurvey/Login'
 import SignupSurvey from './containers/UserSurvey/SignupSurvey'
 import Home from './containers/Home/Home'
 import Category from './containers/Category/Category'
 import SearchResult from "./containers/Header/SearchResult";
 import MyPage from "./containers/MyPage/MyPage";
-
-import { useEffect } from "react"; //local
-import { getRequestUser, getUsers, selectUser } from "./store/slices/User";
-
-
 import { fetchAllProducts } from "./store/slices/product";
 import { fetchRates } from "./store/slices/rate";
 
@@ -27,13 +22,6 @@ function App() {
   const selectedUserState = useSelector(selectedUser);
 
   useLayoutEffect(() => {
-    console.log(localStorage.getItem('loginUser'));
-    if (localStorage.getItem('loginUser') === null) {
-      console.log("> localStorage.getItem('loginUser')===null입니다");
-    } else {
-      dispatch(getUsers()).then(() => dispatch(getRequestUser()));
-      console.log("selectedUser: " + selectedUserState?.username);
-    }
     dispatch(fetchAllProducts())
     dispatch(fetchRates())
     console.log("useEffect in App")
@@ -51,7 +39,7 @@ function App() {
           <Route path='/signup' element={<SignupSurvey />} />
           <Route path="/ProductDetail/:id/" element={<ProductDetailPage />} />
           <Route path="/category/:mainCategory" element={<Category />} />
-          <Route path="/issue" element= {<BestandMost />} />
+          <Route path="/issue" element={<BestandMost />} />
           <Route path="/searchProduct/:searchKey" element={<SearchResult />} />
           <Route path="/searchProduct/" element={<SearchResult />} />
           <Route path="/user/:id" element={<MyPage />} />

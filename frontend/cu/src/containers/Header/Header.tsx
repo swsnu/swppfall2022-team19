@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useLayoutEffect } from 'react';
 import { AppDispatch } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
-import { signoutUser, selectUser } from "../../store/slices/User"; // Login
+import { signoutUser, selectUser, getUsers, getRequestUser } from "../../store/slices/User"; // Login
 
 
 const Header = () => {
@@ -20,11 +20,7 @@ const Header = () => {
 
 
     useLayoutEffect(() => {
-        if (localStorage.getItem('loginUser') === null) {
-            window.location.replace('/login');
-        } else {
-            console.log("is loggeed in");
-        }
+        dispatch(getUsers()).then(() => dispatch(getRequestUser()));
     }, []);
 
     const search = require('../../Categoryicon/search.png');
@@ -37,7 +33,7 @@ const Header = () => {
     const clickSearchHandler = async () => {
         const result = await dispatch(fetchSearchProducts({ name: searchKey }));
 
-        if (`${fetchSearchProducts.typePrefix}/fulfilled`) {
+        if (result.type == `${fetchSearchProducts.typePrefix}/fulfilled`) {
             navigate(`/searchProduct/${searchKey}`);
         }
     }
@@ -50,8 +46,7 @@ const Header = () => {
 
     const clickSignoutHandler = async () => {
         const result = await dispatch(signoutUser());
-        if (`${signoutUser.typePrefix}/fulfilled`) {
-            localStorage.clear();
+        if (result.type == `${signoutUser.typePrefix}/fulfilled`) {
             navigate("/login");
         }
     }
@@ -66,52 +61,51 @@ const Header = () => {
 
     return (
 
-        <div className="header"  >
-            <div className="start-header">
-                <img title="logo" className="Logo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
-                <nav>
-                    <div className="Category">
-                        <div title="CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("간편식사")} >
+        <div className="header" >
+            <div className="upperheader">
+                <div className="upperheader_logoBox">
+                    <img className="upperheader_logo" onClick={() => navigate("/home")} src={logo} alt="homeLogo" />
+                </div>
 
-                            <p>간편식사</p>
-                        </div>
-
-                        <div title="CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("과자류")} >
-                            <p>과자류</p>
-                        </div>
-
-                        <div title="CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("아이스크림")} >
-                            <p>아이스크림</p>
-                        </div>
-
-                        <div title="CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("식품")} >
-                            <p>식품</p>
-                        </div>
-
-                        <div title="CategoryMenu" className="CategoryMenu" onClick={() => categoryHandler("음료")} >
-                            <p>음료</p>
-                        </div>
-
-                        <div title="CategoryMenu" className="CategoryMenu" onClick={() => issueHandler()} >
-                            <p>이슈</p>
-                        </div>
-
-                    </div>
-                </nav>
+                <ul className="upperheader_featureList">
+                    <li>
+                        <a onClick={() => clickMyPageHandler()}>마이페이지</a>
+                    </li>
+                    <li>
+                        <a onClick={() => clickSignoutHandler()}>로그아웃</a>
+                    </li>
+                </ul>
             </div>
 
-            <div className="SearchBox">
-                <input className="SearchInput"
-                    type="text"
-                    value={searchKey}
-                    onChange={(event) => setSearchKey(event.target.value)} />
-                <img title="searchIcon" className="SearchIcon" onClick={() => clickSearchHandler()} src={search} alt="SearchIcon" />
-            </div>
+            <div className="mainheader">
+                <div className="mainheader_categoryBox">
+                    <ul className="navBar">
+                        <li>
+                            <a onClick={() => categoryHandler("간편식사")}>간편식사</a>
+                        </li>
+                        <li>
+                            <a onClick={() => categoryHandler("과자류")}>과자류</a>
+                        </li>
+                        <li>
+                            <a onClick={() => categoryHandler("아이스크림")}>아이스크림</a>
+                        </li>
+                        <li>
+                            <a onClick={() => categoryHandler("식품")}>식품</a>
+                        </li>
+                        <li>
+                            <a onClick={() => categoryHandler("음료")}>음료</a>
+                        </li>
+                    </ul>
+                </div>
 
-
-            <div className="end-header">
-                <img title="myPageIcon" className="MyPageIcon" onClick={() => clickMyPageHandler()} src={myPage} alt="MyPageIcon" />
-                <button title="signoutButton" className="SignoutButton" onClick={() => clickSignoutHandler()}> 로그아웃</button>
+                <div className="SearchBox">
+                    <input className="SearchInput"
+                        type="text"
+                        value={searchKey}
+                        placeholder="무엇을 찾아드릴까요?"
+                        onChange={(event) => setSearchKey(event.target.value)} />
+                    <img title="searchIcon" className="SearchIcon" onClick={() => clickSearchHandler()} src={search} alt="SearchIcon" />
+                </div>
 
             </div>
         </div>

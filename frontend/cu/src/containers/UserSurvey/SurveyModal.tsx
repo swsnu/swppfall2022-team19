@@ -7,7 +7,7 @@ import { AppDispatch } from "../../store";
 import { RootState } from '../../store';
 import { putSurvey } from '../../store/slices/User';
 
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 type Props = {
     setModalOn: (modalOn: boolean) => void;
 }

@@ -2,7 +2,7 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { loginUser, getRequestUser, getUsers, selectUser } from '../../store/slices/User';
+import { loginUser, getRequestUserAtLogin, getUsers, selectUser } from '../../store/slices/User';
 import { RootState } from "../../store";
 import './Login.css';
 
@@ -31,14 +31,9 @@ export default function Login() {
   };
 
   useLayoutEffect(() => {
-    console.log(localStorage.getItem('loginUser'));
-    if (localStorage.getItem('loginUser') != null) {
-      window.location.replace('/home');
-    }
+    dispatch(getUsers()).then(() => dispatch(getRequestUserAtLogin()));
 
-
-
-  }, [dispatch]);
+  }, []);
 
   const clickCreateHandler = () => {
     navigate("/signup");

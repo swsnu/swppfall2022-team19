@@ -67,7 +67,7 @@ export const loginUser = createAsyncThunk(
   async (user: Pick<UserLoginRequest, "username" | "password">, { dispatch }) => {
     const response = await client.post("/api/user/signin/", user);
     dispatch(userActions.loginUser(response.data));
-    localStorage.setItem('loginUser', JSON.stringify(response.data));
+    // localStorage.setItem('loginUser', JSON.stringify(response.data));
   }
 )
 
@@ -81,7 +81,7 @@ export const signoutUser = createAsyncThunk(
     dispatch(userActions.signoutUser(response.data));
     // 그런데 로그인의 경우 로그인 실패 시 에러가 발생할 수도 있음
     // 에러 HttpResponse(status=401)인데, 로그인 오류 시 alert 
-    localStorage.clear();
+    // localStorage.clear();
 
   }
 )
@@ -104,16 +104,43 @@ export const getRequestUser = createAsyncThunk(
     const response = await client.get("/api/user/requestUser/");
     console.log(response);
     console.log(response.data);
-    if (response.data != null) {
-      localStorage.setItem('loginUser', JSON.stringify(response.data));
-    } else {
-      localStorage.clear();
+    console.log(response.data === null);
+    console.log(response.data == undefined);
+    console.log(response.data == "");
+
+    if (response.data === '') {
       window.location.replace('/login');
+      // localStorage.clear();
+    } else {
+
+      // localStorage.setItem('loginUser', JSON.stringify(response.data));
     }
     dispatch(userActions.getRequestUser(response.data));
     return response.data ?? null;
   }
 )
+
+export const getRequestUserAtLogin = createAsyncThunk(
+  "user/getRequestUser",
+  async (user: void, { dispatch }) => {
+    const response = await client.get("/api/user/requestUser/");
+    console.log(response);
+    console.log(response.data);
+
+    if (response.data === '') {
+
+      // localStorage.clear();
+      // window.location.replace('/login');
+    } else {
+      // localStorage.setItem('loginUser', JSON.stringify(response.data));
+      window.location.replace('/home');
+    }
+    dispatch(userActions.getRequestUser(response.data));
+    return response.data ?? null;
+  }
+)
+
+
 export const putSurvey = createAsyncThunk(
   "user/newSurvey",
   async (user: Pick<UserType, "id" | "age" | "gender" | "taste" | "question">, { dispatch }) => {
@@ -147,6 +174,8 @@ export const userSlice = createSlice({
         } else {
           console.log("targetUser가 undefined라 selectedUser는 null로");
           state.selectedUser = null;
+          // localStorage.clear();
+          // window.location.replace('/login');
         }
 
         // console.log("targetUser");
@@ -240,9 +269,11 @@ export const userSlice = createSlice({
       state.selectedUser = action.payload;
     });
     */
+    /*
     builder.addCase(postUser.rejected, (_state, action) => {
       console.error(action.error);
     });
+    */
   },
 });
 
