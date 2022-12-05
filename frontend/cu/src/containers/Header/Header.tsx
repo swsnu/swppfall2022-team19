@@ -95,6 +95,9 @@ const Header = () => {
                         <li>
                             <a onClick={() => categoryHandler("음료")}>음료</a>
                         </li>
+                        <li>
+                            <a onClick={() => {navigate("/issue")}}>이슈</a>
+                        </li>
                     </ul>
                 </div>
 
