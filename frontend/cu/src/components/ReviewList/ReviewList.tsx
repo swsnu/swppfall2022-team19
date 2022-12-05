@@ -1,13 +1,13 @@
-// ReviewList
+// Reviews are shown in a list
+// sort: 인기순, 최신순, 사진리뷰(만) <- 3 buttons
+// default is in 인기순.
 
-//import { useDispatch} from "react-redux";
-import React, { useState, useEffect } from 'react';
-import "./ReviewList.css";
-//import { AppDispatch } from "../../store";
-import Review from "../Review/Review";
-import Rate, { RateType } from "../../store/slices/rate";
+import { useState, useEffect } from 'react';
+import { RateType } from "../../store/slices/rate";
 import { ProductType } from "../../store/slices/product";
 import { UserType } from "../../store/slices/User";
+import Review from "../Review/Review";
+import "./ReviewList.css";
 
 interface Props{
     user: UserType,
@@ -17,35 +17,48 @@ interface Props{
 
 
 export default function ReviewList (props: Props){
-    const filteredRates = props.rate.filter((rate) => rate.product_id === props.product.id);
+    // filteredRates has all the list of reviews related to the product
+    let filteredRates = props.rate.filter((rate) => rate.product_id === props.product.id);
     const [rates, setRates] = useState<RateType[]>(filteredRates); 
+   
+    useEffect(() => {
+        setRates(filteredRates);
+    }, [props.product, props.rate])
+
 
     const likeButtonClick = async () => {
         filteredRates.sort((a, b) => (b.likedCount) - (a.likedCount))
-        setRates(filteredRates.reverse())
-        console.log("인기순")
-        console.log(filteredRates.reverse())
+        setRates(filteredRates.reverse());
+
+        console.log("인기순");
+        console.log(filteredRates.reverse());
     }
 
     const recentButtonClick = async () => {
         filteredRates.sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf())
-        setRates(filteredRates.reverse())
-        console.log("최신순")
+        setRates(filteredRates.reverse());
+
+        console.log("최신순");
+        console.log(filteredRates.reverse());
     }
 
+    
     const pictureButtonClick = async () => {
-        filteredRates.filter((rate) => rate.picture !== null)
+        // reviews with picture & recent ordering
+        const ratesWithPictures = filteredRates.filter((rate) => rate.picture !== null )
         .sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf())
-        setRates(filteredRates.reverse())
-        console.log("사진 있는 것만")
-        console.log(filteredRates[0].picture) //null 인데 왜 있니
+        setRates(ratesWithPictures.reverse());
+
+        console.log("사진 있는 것만");
+        console.log(ratesWithPictures.reverse());
     }
+
 
     return (
         <div className="ReviewList"> 
                 
             <div className='title'>
-                상품 후기(총 {filteredRates.length}개)
+                상품후기( {filteredRates.length} )
                 <button id='button' className="likeButton" onClick={() =>likeButtonClick()}>인기순</button>
                 <button id='button' className="recentButton" onClick={() =>recentButtonClick()}>최신순</button>
                 <button id='button' className="pictureButton" onClick={() =>pictureButtonClick()}>사진리뷰</button>
@@ -59,7 +72,7 @@ export default function ReviewList (props: Props){
             </div>    
             <div className='reviews'>
                 {  rates.reverse().map( (rv) => {
-                    return (<Review user={props.user} product={props.product} rate={rv}/>
+                    return (<Review key={rv.id} user={props.user} product={props.product} rate={rv}/>
                 );})}
                 { filteredRates.length===0 && <div className='no_review'>첫 평가를 남겨주세요</div>}
             </div>

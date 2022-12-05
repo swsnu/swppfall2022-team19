@@ -1,9 +1,10 @@
 import "./Review.css"
-import { useState } from 'react';
-import { UserType } from "../../store/slices/User";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useLayoutEffect, useEffect } from 'react';
+import { RateType, fetchUserLikedRate, selectRate , updateRate} from "../../store/slices/rate";
 import { ProductType } from "../../store/slices/product";
-import { RateType, updateRate} from "../../store/slices/rate";
-import { useDispatch } from "react-redux";
+import { UserType } from "../../store/slices/User";
 import { AppDispatch } from "../../store";
 
 interface IProps {
@@ -11,20 +12,34 @@ interface IProps {
     product: ProductType,
     rate: RateType
 }
-/*
-like ojbect holds
-1. user object
-2. rate object
 
-[liked, setLiked] = useState<boolean>(HERE)
-true: there is Like.objects.filter(user=props.user, product=props.product)
-false: there is no such an object
-*/
 
 const Review = (props: IProps) => {
+    const dispatch = useDispatch<AppDispatch>();
     const [liked, setLiked] = useState<boolean>(false);
     const [likedCount, setLikedCount] = useState(props.rate.likedCount);
-    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        dispatch(fetchUserLikedRate({user_id: props.user.id})) 
+    }, [props.user, liked])
+    const rates = useSelector(selectRate).likedRates
+        
+    //(O)check if 'likedRates' are fetched
+    //console.log("fetchedLikedRates!: ", rates);
+    //console.log("props.rate!: ", props.rate)
+ 
+    useEffect(()=> {
+        //if(rates.includes(props.rate)){ ... }
+        for(let index=0; index<rates.length; index++){
+            if(rates[index].comment === props.rate.comment){
+                setLiked(true);
+                console.log("liked rate:", props.rate)
+                console.log(liked)
+            }
+        }
+
+    }, [props.rate])
+
 
     const likeClick = async () => {
         const scores = props.rate.scores;
@@ -51,13 +66,14 @@ const Review = (props: IProps) => {
         await dispatch(updateRate(formData))
     }
 
-    console.log("rates' likedCount: "+likedCount)
-
+    //console.log("rates' likedCount: "+likedCount)
+    // average score for each reviews
     var totalScore=0;
     for( var i=0; i<5; i++){
         totalScore+=Number(props.rate?.scores[i]);
     }
     totalScore/=5;
+    
 
     return (
         <article className='Review'>
@@ -71,8 +87,8 @@ const Review = (props: IProps) => {
                     <div className="review_comment">{props.rate?.comment}</div>
                 </div>
                 <div className="like_set">
-                        {props.rate.likedCount}
-                    <div className="like_button" onClick={() =>likeClick()}> 
+                        {likedCount}
+                    <div className="like_button" onClick={() =>likeClick()}>  
                         {liked? (<div>❤️</div>): (<div>🤍</div>)}
                     </div>
                 </div>

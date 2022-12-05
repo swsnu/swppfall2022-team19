@@ -31,7 +31,7 @@ export default function TotalScoreList(props: Props){
 
     let score1 = 0;
     let scoreCnt1 = [0,0,0,0,0,0]; //0~5
-    filteredRates.map( (rv) => {
+    filteredRates.forEach( (rv) => {
         score1 += Number(rv.scores.charAt(0)); //rv.scores <= "55555" string type
         switch(Number(rv.scores.charAt(0))){
             case 0:
@@ -54,11 +54,11 @@ export default function TotalScoreList(props: Props){
         }
     })
     if(score1!==0) score1 /= filteredRates.length;
-    score1.toFixed(2);
+    score1 = Math.round(score1*100)*0.01
 
     let score2 = 0;
     let scoreCnt2=[0,0,0,0,0,0];
-    filteredRates.map( (rv) => {
+    filteredRates.forEach( (rv) => {
         score2 += Number(rv.scores.charAt(1));
         switch(Number(rv.scores.charAt(1))){
             case 0:
@@ -81,11 +81,11 @@ export default function TotalScoreList(props: Props){
         }
     })
     if(score2!==0) score2 /= filteredRates.length;
-    score2.toFixed(2);
+    score2 = Math.round(score2*100)*0.01
 
     let score3 = 0;
     let scoreCnt3 = [0,0,0,0,0,0];
-    filteredRates.map( (rv) => {
+    filteredRates.forEach( (rv) => {
         score3 += Number(rv.scores.charAt(2));
         switch(Number(rv.scores.charAt(0))){
             case 0:
@@ -108,11 +108,11 @@ export default function TotalScoreList(props: Props){
         }
     })
     if(score3!==0) score3 /= filteredRates.length;
-    score3.toFixed(2);
+    score3 = Math.round(score3*100)*0.01
 
     let score4 = 0;
     let scoreCnt4 =[0,0,0,0,0,0];
-    filteredRates.map( (rv) => {
+    filteredRates.forEach( (rv) => {
         score4 += Number(rv.scores.charAt(3));
         switch(Number(rv.scores.charAt(0))){
             case 0:
@@ -135,11 +135,11 @@ export default function TotalScoreList(props: Props){
         }
     })
     if(score4!==0) score4 /= filteredRates.length;
-    score4.toFixed(2);
+    score4 = Math.round(score4*100)*0.01
 
     let score5 = 0;
     let scoreCnt5 = [0,0,0,0,0,0];
-    filteredRates.map( (rv) => {
+    filteredRates.forEach( (rv) => {
         score5 += Number(rv.scores.charAt(4));
         switch(Number(rv.scores.charAt(0))){
             case 0:
@@ -162,17 +162,8 @@ export default function TotalScoreList(props: Props){
         }
     })
     if(score5!==0) score5 /= filteredRates.length;
-    score5.toFixed(2);
-
-
-    let totalScore = 0;
-    filteredRates.map( (rv) => {
-        for(var i=0; i<5; i++){
-            totalScore+=Number(rv.scores.charAt(i));
-        }
-    })
-    if(totalScore!==0) totalScore /= 5*filteredRates.length;
-    totalScore.toFixed(2);
+    score5 = Math.round(score5*100)*0.01
+    //score5 = parseFloat(Math.round((score5 * 100) / 100).toFixed(2));
 
     let totalScores = [
         {id: 1, title: "맛 만족도  ",   score: score1 },
@@ -182,14 +173,10 @@ export default function TotalScoreList(props: Props){
         {id: 5, title: question5,       score: score5  },
     ];
 
-
-
-    
-    
     return (
         <div className="TotalScoreList"> 
             <div className='title'>전체 평점 및 항목별 평점</div>
-                <div className='total'>총점 {totalScore}</div>
+                <div className='total'>총점 {props.product.averageScore}</div>
                     <div className='scores'>
                         {totalScores.map( (ts) => {
                             return (
