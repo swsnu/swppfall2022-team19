@@ -15,7 +15,7 @@ type Props = {
 
 const DonutScore = (props: Props) => {
     const { scoreCnt, legendCheck } = props;
-
+    console.log(scoreCnt);
     let data = [
         {
             "id": "0점",
@@ -93,7 +93,7 @@ const DonutScore = (props: Props) => {
             }}
 
 
-            legends={props.legendCheck ? [
+            legends={legendCheck ? [
                 {
                     anchor: 'bottom',
                     direction: 'row',

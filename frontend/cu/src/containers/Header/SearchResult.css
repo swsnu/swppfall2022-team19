@@ -1,3 +1,4 @@
+/*
 .productBlocks{
     display: flex;
     justify-content: center;  
@@ -35,4 +36,5 @@
 @media (hover: hover) and (min-width: 700px){
 .animated-title .content {-webkit-transform: translateY(calc(100% - 8rem)); 
     transform: translateY(calc(100% - 8rem));}
-    }
+}
+*/
