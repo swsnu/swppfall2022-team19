@@ -4,6 +4,10 @@ FROM snuspl/swpp:practice11
 VOLUME /app
 WORKDIR /app
 
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+
 COPY . .
 
 # Environment variables for django deployment
@@ -16,4 +20,4 @@ ENV CSRF_COOKIE_SECURE=True
 ENV SECURE_HSTS_INCLUDE_SUBDOMAINS=True
 ENV SECURE_HSTS_PRELOAD=True
 
-ENTRYPOINT ./run_backend.sh
+ENTRYPOINT sh ./run_backend.sh
