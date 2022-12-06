@@ -1,9 +1,8 @@
-import { useState, useEffect, useLayoutEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useLayoutEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { loginUser, getRequestUserAtLogin, getUsers, selectUser } from '../../store/slices/User';
-import { RootState } from "../../store";
+import { loginUser, getRequestUserAtLogin, getUsers } from '../../store/slices/User';
 import './Login.css';
 
 export default function Login() {
@@ -12,11 +11,6 @@ export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [submitted, setSubmitted] = useState<boolean>(false);
-
-
-  const users = useSelector((state: RootState) => state.user.users);
-  const userState = useSelector((state: RootState) => state.user.selectedUser?.loginState);
-  const selectedUserState = useSelector((state: RootState) => state.user.selectedUser);
 
   const logo = require('../../Categoryicon/Logo.png')
 
@@ -43,39 +37,52 @@ export default function Login() {
   if (submitted) {
     window.location.replace('/home');
     return null;
-    //return <Navigate to="/home" />; // to home, temp hero
+    // 테스트 각주 return <Navigate to="/home" />;
   } else {
     return (
       <div className="Login">
-        <img className="CenterLogo" src={logo} alt="homeLogo" />
-        <div className="IDPassword">
-          <h1>로그인</h1>
-          <div className="IDText">
-
-            <label className="signinText">아  이  디  </label>
-            <input className="inputID"
-              type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
+        <div className="loginWholeWrap">
+          <div className="LoginLogoBox">
+            <img className="CenterLogo" src={logo} alt="homeLogo" />
           </div>
 
-          <div className="PassText">
-            <label className="signinText">비밀번호</label>
-            <input className="inputPassword"
-              type="text"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
+
+          <div className="IDPassword">
+            <div className="IDBox">
+              <div className="spanIDDiv">
+                <span className="spanID">아이디</span>
+              </div>
+
+              <input className="inputID"
+                type="text"
+                value={username}
+                placeholder="아이디를 입력해주세요"
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </div>
+
+            <div className="IDBox">
+              <div className="spanIDDiv">
+                <span className="spanID">비밀번호</span>
+              </div>
+              <input className="inputID"
+                type="text"
+                value={password}
+                placeholder="비밀번호를 입력해주세요"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
+
+          </div>
+
+          <div className="buttonBox">
+            <button onClick={() => loginUserHandler()}> 로그인 </button>
+            <button onClick={() => clickCreateHandler()}> 회원가입 </button>
           </div>
 
         </div>
 
-        {<button onClick={() => loginUserHandler()}>Login</button>}
-        <button onClick={() => clickCreateHandler()}>회원가입</button>
       </div>
-
-
 
     );
   }
