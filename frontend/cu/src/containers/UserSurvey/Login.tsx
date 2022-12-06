@@ -66,7 +66,7 @@ export default function Login() {
                 <span className="spanID">비밀번호</span>
               </div>
               <input className="inputID"
-                type="text"
+                type="password"
                 value={password}
                 placeholder="비밀번호를 입력해주세요"
                 onChange={(event) => setPassword(event.target.value)}
