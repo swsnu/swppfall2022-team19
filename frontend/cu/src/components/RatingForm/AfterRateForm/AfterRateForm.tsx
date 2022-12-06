@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from '../../../store';
 import { createRate, deleteRate, fetchRates, RateType, selectRate } from '../../../store/slices/rate';
 import { UserType } from '../../../store/slices/User';
-import { ProductType } from '../../../store/slices/product';
+import { fetchProduct, ProductType } from '../../../store/slices/product';
 
 interface Props {
     user: UserType,
@@ -35,6 +35,8 @@ function AfterRateForm(props: Props) {
         await dispatch(deleteRate(props.rate.id!))
         props.updateState1(false);
         props.updateState2(false);
+        dispatch(fetchProduct(props.product.id));
+        dispatch(fetchRates());
     }
 
     return (
