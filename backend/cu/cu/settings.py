@@ -23,7 +23,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', secret_key_default)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0', 'localhost', '13.125.244.234', 'ec2-13-125-244-234.ap-northeast-2.compute.amazonaws.com']
+ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0', 'localhost', '13.125.244.234', 'ec2-13-125-244-234.ap-northeast-2.compute.amazonaws.com', 'letmecu.site', '.letmecu.site']
 #ALLOWED_HOSTS = ['*']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')                      
