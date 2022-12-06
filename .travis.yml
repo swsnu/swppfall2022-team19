@@ -24,7 +24,6 @@ jobs:
         - python -m pip install Pillow
         - python -m pip install django-cors-headers
         - pip install djangorestframework
-        - pip install djangorestframework-simplejwt
         - yarn global add coveralls
         - gem install coveralls-lcov
         - cd frontend
