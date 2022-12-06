@@ -1,51 +1,89 @@
 /* 
     Survey와 Signup
 */
-
-
-.signUpAndSurvey{
-    background-color: white;
-    margin: 30px 50px 50px 30px;
-    padding: 20px 30px 30px 20px;
+.SS_maintitle{
     text-align: center;
-
-    
-    
+    margin: 5px 0 17px 0;
 }
 
 .SignupBox{
-    background-color: white;
-    padding: 10px 15px;
-    
-    
+    width: 100%;
 }
 
+.signUpAndSurvey{
+    height: 150vh;
+    display: flex;
+    background-color: rgba(222, 222, 222, 0.909);
+}
+.signUpAndSurveyWrap{
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 120vh;
+    margin: 7vh auto;
+    padding: 3vh 51px;
+    min-width: 300px;
+    background-color: white;
+    border-radius: 20px;
+}
+.signupBox{
+    width: 100%;
+}
+.labelID{
+    width: 30%;
+    margin-right: 10px;
+}
+.inputID_SS{
+    height: 32px;
+    /* Login.css .inputID */
+    width: 100%;
+   
+    padding: 0 10px;
+    font-size: 11px;
+    line-height: 34px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 30px;
+}
+.signupIDBox{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    height: 9vh;
+    justify-content: space-between;
+}
+
+.introBox>h3{
+    text-align: center;
+}
+
+
 .SurveyBox{
-    width: 40%;
-    height: 40%;
+    width: 100%;
+    height: 60%;
     background-color: white;
     padding: 20px 30px;
-    margin: 20px 30px;
+    margin: 0 30px 0px 30px;
     
 }
 
 
 .SelectBox{
     margin: 0 auto;
-    text-align:center;
     align-items: center;
 }
 
 .introBox{
-    margin: 0 15px;
+    
     display: flex;
     flex-direction: column;
 
 }
 
-.questionBox{
-    margin: 5px auto;
-}
 
 .Survey{
     width: 500px;
@@ -53,9 +91,35 @@
 }
 
 .submitButton{
-    padding: 10px auto;
+
     width: 100%;
-    height: 40px;
+    height: 42px;
     margin: 24px 0;
-    background-color: gainsboro;
+
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+    background: linear-gradient(to left, rgb(173, 231, 146), rgb(110, 204, 175));
+    color: white;
+    font-size: 15px;
+}
+.questionBox{
+    margin: 15px auto;
+}
+
+.questionBox>h5{
+    margin: 0 0 10px 0;
+}
+.questionBox>div>div{
+    /* border-radius: 20px; 
+    linear-gradient(to left, rgb(102 50 132), rgb(239 255 171));
+    */
+    border-radius: 20px;
+}
+
+.questionBox>div>div>div{
+    font-size: 12px;
+}
+.css-1p3m7a8-multiValue{
+    border-radius: 11px;
 }
