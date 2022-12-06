@@ -23,12 +23,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', secret_key_default)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0', 'localhost', '13.125.244.234', 'ec2-13-125-244-234.ap-northeast-2.compute.amazonaws.com', 'letmecu.site', '.letmecu.site']
+ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0', 'localhost', '3.35.65.1', 'ec2-3-35-65-1.ap-northeast-2.compute.amazonaws.com', 'letmecu.site']
 #ALLOWED_HOSTS = ['*']
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')                      
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')                      
 SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', 31536000))
-SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False') == 'True'                          # default: False
+# SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False') == 'True'                          # default: False
 SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False') == 'True'                      # default: False
 CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'False') == 'True'                            # default: False
 SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get('SECURE_HSTS_INCLUDE_SUBDOMAINS', 'False') == 'True'    # default: False
@@ -88,6 +88,7 @@ WSGI_APPLICATION = 'cu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': '/db/db.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
@@ -127,7 +128,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -135,19 +136,19 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CSRF 
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = (
-     'http://ec2-13-125-244-234.ap-northeast-2.compute.amazonaws.com:3000',
-     'http://13.125.244.234:3000',
-     'https://ec2-13-125-244-234.ap-northeast-2.compute.amazonaws.com:3000',
-     'https://13.125.244.234:3000',
+CSRF_TRUSTED_ORIGINS = [
+     'http://ec2-3-35-65-1.ap-northeast-2.compute.amazonaws.com',
+     'http://3.35.65.1',
+     'https://ec2-3-35-65-1.ap-northeast-2.compute.amazonaws.com',
+     'https://3.35.65.1',
      'http://letmecu.site',
      'https://letmecu.site',
      
- )
+]
 
 # CORS_ORIGIN_WHITELIST = (
 #    'http://ec2-13-124-241-236.ap-northeast-2.compute.amazonaws.com:3000',
@@ -156,26 +157,26 @@ CSRF_TRUSTED_ORIGINS = (
 #     'https://13.124.241.236:3000',
 # )
 
-CORS_ALLOW_HEADERS = (
-    'access-control-allow-credentials',
-    'access-control-allow-origin',
-    'access-control-request-method',
-    'access-control-request-headers',
-    'accept',
-    'accept-encoding',
-    'accept-language',
-    'authorization',
-    'connection',
-    'content-type',
-    'dnt',
-    'credentials',
-    'host',
-    'origin',
-    'user-agent',
-    'X-CSRFToken',
-    'csrftoken',
-    'x-requested-with',
-)
+# CORS_ALLOW_HEADERS = (
+#     'access-control-allow-credentials',
+#     'access-control-allow-origin',
+#     'access-control-request-method',
+#     'access-control-request-headers',
+#     'accept',
+#     'accept-encoding',
+#     'accept-language',
+#     'authorization',
+#     'connection',
+#     'content-type',
+#     'dnt',
+#     'credentials',
+#     'host',
+#     'origin',
+#     'user-agent',
+#     'X-CSRFToken',
+#     'csrftoken',
+#     'x-requested-with',
+# )
 # Added - Custom User model
 AUTH_USER_MODEL = 'user.User'
 
@@ -188,16 +189,16 @@ os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'
 
 
 # pip install djangorestframework-simplejwt
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
+# }
 
 '''
 JWT_AUTH = {
