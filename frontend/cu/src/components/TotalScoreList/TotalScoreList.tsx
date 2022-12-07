@@ -173,26 +173,46 @@ export default function TotalScoreList(props: Props){
         {id: 5, title: question5,       score: score5  },
     ];
 
+    let totalAverageScore = props.product.averageScore;
+
     return (
         <div className="TotalScoreList"> 
             <div className='title'>전체 평점 및 항목별 평점</div>
-                <div className='total'>총점 {props.product.averageScore}</div>
-                    <div className='scores'>
-                        {totalScores.map( (ts) => {
-                            return (
-                            <TotalScore key={ts.id}
-                                title={ts.title}
-                                score={ts.score}
-                            />
-                        );})}
+                
+                <div className='total'>
+                    <div className='total_number'>
+                        { props.product.averageScore} 
                     </div>
-                    <div className="DonutTest">
+                    <div className='total_star'>
+                        {totalAverageScore===5? "★★★★★": totalAverageScore>=4? "★★★★": totalAverageScore>=3? "★★★": totalAverageScore>=2? "★★": totalAverageScore>=1? "★": ""}
+                    </div>
+                    <div className='not_yet_rated'>
+                        { filteredRates.length===0 && <div> 아직 평가되지 않은 제품입니다 </div>}
+                    </div>
+                </div>
+
+                <div className='scores'>
+                    {totalScores.map( (ts) => {
+                        return (<TotalScore key={ts.id} title={ts.title} score={ts.score}/>);
+                    })}
+                </div>
+                <div className="DonutTest">
+                    <div className="score1">
                         <DonutScore scoreCnt={scoreCnt1} legendCheck={true} />
+                    </div>
+                    <div className="score2">
                         <DonutScore scoreCnt={scoreCnt2} legendCheck={false} />
+                    </div>
+                    <div className="score3">
                         <DonutScore scoreCnt={scoreCnt3} legendCheck={false} />
+                    </div>
+                    <div className="score4">
                         <DonutScore scoreCnt={scoreCnt4} legendCheck={false} />
+                    </div>
+                    <div className="score5">
                         <DonutScore scoreCnt={scoreCnt5} legendCheck={false} />
                     </div>
+                </div>
         </div> 
     )
 }

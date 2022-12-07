@@ -1,119 +1,129 @@
+*{
+  font-family: "Pretendard-Regular";
+}
+
+
 .ReviewList {
-  background: white;
   width: 1100px;
-  box-shadow: 0 3px 9px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
+  
   margin: auto; 
   margin-bottom: 5rem;
-  border: 3px solid #9DC92A;
-  border-radius: 20px;
+  
+  background: white;
+  border-bottom: 5px solid #f1f3f5;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;  
+ 
 }
 
-.ReviewList .likeButton {
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  margin-left: 32rem;
-  font-weight: 400;
-  background: rgb(246, 249, 224);
-  color: black;
-  border-radius: 10px;
-}
-
-.ReviewList .recentButton {
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-left: 2rem;
-  background: rgb(246, 249, 224);
-  color: black;
-  border-radius: 10px;
-}
-
-.ReviewList .pictureButton {
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-left: 2rem;
-  background: rgb(246, 249, 224);
-  color: black;
-  border-radius: 10px;
-}
-
-
-
-.ReviewList .title {
+/* 작성 날짜, 작성자, 평점, 한줄 평가, 좋아요*/
+.title {
   padding: 1rem;
-  font-size: 1.5rem;
-  text-align: left;
-  font-weight: 400;
-  background: yellowgreen;
-  color: black;
-  border-radius: 10px;
-}
-
-.ReviewList .fieldName {
-  padding: 1rem;
-  font-size: 1rem;
-  text-align: left;
   display: flex;
-  font-weight: 400;
-  background: rgb(246, 249, 224);
-  color: black;
-  border-radius: 20px;
+  justify-content: space-between;
 
+  font-weight: bold;
+  text-align: left;
+
+  border: 3px solid #9DC92A;
+  color: black;
 }
 
-.ReviewList .fieldName_date{
-  padding: 0rem;
+
+/*sorting buttons*/
+.sorting_buttons{
+  margin-right: 1.5rem;
+}
+
+.title button{
+  padding: 0 20px;
+  cursor: pointer;
+  
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.title button a{
+  color: black;
+  transition: 0.3s ease-in-out;
+}
+
+.title button a:hover {
+  color: yellowgreen;
+  transition: 0.3s ease-in-out;
+}
+
+
+/* 작성 날짜, 작성자, 평점, 한줄평, 좋아요*/
+.fields {
+  padding: 1rem;
+  display: flex;
+
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+  
+  border: rgb(246, 249, 224);
+  border-bottom: 7px solid #f1f3f5;
+  color: black;
+}
+
+.field_date{
   margin-left: 0.8rem;
-  font-size: 1.5rem;
+
   text-align: left;
   font-weight: 400;
-  background: rgb(246, 249, 224);
+
   color: black;
 }
-.ReviewList .fieldName_user{
-  padding: 0rem;
-  margin-left: 2.1rem;
-  font-size: 1.5rem;
+
+.field_user{
+  margin-left: 5.7rem;
+
   text-align: left;
   font-weight: 400;
-  background: rgb(246, 249, 224);
+
   color: black;
 }
 
-.ReviewList .fieldName_totalScore {
-  padding: 0rem;
-  margin-left: 3.4rem;
-  font-size: 1.5rem;
+.field_totalScore {
+  margin-left: 6.6rem;
+
   font-weight: 400;
-  background: rgb(246, 249, 224);
+
   color: black;
 }
 
-.ReviewList .fieldName_comment {
-  padding: 0rem;
-  margin-left:12rem;
-  font-size: 1.5rem;
+.field_comment {
+  margin-left: 7.4rem;
+
   font-weight: 400;
-  background: rgb(246, 249, 224);
+
   color: black;
 }
 
-.ReviewList .fieldName_like {
-  padding: 0rem;
-  margin-left: 21rem;
-  font-size: 1.5rem;
+.field_like {
+  margin-left: 27.8rem;
+
   text-align: right;
   font-weight: 400;
-  background: rgb(246, 249, 224);
+
   color: black;
 }
 
-
-.ReviewList .no_review{
+/* 첫 사진 리뷰를 남겨주세요*/
+.no_picture_review{
   padding: 2rem;
   margin-left:2rem;
-  font-size: 1.5rem;
+
+  font-weight: 400;
+  color: black;
+}
+
+/* 첫 리뷰를 남겨주세요*/
+.no_review{
+  padding: 2rem;
+  margin-left:2rem;
+
   font-weight: 400;
   color: black;
 }

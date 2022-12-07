@@ -1,7 +1,7 @@
 import "./Review.css"
 
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useLayoutEffect, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { RateType, fetchUserLikedRate, selectRate , updateRate} from "../../store/slices/rate";
 import { ProductType } from "../../store/slices/product";
 import { UserType } from "../../store/slices/User";
@@ -18,6 +18,11 @@ const Review = (props: IProps) => {
     const dispatch = useDispatch<AppDispatch>();
     const [liked, setLiked] = useState<boolean>(false);
     const [likedCount, setLikedCount] = useState(props.rate.likedCount);
+    const [isOpen, setPicture] = useState(false);  // 메뉴의 초기값을 false로 설정
+  
+    const togglePicture = () => {
+        setPicture(isOpen => !isOpen); // on,off
+    }                      
 
     useEffect(() => {
         dispatch(fetchUserLikedRate({user_id: props.user.id})) 
@@ -77,8 +82,10 @@ const Review = (props: IProps) => {
 
     return (
         <article className='Review'>
-            <div className='review_picutre_except'>
+            <div className='review_picture_except'>
+
                 <div className='review_button_except'>
+
                     <div className="review_date"> { props.rate.created_at.toString().split('T')[0].replaceAll("-",".")} </div>
                     <div className="review_username">{props.rate.username}</div>
                     <div className="review_totalScore" style={{color: "green"}}>
@@ -86,14 +93,17 @@ const Review = (props: IProps) => {
                     </div>
                     <div className="review_comment">{props.rate?.comment}</div>
                 </div>
+                
                 <div className="like_set">
-                        {likedCount}
+                        <div className="toggle_picture">  { props.rate.picture != null && <button className="toggle_button" onClick={()=>togglePicture()}> 사진 보기</button>} </div>
+                        <div className="likedCount"> {likedCount} </div>
                     <div className="like_button" onClick={() =>likeClick()}>  
                         {liked? (<div>❤️</div>): (<div>🤍</div>)}
                     </div>
                 </div>
+
             </div>
-            <img className='review_picture' src={props.rate.picture} width={300} />
+                { isOpen && <img className='review_picture' src={props.rate.picture} width="300px"></img> }
         </article>
     );
 };
