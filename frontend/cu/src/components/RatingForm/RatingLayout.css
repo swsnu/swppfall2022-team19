@@ -25,7 +25,7 @@ body {
 }
 
 
-/* 리뷰작성하기 버튼*/
+/* 내 평가 남기러 가기 버튼*/
 .rate_button {
     padding: 1rem 1.2rem;
 
@@ -41,20 +41,10 @@ body {
   
 }
 .rate_button:hover {
-    background: #9DC92A;
+    background: #b7d5ac;
    color: black;
  }
-.rate_button:before {
-     position: absolute;
-     content: '';
-     display: inline-block;
-     top: -180px;
-     left: 0;
-     width: 30px;
-     height: 100%;
-     background-color: #fff;
-     animation: shiny-btn1 3s ease-in-out infinite;
- }
+
  .rate_button:active{
    box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
                -4px -4px 6px 0 rgba(116, 125, 136, .2), 

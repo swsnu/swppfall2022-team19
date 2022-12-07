@@ -1,52 +1,63 @@
-/*display: flex;
-flex-direction: column;
-*/
-
 .surveyModal{
-    margin-bottom: 5rem;
-    margin-left: 30rem;
-    margin-right: 30rem;
-    
-    box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;  
-    border-radius: 50px;
+    width: 100vw;
+    height: 100vh;
+    display: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .SelectBoxModal{
-    width: 35rem;
-    margin: 0 auto;
-    text-align:center;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    height: 470px;
+    margin: auto auto;
+    padding: 25vh 100px;
+    background-color: white;    
 }
 
 /* 사용자 정보를 입력하고 맞춤화된 제품을 추천받자! */
 .introBoxModal{
     margin: 0 15px;
-    margin-top:4rem;
-
     font-size: 1.4rem;
 }
 
-.introBoxModal h4{
-    margin-top:3rem;
-}
 
 /* 질문 */
 .questionBoxModal{
-    margin: 40px auto;
+    margin-top: 4rem;
     font-size: 1.4rem;
-    max-width: 22rem;
+    min-width: 300px;
 }
 
 /* 선택 박스 */
 .questionBoxModal h6{
     margin: 15px;
-    margin-bottom:4rem;
+    margin-bottom: 0.1rem;
+
 }
 
+
 .closeButton{
-    padding: 10px auto;
-    width: 30%;
+    padding: 20px 20px;
+    width: 50%;
     height: 40px;
+    margin-top: 5rem;
     margin-bottom: 5rem;
+    font-weight: bold;
+
+    border: 2px solid rgba(0, 0, 0, 0.23);
     background-color: gainsboro;
+}
+
+.closeButton:hover{
+    background-color: #b7d5ac;
+    box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
 }

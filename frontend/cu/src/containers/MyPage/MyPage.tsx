@@ -2,7 +2,7 @@ import Header from "../Header/Header"
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
-import { ProductType, selectProduct } from "../../store/slices/product";
+import product, { ProductType, selectProduct } from "../../store/slices/product";
 
 import { fetchRates, fetchUserLikedRate, fetchUserRate, RateType, selectRate } from '../../store/slices/rate';
 import { useEffect, useState } from "react";
@@ -12,14 +12,8 @@ import ProductBlock from "../../components/ProductBlock/ProductBlock";
 
 import CommentBlock from "../../components/Comment/CommentBlock";
 
-
-
-
-
 import "./MyPage.css"
 import { selectUser } from "../../store/slices/User";
-
-
 
 const MyPage = () => {
 
@@ -70,15 +64,11 @@ const MyPage = () => {
     }
 
     return (
-        <div className="MyPage">
+        <div className="MyPage">       
             <Header />
-            <button className="modalOpenButton" onClick={onOpenModal}>사용자 정보 수정하기</button> {
-                modalOn ? <SurveyModal setModalOn={setModalOn} /> : ''
-            }
-
-
+            <div className='MyPageTitle'>{selectedUserState.selectedUser?.username}님의 마이페이지</div>
         <div className = "ratedProducts">
-            <h1>내가 평가한 제품들</h1>
+            <h1>{selectedUserState.selectedUser?.username}님이 평가한 제품({products.length})</h1>
 
             <div className= "productBlocks">
                 {products.map(product => (
@@ -93,13 +83,14 @@ const MyPage = () => {
                                 averageScore = {product.averageScore}
                                 clickProduct ={() => navigate(`/ProductDetail/${product.id}`)}
                             />
-                            </div>
+                        </div>
                     ))}
-            </div> 
+            </div>
+            { products.length===0 && <div className='alert_no_ratedProduct'>평가한 제품이 없습니다</div>}
         </div>
 
-        <div className = "Comments">
-                <h1> 내가 좋아한 댓글 </h1>
+        <div className = "likedComments">
+                <h1>{selectedUserState.selectedUser?.username}님이 좋아한 리뷰({comments.length}) </h1>
                 <div className = "Comments" > 
                 {comments.map(comment => (
                     <CommentBlock 
@@ -109,9 +100,12 @@ const MyPage = () => {
                     ></CommentBlock>
                 ))}
                 </div>
-             </div>
-
-
+                { comments.length===0 && <div className='alert_no_likedComment'>좋아요한 리뷰가 없습니다</div>}
+        </div>
+            <div className='buttonSet'>
+            <button className="modalOpenButton" onClick={onOpenModal}>사용자 정보 수정하기</button> 
+            {modalOn ? <SurveyModal setModalOn={setModalOn} /> : ''}
+            </div>
         </div>
     )
 }

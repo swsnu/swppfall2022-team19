@@ -88,9 +88,9 @@ function EditRateForm(props: Props) {
         <div>
             <h2 className="rating_heading"> 리뷰 수정하기</h2>
                 <div className='rating_box'>
-                    <div className='q1'>맛 만족도 {<HeartRating score={score1} updateScore={updateScore1} />} </div>
-                    <div className='q2'>가성비 {<HeartRating score={score2} updateScore={updateScore2} />}</div>
-                    <div className='q3'>재구매 의사 {<HeartRating score={score3} updateScore={updateScore3} />}</div>
+                    <div className='q1'>맛이 만족스럽나요? {<HeartRating score={score1} updateScore={updateScore1} />} </div>
+                    <div className='q2'>가성비가 좋은가요? {<HeartRating score={score2} updateScore={updateScore2} />}</div>
+                    <div className='q3'>재구매 의사가 있나요? {<HeartRating score={score3} updateScore={updateScore3} />}</div>
                     <div className='q4'>
                         {props.question4}
                         {<HeartRating score={score4} updateScore={updateScore4} />}
