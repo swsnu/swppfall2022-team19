@@ -113,7 +113,7 @@ function Recommendation() {
 
         product && products.push(product)
 
-        if (products.length == 5) break;
+        if (products.length == 4) break;
     }
 
 

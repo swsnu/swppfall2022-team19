@@ -54,7 +54,7 @@ export default function TotalScoreList(props: Props) {
         }
     })
     if (score1 !== 0) score1 /= filteredRates.length;
-    score1 = Math.round(score1 * 100) * 0.01
+    score1 = Number(score1.toFixed(2))
 
     let score2 = 0;
     let scoreCnt2 = [0, 0, 0, 0, 0, 0];
@@ -81,7 +81,7 @@ export default function TotalScoreList(props: Props) {
         }
     })
     if (score2 !== 0) score2 /= filteredRates.length;
-    score2 = Math.round(score2 * 100) * 0.01
+    score2 = Number(score2.toFixed(2))
 
     let score3 = 0;
     let scoreCnt3 = [0, 0, 0, 0, 0, 0];
@@ -108,7 +108,7 @@ export default function TotalScoreList(props: Props) {
         }
     })
     if (score3 !== 0) score3 /= filteredRates.length;
-    score3 = Math.round(score3 * 100) * 0.01
+    score3 = Number(score3.toFixed(2))
 
     let score4 = 0;
     let scoreCnt4 = [0, 0, 0, 0, 0, 0];
@@ -135,7 +135,7 @@ export default function TotalScoreList(props: Props) {
         }
     })
     if (score4 !== 0) score4 /= filteredRates.length;
-    score4 = Math.round(score4 * 100) * 0.01
+    score4 = Number(score4.toFixed(2))
 
     let score5 = 0;
     let scoreCnt5 = [0, 0, 0, 0, 0, 0];
@@ -162,7 +162,7 @@ export default function TotalScoreList(props: Props) {
         }
     })
     if (score5 !== 0) score5 /= filteredRates.length;
-    score5 = Math.round(score5 * 100) * 0.01
+    score5 = Number(score5.toFixed(2))
     //score5 = parseFloat(Math.round((score5 * 100) / 100).toFixed(2));
 
     let totalScores = [
