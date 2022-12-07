@@ -43,9 +43,9 @@ function AfterRateForm(props: Props) {
             <div>
                 <h2 className="rating_heading"> 내 리뷰</h2>
                 <div className='rating_box'>
-                <div className='q1'>맛 만족도 {<FixedHeartRating score={score1!} />} </div>
-                <div className='q2'>가성비 {<FixedHeartRating score={score2!} />}</div>
-                <div className='q3'>재구매 의사 {<FixedHeartRating score={score3!} />}</div>
+                <div className='q1'>맛이 만족스럽나요? {<FixedHeartRating score={score1!} />} </div>
+                <div className='q2'>가성비가 좋은가요? {<FixedHeartRating score={score2!} />}</div>
+                <div className='q3'>재구매 의사가 있나요? {<FixedHeartRating score={score3!} />}</div>
                 <div className='q4'>
                     {props.question4}
                     {<FixedHeartRating score={score4!} />}

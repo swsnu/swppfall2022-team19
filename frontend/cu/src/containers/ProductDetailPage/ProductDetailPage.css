@@ -4,9 +4,17 @@
 
 .productRate{
     display: flex;
-    justify-content: center;
-    margin-top: 5rem;
+    justify-content: space-evenly;
+    margin-top: 5rem; 
 }
 
-.scoresReviews{
+.productDetailPage .productBlock{
+    margin-left: 3rem;
+    margin-top: 10rem;
+    width: 120%;
+    height: 50%
 }
+
+
+
+

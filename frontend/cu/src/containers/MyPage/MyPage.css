@@ -1,5 +1,96 @@
-.MyPage {
-
-    text-align: center;
-
+.MyPage{
+    display: row;
 }
+
+/* oo님의 마이페이지 */
+.MyPageTitle{
+    padding:3rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    background-color: #b7d5ac;
+    box-shadow: 2px 5px 8px 2px #dadce0;
+    font-size:2rem;
+    font-weight: bold;
+}
+
+
+/* oo님이 평가한 제품(N)*/
+.ratedProducts{
+    margin-top: 3rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    border-bottom: 5px solid #f1f3f5;
+    box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;  
+
+    font-size: 0.8rem;
+}
+.ratedProducts h1{
+    background-color: #f1f3f5;
+    padding: 2rem;
+}
+.productBlocks{
+    margin-bottom: 2rem;
+}
+.alert_no_ratedProduct{
+    margin-top: 3rem;
+    margin-left: 5rem;
+    margin-bottom: 3rem; 
+    font-size: 1rem;
+}
+
+/* oo님이 좋아요한 리뷰(N)*/
+.likedComments{
+    margin-top: 3rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    border-bottom: 5px solid #f1f3f5;
+    box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;  
+    font-size: 0.8rem;
+}
+.likedComments h1{
+    background-color: #f1f3f5;
+    padding: 2rem;
+}
+.Comments{
+    margin-bottom: 2rem;
+}
+.alert_no_likedComment{
+    margin-top: 3rem;
+    margin-left: 5rem;  
+    margin-bottom: 3rem; 
+    font-size: 1rem;
+}
+
+
+
+/* 사용자 정보 수정하기 버튼 */
+.buttonSet{
+    width: 100%;
+    display: row;
+    justify-content: center;
+    margin-top:5rem;
+}
+.modalOpenButton{
+    align-items: center;
+    padding:1rem;
+    width: 20%;
+    margin-top: 5rem;
+    margin-left: 5rem;
+    margin-bottom: 5rem;
+    
+    font-size:1rem;
+    font-weight: bold;
+
+    border: 2px solid rgba(0, 0, 0, 0.23);
+}
+
+.modalOpenButton:hover{
+    background-color: #b7d5ac;
+    box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+}
+
+

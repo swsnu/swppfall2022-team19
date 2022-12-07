@@ -42,9 +42,9 @@ function ProductDetailPage() {
 
   return (
     <div className="productDetailPage">
-      <Header />
+      <Header/>
       <div className="productRate">
-        <div key={1}>
+          <div key={1}>
           {selectedProduct && (<ProductBlock
             product_id={selectedProduct?.id}
             name={selectedProduct?.name}
@@ -54,7 +54,7 @@ function ProductDetailPage() {
             newProduct={selectedProduct?.newProduct}
             averageScore={selectedProduct?.averageScore}
           />)}
-        </div>
+          </div>
         <div key={2}>
           {
             userState.selectedUser && selectedProduct &&

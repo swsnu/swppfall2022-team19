@@ -152,10 +152,10 @@ const SurveyModal = (props: Props) => {
                         <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
                         <h6><Select className="questionDropDown" defaultValue={[questionList[question - 1]]} options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} /></h6>
                     </div>
-
+                    <button className="closeButton" onClick={() => { putSurveyHandler(); }}>수정하기</button>
+            
                 </div>
-                <button className="closeButton" onClick={() => { putSurveyHandler(); }}>수정하기</button>
-            </div>
+                </div>
         </div>
     )
 
