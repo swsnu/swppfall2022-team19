@@ -1,21 +1,16 @@
 .TotalScore {
+  width: 20%;
   padding: 0.5rem;
   display: inline-flex;
-  margin-bottom: 1.3rem;
+  justify-content: center;
 }
   
 .totalScoreTitle{
-  padding: 0.1rem;
-  margin-left: 2.1rem;
-
   font-weight: 400;
 }
 
 .totalScoreScore{
-  padding: 0.1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-
+  padding: 0 0 0 5px;
   font-weight: 400;
 }
   
