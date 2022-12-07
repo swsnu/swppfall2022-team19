@@ -1,0 +1,52 @@
+/*display: flex;
+flex-direction: column;
+*/
+
+.surveyModal{
+    margin-bottom: 5rem;
+    margin-left: 30rem;
+    margin-right: 30rem;
+    
+    box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;  
+    border-radius: 50px;
+}
+
+.SelectBoxModal{
+    width: 35rem;
+    margin: 0 auto;
+    text-align:center;
+    align-items: center;
+}
+
+/* 사용자 정보를 입력하고 맞춤화된 제품을 추천받자! */
+.introBoxModal{
+    margin: 0 15px;
+    margin-top:4rem;
+
+    font-size: 1.4rem;
+}
+
+.introBoxModal h4{
+    margin-top:3rem;
+}
+
+/* 질문 */
+.questionBoxModal{
+    margin: 40px auto;
+    font-size: 1.4rem;
+    max-width: 22rem;
+}
+
+/* 선택 박스 */
+.questionBoxModal h6{
+    margin: 15px;
+    margin-bottom:4rem;
+}
+
+.closeButton{
+    padding: 10px auto;
+    width: 30%;
+    height: 40px;
+    margin-bottom: 5rem;
+    background-color: gainsboro;
+}
