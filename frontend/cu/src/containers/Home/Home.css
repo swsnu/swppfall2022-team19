@@ -1,65 +1,57 @@
-/*
+.content1_random{
+    padding: 8vh 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #f3f9f0;
+    overflow-x: auto;
+}
 
-.productBlocks{
-    
+.content_titleBox{
+    width: 10%;
+    min-width: 200px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.content_title{
+    font-size: 1.5em;
+}
+.content_title::after{
+    display: block;
+    content: '';
+    width: 45px;
+    height: 2px;
+    background: #707070;
+    margin: 18px 0;
+}
+
+.explain{
+    color: gray;
+    font-size: 15px;
+    margin-top: 3vh;
+    font-weight: 400;
+}
+
+.productBlocks4{
     display: grid;
-    width: max-content;
-    
-    padding: 3%;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    grid-gap: 1rem;
-    
-
-    
-    align-items: center;
-    
-
-}
-.BasicList {
-    text-align: center;
+    grid-template-columns: 220px 220px 220px 220px;
+    column-gap: 1vw;
+    row-gap: 40px;
+    grid-auto-rows: 350px;
+    justify-content: space-evenly;
 }
 
-
-.CenterLogo {
-margin-top: 50px;
-margin-bottom: 20px;
-display: inline-block;
-
-}
-
-.Home {
-    align-items: center;
-    text-align: center;
-    vertical-align:middle;
-}
-
-.titles {
-    margin: 10px;
-    color: white;
-
-}
-
-
-.animated-title {
-    background-color: rgb(157, 201, 42);
-    border:solid;
-    border-radius: 10px;
-    border-color:  rgb(157, 201, 42); 
+.productBlocks4>div{
     width: 100%;
-    height: 50px;
-    overflow-x: hidden; overflow-y: hidden; }
-/* .animated-title .titles {position: absolute;
-     white-space: nowrap;
-     
-     will-change: transform;
-     animation: marquee 20s linear infinite; }
-
-@keyframes marquee {
-  from { transform: translateX(1000%); }
-  to { transform: translateX(-500%); }
+    height:100%;
 }
-@media (hover: hover) and (min-width: 700px){
-.animated-title .content {-webkit-transform: translateY(calc(100% - 8rem)); 
-    transform: translateY(calc(100% - 8rem));}
-    } 
-*/
+
+/* content2_recommend */
+.content2_recommend{
+    padding: 8vh 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    overflow-x: auto;
+}
