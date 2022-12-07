@@ -7,8 +7,7 @@
   margin-bottom: 5rem;
 
   background: white;
-  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;  
- 
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;
 }
 
 .TotalScoreList title{
@@ -56,37 +55,42 @@
 }
 
 .scores {
+  font-size: 14px;  
+
+  display: flex;
   padding: 0rem;
-  margin-top:1rem;
-  margin-left: 1.3rem;
-
+  margin-top: 1rem;
   font-weight: 400;
-
   color: black;
   border-radius: 10px;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-/*
+/* For Donut */ 
+
 .DonutTest{
-  display:flex;
-}
-.score1{
-  height:5rem;
-}
-
-.score2{
-  height:5rem;
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.score3{
-  height:5rem;
+.donutscore{
+  width: 14%;
+  padding: 0% 1%;
+  height: 80%;
 }
 
-.score4{
-  height:5rem;
+.donutLegendBox{ 
+  width: 100%;
+  height: 9vh;
 }
 
-.score5{
-  height:5rem;
+.donutLegendImg{
+  display: block;
+  height: 100%;
+  margin: 0 auto;
 }
-*/

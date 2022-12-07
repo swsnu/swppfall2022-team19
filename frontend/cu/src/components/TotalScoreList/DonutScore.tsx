@@ -59,7 +59,7 @@ const DonutScore = (props: Props) => {
     return (
         <ResponsivePie
             data={data}
-            margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+            margin={{ top: 5, right: 10, bottom: 10, left: 10 }}
             startAngle={-180}
             innerRadius={0.5}
             activeOuterRadiusOffset={8}
@@ -77,7 +77,7 @@ const DonutScore = (props: Props) => {
             enableArcLinkLabels={false}
             arcLinkLabelsSkipAngle={10}
             arcLinkLabelsTextColor="#333333"
-            arcLinkLabelsDiagonalLength={15}
+            arcLinkLabelsDiagonalLength={3}
             arcLinkLabelsThickness={2}
             arcLinkLabelsColor={{ from: 'color' }}
             arcLabel="value"
@@ -99,9 +99,9 @@ const DonutScore = (props: Props) => {
                     direction: 'row',
                     justify: false,
                     translateX: 0,
-                    translateY: 56,
+                    translateY: 50,
                     itemsSpacing: 0,
-                    itemWidth: 100,
+                    itemWidth: 110,
                     itemHeight: 18,
                     itemTextColor: '#999',
                     itemDirection: 'left-to-right',
