@@ -1,42 +1,98 @@
 /*box-shadow: 0 3px 9px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);그림자 */ 
 
 .TotalScoreList {
-  background: white;
   width: 1100px;
   margin: auto; 
   margin-top: 5rem;
   margin-bottom: 5rem;
-  border: 3px solid #9DC92A;
-  border-radius: 20px;
-  box-shadow: 0 3px 9px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+  background: white;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;
 }
 
-.TotalScoreList .title {
+.TotalScoreList title{
   padding: 1rem;
-  font-size: 1.5rem;
+  
   text-align: left;
   font-weight: 400;
+  
   background:#9DC92A;
   color: black;
-  border-radius: 10px;
 }
 
 .TotalScoreList .total {
-  padding: 1rem;
+  display: flex;
+  border-bottom: 5px solid #f1f3f5;
+}
+
+.total_number {
+  padding: 2rem;
+  max-width: 0rem;
   margin-left: 2rem;
+
   font-size: 1.5rem;
   font-weight: 400;
+
   color: black;
   border-radius: 10px;
 }
 
-.TotalScoreList .scores {
-  padding: 1rem;
-  margin-left: 2rem;
+.not_yet_rated{
+  padding: 2rem;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.total_star {
+  padding: 2rem;
+
   font-size: 1.5rem;
   font-weight: 400;
-  color: black;
+
+  color: green;
   border-radius: 10px;
 }
 
+.scores {
+  font-size: 14px;  
 
+  display: flex;
+  padding: 0rem;
+  margin-top: 1rem;
+  font-weight: 400;
+  color: black;
+  border-radius: 10px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* For Donut */ 
+
+.DonutTest{
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.donutscore{
+  width: 14%;
+  padding: 0% 1%;
+  height: 80%;
+}
+
+.donutLegendBox{ 
+  width: 100%;
+  height: 9vh;
+  display: flex;
+  justify-content: center;
+}
+
+.dounutLegendImg{
+  display: block;
+  height: 100%;
+  margin: 0 auto;
+}

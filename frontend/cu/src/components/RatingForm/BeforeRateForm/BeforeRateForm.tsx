@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface Props {
     updateState2: (arg: boolean) => void
 }

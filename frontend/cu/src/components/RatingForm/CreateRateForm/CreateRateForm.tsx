@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import HeartRating from '../HeartRate/HeartRating'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppDispatch } from '../../../store';
 import { createRate, fetchRates } from '../../../store/slices/rate';
 import { UserType } from '../../../store/slices/User';
 import { fetchProduct, ProductType } from '../../../store/slices/product';
-
+import "../RatingLayout.css"
 
 interface Props {
     user: UserType,
@@ -79,34 +79,30 @@ function CreateRateForm(props: Props) {
 
     return (
         <div>
-            <div className='rate_box'>
-                <h2 className="rating_heading"> 리뷰 작성하기</h2>
-                <button id='button' onClick={() => onclickBackToRateHandler()}>작성 취소</button>
-                <button id='button' onClick={() => onclickSaveHandler()}>저장</button>
-                <br></br>
-                <div>맛 만족도 {<HeartRating score={score1} updateScore={updateScore1} />} </div>
-                <div>가성비 {<HeartRating score={score2} updateScore={updateScore2} />}</div>
-                <div>재구매 의사 {<HeartRating score={score3} updateScore={updateScore3} />}</div>
-                <div>
+            <h2 className="rating_heading"> 리뷰 작성하기</h2>
+            <div className='rating_box'>
+                <div className='q1'> 맛이 만족스럽나요? {<HeartRating score={score1} updateScore={updateScore1} />} </div>
+                <div className='q2'> 가성비가 좋은가요? {<HeartRating score={score2} updateScore={updateScore2} />}</div>
+                <div className='q3'> 재구매 의사가 있나요? {<HeartRating score={score3} updateScore={updateScore3} />}</div>
+                <div className='q4'> 
                     {props.question4}
                     {<HeartRating score={score4} updateScore={updateScore4} />}
                 </div>
-                <div>
+                <div className='q5'>
                     {props.question5}
                     {<HeartRating score={score5} updateScore={updateScore5} />}
                 </div>
                 <div className="comment">
-                    <label>한줄평</label>
-                    <textarea value={comment} onChange={(event) => setComment(event.target.value)} />
+                    <div>한줄 평가를 남겨주세요 </div>
+                    <input className="comment_box" value={comment} onChange={(event) => setComment(event.target.value)} />
                 </div>
                 <div className='picture'>
-                    <label>사진 </label>
-                    {image && (
-                        <div>
-                            <img alt='Image Not Found' width={'300px'} src={URL.createObjectURL(image)} />
-                        </div>
-                    )}
-                    <br />
+                    <div className='picture_first_row'>
+                    사진 첨부
+                    <button className='image_delete_button' onClick={() => onclickDeleteImageHandler()}>사진 삭제</button>
+                    </div>
+                    <div className ='image_input'>
+                    {image && (<img alt='Image Not Found' height={'180px'} width={'200px'} src={URL.createObjectURL(image)} />)}
                     <input
                         type='file'
                         accept="image/*"
@@ -115,8 +111,12 @@ function CreateRateForm(props: Props) {
                                 setImage(event.target?.files[0])
                             }
                         }}
-                    />
-                    <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
+                    />   
+                    </div>
+                </div> 
+                <div className="buttons">              
+                    <button className="create_cancel_button" onClick={() => onclickBackToRateHandler()}>취소 하기</button>
+                    <button className="create_button" onClick={() => onclickSaveHandler()}>등록 하기</button>
                 </div>
             </div>
         </div>

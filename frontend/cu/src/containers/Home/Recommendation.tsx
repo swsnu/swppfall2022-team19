@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
 import { fetchQueryProducts, fetchSearchProducts, ProductType, selectProduct } from "../../store/slices/product";
@@ -32,44 +32,44 @@ function Recommendation() {
     allUsers.forEach(element => {
         if (selectedUser && (element.id != selectedUser.id)) {
             recommendedUsers.push(element);
-        }        
+        }
     });
 
-    useEffect(()=> {
+    useEffect(() => {
 
-    allUsers.forEach(element => {
-        if (selectedUser && (element.id != selectedUser.id)) {
-            recommendedUsers.push(element);
-        }        
-    });
+        allUsers.forEach(element => {
+            if (selectedUser && (element.id != selectedUser.id)) {
+                recommendedUsers.push(element);
+            }
+        });
 
 
-        while(true) {
-    
+        while (true) {
+
             console.log("allUser: ", recommendedUsers)
-            let commonUser = selectedUser && recommendedUsers.filter( user => user.gender === selectedUser.gender )
+            let commonUser = selectedUser && recommendedUsers.filter(user => user.gender === selectedUser.gender)
 
-            if (commonUser && commonUser.length != 0 ) {
+            if (commonUser && commonUser.length != 0) {
                 recommendedUsers = commonUser
                 console.log("gender: ", commonUser)
-                commonUser = selectedUser && recommendedUsers.filter( user => user.age === selectedUser.age )
-                if (commonUser && commonUser.length != 0 ) {
+                commonUser = selectedUser && recommendedUsers.filter(user => user.age === selectedUser.age)
+                if (commonUser && commonUser.length != 0) {
                     recommendedUsers = commonUser
                     console.log("age: ", commonUser)
-                    commonUser = selectedUser && recommendedUsers.filter( user => user.question === selectedUser.question )
-                    if (commonUser && commonUser.length != 0 ) {
+                    commonUser = selectedUser && recommendedUsers.filter(user => user.question === selectedUser.question)
+                    if (commonUser && commonUser.length != 0) {
                         recommendedUsers = commonUser
                         console.log("question: ", commonUser)
-                        commonUser = selectedUser && recommendedUsers.filter( user => user.taste === selectedUser.taste )
-                        if (commonUser && commonUser.length != 0 ) {
+                        commonUser = selectedUser && recommendedUsers.filter(user => user.taste === selectedUser.taste)
+                        if (commonUser && commonUser.length != 0) {
                             recommendedUsers = commonUser // 4 match
                             console.log("taste: ", commonUser)
                             break;
                         } else break;
-                    } else break; 
+                    } else break;
                 } else break;
             } else break;
-            
+
         }
 
         // const showUser: number = Math.floor(Math.random() * recommendedUsers.length)
@@ -79,15 +79,17 @@ function Recommendation() {
         //  dispatch(fetchUserRate({user_id: recommendedUsers[showUser].id}))
         // }
 
-        
 
 
-    for(let index = 0; index < recommendedUsers.length; index ++) {
-        if( index == 0){
-            dispatch(fetchUserRate({user_id: recommendedUsers[index].id}))}
-        else {
-            dispatch(addUserRate({user_id: recommendedUsers[index].id}))}
-    }
+
+        for (let index = 0; index < recommendedUsers.length; index++) {
+            if (index == 0) {
+                dispatch(fetchUserRate({ user_id: recommendedUsers[index].id }))
+            }
+            else {
+                dispatch(addUserRate({ user_id: recommendedUsers[index].id }))
+            }
+        }
 
         console.log("Recommendation UseEffect")
     }, [selectedUser]
@@ -101,25 +103,25 @@ function Recommendation() {
 
     console.log("selectedRates.length: ", rates.selectedRates.length)
 
-    
+
 
     for (let index = 0; index < rates.selectedRates.length; index++) {
 
         const product = allProducts.products.find(product => product.id == rates.selectedRates[index].product_id);
 
-        if (product && products.find( org => org.id == product.id )) continue;
+        if (product && products.find(org => org.id == product.id)) continue;
 
         product && products.push(product)
 
-        if(products.length == 5) break;
+        if (products.length == 4) break;
     }
 
-        
 
-    
-    
 
-    const onclickProductHandler = (product: ProductType) =>{
+
+
+
+    const onclickProductHandler = (product: ProductType) => {
         navigate(`/ProductDetail/${product.id}`)
     }
 
@@ -128,20 +130,20 @@ function Recommendation() {
     return (
         <div className="RecommendationPage">
 
-            <div title = "productBlocks" className="productBlocks">
+            <div className="productBlocks4">
                 {products.map(product => (
                     <div key={product.id}>
                         <ProductBlock
-                            product_id = {product.id}
-                            name = {product.name}
-                            imageUrl = {product.imageUrl}
-                            details= {product.details}
-                            price = {product.price}
-                            newProduct = {product.newProduct}
-                            averageScore = {product.averageScore}
-                            clickProduct ={() => onclickProductHandler(product)}
+                            product_id={product.id}
+                            name={product.name}
+                            imageUrl={product.imageUrl}
+                            details={product.details}
+                            price={product.price}
+                            newProduct={product.newProduct}
+                            averageScore={product.averageScore}
+                            clickProduct={() => onclickProductHandler(product)}
                         />
-                        </div>
+                    </div>
                 ))}
             </div>
         </div>

@@ -17,8 +17,8 @@ from .models import User
 def token(request):
     if request.method == 'GET':  # 테스트 각주 if request.method == 'GET':
         return HttpResponse(status=204)
-    else:
-        return HttpResponseNotAllowed(['GET'])
+    # else:
+    #    return HttpResponseNotAllowed(['GET'])
     # else:
     #    return HttpResponse(status=403)
     # Check: CSRF-EXEMPT가 아니므로, 403 Forbidden Error가 뜸
@@ -164,16 +164,12 @@ def changeSurvey(request, user_id):
         question = req_data['question']
 
         selectedUser = get_object_or_404(User, id=user_id)  # user_id
-        if (request.user.id != numberId):
-            return HttpResponse(status=403)
 
         selectedUser.age = age
         selectedUser.gender = gender
         selectedUser.taste = taste
         selectedUser.question = question
         selectedUser.save()
-
-        selectedUser = get_object_or_404(User, id=user_id)
 
         res = {
             "gender": selectedUser.gender,

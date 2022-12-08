@@ -1,5 +1,6 @@
 
 .productBlocks{
+    padding: 0 2vw;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
     column-gap: 20px;
@@ -16,58 +17,13 @@
     height: 100%;
 }
 
-/*
-.productBlocks{
-    
-    display: flexbox;
-    max-width: 100%;
-    
-    padding: 3%;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+.categoryBox{
 
-    flex-wrap: wrap;
-    flex-direction:row;
-
-    
-    
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 15vh;
+    padding: 3vh 0 3vh 50px;
+    min-width: 500px;
+    min-height: 50px;
 }
-
-.CategoryPage{
-
-    
-    width: 100%;
-    flex-wrap: wrap;
-
-}
-
-.titles {
-    margin: 10px;
-    color: white;
-
-}
-
-
-.animated-title {
-    background-color: rgb(157, 201, 42);
-    border:solid;
-    border-radius: 10px;
-    border-color:  rgb(157, 201, 42); 
-    width: 100%;
-    height: 50px;
-    overflow-x: hidden; overflow-y: hidden; }
-.animated-title .titles {position: absolute;
-     white-space: nowrap;
-     
-     will-change: transform;
-     animation: marquee 20s linear infinite; }
-
-@keyframes marquee {
-  from { transform: translateX(1000%); }
-  to { transform: translateX(-500%); }
-}
-@media (hover: hover) and (min-width: 700px){
-.animated-title .content {-webkit-transform: translateY(calc(100% - 8rem)); 
-    transform: translateY(calc(100% - 8rem));}
-    }
-*/

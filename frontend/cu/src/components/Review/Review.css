@@ -1,91 +1,98 @@
-/*justify-content:space-between
-
-
-*/
-
-
 .Review {
-  border-top: 3px solid #f1f3f5;
   padding: 1rem;
   display: row;
-  transition: all 0.15s;
+  justify-content:space-between;
+  border-bottom: 3px solid #f1f3f5;
 }
-.review_picutre_except{
+
+
+.review_picture_except{
   display:flex;
   justify-content:space-between;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .review_button_except{
+  margin-top: 1rem;
   display: flex;
 }
+
 .review_date{
-  font-size: 1.5rem;
-  font-weight: 400;
+  width: 7.5rem;
   margin-left: 0.5rem;
-  display: table-header-group;
+
   align-items: left; 
-  transition: all 0.15s;
+
+  font-weight: 400;
 }
 
 .review_username{
-  font-size: 1.5rem;
-  font-weight: 400;
+  width: 7rem;
   margin-left: 2.0rem;
-  display: table-header-group;
+
   align-items: left; 
+
+  font-weight: 400;
 }
 
 .review_totalScore{
-  font-size: 1.5rem;
-  font-weight: 400;
   display:  flex;
   margin-left: 2rem;
+
+  font-weight: 400;
 }
 
 .review_comment{
-  padding: 0rem;
-  font-size: 1.5rem;
-  font-weight: 100;
   display:  row;
-  text-align: left;
   margin-left: 3.5rem;
+  max-width: 26rem;
+
+  text-align: left;
 }
 
+/* toggle-button + likedCount + like-button */
 .like_set{
-  padding: 0rem;
-  font-size: 1.5rem;
-  font-weight: 100;
   display: flex;
-  margin-bottom: 1rem;
+  min-width: 0rem;
+
+  font-size: 1.2rem;
+  font-weight: 100;
+}
+
+.toggle_picture{
+  margin-right: 1rem;
+  margin-top:0.9rem;
+}
+
+/* picture under comment */
+.review_picture {
+  display: row;
+  align-items:center;
+}
+
+.toggle_button:hover {
+  border-bottom: 1px solid black;
+}
+
+.likedCount{
+  min-width: 1rem;
+  margin-top: 1rem;
 }
 
 .like_button{
   cursor: pointer;
   display: right;
-  font-size: 2rem;
-  font-weight: 0;
   line-height: 1;
+  margin-top:0.7rem;
   margin-left : 0.3rem;
   margin-right : 3.1rem;
+
+  font-size: 2rem;
   touch-action: manipulation;
 }
 
-
-.review_totalScore .blank{
-  color: white;
-}
 .like_button:hover {
   transform: scale(1.3);
   transition: all 0.3s ease-in-out;
 }
-
-.review_picture {
-  display: row;
-}
-
-
-
-  
-
-
-

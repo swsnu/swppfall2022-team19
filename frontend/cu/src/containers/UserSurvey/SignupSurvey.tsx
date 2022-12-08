@@ -1,14 +1,11 @@
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import "./SignupSurvey.css";
 
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
-import { postUser } from "../../store/slices/User";
-import { getRequestUserAtLogin, getUsers } from '../../store/slices/User';
-import { useLayoutEffect } from 'react';
+import { postUser, getRequestUserAtLogin, getUsers } from "../../store/slices/User";
 
 const animatedComponents = makeAnimated();
 
@@ -102,67 +99,74 @@ const SignupSurvey = () => {
     } else {
         return (
             <div className="signUpAndSurvey">
-                <div className="SignupBox">
-                    <h1>Register</h1>
-                    <label>ID
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(event) => setUsername(event.target.value)}
-                        /></label>
+                <div className="signUpAndSurveyWrap">
+                    <div className="signupBox">
+                        <h1 className="SS_maintitle">회원가입</h1>
 
-                    <label>Password
-                        <input
-                            type="text"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                        /></label>
-
-                </div>
-
-                <div className="SurveyBox">
-                    <div className="SelectBox">
-                        <div className="introBox">
-                            <img className="CenterLogo" src={logo} alt="homeLogo" />
-
-                            <h4>사용자 정보를 입력하고 맞춤화 된 제품을 추천받자!</h4>
-                        </div>
-
-                        <div className="questionBox">
-                            <h5> 당신의 성별을 알려주세요 </h5>
-                            <Select className="genderDropdown" isClearable={false} options={genderList} onChange={(event) => event === null ? setGender(0) : setGender(event.value)} />
-                        </div>
-
-                        <div className="questionBox">
-                            <h5> 당신의 연령대를 알려주세요 </h5>
-                            <Select className="ageDropDown" options={ageList} onChange={(event) => event === null ? setAge(0) : setAge(event.value)} />
-                        </div>
-
-                        <div className="questionBox">
-                            <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
-                            <Select className="tasteDropDown" isMulti defaultValue={[tasteList[0]]} components={animatedComponents} options={tasteList} onChange={(event) => {
-                                var getStr: string = "";
-                                var temp: string[] = [];
-                                temp = event.map((element) => {
-                                    return element.value;
-                                });
-
-                                for (var i = 0; i < temp.length; i++) {
-                                    getStr = getStr + temp[i];
-                                }
-                                setTaste(getStr);
-                            }}
+                        <div className="signupIDBox">
+                            <h3 className="labelID">아이디</h3>
+                            <input className="inputID_SS"
+                                placeholder="아이디를 입력해주세요"
+                                type="text"
+                                value={username}
+                                onChange={(event) => setUsername(event.target.value)}
                             />
                         </div>
 
-                        <div className="questionBox">
-                            <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
-                            <Select className="questionDropDown" options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} />
+                        <div className="signupIDBox">
+                            <h3 className="labelID">비밀번호</h3>
+                            <input className="inputID_SS"
+                                type="text"
+                                placeholder="4자리 이상의 비밀번호를 입력해주세요"
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}
+                            />
                         </div>
 
                     </div>
 
-                    <button className="submitButton" onClick={() => postUserHandler()}>제출하기</button>
+                    <div className="SurveyBox">
+                        <div className="SelectBox">
+                            <div className="introBox">
+                                <h3>사용자 정보를 입력하면 맞춤 제품을 추천해드립니다</h3>
+                            </div>
+
+                            <div className="questionBox">
+                                <h5> 당신의 성별을 알려주세요 </h5>
+                                <Select className="genderDropdown" isClearable={false} options={genderList} onChange={(event) => event === null ? setGender(0) : setGender(event.value)} />
+                            </div>
+
+                            <div className="questionBox">
+                                <h5> 당신의 연령대를 알려주세요 </h5>
+                                <Select className="ageDropDown" options={ageList} onChange={(event) => event === null ? setAge(0) : setAge(event.value)} />
+                            </div>
+
+                            <div className="questionBox">
+                                <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
+                                <Select className="tasteDropDown" isMulti defaultValue={[tasteList[0]]} components={animatedComponents} options={tasteList} onChange={(event) => {
+                                    var getStr: string = "";
+                                    var temp: string[] = [];
+                                    temp = event.map((element) => {
+                                        return element.value;
+                                    });
+
+                                    for (var i = 0; i < temp.length; i++) {
+                                        getStr = getStr + temp[i];
+                                    }
+                                    setTaste(getStr);
+                                }}
+                                />
+                            </div>
+
+                            <div className="questionBox">
+                                <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
+                                <Select className="questionDropDown" options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} />
+                            </div>
+
+                        </div>
+
+                        <button className="submitButton" onClick={() => postUserHandler()}>회원가입 하기</button>
+                    </div>
                 </div>
             </div>
         )

@@ -1,11 +1,11 @@
 button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-  }
-  .on {
-    color: rgb(255, 74, 74);
-  }
-  .off {
-    color: #ccc;
-  }
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.on {
+  color: rgb(255, 74, 74);
+}
+.off {
+  color: #ccc;
+}

@@ -9,6 +9,7 @@ export interface Props{
     price: number,
     newProduct: boolean,
     averageScore: number,
+    //rateCount: number,
     clickProduct?: () => void
 }
 
@@ -25,7 +26,7 @@ const ProductBlock = (props: Props) => {
                         {/* {props.details !== "null" &&
                             <span title="detail" className='productDetail'>설명:{props.details}</span>
                         } */}
-                        <span title="score" className='productAverageScore'>평균점수: {props.averageScore}</span>
+                        <span title="score" className='productAverageScore'>★{props.averageScore}</span>
                     </div>
                 </div>
         </div>

@@ -5,7 +5,7 @@ import { AppDispatch } from '../../../store';
 import { createRate, fetchRates, RateType, selectRate, updateRate } from '../../../store/slices/rate';
 import { UserType } from '../../../store/slices/User';
 import { fetchProduct, ProductType, updateProduct } from '../../../store/slices/product';
-
+import "../RatingLayout.css"
 
 interface Props {
     user: UserType,
@@ -86,50 +86,51 @@ function EditRateForm(props: Props) {
 
     return (
         <div>
-            <div className='rate_box'>
-                <h2 className="rating_heading"> 리뷰 수정하기</h2>
-                <button id='button' onClick={() => onclickBackEditHandler()}>수정 취소</button>
-                <button id='button' onClick={() => onclickSaveEditHandler()}>수정 저장</button>
-                <br></br>
-                <div>맛 만족도 {<HeartRating score={score1} updateScore={updateScore1} />} </div>
-                <div>가성비 {<HeartRating score={score2} updateScore={updateScore2} />}</div>
-                <div>재구매 의사 {<HeartRating score={score3} updateScore={updateScore3} />}</div>
-                <div>
-                    {props.question4}
-                    {<HeartRating score={score4} updateScore={updateScore4} />}
-                </div>
-                <div>
-                    {props.question5}
-                    {<HeartRating score={score5} updateScore={updateScore5} />}
-                </div>
-                <div>
-                    <div>한줄평</div>
-                    <input type="text" value={comment} onChange={(event) => setComment(event.target.value)} />
-                </div>
-                <div className='picture'>
-                    <label>사진</label>
-                    {previousImage && 
-                        <img src={previousImage} width={250} />}
-                    {image && (
-                        <div>
-                            <img alt='Image Not Found' width={'250px'} src={URL.createObjectURL(image)} />
+            <h2 className="rating_heading"> 리뷰 수정하기</h2>
+                <div className='rating_box'>
+                    <div className='q1'>맛이 만족스럽나요? {<HeartRating score={score1} updateScore={updateScore1} />} </div>
+                    <div className='q2'>가성비가 좋은가요? {<HeartRating score={score2} updateScore={updateScore2} />}</div>
+                    <div className='q3'>재구매 의사가 있나요? {<HeartRating score={score3} updateScore={updateScore3} />}</div>
+                    <div className='q4'>
+                        {props.question4}
+                        {<HeartRating score={score4} updateScore={updateScore4} />}
+                    </div>
+                    <div className='q5'>
+                        {props.question5}
+                        {<HeartRating score={score5} updateScore={updateScore5} />}
+                    </div>
+                    <div className="comment">
+                        <div>한줄평가</div>
+                        <input className="comment_box" type="text" value={comment} onChange={(event) => setComment(event.target.value)} />
+                    </div>
+                    <div className='picture'>
+                        <div className='picture_first_row'>
+                        <div>사진</div>
+                        <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
                         </div>
-                    )}
-                    <br />
-                    <input
-                        type='file'
-                        accept="image/*"
-                        onChange={(event) => {
-                            if (event.target?.files) {
-                                setImage(event.target?.files[0])
-                            }
-                            setPreviousImage(null)
-                        }}
-                    />
-                    <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
-                </div>
+                        {previousImage && 
+                            <img src={previousImage} height={'180px'} width={200} />}
+                        {image && (
+                            <div>
+                                <img alt='Image Not Found' height={'180px'} width={'200px'} src={URL.createObjectURL(image)} />
+                            </div>
+                        )}
+                        <input
+                            type='file'
+                            accept="image/*"
+                            onChange={(event) => {
+                                if (event.target?.files) {
+                                    setImage(event.target?.files[0])
+                                }
+                                setPreviousImage(null)
+                            }}
+                        />
+                        </div>
+                        <div className="buttons">  
+                        <button className='edit_cancel_button' id='button' onClick={() => onclickBackEditHandler()}>수정 취소</button>
+                        <button className='edit_save_button' id='button' onClick={() => onclickSaveEditHandler()}>수정 저장</button>
+                        </div>
             </div>
-
         </div>
     )
 }
