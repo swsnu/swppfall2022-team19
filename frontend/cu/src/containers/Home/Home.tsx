@@ -83,6 +83,7 @@ const Home = () => {
                                     price={product.price}
                                     newProduct={product.newProduct}
                                     averageScore={product.averageScore}
+                                    rateCount={product.rateCount}
                                     clickProduct={() => onclickProductHandler(product)}
                                 />
                             </div>

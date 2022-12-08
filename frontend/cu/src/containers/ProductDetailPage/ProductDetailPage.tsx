@@ -53,6 +53,7 @@ function ProductDetailPage() {
             price={selectedProduct?.price}
             newProduct={selectedProduct?.newProduct}
             averageScore={selectedProduct?.averageScore}
+            rateCount={selectedProduct?.rateCount}
           />)}
           </div>
         <div key={2}>

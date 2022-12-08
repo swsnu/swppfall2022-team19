@@ -85,6 +85,7 @@ function BestandMost() {
                             price={bestProduct.price}
                             newProduct={bestProduct.newProduct}
                             averageScore={bestProduct.averageScore}
+                            rateCount={bestProduct.rateCount}
                             clickProduct={() => onclickProductHandler(bestProduct)}
                         />
                     </div>
@@ -123,6 +124,7 @@ function BestandMost() {
                                 price={mostProduct.price}
                                 newProduct={mostProduct.newProduct}
                                 averageScore={mostProduct.averageScore}
+                                rateCount={bestProduct.rateCount}
                                 clickProduct={() => onclickProductHandler(mostProduct)}
                             />)}
                     </div>
