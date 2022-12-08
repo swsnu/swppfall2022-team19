@@ -24,7 +24,6 @@ function Recommendation() {
     const navigate = useNavigate();
 
     const selectedUser = useSelector(selectUser).selectedUser
-    console.log("selectedUser ", selectedUser)
     const allUsers = useSelector(selectUser).users
 
     let recommendedUsers: UserType[] = [];
@@ -46,24 +45,23 @@ function Recommendation() {
 
         while (true) {
 
-            console.log("allUser: ", recommendedUsers)
+    
             let commonUser = selectedUser && recommendedUsers.filter(user => user.gender === selectedUser.gender)
 
-            if (commonUser && commonUser.length != 0) {
+            if (commonUser && commonUser.length > 1 ) {
                 recommendedUsers = commonUser
-                console.log("gender: ", commonUser)
+
                 commonUser = selectedUser && recommendedUsers.filter(user => user.age === selectedUser.age)
-                if (commonUser && commonUser.length != 0) {
+                if (commonUser && commonUser.length > 1 ) {
                     recommendedUsers = commonUser
-                    console.log("age: ", commonUser)
+    
                     commonUser = selectedUser && recommendedUsers.filter(user => user.question === selectedUser.question)
-                    if (commonUser && commonUser.length != 0) {
+                    if (commonUser && commonUser.length > 1 ) {
                         recommendedUsers = commonUser
-                        console.log("question: ", commonUser)
+    
                         commonUser = selectedUser && recommendedUsers.filter(user => user.taste === selectedUser.taste)
-                        if (commonUser && commonUser.length != 0) {
+                        if (commonUser && commonUser.length > 1) {
                             recommendedUsers = commonUser // 4 match
-                            console.log("taste: ", commonUser)
                             break;
                         } else break;
                     } else break;
@@ -71,15 +69,6 @@ function Recommendation() {
             } else break;
 
         }
-
-        // const showUser: number = Math.floor(Math.random() * recommendedUsers.length)
-        // if (recommendedUsers[showUser]){
-        // // recommendedUsers[(showUser * recommendedUsers.length)] &&
-        // console.log("new fetch User")
-        //  dispatch(fetchUserRate({user_id: recommendedUsers[showUser].id}))
-        // }
-
-
 
 
         for (let index = 0; index < recommendedUsers.length; index++) {

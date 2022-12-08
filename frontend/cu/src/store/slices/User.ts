@@ -75,7 +75,7 @@ export const loginUser = createAsyncThunk(
 export const signoutUser = createAsyncThunk(
   "user/signoutUser",
   async (user: void, { dispatch }) => {
-    // console.log("user ", user.username , user.password )
+  
     const response = await client.get("/api/user/signout/");
 
     dispatch(userActions.signoutUser(response.data));
@@ -91,7 +91,7 @@ export const getUsers = createAsyncThunk(
   "user/getUsers",
   async (user: void, { dispatch }) => {
     const response = await client.get("/api/user/userlist/");
-    console.log(response);
+    
     dispatch(userActions.getUsers(response.data));
     return response.data ?? null;
   }
@@ -102,14 +102,9 @@ export const getRequestUser = createAsyncThunk(
   "user/getRequestUser",
   async (user: void, { dispatch }) => {
     const response = await client.get("/api/user/requestUser/");
-    console.log(response);
-    console.log(response.data);
-    console.log(response.data === null);
-    console.log(response.data == undefined);
-    console.log(response.data == "");
+
 
     if (response.data === '') {
-      console.log('there is no response data for request user')
       window.location.replace('/login');
       // localStorage.clear();
     } else {
@@ -125,9 +120,7 @@ export const getRequestUserAtLogin = createAsyncThunk(
   "user/getRequestUser",
   async (user: void, { dispatch }) => {
     const response = await client.get("/api/user/requestUser/");
-    console.log(response);
-    console.log(response.data);
-    console.log('there is no response data for request user at login')
+
     if (response.data === '') {
 
       // localStorage.clear();
@@ -145,10 +138,9 @@ export const getRequestUserAtLogin = createAsyncThunk(
 export const putSurvey = createAsyncThunk(
   "user/newSurvey",
   async (user: Pick<UserType, "id" | "age" | "gender" | "taste" | "question">, { dispatch }) => {
-    console.log(">user!");
-    console.log(user);
+
     const response = await client.put(`/api/user/newSurvey/${user.id}/`, user);
-    console.log(response.data);
+
     dispatch(userActions.putSurvey(response.data));
   }
 )
@@ -158,36 +150,29 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     getRequestUser: (state, action: PayloadAction<UserType>) => {
-      console.log("> getRequestUser의 리듀서 실행됨");
-      console.log(action.payload);
-      console.log(state.selectedUser);
-      if (action.payload === null || action.payload === undefined) {
+          if (action.payload === null || action.payload === undefined) {
         state.selectedUser = null;
-        console.log("현재 로그인된 게 없어서 action.payload도 비어있어서 selectedUser에 null을 줌");
+       
       } else {
         const targetUser = state.users.find(
           (user: UserType) => (user.username === action.payload.username)
         );
         if (targetUser) {
           state.selectedUser = targetUser;
-          console.log(targetUser);
-          console.log(state.selectedUser);
         } else {
-          console.log("targetUser가 undefined라 selectedUser는 null로");
+        
           state.selectedUser = null;
           // localStorage.clear();
           // window.location.replace('/login');
         }
 
-        // console.log("targetUser");
-        // console.log(targetUser);
 
       }
     },
     getUsers: (state, action: PayloadAction<UserType[]>) => {
-      console.log(action.payload);
+
       if (action.payload === null || action.payload === undefined) {
-        console.log("아무 User도 등록되지 않은 상태");
+
       } else {
         var user_list: UserType[] = [];
         for (var i = 0; i < action.payload.length; i++) {
@@ -196,7 +181,7 @@ export const userSlice = createSlice({
         // 유저탈퇴 기능이 있다면 오류가 생길 수 있음
 
         state.users = user_list;
-        console.log(user_list);
+   
       }
     },
     loginUser: (state, action: PayloadAction<UserLoginRequest>) => {
@@ -208,10 +193,10 @@ export const userSlice = createSlice({
       if (targetUser) {
         targetUser.loginState = true;
         state.selectedUser = targetUser;
-        console.log("Logged_in User: " + targetUser.username);
+       
       }
       else {
-        console.log("Username or password is wrong");
+       
         state.selectedUser = null;
       };
 
@@ -244,11 +229,9 @@ export const userSlice = createSlice({
 
     },
     putSurvey: (state, action: PayloadAction<SurveyRequest>) => {
-      console.log(">>putSurvey의 PayloadAction");
-      console.log(action.payload);
 
       if (state.selectedUser == null) {
-        console.log("state.selectedUser is null");
+
       } else {
         state.selectedUser.gender = action.payload.gender;
         state.selectedUser.age = action.payload.age;
@@ -256,26 +239,11 @@ export const userSlice = createSlice({
         state.selectedUser.question = action.payload.question;
 
         state.users[state.selectedUser.id] = state.selectedUser;
-        console.log(">>PutSurvey 이후 변화");
-        console.log(state.selectedUser.taste);
-        console.log(state.users[state.selectedUser.id].taste);
+
       }
     },
   },
 
-  extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
-    /*
-    builder.addCase(fetchUser.fulfilled, (state, action) => {
-      state.selectedUser = action.payload;
-    });
-    */
-    /*
-    builder.addCase(postUser.rejected, (_state, action) => {
-      console.error(action.error);
-    });
-    */
-  },
 });
 
 export const userActions = userSlice.actions;
@@ -286,100 +254,3 @@ export default userSlice.reducer;
 
 
 
-
-/*
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { RootState } from "..";
-axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-export interface UserType {
-  username: string;
-  password: string;
-  loginState: boolean;
-}
-export interface UserState {
-  users: UserType[];
-  selectedUser: UserType | null;
-}
-const initialState: UserState = {
-  users: [],
-  selectedUser: null,
-};
-export const fetchUser = createAsyncThunk(
-  "user/fetchUser",
-  async (username: UserType["username"], { dispatch }) => {
-    const response = await axios.get(`/api/user/login/`);
-    return response.data ?? null;
-  }
-);
-export const postUser = createAsyncThunk( // signup
-  "user/postUser",
-  async (user: Pick<UserType, "username" | "password" >, { dispatch }) => {
-    const response = await axios.post("/api/user/signup/", user);
-    console.log("postUser")
-    dispatch(userActions.addUser(response.data));
-  }
-);
-export const putUser = createAsyncThunk( // login
-  "user/putUser",
-  async (user: Pick<UserType, "username" | "password" >, { dispatch }) => {
-    const response = await axios.put("/api/user/login/", user);
-    if( response.data == null ){ // if login failed ,
-      console.log("login failed in putUser")
-    }else{
-    dispatch(userActions.loginUser(response.data));}
-  }
-);
-export const userSlice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {
-    getAll: (state, action: PayloadAction<{ users: UserType[] }>) => {},
-    getUser: (state, action: PayloadAction<{ targetusername: string }>) => {
-      const target = state.users.find(
-        (user) => user.username === action.payload.targetusername
-      );
-      state.selectedUser = target ?? null;
-    },
-    addUser: ( // register 
-      state,
-      action: PayloadAction<{ username: string; password: string }>
-    ) => {
-      const newUser = {
-    
-        username: action.payload.username,
-        password: action.payload.password,
-        loginState: false 
-      };
-      state.users.push(newUser);
-    },
-    loginUser:  ( // login 
-      state,
-      action: PayloadAction<{ username: string; password: string }>
-    ) => {
-      const target = state.users.find(
-        (user) => user.username === action.payload.username
-      );
-      state.selectedUser = target ?? null;
-      if(target!=null && target.password === action.payload.password) target.loginState = true // logged in 
-      // check target is null after login trial.
-      }    
-  },
-  extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(fetchUser.fulfilled, (state, action) => {
-      state.selectedUser = action.payload;
-    });
-    builder.addCase(postUser.rejected, (_state, action) => {
-      console.error(action.error);
-    });
-    builder.addCase(putUser.rejected, (_state, action) => {
-      console.error(action.error);
-    });
-  },
-});
-export const userActions = userSlice.actions;
-export const selectUser = (state: RootState) => state.user;
-export default userSlice.reducer;
-*/

@@ -3,8 +3,8 @@ import "./Home.css"
 
 import Header from "../Header/Header"
 import { useLocation, useNavigate } from "react-router-dom";
-import { useLayoutEffect } from "react";
-import { fetchAllProducts, ProductType, selectProduct } from "../../store/slices/product";
+import { useEffect, useLayoutEffect } from "react";
+import { fetchAllProducts, productActions, ProductType, selectProduct } from "../../store/slices/product";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
@@ -25,37 +25,29 @@ const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
 
 
-    const { search } = useLocation();
+    // const { search } = useLocation();
 
-    useLayoutEffect(() => {  // 두번 뜹니다 
+
+
+    useLayoutEffect(() => {  
 
         dispatch(fetchAllProducts())
         dispatch(fetchRates())
-        console.log("useEffect in Home")
-
-    }, [search]);
+        // console.log("Home useEffect")    
+    }, []);
 
 
 
     const allProducts = useSelector(selectProduct);
 
-
-    const m = Math.floor(Math.random() * 13) + 2
-    const r = Math.floor(Math.random() * (m - 1))
+    const d = new Date();
+    const m = Math.floor(d.getSeconds()/60 * 13) + 2
+    const r = Math.floor(d.getSeconds()/60 * (m - 1))
+    console.log("m", m, "r", r)
     const showProducts = allProducts.products.filter(product => (product.id % m === r))
-    const showLength = Math.floor(Math.random() * (showProducts.length - 4))
+    const showLength = Math.floor(d.getSeconds()/60 * (showProducts.length - 4))
     const showProducts5 = showProducts.slice(showLength, showLength + 4)
-    // const showLength = Math.floor(Math.random() * (showProducts.length - 5))
-    // const showProducts5 = showProducts.slice(showLength, showLength + 5)
 
-
-    // randomly all the time 
-    // product nums == 78
-    // m at most 15 
-    // 2 <= m <= 15
-    // 0<= residue <= m-1
-
-    // get 5 elements , 
 
 
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
-import { fetchSearchProducts, ProductType, selectProduct } from "../../store/slices/product";
+import product, { fetchSearchProducts, ProductType, selectProduct, TagType } from "../../store/slices/product";
 import Header from "../Header/Header"
 import "./SearchResult.css"
 
@@ -18,12 +18,52 @@ function SearchResult() {
 
     const allProducts = useSelector(selectProduct)
     let products = allProducts.products.filter(product => product.name.includes(searchKey ? searchKey : " "))
+    let categoryProducts = allProducts.products.filter(product => product.mainCategory === searchKey ||  product.mainCategory == searchKey)
+    const tag_SearchID = allProducts.tags.filter(tag => tag.name === String(searchKey)) // id
+     
+    console.log("tag_SearchId", tag_SearchID)
+    console.log("searchyKey", String(searchKey))
+    if (tag_SearchID){
+        tag_SearchID.forEach((tag: TagType) => {
+
+            // let tagProducts = allProducts.products.filter(product => product.tags.some(product_tag => product_tag === String(tag.id)))
+            // if(tagProducts){
+            //     products.concat(tagProducts)
+            // }
+
+            for (let index = 0; index < allProducts.products.length; index++) {
+                const product = allProducts.products[index];
+
+                for (let j = 0; j < product.tags.length; j++){
+                    console.log("product_tagId", product.tags[j])
+                    console.log("tag_id", tag.id)
+                    if (product.tags[j] == String(tag.id)){
+                    
+                    
+                    console.log("product_name", product.name)
+                    console.log("tag_id", tag.id)
+
+                        products.push(product)
+
+                    }
+
+                        
+                }
+            }
+        });
+    }
+    
+
+    products = products.concat(categoryProducts);
+
     if (products.length === 0) {
         message = "찾으시는 상품과 일치하는 상품이 없습니다. 이런 제품은 어떠신가요?"
-        const m = Math.floor(Math.random() * 13) + 2
-        const r = Math.floor(Math.random() * (m - 1))
+        const date = new Date();
+        const sec = date.getSeconds();
+        const m = Math.floor(sec/60 * 13) + 2
+        const r = Math.floor(sec/60 * (m - 1))
         const showProducts = allProducts.products.filter(product => (product.id % m === r))
-        const showLength = Math.floor(Math.random() * (showProducts.length - 5))
+        const showLength = Math.floor(sec/60 * (showProducts.length - 5))
         products = showProducts.slice(showLength, showLength + 5)
 
     } else {

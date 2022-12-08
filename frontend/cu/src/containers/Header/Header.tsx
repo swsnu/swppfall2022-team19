@@ -31,10 +31,13 @@ const Header = () => {
 
 
     const clickSearchHandler = async () => {
+        if(searchKey == "" || searchKey == " "){
+        }
+
         const result = await dispatch(fetchSearchProducts({ name: searchKey }));
 
         if (result.type == `${fetchSearchProducts.typePrefix}/fulfilled`) {
-            navigate(`/searchProduct/${searchKey}`);
+            navigate(`/searchProduct/searchkey=${searchKey}`);
         }
     }
 
@@ -53,10 +56,6 @@ const Header = () => {
 
     const categoryHandler = (mainCategory: string) => {
         navigate(`/category/${mainCategory}`)
-    }
-
-    const issueHandler = () => {
-        navigate(`/issue`)
     }
 
     return (
@@ -81,6 +80,9 @@ const Header = () => {
                 <div className="mainheader_categoryBox">
                     <ul className="navBar">
                         <li>
+                            <a onClick={() => categoryHandler("전체")}>전체</a>
+                        </li>
+                        <li>
                             <a onClick={() => categoryHandler("간편식사")}>간편식사</a>
                         </li>
                         <li>
@@ -95,9 +97,7 @@ const Header = () => {
                         <li>
                             <a onClick={() => categoryHandler("음료")}>음료</a>
                         </li>
-                        <li>
-                            <a onClick={() => {navigate("/issue")}}>이슈</a>
-                        </li>
+
                     </ul>
                 </div>
 
