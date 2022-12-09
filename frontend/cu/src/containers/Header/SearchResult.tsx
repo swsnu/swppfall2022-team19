@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
-import product, { fetchSearchProducts, ProductType, selectProduct, TagType } from "../../store/slices/product";
+import { fetchSearchProducts, ProductType, selectProduct, TagType } from "../../store/slices/product";
 import Header from "../Header/Header"
 import "./SearchResult.css"
 
@@ -99,6 +99,7 @@ function SearchResult() {
                             price={product.price}
                             newProduct={product.newProduct}
                             averageScore={product.averageScore}
+                            rateCount={product.rateCount}
                             clickProduct={() => onclickProductHandler(product)}
                         />
                     </div>

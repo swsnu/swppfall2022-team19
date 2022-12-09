@@ -102,7 +102,7 @@ function CreateRateForm(props: Props) {
                     <button className='image_delete_button' onClick={() => onclickDeleteImageHandler()}>사진 삭제</button>
                     </div>
                     <div className ='image_input'>
-                    {image && (<img alt='Image Not Found' height={'180px'} width={'200px'} src={URL.createObjectURL(image)} />)}
+                    {image && (<img alt='Image Not Found'  width={'110px'} height={'100px'}src={URL.createObjectURL(image)} />)}
                     <input
                         type='file'
                         accept="image/*"

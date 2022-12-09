@@ -7,7 +7,9 @@
     align-items: center;
 }
 
-.SelectBoxModal{
+
+
+.SelectBoxModalwithButtons{
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -16,37 +18,51 @@
     height: 470px;
     margin: auto auto;
     padding: 25vh 100px;
-    background-color: white;    
+    background-color: white;  
+}
+.exitButton{
+    width: 10%;
+    height: 40px;
+    font-weight: bold;
+    margin-top:1.5rem;
+    margin-left: 25rem;
+    border: 2px solid black;
 }
 
-/* 사용자 정보를 입력하고 맞춤화된 제품을 추천받자! */
-.introBoxModal{
-    margin: 0 15px;
+/* 사용자 정보를 입력하고 */
+.introBoxModal h4{
+    margin: 0 47px;
+    margin-top: 0rem;
+    font-size: 1.4rem;
+}
+/* 맞춤화된 제품을 추천받자! */
+.introBoxModal h5{
+    margin: 0 30px;
     font-size: 1.4rem;
 }
 
 
 /* 질문 */
-.questionBoxModal{
-    margin-top: 4rem;
-    font-size: 1.4rem;
-    min-width: 300px;
+.questionBoxModal h5{
+    margin-top: 1.3rem;
+    margin-left:1rem;
+    font-size: 1rem;
+    min-width: 350px;
 }
 
 /* 선택 박스 */
 .questionBoxModal h6{
     margin: 15px;
-    margin-bottom: 0.1rem;
-
+    margin-bottom: 0rem;
+    font-size: 1rem;
 }
 
-
 .closeButton{
-    padding: 20px 20px;
+    padding: 10px 0px 10px;
     width: 50%;
     height: 40px;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-top: 2rem;
+    margin-bottom: 7rem;
     font-weight: bold;
 
     border: 2px solid rgba(0, 0, 0, 0.23);
