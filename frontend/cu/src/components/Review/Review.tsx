@@ -81,6 +81,7 @@ const Review = (props: IProps) => {
     
 
     return (
+        
         <article className='Review'>
             <div className='review_picture_except'>
 
@@ -101,9 +102,10 @@ const Review = (props: IProps) => {
                         {liked? (<div>❤️</div>): (<div>🤍</div>)}
                     </div>
                 </div>
-
             </div>
-                { isOpen && <img className='review_picture' src={props.rate.picture} width="300px"></img> }
+            <div className='picture_box'>
+            { isOpen && <img className='review_picture' src={props.rate.picture} width="300px"></img> }
+            </div>
         </article>
     );
 };
