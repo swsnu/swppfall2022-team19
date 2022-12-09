@@ -36,7 +36,7 @@ const Review = (props: IProps) => {
     useEffect(()=> {
         //if(rates.includes(props.rate)){ ... }
         for(let index=0; index<rates.length; index++){
-            if(rates[index].comment === props.rate.comment){
+            if(rates[index].id === props.rate.id){
                 setLiked(true);
                 console.log("liked rate:", props.rate)
                 console.log(liked)
