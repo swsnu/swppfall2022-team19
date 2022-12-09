@@ -5,22 +5,22 @@
 [![Coverage Status](https://coveralls.io/repos/github/swsnu/swppfall2022-team19/badge.svg?branch=main&kill_cache=1)](https://coveralls.io/github/swsnu/swppfall2022-team19?branch=main)
 
 # Frontend
+### Starting Server
+- cd frontend/cu
 - yarn
 - yarn add redux react-redux @reduxjs/toolkit
 - yarn add react-select
-- yarn add --save @types/qs
+- yarn start
+### Testing
+- cd frontend/cu
+- yarn test --coverage --watchAll=false
+
 
 # Backend
-- python -m pip install Pillow
-- pip install djangorestframework
-- python manage.py makemigrations
-- python manage.py migrate
-- python manage.py runserver (0.0.0.0:8000)
+### Starting Server
+- cd backend/cu
+- python manage.py runserver
+### Testing
+- cd backend/cu
+- coverage run --source='.' manage.py test
 
-# docker
-docker run --rm -it \
---ipc=host \
---name "practice8" \
--p 0.0.0.0:3000:3000 -p 0.0.0.0:8000:8000 \
--v ${PWD}:/home \
-snuspl/swpp:practice8
