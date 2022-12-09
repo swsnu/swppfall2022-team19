@@ -65,11 +65,6 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/index.tsx",
-      "!src/components/TotalScore/*",
-      "!src/components/TotalScoreList/*",
-      "!src/components/Review/*",
-      "!src/components/ReviewList/*",
-      "!src/containers/ProductDetailPage/*",
       "!src/containers/UserSurvey/SurveyModal.tsx",
       "!src/store/api/*",
       "!src/test-utils/*",
