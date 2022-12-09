@@ -64,32 +64,34 @@ const MyPage = () => {
     }
 
     return (
-        <div className="MyPage">       
+        <div className="MyPage">     
+            <div className='modal'>{modalOn ? <SurveyModal setModalOn={setModalOn} /> : ''}</div>   
             <Header />
             <div className='MyPageTitle'>{selectedUserState.selectedUser?.username}님의 마이페이지</div>
-        <div className = "ratedProducts">
-            <h1>{selectedUserState.selectedUser?.username}님이 평가한 제품({products.length})</h1>
+            <div className = "ratedProducts">
+                <h1>{selectedUserState.selectedUser?.username}님이 평가한 제품({products.length})</h1>
 
-            <div className= "productBlocks">
-                {products.map(product => (
-                        <div key={product.id}>
-                            <ProductBlock
-                                product_id = {product.id}
-                                name = {product.name}
-                                imageUrl = {product.imageUrl}
-                                details= {product.details}
-                                price = {product.price}
-                                newProduct = {product.newProduct}
-                                averageScore = {product.averageScore}
-                                clickProduct ={() => navigate(`/ProductDetail/${product.id}`)}
-                            />
-                        </div>
-                    ))}
+                <div className= "productBlocks">
+                    {products.map(product => (
+                            <div key={product.id}>
+                                <ProductBlock
+                                    product_id = {product.id}
+                                    name = {product.name}
+                                    imageUrl = {product.imageUrl}
+                                    details= {product.details}
+                                    price = {product.price}
+                                    newProduct = {product.newProduct}
+                                    averageScore = {product.averageScore}
+                                    rateCount={product.rateCount}
+                                    clickProduct ={() => navigate(`/ProductDetail/${product.id}`)}
+                                />
+                            </div>
+                        ))}
+                </div>
+                { products.length===0 && <div className='alert_no_ratedProduct'>평가한 제품이 없습니다</div>}
             </div>
-            { products.length===0 && <div className='alert_no_ratedProduct'>평가한 제품이 없습니다</div>}
-        </div>
 
-        <div className = "likedComments">
+            <div className = "likedComments">
                 <h1>{selectedUserState.selectedUser?.username}님이 좋아한 리뷰({comments.length}) </h1>
                 <div className = "Comments" > 
                 {comments.map(comment => (
@@ -101,11 +103,8 @@ const MyPage = () => {
                 ))}
                 </div>
                 { comments.length===0 && <div className='alert_no_likedComment'>좋아요한 리뷰가 없습니다</div>}
-        </div>
-            <div className='buttonSet'>
-            <button className="modalOpenButton" onClick={onOpenModal}>사용자 정보 수정하기</button> 
-            {modalOn ? <SurveyModal setModalOn={setModalOn} /> : ''}
             </div>
+            <button className="modalOpenButton" onClick={onOpenModal}>사용자 정보 수정하기</button>
         </div>
     )
 }

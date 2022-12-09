@@ -61,7 +61,7 @@ function AfterRateForm(props: Props) {
                 {props.rate.picture != undefined &&
                     <div className='picture'>
                         <div className='picture_first_row'>사진</div>
-                        <img src={props.rate.picture} height={'180px'} width={200} />
+                        <img src={props.rate.picture} height={'100px'} width={'110px'} />
                     </div>
                 }
                 <div className="buttons"> 

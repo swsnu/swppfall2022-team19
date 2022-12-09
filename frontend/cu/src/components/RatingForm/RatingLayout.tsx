@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./RatingLayout.css"
 import subCategoryQuestion from "../../Questionnaires/subCategoryQuestion.json"
 import { fetchRates, RateType} from '../../store/slices/rate';

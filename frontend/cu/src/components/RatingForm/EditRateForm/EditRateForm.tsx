@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import HeartRating from '../HeartRate/HeartRating'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppDispatch } from '../../../store';
-import { createRate, fetchRates, RateType, selectRate, updateRate } from '../../../store/slices/rate';
+import { fetchRates, RateType, updateRate } from '../../../store/slices/rate';
 import { UserType } from '../../../store/slices/User';
-import { fetchProduct, ProductType, updateProduct } from '../../../store/slices/product';
+import { fetchProduct, ProductType } from '../../../store/slices/product';
 import "../RatingLayout.css"
 
 interface Props {
@@ -109,7 +109,7 @@ function EditRateForm(props: Props) {
                         <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
                         </div>
                         {previousImage && 
-                            <img src={previousImage} height={'180px'} width={200} />}
+                            <img src={previousImage} height={'100px'} width={110} />}
                         {image && (
                             <div>
                                 <img alt='Image Not Found' height={'180px'} width={'200px'} src={URL.createObjectURL(image)} />

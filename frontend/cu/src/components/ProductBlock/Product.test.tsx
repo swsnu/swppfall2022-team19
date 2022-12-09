@@ -16,6 +16,7 @@ describe("<ProductBlock />", () => {
             price={3000}
             newProduct={false}
             averageScore={3.5}
+            rateCount={1}
             clickProduct={jest.fn()} 
             />);
         const productName = screen.getByText("product1");

@@ -13,6 +13,7 @@ export interface CProps{
 const CommentBlock = (props: CProps) => {  
     return (
         <div className="commentBlock" onClick={props.clickCommentBlock!} >
+                
                 <div className="productBlockComment">
                     <ProductBlock 
                     product_id={props.productBlock.id} 
@@ -22,6 +23,7 @@ const CommentBlock = (props: CProps) => {
                     price={props.productBlock.price} 
                     newProduct={true} 
                     averageScore={props.productBlock.averageScore}                    
+                    rateCount={props.productBlock.rateCount}
                     ></ProductBlock>   
                 </div>
 

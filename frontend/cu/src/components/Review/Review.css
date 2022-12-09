@@ -66,9 +66,18 @@
 }
 
 /* picture under comment */
+
+.picture_box{
+  background-color: #f1f3f5;
+  
+}
 .review_picture {
-  display: row;
-  align-items:center;
+  width: 30%;
+  height:70%;
+  margin-top: 2rem;
+  margin-left: 24rem;
+  margin-bottom:2rem;
+  border-radius: 3rem;
 }
 
 .toggle_button:hover {

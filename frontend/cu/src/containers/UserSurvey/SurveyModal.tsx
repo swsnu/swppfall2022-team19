@@ -1,5 +1,5 @@
 import "./SurveyModal.css";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { useDispatch, useSelector } from "react-redux";
@@ -91,6 +91,10 @@ const SurveyModal = (props: Props) => {
     }, [taste]);
 
 
+    const exitHandler = async() => {
+        props.setModalOn(false);
+    }
+
     const putSurveyHandler = async () => {
         const data = { id: nowUser.id, age: age, gender: gender, taste: taste, question: question };
 
@@ -108,54 +112,56 @@ const SurveyModal = (props: Props) => {
     };
 
     return (
-        <div className="wrapper">
-            <div className="surveyModal">
-                <div className="SelectBoxModal">
-                    <div className="introBoxModal">
-                        <h4>사용자 정보를 입력하고 맞춤화 된 제품을 추천받자!</h4>
-                    </div>
-
-                    <div className="questionBoxModal">
-                        <h5> 당신의 성별을 알려주세요 </h5>
-                        <h6><Select className="genderDropdown" defaultValue={[genderList[gender - 1]]} isClearable={false} options={genderList} onChange={(event) => event === null ? setGender(0) : setGender(event.value)} /></h6>
-                    </div>
-
-                    <div className="questionBoxModal">
-                        <h5> 당신의 연령대를 알려주세요 </h5>
-                        <h6><Select className="ageDropDown" defaultValue={[ageList[age - 1]]} options={ageList} onChange={(event) => event === null ? setAge(0) : setAge(event.value)} /></h6>
-                    </div>
-
-                    <div className="questionBoxModal">
-                        <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
-                        <h6><Select className="tasteDropDown" isMulti defaultValue={defaultTaste} components={animatedComponents} options={tasteList} onChange={(event) => {
-                            console.log("event입니다");
-                            console.log(event);
-
-                            var getStr: string = "";
-                            var temp: string[] = [];
-                            temp = event.map((element) => {
-                                return element.value;
-                            });
-                            temp.sort();
-                            console.log("temp:");
-                            console.log(temp);
-                            for (let value of temp) {
-                                getStr = getStr + value;
-                            }
-                            console.log("getStr: " + getStr);
-                            setTaste(getStr);
-                        }}
-                        /></h6>
-                    </div>
-
-                    <div className="questionBoxModal">
-                        <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
-                        <h6><Select className="questionDropDown" defaultValue={[questionList[question - 1]]} options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} /></h6>
-                    </div>
-                    <button className="closeButton" onClick={() => { putSurveyHandler(); }}>수정하기</button>
+        <div className="surveyModal">
+            <div className="SelectBoxModalwithButtons">
+                <button className='exitButton'onClick={()=> {exitHandler()}}> X </button>    
             
+                <div className="introBoxModal">
+                    <h4>사용자 정보를 입력하고 </h4>
+                    <h5>맞춤화 된 제품을 추천받자!</h5>
                 </div>
+
+                <div className="questionBoxModal">
+                    <h5> 당신의 성별을 알려주세요 </h5>
+                    <h6><Select className="genderDropdown" defaultValue={[genderList[gender - 1]]} isClearable={false} options={genderList} onChange={(event) => event === null ? setGender(0) : setGender(event.value)} /></h6>
                 </div>
+
+                <div className="questionBoxModal">
+                    <h5> 당신의 연령대를 알려주세요 </h5>
+                    <h6><Select className="ageDropDown" defaultValue={[ageList[age - 1]]} options={ageList} onChange={(event) => event === null ? setAge(0) : setAge(event.value)} /></h6>
+                </div>
+
+                <div className="questionBoxModal">
+                    <h5> 당신이 가장 즐겨찾는 카테고리는 무엇인가요? </h5>
+                    <h6><Select className="tasteDropDown" isMulti defaultValue={defaultTaste} components={animatedComponents} options={tasteList} onChange={(event) => {
+                        console.log("event입니다");
+                        console.log(event);
+
+                        var getStr: string = "";
+                        var temp: string[] = [];
+                        temp = event.map((element) => {
+                            return element.value;
+                        });
+                        temp.sort();
+                        console.log("temp:");
+                        console.log(temp);
+                        for (let value of temp) {
+                            getStr = getStr + value;
+                        }
+                        console.log("getStr: " + getStr);
+                        setTaste(getStr);
+                    }}
+                    /></h6>
+                </div>
+
+                <div className="questionBoxModal">
+                    <h5> 맛 만족도, 가성비, 재구매 의사 중 가장 중요하게 여기는 평가 지표가 무엇인가요? </h5>
+                    <h6><Select className="questionDropDown" defaultValue={[questionList[question - 1]]} options={questionList} onChange={(event) => event === null ? setQuestion(-1) : setQuestion(event.value)} /></h6>
+                </div>
+
+                <button className="closeButton" onClick={() => { putSurveyHandler(); }}>수정하기</button>
+        
+            </div>
         </div>
     )
 
