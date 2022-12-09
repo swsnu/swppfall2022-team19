@@ -26,13 +26,17 @@ class UserTestCase(TestCase):
         # 1.1 token을 잘 받음
         client = Client(enforce_csrf_checks=True)
         response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
+        # csrftoken
+        csrftoken = response.cookies['csrftoken'].value
         self.assertEqual(response.status_code, 204)
 
         # 1.2 GET 이외의 요청
         # Check: CSRF-EXEMPT가 아니므로, 403 Forbidden Error가 뜸
-        # response = client.delete('/api/user/token/')
-        # self.assertEqual(response.status_code, 403)
+        client = Client(enforce_csrf_checks=True)
+        response = client.get('/api/user/token/')
+        csrftoken = response.cookies['csrftoken'].value
+        response = client.delete('/api/user/token/')
+        self.assertEqual(response.status_code, 403)
 
     # 2. 회원가입
 
@@ -48,7 +52,7 @@ class UserTestCase(TestCase):
 
         # 2.2. CSRF 토큰 있고 + 정상 회원가입 -> 201
         response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
+        csrftoken = response.cookies['csrftoken'].value
         response = client.post('/api/user/signup/', json.dumps({'username': 'testUser1', 'password': '12345',
                                                                 'gender': '1', 'age': '1', 'taste': 'ABC', 'question': '1', 'access_token': csrftoken}),
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
@@ -70,7 +74,7 @@ class UserTestCase(TestCase):
     def test_signin(self):
         client = Client(enforce_csrf_checks=True)
         response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
+        csrftoken = response.cookies['csrftoken'].value
 
         # 2.1.1 POST일 때, 로그인 등록되어 있음 + 현재 로그아웃 상태임(204) - 정상 작동
         response = client.post('/api/user/signin/', json.dumps(
@@ -79,7 +83,7 @@ class UserTestCase(TestCase):
 
         # 2.1.2 POST일 때, 로그인 등록되어 있음 + 현재 로그인 상태임(401) - 비정상 접근
         response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
+        csrftoken = response.cookies['csrftoken'].value
         response = client.post('/api/user/signin/', json.dumps(
             {'username': 'newUser1', 'password': '12345'}), content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)  # , HTTP_X_CSRFTOKEN=csrftoken
         self.assertEqual(response.status_code, 401)
@@ -103,7 +107,7 @@ class UserTestCase(TestCase):
         # 3.1.1 GET + 로그아웃된 상태(401)
         client = Client(enforce_csrf_checks=True)
         response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
+        csrftoken = response.cookies['csrftoken'].value
 
         # , HTTP_X_CSRFTOKEN=csrftoken
         response = client.get('/api/user/signout/', HTTP_X_CSRFTOKEN=csrftoken)
@@ -129,11 +133,11 @@ class UserTestCase(TestCase):
     def test_requestUser(self):
         client = Client(enforce_csrf_checks=True)
         response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
+        csrftoken = response.cookies['csrftoken'].value
 
         # .1 로그아웃된 상태는 아무것도 반환 않음
         response = client.get('/api/user/requestUser/')
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 204)
 
         # .2 로그인된 상태 + requestUser 정상
         client.login(username="newUser1", password="12345")
@@ -142,40 +146,42 @@ class UserTestCase(TestCase):
 
         # 3.2 GET이 아닌 경우
         # Check: CSRF-EXEMPT가 아니므로, 403 Forbidden Error가 뜸
-        # response = client.delete(
-        #    '/api/user/requestUser/', HTTP_X_CSRFTOKEN=csrftoken)  # , HTTP_X_CSRFTOKEN=csrftoken
-        # self.assertEqual(response.status_code, 403)  # 405
+        # , HTTP_X_CSRFTOKEN=csrftoken
+        response = client.delete(
+            '/api/user/requestUser/', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)  # 405
 
     def test_userlist(self):
         # 3.1.1. userList를 정상적으로 반환함(user 없는 경우 []) (200)
         client = Client(enforce_csrf_checks=True)
         response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
+        csrftoken = response.cookies['csrftoken'].value
 
         response = client.get('/api/user/userlist/')
         self.assertEqual(response.status_code, 200)
 
         # 3.2 GET이 아닌 경우
-        # HTTP_X_CSRFTOKEN=csrftoken
-        # response = client.get('/api/user/token/')
-        # csrftoken = response.cookies['XSRF-TOKEN'].value
-        # response = client.delete(
-        #     '/api/user/userlist/', HTTP_X_CSRFTOKEN=csrftoken)  # , HTTP_X_CSRFTOKEN=csrftoken
-        # self.assertEqual(response.status_code, 403)  # 405
+        # , HTTP_X_CSRFTOKEN=csrftoken
+        response = client.delete(
+            '/api/user/userlist/', HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)  # 405
 
     def test_changeSurvey(self):
         # 3.1.1
         client = Client(enforce_csrf_checks=True)
-    # id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2
+        response = client.get('/api/user/token/')
+        csrftoken = response.cookies['csrftoken'].value
+
+        # id: 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2
         # .1 로그아웃된 상태 401
-        response = client.put('/api/user/newSurvey/1/',
-                              content_type='application/json')
+        response = client.put('/api/user/newSurvey/1/', json.dumps(
+            {'id': 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2}), HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 401)
 
         # .2 로그인된 상태 + requestUser 정상적(204)
         client.login(username="newUser1", password="12345")
         response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
+        csrftoken = response.cookies['csrftoken'].value
 
         response = client.put('/api/user/newSurvey/10/', json.dumps(
             {'id': 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2}), HTTP_X_CSRFTOKEN=csrftoken)
@@ -185,13 +191,13 @@ class UserTestCase(TestCase):
             {'id': 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2}), HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 404)
 
-        # request
-        response = client.put('/api/user/newSurvey/2/', json.dumps(
-            {'id': 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2}), HTTP_X_CSRFTOKEN=csrftoken)
-        self.assertEqual(response.status_code, 403)
-
-        response = client.get('/api/user/token/')
-        csrftoken = response.cookies['XSRF-TOKEN'].value
         response = client.put('/api/user/newSurvey/1/', json.dumps(
             {'id': 1, 'gender': 1, 'age': 3, 'taste': 'C', 'question': 2}), HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 200)
+
+        # false Request
+        response = client.get('/api/user/token/')
+        csrftoken = response.cookies['csrftoken'].value
+        response = client.get('/api/user/newSurvey/1/',
+                              HTTP_X_CSRFTOKEN=csrftoken)
+        self.assertEqual(response.status_code, 405)
