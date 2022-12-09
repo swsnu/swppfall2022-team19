@@ -2,22 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
-import { fetchQueryProducts, fetchSearchProducts, ProductType, selectProduct } from "../../store/slices/product";
+import { ProductType, selectProduct } from "../../store/slices/product";
 import { useNavigate } from 'react-router';
 import { selectUser, UserType } from '../../store/slices/User';
 import { addUserRate, fetchUserRate, selectRate } from '../../store/slices/rate';
-
-
-// user info
-// user info with same user info (up to 5)
-// fetch them all and randomize
-// age, taste, gender, question 
-
-// select one user among them and show rated products.
-
-
-
-
 
 function Recommendation() {
     const dispatch = useDispatch<AppDispatch>();
@@ -79,8 +67,6 @@ function Recommendation() {
                 dispatch(addUserRate({ user_id: recommendedUsers[index].id }))
             }
         }
-
-        console.log("Recommendation UseEffect")
     }, [selectedUser]
     )
 
@@ -90,31 +76,16 @@ function Recommendation() {
     let products: ProductType[] = [];
     const allProducts = useSelector(selectProduct)
 
-    console.log("selectedRates.length: ", rates.selectedRates.length)
-
-
-
     for (let index = 0; index < rates.selectedRates.length; index++) {
-
         const product = allProducts.products.find(product => product.id == rates.selectedRates[index].product_id);
-
         if (product && products.find(org => org.id == product.id)) continue;
-
         product && products.push(product)
-
         if (products.length == 4) break;
     }
-
-
-
-
-
 
     const onclickProductHandler = (product: ProductType) => {
         navigate(`/ProductDetail/${product.id}`)
     }
-
-
 
     return (
         <div className="RecommendationPage">
@@ -138,7 +109,6 @@ function Recommendation() {
             </div>
         </div>
     )
-
 }
 
 export default Recommendation;

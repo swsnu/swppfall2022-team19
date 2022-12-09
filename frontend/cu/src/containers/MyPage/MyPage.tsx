@@ -66,7 +66,7 @@ const MyPage = () => {
     return (
         <div className="MyPage">     
             <div className='modal'>{modalOn ? <SurveyModal setModalOn={setModalOn} /> : ''}</div>   
-            <Header />
+            {/* <Header /> */}
             <div className='MyPageTitle'>{selectedUserState.selectedUser?.username}님의 마이페이지</div>
             <div className = "ratedProducts">
                 <h1>{selectedUserState.selectedUser?.username}님이 평가한 제품({products.length})</h1>
@@ -93,7 +93,7 @@ const MyPage = () => {
 
             <div className = "likedComments">
                 <h1>{selectedUserState.selectedUser?.username}님이 좋아한 리뷰({comments.length}) </h1>
-                <div className = "Comments" > 
+                <div className = "Comments" title="Comments"> 
                 {comments.map(comment => (
                     <CommentBlock 
                     comment={comment.comment}

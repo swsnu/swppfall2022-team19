@@ -2,9 +2,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { ProductState } from "../../store/slices/product";
-import { getMockProductStore } from "../../test-utils/mock_JH";
-import Category from "./Category";
+import Recommendation from "./Recommendation";
 import { Props as ProductProps } from "../../components/ProductBlock/ProductBlock";
+import { UserState } from "../../store/slices/User";
+import { RateState } from "../../store/slices/rate";
+import { getMockStore } from "../../test-utils/mock_MJ";
 
 jest.mock("../../components/ProductBlock/ProductBlock", () => (props: ProductProps) => (
   <div title="spyProduct">
@@ -24,12 +26,14 @@ jest.mock("../../components/ProductBlock/ProductBlock", () => (props: ProductPro
                 </div>
 ));
 
-const stubInitialState: ProductState = {
+
+
+const productInitialState: ProductState = {
   products: [
     {    id:1,
       name: "TEST1",
       mainCategory: undefined!,
-      subCategory: "SubCategory", 
+      subCategory: "subCategory", 
       imageUrl: "IMAGE1",
       details: "DETAIL INFO",
       price: 1000,
@@ -41,7 +45,7 @@ const stubInitialState: ProductState = {
       {    id: 2,
         name: "TEST2",
         mainCategory: undefined!,
-        subCategory: "SubCategory", 
+        subCategory: "subCategory", 
         imageUrl: "IMAGE2",
         details: "DETAIL INFO",
         price: 2000,
@@ -55,7 +59,85 @@ const stubInitialState: ProductState = {
   selectedProduct: null,
   tags: [],
 };
-const mockStore = getMockProductStore({ product: stubInitialState
+
+const userInitialState: UserState = {
+    users: [
+        {
+            id: 1, 
+            username: "User1", 
+            password: "P1", 
+            gender: 1,
+            age: 1,
+            taste: "taste",
+            question: 1,
+            loginState: true,
+
+        }, {
+            id: 2,
+            username: "User2",
+            password: "P2",
+            gender: 1,
+            age: 1,
+            taste: "taste",
+            question: 1,
+            loginState: true,
+        }
+    ],
+    selectedUser: {
+        id: 2,
+        username: "User2",
+        password: "P2",
+        gender: 1,
+        age: 1,
+        taste: "taste",
+        question: 1,
+        loginState: true,
+    },
+}
+
+const rateInitialState: RateState = {
+    rates: [
+        {
+            id: 1,
+            user_id: 1,
+            username: "User1",
+            product_id: 1,
+            scores: "55555",
+            comment: "",
+            picture: "",
+            likedCount: 1,
+            created_at: 1,
+        },
+    ],
+    selectedRates: [        {
+        id: 1,
+        user_id: 1,
+        username: "User1",
+        product_id: 1,
+        scores: "55555",
+        comment: "",
+        picture: "",
+        likedCount: 1,
+        created_at: 1,
+    },],
+    selectedRate:         {
+        id: 1,
+        user_id: 1,
+        username: "User1",
+        product_id: 1,
+        scores: "55555",
+        comment: "",
+        picture: "",
+        likedCount: 1,
+        created_at: 1,
+    },
+    likedRates: [],
+}
+
+const mockStore = getMockStore({ 
+    product: productInitialState,
+    user: userInitialState,
+    rate: rateInitialState,
 });
 
 const mockNavigate = jest.fn();
@@ -76,48 +158,35 @@ jest.mock("react-redux", () => ({
   useState: () => mockSetState,
 }));
 
-describe("<Category />", () => {
-  let category: JSX.Element;
+describe("<Recommendation />", () => {
+  let recommendation: JSX.Element;
   beforeEach(() => {
     jest.clearAllMocks();
-    category = (
+    recommendation = (
       <Provider store={mockStore}>
         <MemoryRouter>
           <Routes>
-            <Route path="/" element={<Category />} />
+            <Route path="/" element={<Recommendation />} />
           </Routes>
         </MemoryRouter>
       </Provider>
     );
   });
 
-  it("should render Category", () => {
-    const { container } = render(category);
+  it("should render Recommendation", () => {
+    const { container } = render(recommendation);
     expect(container).toBeTruthy();
   });
 
-
-  it("should render sorting buttons", () => {
-    render(category);
-    const buttons = document.querySelectorAll('button');
-    expect(buttons).toHaveLength(5);
-
-    for (let index = 0; index < 5; index++) {
-      fireEvent.click(buttons[index]!);
-    }
-    expect(mockSetState).toHaveBeenCalledTimes(0);
-
-  });
-
   it("should render products", () => {
-    render(category);
-    const products = screen.getAllByTitle("productBlocks");
+    render(recommendation);
+    const products = screen.getAllByTitle("spyProduct");
     expect(products).toHaveLength(1);
   });
 
   it("should handle clickProduct", () => {
-    render(category);
-    const products = screen.getAllByTitle("productBlocks")[0];
+    render(recommendation);
+    const products = screen.getAllByTitle("spyProduct")[0];
     const title = products.querySelector(".productInfoBlock");
     fireEvent.click(title!);
     expect(mockNavigate).toHaveBeenCalledTimes(1);

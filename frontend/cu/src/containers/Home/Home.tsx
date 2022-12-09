@@ -41,16 +41,13 @@ const Home = () => {
     const allProducts = useSelector(selectProduct);
 
     const d = new Date();
-    const m = Math.floor(d.getSeconds()/60 * 13) + 2
-    const r = Math.floor(d.getSeconds()/60 * (m - 1))
-    console.log("m", m, "r", r)
-    const showProducts = allProducts.products.filter(product => (product.id % m === r))
-    const showLength = Math.floor(d.getSeconds()/60 * (showProducts.length - 4))
-    const showProducts5 = showProducts.slice(showLength, showLength + 4)
-
-
-
-
+    // const m = Math.floor(d.getSeconds()/60 * 13) + 2
+    // const r = Math.floor(d.getSeconds()/60 * (m - 1))
+    
+    // const showProducts = allProducts.products.filter(product => (product.id % m === r))
+    // const showLength = Math.floor(d.getSeconds()/60 * (showProducts.length - 4))
+    // const showProducts5 = showProducts.slice(showLength, showLength + 4)
+    const showProducts5 = allProducts.products;
 
     return (
         <div className="Home">
@@ -91,9 +88,9 @@ const Home = () => {
                         <p className="explain"> 비슷한 취향을 가진 <br /> 다른 사용자의 평가를 바탕으로 <br /> 추천해드려요 </p>
                     </div>
 
-                    <div className="recommendBox">
+                    {/* <div className="recommendBox">
                         <Recommendation></Recommendation>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
