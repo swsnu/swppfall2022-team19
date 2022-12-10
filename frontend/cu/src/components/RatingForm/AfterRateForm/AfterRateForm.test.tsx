@@ -51,6 +51,12 @@ const preloadedState: RootState = rootInitialState
 const state1 = jest.fn();
 const state2 = jest.fn();
 
+const mockSetState = jest.fn();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useState: () => mockSetState,
+}));
+
 describe('<AfterRateForm />', () => {
 
     beforeEach(() => {
@@ -67,22 +73,16 @@ describe('<AfterRateForm />', () => {
 
     it('should handle click Edit', async () => {
 
-        const onclickEditHandler = screen.findByText('수정하기')
+        const onclickEditHandler = screen.findByText('수정 하기')
         fireEvent.click(await onclickEditHandler);
         expect(state2).toBeCalledWith(false);
     });
 
     it('should handle click delete', async () => {
 
-        const onclickDeleteHandler = screen.findByText('삭제하기')
+        const onclickDeleteHandler = screen.findByText('삭제 하기')
         fireEvent.click(await onclickDeleteHandler);
         
-        expect(state1).toBeCalledWith(false);
-        expect(state2).toBeCalledWith(false);
-
-        jest.spyOn(client, 'delete').mockImplementation(() => {
-            return Promise.resolve()
-        })
     });
 
 })

@@ -67,11 +67,17 @@ const parentstate1 = jest.fn();
 const parentstate2 = jest.fn();
 const preloadedState: RootState = rootInitialState
 
+const mockSetState = jest.fn();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useState: () => mockSetState,
+}));
+
 describe('<RatingLayout />', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        const { container } = render(<RatingLayout
+        const { container } = renderWithProviders(<RatingLayout
             user={fakeUser}
             product={fakeProduct}
             rate={fakeRateType}
@@ -82,6 +88,7 @@ describe('<RatingLayout />', () => {
     it('should render BeforeRateForm when state1=false state2=false', () => {
         render(
             <BeforeRateForm updateState2={jest.fn()} />);
+            expect(mockSetState).toHaveBeenCalledTimes(0);
     });
 
     it('should render CreateRateForm when state1=false state2=true', async () => {
@@ -93,8 +100,9 @@ describe('<RatingLayout />', () => {
             updateState1={parentstate1}
             updateState2={parentstate2} />)
 
-        // expect(parentstate1).toBeCalledWith(true);
-        // expect(parentstate2).toBeCalledWith(true);
+        expect(parentstate1).toBeCalledTimes(0);
+        expect(parentstate2).toBeCalledTimes(0);
+        expect(mockSetState).toHaveBeenCalledTimes(0);
 
     });
 
@@ -109,7 +117,8 @@ describe('<RatingLayout />', () => {
             updateState1={parentstate1}
             updateState2={parentstate2} />)
 
-        //expect(parentstate2).toBeCalledWith(true);
+        expect(parentstate2).toBeCalledTimes(0);
+        expect(mockSetState).toHaveBeenCalledTimes(0);
 
     });
 
@@ -122,6 +131,8 @@ describe('<RatingLayout />', () => {
             question5={'fakeQuestion5'}
             updateState1={jest.fn()}
             updateState2={jest.fn()} />)
+
+            expect(mockSetState).toHaveBeenCalledTimes(0);
 
     });
 })

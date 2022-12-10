@@ -53,6 +53,12 @@ const preloadedState: RootState = rootInitialState
 const state1 = jest.fn();
 const state2 = jest.fn();
 
+const mockSetState = jest.fn();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useState: () => mockSetState,
+}));
+
 describe('<EditRateForm />', () => {
 
     beforeEach(() => {
@@ -75,21 +81,22 @@ describe('<EditRateForm />', () => {
     });
 
     it('should handle  save edit rate', async () => {
-        jest.spyOn(client, 'put').mockImplementation(() => {
-            return Promise.resolve({ fakeRate })
-        })
 
         const onclickSaveEditHandle = screen.findByText('수정 저장')
-        
         fireEvent.click(await onclickSaveEditHandle);
-
+        expect(mockSetState).toHaveBeenCalledTimes(0);
         // expect(state1).toBeCalledWith(true);
         // expect(state2).toBeCalledWith(true);
     })
 
     it('should handle delete picture', async () => {
-
         const deletePicture = screen.findByText('사진 삭제')
-        // fireEvent.click(await deletePicture);
+        fireEvent.click(await deletePicture);
+        expect(mockSetState).toHaveBeenCalledTimes(0);
+    })
+
+    it('should handle input change', () =>{
+        expect(screen.getByText('한줄평가')).toBeInTheDocument();
+        expect(screen.getByText('사진')).toBeInTheDocument();
     })
 })

@@ -9,6 +9,7 @@ import { RootState } from "../../../store";
 import { rootInitialState, renderWithProviders } from "../../../test-utils/mock";
 import client from "../../../store/api/client";
 import { configureStore } from "@reduxjs/toolkit";
+import HeartRating from "../HeartRate/HeartRating";
 
 const fakeUser: UserType = {
     id: 1,
@@ -55,6 +56,12 @@ const preloadedState: RootState = rootInitialState
 const state1 = jest.fn();
 const state2 = jest.fn();
 
+const mockSetState = jest.fn();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useState: () => mockSetState,
+}));
+
 describe('<CreateRateForm />', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -75,27 +82,35 @@ describe('<CreateRateForm />', () => {
     });
 
     it('should handle post rate', async () => {
-        jest.spyOn(client, 'post').mockImplementation(() => {
-            return Promise.resolve({ fakeRate })
-        })
 
         const onclickSaveHandler = screen.findByText('등록 하기')
-
-        // const inputs = container.getElementsByTagName('input')
-        // fireEvent.change(inputs[0], { target: { value: String(fakeUser.id) } })
-        // fireEvent.change(inputs[1], { target: { value: String(fakeProduct.id) } })
-        // fireEvent.change(inputs[2], { target: { value: fakeRate.scores } })
-        // fireEvent.change(inputs[3], { target: { value: fakeRate.comment } })
-        // fireEvent.change(inputs[4], { target: { file: fakeFile } })
         
         fireEvent.click(await onclickSaveHandler);
-        expect(state1).toBeCalledWith(true);
-        expect(state2).toBeCalledWith(true);
+        expect(state1).toBeCalledTimes(0);
+        expect(state2).toBeCalledTimes(0);
+        expect(mockSetState).toHaveBeenCalledTimes(0);
     })
 
     it('should handle delete picture', async () => {
 
         const deletePicture = screen.findByText('사진 삭제')
-        // fireEvent.click(await deletePicture);
+        fireEvent.click(await deletePicture);
+        expect(mockSetState).toHaveBeenCalledTimes(0);
+    })
+
+    it("should render heartRating without errors", async () => {
+        const { container } = render(<HeartRating
+            score={3}
+            updateScore={jest.fn()}
+        />);
+        const rating = container.getElementsByClassName("heart");
+        expect(rating.length).toBe(5);
+
+
+        const question1 = screen.findByText('맛이 만족스럽나요?')
+        fireEvent.click(await question1);
+        expect(mockSetState).toHaveBeenCalledTimes(0);
+
+
     })
 })
