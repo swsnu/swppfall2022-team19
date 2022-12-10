@@ -22,3 +22,5 @@ tomli==2.0.1
 tomlkit==0.11.6
 typing_extensions==4.4.0
 wrapt==1.14.1
+mysqlclient==1.4.6
+pymysql==0.10.1
