@@ -113,6 +113,6 @@ describe('product reducers', () => {
     it('should handle fetchProduct', async () => {
         axios.get = jest.fn().mockResolvedValue({ data: product1 })
         await store.dispatch(fetchProduct(1))
-        expect(store.getState().product.selectedProduct).toEqual([product1])
+        expect(store.getState().product.selectedProduct).toEqual(product1)
       })
 })
