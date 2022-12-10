@@ -12,7 +12,7 @@ export interface CProps{
 
 const CommentBlock = (props: CProps) => {  
     return (
-        <div className="commentBlock" onClick={props.clickCommentBlock!} >
+        <div className="commentBlock" title = "Comment" onClick={props.clickCommentBlock!} >
                 
                 <div className="productBlockComment">
                     <ProductBlock 

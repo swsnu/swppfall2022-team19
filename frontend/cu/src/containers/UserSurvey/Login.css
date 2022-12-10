@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Pretendard-Regular';
     font-style: normal;
-    src: url("/usr/app/src/fonts/Pretendard-Regular.ttf");
+    src: url("../../fonts/Pretendard-Regular.ttf");
 }
 
 *{

@@ -68,20 +68,6 @@ export const fetchAllProducts = createAsyncThunk(
     }
   )
 
-
-  //update information of score 
-  export const updateProduct = createAsyncThunk(
-    'product/updateProduct',
-    async (product: Pick<ProductType, 'id'|'averageScore'>, { dispatch }) => { //only updates 
-      const { id, averageScore } = product
-
-      const response = await client.put(`/api/product/${id}/`, product)
-      dispatch(productActions.updateProduct(response.data))
-      return response.data
-    }
-  )
-
-//product is not created, it's stored in db
   const initialState: ProductState = {
     products: [],
     selectedProduct: null,
@@ -142,19 +128,6 @@ export const fetchAllProducts = createAsyncThunk(
     name: "product",
     initialState,
     reducers: {
-        updateProduct: (
-            state, action: PayloadAction<ProductType>
-          ) => {
-            state.products = state.products.map(
-              product => (product.id === action.payload.id) ? action.payload : product
-            )
-          },
-          
-          noProduct: (
-            state,
-          ) => {
-            state.products = []
-          },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchQueryProducts.fulfilled, (state, action) => {

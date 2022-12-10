@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { ProductState } from "../../store/slices/product";
 import { getMockProductStore } from "../../test-utils/mock_JH";
-import Category from "./Category";
+import Home from "./Home";
 import { Props as ProductProps } from "../../components/ProductBlock/ProductBlock";
 
 jest.mock("../../components/ProductBlock/ProductBlock", () => (props: ProductProps) => (
@@ -29,7 +29,7 @@ const stubInitialState: ProductState = {
     {    id:1,
       name: "TEST1",
       mainCategory: undefined!,
-      subCategory: "SubCategory", 
+      subCategory: "subCategory", 
       imageUrl: "IMAGE1",
       details: "DETAIL INFO",
       price: 1000,
@@ -41,7 +41,7 @@ const stubInitialState: ProductState = {
       {    id: 2,
         name: "TEST2",
         mainCategory: undefined!,
-        subCategory: "SubCategory", 
+        subCategory: "subCategory", 
         imageUrl: "IMAGE2",
         details: "DETAIL INFO",
         price: 2000,
@@ -76,48 +76,35 @@ jest.mock("react-redux", () => ({
   useState: () => mockSetState,
 }));
 
-describe("<Category />", () => {
-  let category: JSX.Element;
+describe("<Home />", () => {
+  let home: JSX.Element;
   beforeEach(() => {
     jest.clearAllMocks();
-    category = (
+    home = (
       <Provider store={mockStore}>
         <MemoryRouter>
           <Routes>
-            <Route path="/" element={<Category />} />
+            <Route path="/" element={<Home />} />
           </Routes>
         </MemoryRouter>
       </Provider>
     );
   });
 
-  it("should render Category", () => {
-    const { container } = render(category);
+  it("should render Home", () => {
+    const { container } = render(home);
     expect(container).toBeTruthy();
   });
 
-
-  it("should render sorting buttons", () => {
-    render(category);
-    const buttons = document.querySelectorAll('button');
-    expect(buttons).toHaveLength(5);
-
-    for (let index = 0; index < 5; index++) {
-      fireEvent.click(buttons[index]!);
-    }
-    expect(mockSetState).toHaveBeenCalledTimes(0);
-
-  });
-
   it("should render products", () => {
-    render(category);
-    const products = screen.getAllByTitle("productBlocks");
-    expect(products).toHaveLength(1);
+    render(home);
+    const products = screen.getAllByTitle("spyProduct");
+    expect(products).toHaveLength(2);
   });
 
   it("should handle clickProduct", () => {
-    render(category);
-    const products = screen.getAllByTitle("productBlocks")[0];
+    render(home);
+    const products = screen.getAllByTitle("spyProduct")[0];
     const title = products.querySelector(".productInfoBlock");
     fireEvent.click(title!);
     expect(mockNavigate).toHaveBeenCalledTimes(1);

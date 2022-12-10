@@ -4,6 +4,8 @@ import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { ProductStore, ProductRootState } from "../store/index";
 import productReducer from "../store/slices/product";
+import rateReducer from '../store/slices/rate'
+
 
 import { UserRootState } from "../store/index";
 import userReducer from "../store/slices/User";
@@ -16,12 +18,14 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
 
 export const getMockProductStore = (preloadedState?: PreloadedState<ProductRootState>) => {
   return configureStore({
-    reducer: { product: productReducer,
+    reducer: {
+      user: userReducer,
+      product: productReducer,
+      rate: rateReducer,
      },
     preloadedState,
   });
 };
-
 
 
 export function renderWithProviders(

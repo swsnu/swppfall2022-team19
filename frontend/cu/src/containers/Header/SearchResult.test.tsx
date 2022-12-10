@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { ProductState } from "../../store/slices/product";
 import { getMockProductStore } from "../../test-utils/mock_JH";
-import Category from "./Category";
+import SearchResult from "./SearchResult";
 import { Props as ProductProps } from "../../components/ProductBlock/ProductBlock";
 
 jest.mock("../../components/ProductBlock/ProductBlock", () => (props: ProductProps) => (
@@ -28,8 +28,8 @@ const stubInitialState: ProductState = {
   products: [
     {    id:1,
       name: "TEST1",
-      mainCategory: undefined!,
-      subCategory: "SubCategory", 
+      mainCategory: "Hello",
+      subCategory: "subCategory", 
       imageUrl: "IMAGE1",
       details: "DETAIL INFO",
       price: 1000,
@@ -40,8 +40,8 @@ const stubInitialState: ProductState = {
     },
       {    id: 2,
         name: "TEST2",
-        mainCategory: undefined!,
-        subCategory: "SubCategory", 
+        mainCategory: "Hello",
+        subCategory: "subCategory", 
         imageUrl: "IMAGE2",
         details: "DETAIL INFO",
         price: 2000,
@@ -70,54 +70,42 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
 
-const mockSetState = jest.fn();
-jest.mock("react-redux", () => ({
-  ...jest.requireActual("react-redux"),
-  useState: () => mockSetState,
-}));
 
-describe("<Category />", () => {
-  let category: JSX.Element;
+describe("<SearchResult />", () => {
+  let searchResult: JSX.Element;
   beforeEach(() => {
     jest.clearAllMocks();
-    category = (
+    searchResult = (
       <Provider store={mockStore}>
         <MemoryRouter>
           <Routes>
-            <Route path="/" element={<Category />} />
+            <Route path="/" element={<SearchResult />} />
           </Routes>
         </MemoryRouter>
       </Provider>
     );
   });
 
-  it("should render Category", () => {
-    const { container } = render(category);
+  it("should render SearchResult", () => {
+    const { container } = render(searchResult);
     expect(container).toBeTruthy();
   });
 
-
-  it("should render sorting buttons", () => {
-    render(category);
-    const buttons = document.querySelectorAll('button');
-    expect(buttons).toHaveLength(5);
-
-    for (let index = 0; index < 5; index++) {
-      fireEvent.click(buttons[index]!);
-    }
-    expect(mockSetState).toHaveBeenCalledTimes(0);
-
+  it("should render products", () => {
+    render(searchResult);
+    const products = screen.getAllByTitle("spyProduct");
+    expect(products).toHaveLength(2);
   });
 
-  it("should render products", () => {
-    render(category);
-    const products = screen.getAllByTitle("productBlocks");
+  it("should render message", () => {
+    render(searchResult);
+    const products = screen.getAllByText("찾으시는 상품과 일치하는 상품이 없습니다. 이런 제품은 어떠신가요?");
     expect(products).toHaveLength(1);
   });
 
   it("should handle clickProduct", () => {
-    render(category);
-    const products = screen.getAllByTitle("productBlocks")[0];
+    render(searchResult);
+    const products = screen.getAllByTitle("spyProduct")[0];
     const title = products.querySelector(".productInfoBlock");
     fireEvent.click(title!);
     expect(mockNavigate).toHaveBeenCalledTimes(1);
