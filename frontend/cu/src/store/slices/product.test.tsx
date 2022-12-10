@@ -13,6 +13,7 @@ describe('product reducers', () => {
         details: "productDetail1",
         price: 1000,
         newProduct: true,
+        rateCount: 0,
         tags: ["product1Tag1, product1Tag2"],
         averageScore: 5.0
     }
@@ -24,6 +25,7 @@ describe('product reducers', () => {
         imageUrl: "productImageUrl2",
         details: "productDetail2",
         price: 2000,
+        rateCount: 0,
         newProduct: false,
         tags: ["product2Tag1, product2Tag2"],
         averageScore: 3.0
@@ -96,21 +98,16 @@ describe('product reducers', () => {
     it('should handle fetchQueryProduct', async () => {
         axios.get = jest.fn().mockResolvedValue({ data: [product1] })
         await store.dispatch(fetchQueryProducts({ mainCategory: "productMainCategory1" }))
-        expect(store.getState().product.products).toEqual([])
+        expect(store.getState().product.products).toEqual([product1])
     })
     it('should handle fetchSearchProduct', async () => {
         axios.get = jest.fn().mockResolvedValue({ data: [product1] })
         await store.dispatch(fetchSearchProducts({ name: "productMainCategory1" }))
-        expect(store.getState().product.products).toEqual([])
-    })
-    it('should handle fetchAllProduct', async () => {
-        axios.get = jest.fn().mockResolvedValue({ data: [product1] })
-        await store.dispatch(fetchAllProducts())
-        expect(store.getState().product.products).toEqual([])
+        expect(store.getState().product.products).toEqual([product1])
     })
     it('should handle fetchProduct', async () => {
         axios.get = jest.fn().mockResolvedValue({ data: product1 })
         await store.dispatch(fetchProduct(1))
-        expect(store.getState().product.selectedProduct).toEqual(null)
+        expect(store.getState().product.selectedProduct).toEqual(product1)
       })
 })
