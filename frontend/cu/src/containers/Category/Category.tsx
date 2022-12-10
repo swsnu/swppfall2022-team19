@@ -12,7 +12,7 @@ import { fetchRates } from "../../store/slices/rate";
 
 function Category() {
 
-    const url = useLocation();    
+    const url = useLocation();
     const { mainCategory } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -20,10 +20,10 @@ function Category() {
     const allProducts = useSelector(selectProduct)
     let filteredProducts: ProductType[] = allProducts.products
 
-    if ( mainCategory != "전체") {
+    if (mainCategory !== "전체") {
         filteredProducts = allProducts.products.filter(product => product.mainCategory === mainCategory)
     }
-    else filteredProducts = allProducts.products.filter(product => product )
+    else filteredProducts = allProducts.products.filter(product => product)
 
 
     useLayoutEffect(() => {
@@ -35,12 +35,12 @@ function Category() {
 
     const [products, setProducts] = useState<ProductType[]>([...filteredProducts]);
 
-    if(products.length == 0 && filteredProducts.length != 0) {
+    if (products.length === 0 && filteredProducts.length !== 0) {
         setProducts(filteredProducts);
     }
 
     const onclickProductHandler = (product: ProductType) => {
-        navigate(`/ProductDetail/${product.id}`)   
+        navigate(`/ProductDetail/${product.id}`)
     }
 
     const HighScoreButtonClick = async () => {
@@ -73,18 +73,21 @@ function Category() {
         <div className="CategoryPage">
             <Header />
 
-            <div className="categoryBox">
-                <h1 className="category">{mainCategory}</h1>
+            <div className="categoryHeader">
+                <div className="categoryBox">
+                    <h1 className="category">{mainCategory}</h1>
+                </div>
+
+                <div className="sorting" >
+                    <button className="sortingButton" title="sortingButtons" onClick={() => HighScoreButtonClick()}>높은 평가 순</button>  │
+                    <button className="sortingButton" title="sortingButtons" onClick={() => LowScoreButtonClick()}>낮은 평가 순</button>  │
+                    <button className="sortingButton" title="sortingButtons" onClick={() => RatedButtonClick()}>평가 많은 순</button>  │
+                    <button className="sortingButton" title="sortingButtons" onClick={() => ExpensiveButtonClick()}>가격 높은 순</button>  │
+                    <button className="sortingButton" title="sortingButtons" onClick={() => CheapButtonClick()} >가격 낮은 순</button>
+
+                </div>
             </div>
 
-            <div className = "sorting" >
-                <button className = "sortingButton" title = "sortingButtons" onClick={() => HighScoreButtonClick()}>높은 평가 순</button> |
-                <button  className = "sortingButton" title = "sortingButtons" onClick={() => LowScoreButtonClick()}>낮은 평가 순</button> |
-                <button className = "sortingButton" title = "sortingButtons" onClick={() => RatedButtonClick()}>평가 많은 순</button> |
-                <button className = "sortingButton" title = "sortingButtons" onClick={() => ExpensiveButtonClick()}>가격 높은 순</button> |
-                <button className = "sortingButton" title = "sortingButtons" onClick={() => CheapButtonClick()} >가격 낮은 순</button>
-
-            </div>
 
             <div title="productBlocks" className="productBlocks">
                 {products.map(product => (
