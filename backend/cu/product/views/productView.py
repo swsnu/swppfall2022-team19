@@ -28,7 +28,7 @@ class ProductViewSet(viewsets.GenericViewSet):
         products = Product.objects.all()
         serializer = self.get_serializer(products, many=True)
         data = serializer.data              # dictionary format not json yet
-        print("/api/product")
+        #print("/api/product")
         return Response(data, status=200)   # json
 
 

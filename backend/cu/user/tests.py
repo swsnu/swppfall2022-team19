@@ -7,12 +7,14 @@ from .models import User
 class UserTestCase(TestCase):
     def setUp(self) -> None:
         newUser1 = User.objects.create_user(
+            id=1,
             username="newUser1", password="12345",
             gender=1, age=1, taste="A", question=1
             # 남성, ~10대, "간편식사", "맛"
         )
 
         newUser2 = User.objects.create_user(
+            id=2,
             username="newUser2", password="12345",
             gender=1, age=2, taste="AB", question=2
             # 남성, 20대, "간편식사/과자류", "가성비"

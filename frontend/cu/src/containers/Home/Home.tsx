@@ -9,7 +9,7 @@ import { fetchAllProducts, productActions, ProductType, selectProduct } from "..
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import Recommendation from './Recommendation';
-import BestandMost from './BestandMost';
+
 import { fetchRates } from '../../store/slices/rate';
 
 
