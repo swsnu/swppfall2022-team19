@@ -96,6 +96,22 @@ DATABASES = {
 }
 
 
+# DATABASES = { 
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', # mysql 엔진 설정
+#         'NAME': 'cu_data', # 데이터베이스 이름
+#         'USER': 'root', # 데이터베이스 연결시 사용할 유저 이름
+#         'PASSWORD':'root',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             'charset': 'utf8mb4', # 테이블 생성 자동으로 해줄때 쓸 인코딩,, 이거안하면 밑에꺼해도 효과 엑스
+#             'use_unicode': True,
+#         },
+#     }
+# }
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
