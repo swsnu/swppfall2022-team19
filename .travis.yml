@@ -27,6 +27,10 @@ jobs:
         - pip install djangorestframework-simplejwt
         - yarn global add coveralls
         - gem install coveralls-lcov
+        - sudo apt-get install mysql-server
+        - sudo apt-get install libmysqlclient-dev
+        - sudo pip install mysqlclient
+        - sudo pip install pymysql
         - cd frontend
         - cd cu
         - yarn install
