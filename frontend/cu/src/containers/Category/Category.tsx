@@ -1,39 +1,47 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
-import { fetchQueryProducts, ProductType, selectProduct } from "../../store/slices/product";
+import { ProductType, selectProduct, fetchAllProducts } from '../../store/slices/product';
 import Header from "../Header/Header"
 import "./Category.css"
-import QueryString from 'qs'
+
+import { fetchRates } from "../../store/slices/rate";
 
 
 function Category() {
 
-    const url = useLocation();
+    const url = useLocation();    
     const { mainCategory } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
     const allProducts = useSelector(selectProduct)
-    let filteredProducts: ProductType[];
+    let filteredProducts: ProductType[] = allProducts.products
 
-    if ( mainCategory != "전체") 
+    if ( mainCategory != "전체") {
         filteredProducts = allProducts.products.filter(product => product.mainCategory === mainCategory)
+    }
     else filteredProducts = allProducts.products.filter(product => product )
 
-    const [products, setProducts] = useState<ProductType[]>(filteredProducts);
 
+    useLayoutEffect(() => {
+        dispatch(fetchAllProducts());
+        dispatch(fetchRates());
 
-    const onclickProductHandler = (product: ProductType) => {
-        navigate(`/ProductDetail/${product.id}`)
-        
-    }
-
-    useEffect(() => {
         setProducts(filteredProducts);
     }, [url])
 
+    const [products, setProducts] = useState<ProductType[]>([...filteredProducts]);
+
+    if(products.length == 0 && filteredProducts.length != 0) {
+        setProducts(filteredProducts);
+    }
+
+    const onclickProductHandler = (product: ProductType) => {
+        navigate(`/ProductDetail/${product.id}`)   
+    }
 
     const HighScoreButtonClick = async () => {
         filteredProducts.sort((a, b) => (b.averageScore) - (a.averageScore))
@@ -46,25 +54,20 @@ function Category() {
         setProducts([...filteredProducts])
     }
 
-
     const RatedButtonClick = async () => {
         filteredProducts.sort((a, b) => (b.rateCount) - (a.rateCount))
         setProducts([...filteredProducts])
     }
 
-
     const ExpensiveButtonClick = async () => {
         filteredProducts.sort((a, b) => (b.price) - (a.price))
         setProducts([...filteredProducts])
-
     }
-
 
     const CheapButtonClick = async () => {
         filteredProducts.sort((a, b) => (a.price) - (b.price))
         setProducts([...filteredProducts])
     }
-
 
     return (
         <div className="CategoryPage">
@@ -74,12 +77,12 @@ function Category() {
                 <h1 className="category">{mainCategory}</h1>
             </div>
 
-            <div className = "sorting">
-                <button className = "sortingButton" onClick={() => HighScoreButtonClick()}>높은 평가 순</button> |
-                <button  className = "sortingButton" onClick={() => LowScoreButtonClick()}>낮은 평가 순</button> |
-                <button className = "sortingButton" onClick={() => RatedButtonClick()}>평가 많은 순</button> |
-                <button className = "sortingButton" onClick={() => ExpensiveButtonClick()}>가격 높은 순</button> |
-                <button className = "sortingButton" onClick={() => CheapButtonClick()} >가격 낮은 순</button>
+            <div className = "sorting" >
+                <button className = "sortingButton" title = "sortingButtons" onClick={() => HighScoreButtonClick()}>높은 평가 순</button> |
+                <button  className = "sortingButton" title = "sortingButtons" onClick={() => LowScoreButtonClick()}>낮은 평가 순</button> |
+                <button className = "sortingButton" title = "sortingButtons" onClick={() => RatedButtonClick()}>평가 많은 순</button> |
+                <button className = "sortingButton" title = "sortingButtons" onClick={() => ExpensiveButtonClick()}>가격 높은 순</button> |
+                <button className = "sortingButton" title = "sortingButtons" onClick={() => CheapButtonClick()} >가격 낮은 순</button>
 
             </div>
 
@@ -102,7 +105,6 @@ function Category() {
             </div>
         </div>
     )
-
 }
 
 export default Category
