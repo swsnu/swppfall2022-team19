@@ -1,7 +1,6 @@
 import { EnhancedStore, ThunkMiddleware, AnyAction, configureStore } from '@reduxjs/toolkit'
-import { waitFor } from '@testing-library/react'
 import axios from 'axios'
-import reducer, { ProductState, fetchProduct, fetchQueryProducts, updateProduct, fetchSearchProducts, fetchAllProducts } from './product'
+import reducer, { ProductState, fetchProduct, fetchQueryProducts, fetchSearchProducts, fetchAllProducts } from './product'
 
 describe('product reducers', () => {
     let store: EnhancedStore<{ product: ProductState }, AnyAction, [ThunkMiddleware<{ product: ProductState }, AnyAction, undefined>]>
