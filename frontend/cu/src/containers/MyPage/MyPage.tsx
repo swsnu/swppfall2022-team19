@@ -25,9 +25,9 @@ const MyPage = () => {
     const selectedUserState = useSelector(selectUser);
 
 
-    useEffect(()=>{
-        dispatch(fetchUserRate({user_id : Number(user_id) }));
-        dispatch(fetchUserLikedRate({user_id: Number(user_id)}))
+    useEffect(() => {
+        dispatch(fetchUserRate({ user_id: Number(user_id) }));
+        dispatch(fetchUserLikedRate({ user_id: Number(user_id) }))
 
         return () => {
             dispatch(fetchRates())
@@ -44,16 +44,16 @@ const MyPage = () => {
 
     if (rates.selectedRates != undefined) {
 
-    for (let index = 0; index < rates.selectedRates.length; index++) {
-        if (!products.find(product => product.id === rates.selectedRates[index].product_id)){
-            const product = allProducts.products.find(product => product.id == rates.selectedRates[index].product_id)!;
-            products.push(product);
+        for (let index = 0; index < rates.selectedRates.length; index++) {
+            if (!products.find(product => product.id === rates.selectedRates[index].product_id)) {
+                const product = allProducts.products.find(product => product.id == rates.selectedRates[index].product_id)!;
+                products.push(product);
+            }
         }
-    }
     }
 
     const comments: RateType[] = rates.likedRates
-    
+
     const onOpenModal = () => {
         setModalOn(!modalOn);
     }
@@ -64,45 +64,45 @@ const MyPage = () => {
     }
 
     return (
-        <div className="MyPage">     
-            <div className='modal'>{modalOn ? <SurveyModal setModalOn={setModalOn} /> : ''}</div>   
+        <div className="MyPage">
+            <div className='modal'>{modalOn ? <SurveyModal setModalOn={setModalOn} /> : ''}</div>
             {/* <Header /> */}
             <div className='MyPageTitle'>{selectedUserState.selectedUser?.username}님의 마이페이지</div>
-            <div className = "ratedProducts">
+            <div className="ratedProducts">
                 <h1>{selectedUserState.selectedUser?.username}님이 평가한 제품({products.length})</h1>
 
-                <div className= "productBlocks">
+                <div className="productBlocks_myPage">
                     {products.map(product => (
-                            <div key={product.id}>
-                                <ProductBlock
-                                    product_id = {product.id}
-                                    name = {product.name}
-                                    imageUrl = {product.imageUrl}
-                                    details= {product.details}
-                                    price = {product.price}
-                                    newProduct = {product.newProduct}
-                                    averageScore = {product.averageScore}
-                                    rateCount={product.rateCount}
-                                    clickProduct ={() => navigate(`/ProductDetail/${product.id}`)}
-                                />
-                            </div>
-                        ))}
+                        <div key={product.id}>
+                            <ProductBlock
+                                product_id={product.id}
+                                name={product.name}
+                                imageUrl={product.imageUrl}
+                                details={product.details}
+                                price={product.price}
+                                newProduct={product.newProduct}
+                                averageScore={product.averageScore}
+                                rateCount={product.rateCount}
+                                clickProduct={() => navigate(`/ProductDetail/${product.id}`)}
+                            />
+                        </div>
+                    ))}
                 </div>
-                { products.length===0 && <div className='alert_no_ratedProduct'>평가한 제품이 없습니다</div>}
+                {products.length === 0 && <div className='alert_no_ratedProduct'>평가한 제품이 없습니다</div>}
             </div>
 
-            <div className = "likedComments">
+            <div className="likedComments">
                 <h1>{selectedUserState.selectedUser?.username}님이 좋아한 리뷰({comments.length}) </h1>
-                <div className = "Comments" title="Comments"> 
-                {comments.map(comment => (
-                    <CommentBlock 
-                    comment={comment.comment}
-                    productBlock={allProducts.products.find(product => product.id == comment.product_id)!}                        
-                    clickCommentBlock = { () => onclickCommentHandler(comment) }
-                    ></CommentBlock>
-                ))}
+                <div className="Comments" title="Comments">
+                    {comments.map(comment => (
+                        <CommentBlock
+                            comment={comment.comment}
+                            productBlock={allProducts.products.find(product => product.id === comment.product_id)!}
+                            clickCommentBlock={() => onclickCommentHandler(comment)}
+                        ></CommentBlock>
+                    ))}
                 </div>
-                { comments.length===0 && <div className='alert_no_likedComment'>좋아요한 리뷰가 없습니다</div>}
+                {comments.length === 0 && <div className='alert_no_likedComment'>좋아요한 리뷰가 없습니다</div>}
             </div>
             <button className="modalOpenButton" onClick={onOpenModal}>사용자 정보 수정하기</button>
         </div>
