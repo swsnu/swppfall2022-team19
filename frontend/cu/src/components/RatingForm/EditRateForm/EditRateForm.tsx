@@ -106,7 +106,7 @@ function EditRateForm(props: Props) {
                     <div className='picture'>
                         <div className='picture_first_row'>
                         <div>사진</div>
-                        <button onClick={() => onclickDeleteImageHandler()}>사진삭제</button>
+                        <button onClick={() => onclickDeleteImageHandler()}>사진 삭제</button>
                         </div>
                         {previousImage && 
                             <img src={previousImage} height={'100px'} width={110} />}
