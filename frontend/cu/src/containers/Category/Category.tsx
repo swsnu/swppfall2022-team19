@@ -8,6 +8,7 @@ import Header from "../Header/Header"
 import "./Category.css"
 
 import { fetchRates } from "../../store/slices/rate";
+import BestandMost from "../Home/BestandMost";
 
 
 function Category() {
@@ -78,15 +79,18 @@ function Category() {
                     <h1 className="category">{mainCategory}</h1>
                 </div>
 
+
                 <div className="sorting" >
                     <button className="sortingButton" title="sortingButtons" onClick={() => HighScoreButtonClick()}>높은 평가 순</button>  │
                     <button className="sortingButton" title="sortingButtons" onClick={() => LowScoreButtonClick()}>낮은 평가 순</button>  │
                     <button className="sortingButton" title="sortingButtons" onClick={() => RatedButtonClick()}>평가 많은 순</button>  │
                     <button className="sortingButton" title="sortingButtons" onClick={() => ExpensiveButtonClick()}>가격 높은 순</button>  │
                     <button className="sortingButton" title="sortingButtons" onClick={() => CheapButtonClick()} >가격 낮은 순</button>
-
                 </div>
+
             </div>
+
+            {mainCategory ==="전체" && <BestandMost></BestandMost>}
 
 
             <div title="productBlocks" className="productBlocks">
@@ -111,4 +115,3 @@ function Category() {
 }
 
 export default Category
-
