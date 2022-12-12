@@ -1,0 +1,50 @@
+
+.Best{
+    padding: 6vh 50px 5vh;
+    height: 100%;
+    background-color: white;
+}
+
+.productInfoWrap{
+    display: flex;
+    margin-top: 3vh;
+    height: 55vh;
+}
+
+.productBlockBest{
+    width: 38%;
+    min-width: 200px;
+    max-width: 270px;
+}
+
+.BestProductComment{
+    padding: 0 10vw 0 6vw;
+    height: 100%;
+    overflow-y:auto;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.bestCommentBox{
+    width: 100%;
+    margin-bottom: 8%;
+}
+
+.smalltitle{
+    margin-bottom: 3%;
+}
+
+.smallComment{
+    
+}
+
+
+/* Most */
+.Most{
+    padding: 6vh 50px 5vh;
+    height: 60vh;
+    background-color: #f6faf6;
+}

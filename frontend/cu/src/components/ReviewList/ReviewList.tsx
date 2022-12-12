@@ -1,6 +1,5 @@
 // Reviews are shown in a list
 // sort: 인기순, 최신순, 사진리뷰(만) <- 3 buttons
-// default is in 인기순.
 
 import { useState, useEffect } from 'react';
 import { RateType } from "../../store/slices/rate";
@@ -28,7 +27,7 @@ export default function ReviewList (props: Props){
 
     const likeButtonClick = async () => {
         filteredRates.sort((a, b) => (b.likedCount) - (a.likedCount))
-        setRates(filteredRates.reverse());
+        setRates([...filteredRates]);
 
         console.log("인기순");
         console.log(filteredRates.reverse());
@@ -36,7 +35,7 @@ export default function ReviewList (props: Props){
 
     const recentButtonClick = async () => {
         filteredRates.sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf())
-        setRates(filteredRates.reverse());
+        setRates([...filteredRates]);
 
         console.log("최신순");
         console.log(filteredRates.reverse());
@@ -47,7 +46,7 @@ export default function ReviewList (props: Props){
         // reviews with picture & recent ordering
         const ratesWithPictures = filteredRates.filter((rate) => rate.picture !== null )
         .sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf())
-        setRates(ratesWithPictures.reverse());
+        setRates([...ratesWithPictures]);
 
         console.log("사진 있는 것만");
         console.log(ratesWithPictures.reverse());

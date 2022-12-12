@@ -81,22 +81,22 @@ function ProductDetailPage() {
   return (
     <div className="productDetailPage">
       <Header/>
+      <div className='productRateWrapper'>
       <div className="productRate">
-          <div className='productblock' key={1}>
-            <img className="productImage" src={selectedProduct?.imageUrl} alt="Product"/>
-            <div>{selectedProduct?.name}</div>
-            <div>{selectedProduct?.mainCategory}</div>
-            <div>{selectedProduct?.price}원</div>
-           
-            <div className='productblock_detail'> {selectedProduct?.details}</div>
-          </div>
+        <div className='productblock' key={1}>
+          <img className="product_image" src={selectedProduct?.imageUrl} alt="Product"/>
+          <div>{selectedProduct?.name}</div>
+          <div>{selectedProduct?.mainCategory}</div>
+          <div>{selectedProduct?.price}원</div>
+          <div className='productblock_detail'> {selectedProduct?.details}</div>
+        </div>
         <div className='ratingform' key={2}>
           {
             userState.selectedUser && selectedProduct &&
             <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} recallRateState1={updateRecall1} recallRateState2={updateRecall2}/>
           }
         </div>
-
+      </div>
       </div>
       {<div className="scoresReviews">
         <div key={3}>
