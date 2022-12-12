@@ -33,6 +33,8 @@ jobs:
         - sudo pip install mysqlclient
         - sudo pip install pymysql
         - sudo service mysql start
+        - mysql -u root -p
+        - ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'
         - cd frontend
         - cd cu
         - yarn install
