@@ -9,12 +9,14 @@ class BlogTestCase(TestCase):
     def setUp(self) -> None:
 
         newUser1 = User.objects.create_user(
+            id = 1,
             username="newUser1", password="12345",
             gender=1, age=1, taste="A", question=1
             # 남성, ~10대, "간편식사", "맛"
         )
 
         벌교꼬막비빔밥 = Product.objects.create(
+            id = 1,
             name = "벌교꼬막비빔밥",
             mainCategory = "간편식사",
             subCategory = "도시락",
@@ -28,6 +30,7 @@ class BlogTestCase(TestCase):
         )
 
         자이언트일품닭강정 = Product.objects.create(
+            id = 2,
             name = "자이언트일품닭강정",
             mainCategory = "간편식사",
             subCategory = "도시락",
