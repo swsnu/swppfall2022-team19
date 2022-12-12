@@ -100,7 +100,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # mysql 엔진 설정
         'NAME': 'cu_data', # 데이터베이스 이름
         'USER': 'root', # 데이터베이스 연결시 사용할 유저 이름
-        'PASSWORD':'root',
+        # 'PASSWORD':'root',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
