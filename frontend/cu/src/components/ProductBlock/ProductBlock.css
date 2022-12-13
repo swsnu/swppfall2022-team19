@@ -10,8 +10,7 @@
 
     align-items: center;
     justify-content: space-around;
-    border-radius: 30px;  
-    
+    border-radius: 30px;
 }
 
 .productA{
@@ -54,5 +53,10 @@
 }
 
 .productName{
+    font-weight: bold;
+}
+
+.star::first-letter{
+    color: green;
     font-weight: bold;
 }

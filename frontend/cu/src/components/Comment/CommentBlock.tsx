@@ -15,13 +15,15 @@ const CommentBlock = (props: CProps) => {
         <div className="commentBlock" onClick={props.clickCommentBlock!} >
                 <div className="productBlockComment">
                     <ProductBlock 
-                    product_id={props.productBlock.id} 
-                    name={props.productBlock.name} 
-                    imageUrl={props.productBlock.imageUrl} 
-                    details={props.productBlock.details} 
-                    price={props.productBlock.price} 
-                    newProduct={true} 
-                    averageScore={props.productBlock.averageScore}                    
+                    product_id={props.productBlock.id}
+                    name={props.productBlock.name}
+                    imageUrl={props.productBlock.imageUrl}
+                    details={props.productBlock.details}
+                    price={props.productBlock.price}
+                    newProduct={true}
+                    rateCount={props.productBlock.rateCount}
+                    averageScore={props.productBlock.averageScore} 
+                    
                     ></ProductBlock>   
                 </div>
 

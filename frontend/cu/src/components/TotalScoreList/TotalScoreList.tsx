@@ -87,7 +87,7 @@ export default function TotalScoreList(props: Props) {
     let scoreCnt3 = [0, 0, 0, 0, 0, 0];
     filteredRates.forEach((rv) => {
         score3 += Number(rv.scores.charAt(2));
-        switch (Number(rv.scores.charAt(0))) {
+        switch (Number(rv.scores.charAt(2))) {
             case 0:
                 scoreCnt3[0]++;
                 break;
@@ -114,7 +114,7 @@ export default function TotalScoreList(props: Props) {
     let scoreCnt4 = [0, 0, 0, 0, 0, 0];
     filteredRates.forEach((rv) => {
         score4 += Number(rv.scores.charAt(3));
-        switch (Number(rv.scores.charAt(0))) {
+        switch (Number(rv.scores.charAt(3))) {
             case 0:
                 scoreCnt4[0]++;
                 break;
@@ -141,7 +141,7 @@ export default function TotalScoreList(props: Props) {
     let scoreCnt5 = [0, 0, 0, 0, 0, 0];
     filteredRates.forEach((rv) => {
         score5 += Number(rv.scores.charAt(4));
-        switch (Number(rv.scores.charAt(0))) {
+        switch (Number(rv.scores.charAt(4))) {
             case 0:
                 scoreCnt5[0]++;
                 break;

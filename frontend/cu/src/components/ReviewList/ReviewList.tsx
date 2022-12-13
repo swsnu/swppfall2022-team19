@@ -1,6 +1,5 @@
 // Reviews are shown in a list
 // sort: 인기순, 최신순, 사진리뷰(만) <- 3 buttons
-// default is in 인기순.
 
 import { useState, useEffect } from 'react';
 import { RateType } from "../../store/slices/rate";
@@ -8,6 +7,7 @@ import { ProductType } from "../../store/slices/product";
 import { UserType } from "../../store/slices/User";
 import Review from "../Review/Review";
 import "./ReviewList.css";
+
 
 interface Props{
     user: UserType,
@@ -20,15 +20,16 @@ export default function ReviewList (props: Props){
     // filteredRates has all the list of reviews related to the product
     let filteredRates = props.rate.filter((rate) => rate.product_id === props.product.id);
     const [rates, setRates] = useState<RateType[]>(filteredRates); 
-   
+
     useEffect(() => {
         setRates(filteredRates);
     }, [props.product, props.rate])
 
 
+
     const likeButtonClick = async () => {
         filteredRates.sort((a, b) => (b.likedCount) - (a.likedCount))
-        setRates(filteredRates.reverse());
+        setRates([...filteredRates]);
 
         console.log("인기순");
         console.log(filteredRates.reverse());
@@ -36,7 +37,7 @@ export default function ReviewList (props: Props){
 
     const recentButtonClick = async () => {
         filteredRates.sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf())
-        setRates(filteredRates.reverse());
+        setRates([...filteredRates]);
 
         console.log("최신순");
         console.log(filteredRates.reverse());
@@ -47,7 +48,7 @@ export default function ReviewList (props: Props){
         // reviews with picture & recent ordering
         const ratesWithPictures = filteredRates.filter((rate) => rate.picture !== null )
         .sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf())
-        setRates(ratesWithPictures.reverse());
+        setRates([...ratesWithPictures]);
 
         console.log("사진 있는 것만");
         console.log(ratesWithPictures.reverse());
@@ -81,7 +82,7 @@ export default function ReviewList (props: Props){
             </div>    
             <div className='reviews'>
                 {  (filteredRates.length !== 0 && rates.length === 0 )&& <div className='no_picture_review'>첫 사진 리뷰를 남겨주세요</div> }
-                {  rates.reverse().map( (rv) => {
+                {  rates.map( (rv) => {
                     return (<Review key={rv.id} user={props.user} product={props.product} rate={rv}/>
                 );})}
                 { filteredRates.length===0 && <div className='no_review'>첫 리뷰를 남겨주세요</div>}

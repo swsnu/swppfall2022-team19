@@ -2,19 +2,43 @@
     display: row;
 }
 
-.productRate{
+.productRateWrapper{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
+}
+
+.productRate{
+    display:flex;
     margin-top: 5rem; 
 }
 
-.productDetailPage .productBlock{
-    margin-left: 3rem;
-    margin-top: 10rem;
-    width: 120%;
-    height: 50%
+.productRate .productblock{
+    display: row;
+    width: 420px;
+    height: 550px;
+    margin-top:5px;
+    background-color: white;
+    text-align-last: center;
+    box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;  
+}
+.productRate .ratingform{
+    margin-left:1rem;
 }
 
+.product_image{
+    width: 200px;
+    height: 200px;
+    margin-top:3rem;
+}
+
+.productblock_detail{
+    margin-top: 3rem;
+    margin-left:2.1rem;
+    max-width: 18rem;
+    border: 3px solid #f6faf6;
+    padding:2rem;
+}
 
 
 

@@ -2,12 +2,10 @@ body {
     background : #f6faf6;
 }
 
-
-/*ratingform layout - or 'rate_box'*/
 .rating_form {
 
     width: 600px;
-    height: 750px;
+    height: 550px;
 
     display: flex;
     flex-direction: column;
@@ -56,8 +54,8 @@ body {
 /* 리뷰 작성하기 리뷰 수정하기 title */
 .rating_heading {
     padding: 0.4rem;
-    margin-top: 3rem;
-    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
     border-bottom: 2px solid black;
 
     font-weight: bold;
@@ -153,10 +151,10 @@ body {
 }
 
 .create_cancel_button{
-    margin-top: 11rem;
+    margin-top: 1.7rem;
     cursor: pointer;
     padding: 10px 20px;
-    margin-left: 3.3rem;
+    margin-left: 7.7rem;
     border: 2px solid rgba(0, 0, 0, 0.23);
 }
 .create_cancel_button:hover{
@@ -169,10 +167,10 @@ body {
 }
 
 .create_button{
-    margin-top: 9.5rem;
+    margin-top: 1.7rem;
     cursor: pointer;
     padding: 10px 20px;
-    margin-left: 3rem;
+    margin-left: 0.6rem;
     border: 2px solid rgba(0, 0, 0, 0.23);
 }
 .create_button:hover{
@@ -185,10 +183,10 @@ body {
 }
 
 .edit_button{
-    margin-top: 11rem;
+    margin-top: 1.6rem;
     cursor: pointer;
     padding: 10px 20px;
-    margin-left: 3.3rem;
+    margin-left: 7.7rem;
     border: 2px solid rgba(0, 0, 0, 0.23);
 }
 
@@ -202,10 +200,10 @@ body {
 }
 
 .delete_button{
-    margin-top: 11rem;
+    margin-top: 1.6rem;
     cursor: pointer;
     padding: 10px 20px;
-    margin-left: 3.3rem;
+    margin-left: 0.6rem;
     border: 2px solid rgba(0, 0, 0, 0.23);
 }
 
@@ -219,10 +217,10 @@ body {
 }
 
 .edit_cancel_button{
-    margin-top: 11.5rem;
+    margin-top: 1.6rem;
     cursor: pointer;
     padding: 10px 20px;
-    margin-left: 3rem;
+    margin-left: 7.7rem;
     border: 2px solid rgba(0, 0, 0, 0.23);
 }
 .edit_cancel_button:hover{
@@ -235,10 +233,10 @@ body {
 }
 
 .edit_save_button{
-    margin-top: 9.5rem;
+    margin-top: 1.6rem;
     cursor: pointer;
     padding: 10px 20px;
-    margin-left: 3.3rem;
+    margin-left: 0.6rem;
     border: 2px solid rgba(0, 0, 0, 0.23);
 }
 .edit_save_button:hover{

@@ -27,7 +27,6 @@ const Header = () => {
 
     const logo = require('../../Categoryicon/Logo.png');
 
-    const myPage = require('../../Categoryicon/myPage.png');
 
 
     const clickSearchHandler = async () => {

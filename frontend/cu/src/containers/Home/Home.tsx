@@ -2,20 +2,20 @@ import ProductBlock from '../../components/ProductBlock/ProductBlock';
 import "./Home.css"
 
 import Header from "../Header/Header"
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useLayoutEffect } from "react";
-import { fetchAllProducts, productActions, ProductType, selectProduct } from "../../store/slices/product";
+import { useNavigate } from "react-router-dom";
+import { useLayoutEffect } from "react";
+import { fetchAllProducts, ProductType, selectProduct } from "../../store/slices/product";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
 import Recommendation from './Recommendation';
-import BestandMost from './BestandMost';
 import { fetchRates } from '../../store/slices/rate';
+import BestandMost from './BestandMost';
+import Footer from '../Header/Footer';
 
 
 const Home = () => {
-    const logo = require('../../Categoryicon/Logo.png');
-
+    
     const navigate = useNavigate();
 
     const onclickProductHandler = (product: ProductType) => {
@@ -25,15 +25,12 @@ const Home = () => {
     const dispatch = useDispatch<AppDispatch>();
 
 
-    // const { search } = useLocation();
-
-
-
     useLayoutEffect(() => {  
 
         dispatch(fetchAllProducts())
         dispatch(fetchRates())
-        // console.log("Home useEffect")    
+
+        
     }, []);
 
 
@@ -43,12 +40,9 @@ const Home = () => {
     const d = new Date();
     const m = Math.floor(d.getSeconds()/60 * 13) + 2
     const r = Math.floor(d.getSeconds()/60 * (m - 1))
-    console.log("m", m, "r", r)
     const showProducts = allProducts.products.filter(product => (product.id % m === r))
     const showLength = Math.floor(d.getSeconds()/60 * (showProducts.length - 4))
     const showProducts5 = showProducts.slice(showLength, showLength + 4)
-
-
 
 
 
@@ -75,6 +69,7 @@ const Home = () => {
                                     price={product.price}
                                     newProduct={product.newProduct}
                                     averageScore={product.averageScore}
+                                    rateCount={product.rateCount}
                                     clickProduct={() => onclickProductHandler(product)}
                                 />
                             </div>
@@ -94,7 +89,12 @@ const Home = () => {
                         <Recommendation></Recommendation>
                     </div>
                 </div>
+
+                <BestandMost></BestandMost>
+
             </div>
+
+            <Footer></Footer>
         </div>
 
     )

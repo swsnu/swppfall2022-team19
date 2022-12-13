@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { loginUser, getRequestUserAtLogin, getUsers } from '../../store/slices/User';
+import Footer from "../Header/Footer";
 import './Login.css';
 
 export default function Login() {

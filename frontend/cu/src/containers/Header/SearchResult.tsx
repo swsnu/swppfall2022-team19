@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import ProductBlock from "../../components/ProductBlock/ProductBlock";
 import { AppDispatch } from "../../store";
-import product, { fetchSearchProducts, ProductType, selectProduct, TagType } from "../../store/slices/product";
+import { fetchAllProducts, fetchSearchProducts, ProductType, selectProduct, TagType } from "../../store/slices/product";
+import { fetchRates } from "../../store/slices/rate";
+import { selectUser } from "../../store/slices/User";
 import Header from "../Header/Header"
+import Footer from "./Footer";
 import "./SearchResult.css"
 
 
@@ -21,39 +24,20 @@ function SearchResult() {
     let categoryProducts = allProducts.products.filter(product => product.mainCategory === searchKey ||  product.mainCategory == searchKey)
     const tag_SearchID = allProducts.tags.filter(tag => tag.name === String(searchKey)) // id
      
-    console.log("tag_SearchId", tag_SearchID)
-    console.log("searchyKey", String(searchKey))
     if (tag_SearchID){
         tag_SearchID.forEach((tag: TagType) => {
 
-            // let tagProducts = allProducts.products.filter(product => product.tags.some(product_tag => product_tag === String(tag.id)))
-            // if(tagProducts){
-            //     products.concat(tagProducts)
-            // }
-
             for (let index = 0; index < allProducts.products.length; index++) {
                 const product = allProducts.products[index];
-
                 for (let j = 0; j < product.tags.length; j++){
-                    console.log("product_tagId", product.tags[j])
-                    console.log("tag_id", tag.id)
                     if (product.tags[j] == String(tag.id)){
-                    
-                    
-                    console.log("product_name", product.name)
-                    console.log("tag_id", tag.id)
-
                         products.push(product)
-
                     }
-
-                        
                 }
             }
         });
     }
     
-
     products = products.concat(categoryProducts);
 
     if (products.length === 0) {
@@ -65,20 +49,28 @@ function SearchResult() {
         const showProducts = allProducts.products.filter(product => (product.id % m === r))
         const showLength = Math.floor(sec/60 * (showProducts.length - 5))
         products = showProducts.slice(showLength, showLength + 5)
+        // products = allProducts.products
 
     } else {
         message = "찾으시는 상품은 다음과 같습니다."
     }
 
-
     const onclickProductHandler = (product: ProductType) => {
         navigate(`/ProductDetail/${product.id}`)
     }
 
+    const selectedUser = useSelector(selectUser).selectedUser;
+
+
+
+    useEffect(() => {
+        dispatch(fetchAllProducts());
+        dispatch(fetchRates())
+    }, [selectedUser])
 
     useEffect(() => {
         dispatch(fetchSearchProducts({ name: searchKey! }))
-    })
+    }, [])
 
     return (
         <div className="SearchResultPage">
@@ -99,14 +91,16 @@ function SearchResult() {
                             price={product.price}
                             newProduct={product.newProduct}
                             averageScore={product.averageScore}
+                            rateCount={product.rateCount}
                             clickProduct={() => onclickProductHandler(product)}
                         />
                     </div>
                 ))}
             </div>
+            <Footer></Footer>
         </div>
+        
     )
-
 }
 
 export default SearchResult;

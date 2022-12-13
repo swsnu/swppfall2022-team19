@@ -19,9 +19,10 @@ export interface RateType {
 
 export interface RateState {
     rates: RateType[],
-    selectedRates: RateType[],
+    selectedRates: RateType[], // recommendation
     selectedRate: RateType | null,
-    likedRates: RateType[],
+    likedRates: RateType[], // liked rates from other user
+    rateRates: RateType[], // my rates
 }
 
 const initialState: RateState = {
@@ -29,16 +30,17 @@ const initialState: RateState = {
     selectedRates: [],
     selectedRate: null,
     likedRates: [],
+    rateRates: [],
 }
 
 
-// export const fetchUserRate = createAsyncThunk(
-//     'rate/user/',
-//     async (userID: RateType['user_id']) => {
-//         const response = await client.get<RateType[]>(`/api/rate/user`)
-//         return response.data
-//     }
-// )
+export const fetchMyRate = createAsyncThunk(
+    'rate/myRates/',
+    async (params: { user_id: number }) => {
+        const response = await client.get<RateType[]>(`/api/rate/user`, { params })
+        return response.data
+    }
+)
 
 
 export const fetchUserRate = createAsyncThunk(
@@ -106,7 +108,12 @@ export const deleteRate = createAsyncThunk(
     }
 )
 
-
+export const removeSelectedRates = createAsyncThunk (
+    'product/removeSelectedRates',
+    async () => {
+          return "remove it"
+    } )
+        
 
 export const rateSlice = createSlice({
     name: 'rate',
@@ -136,16 +143,19 @@ export const rateSlice = createSlice({
         builder.addCase(createRate.rejected, (_state, action) => {
             console.error(action.error);
         })
-        builder.addCase(fetchUserRate.fulfilled, (state, action) => {
-            state.selectedRates = action.payload; // my page user review 
+        builder.addCase(fetchUserRate.fulfilled, (state, action) => { // 
+            state.selectedRates = action.payload; // recommendation
         })
         builder.addCase(addUserRate.fulfilled, (state, action) => {
-            action.payload.forEach(element => {
+            action.payload.forEach(element => { // recommendation
                 state.selectedRates.push(element)                
             });
         })
         builder.addCase(fetchUserLikedRate.fulfilled, (state, action) => {
             state.likedRates = action.payload // liked rates temp 
+        })
+        builder.addCase(fetchMyRate.fulfilled, (state, action) => {
+            state.rateRates = action.payload
         })
     }
 

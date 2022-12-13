@@ -36,7 +36,7 @@ const Review = (props: IProps) => {
     useEffect(()=> {
         //if(rates.includes(props.rate)){ ... }
         for(let index=0; index<rates.length; index++){
-            if(rates[index].comment === props.rate.comment){
+            if(rates[index].id === props.rate.id){
                 setLiked(true);
                 console.log("liked rate:", props.rate)
                 console.log(liked)
@@ -81,6 +81,7 @@ const Review = (props: IProps) => {
     
 
     return (
+        
         <article className='Review'>
             <div className='review_picture_except'>
 
@@ -101,9 +102,10 @@ const Review = (props: IProps) => {
                         {liked? (<div>❤️</div>): (<div>🤍</div>)}
                     </div>
                 </div>
-
             </div>
-                { isOpen && <img className='review_picture' src={props.rate.picture} width="300px"></img> }
+            <div className='picture_box'>
+            { isOpen && <img className='review_picture' src={props.rate.picture} width="300px"></img> }
+            </div>
         </article>
     );
 };

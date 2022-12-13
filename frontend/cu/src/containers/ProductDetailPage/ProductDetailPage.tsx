@@ -8,10 +8,11 @@ import ProductBlock from '../../components/ProductBlock/ProductBlock';
 import "./ProductDetailPage.css"
 import Header from '../Header/Header'
 import { selectUser } from "../../store/slices/User"
-import { fetchProduct, selectProduct, updateProduct } from "../../store/slices/product"
-import { fetchRates, RateType, selectRate } from "../../store/slices/rate"
+import { fetchProduct, selectProduct } from "../../store/slices/product"
+import { fetchRates, selectRate } from "../../store/slices/rate"
 import { AppDispatch } from '../../store';
 import RatingLayout from '../../components/RatingForm/RatingLayout';
+import Footer from '../Header/Footer';
 
 
 function ProductDetailPage() {
@@ -40,6 +41,9 @@ function ProductDetailPage() {
     setCallRate2(state)
   }
 
+
+  //{selectedProduct?.details}
+  /*        
   return (
     <div className="productDetailPage">
       <Header/>
@@ -53,6 +57,7 @@ function ProductDetailPage() {
             price={selectedProduct?.price}
             newProduct={selectedProduct?.newProduct}
             averageScore={selectedProduct?.averageScore}
+            rateCount={selectedProduct?.rateCount}
           />)}
           </div>
         <div key={2}>
@@ -72,7 +77,40 @@ function ProductDetailPage() {
             <ReviewList user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
       </div>}
     </div>
+  )*/
+
+  return (
+    <div className="productDetailPage">
+      <Header/>
+      <div className='productRateWrapper'>
+      <div className="productRate">
+        <div className='productblock' key={1}>
+          <img className="product_image" src={selectedProduct?.imageUrl} alt="Product"/>
+          <div>{selectedProduct?.name}</div>
+          <div>{selectedProduct?.mainCategory}</div>
+          <div>{selectedProduct?.price}원</div>
+          <div className='productblock_detail'> {selectedProduct?.details}</div>
+        </div>
+        <div className='ratingform' key={2}>
+          {
+            userState.selectedUser && selectedProduct &&
+            <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} recallRateState1={updateRecall1} recallRateState2={updateRecall2}/>
+          }
+        </div>
+      </div>
+      </div>
+      {<div className="scoresReviews">
+        <div key={3}>
+          {userState.selectedUser && selectedProduct &&
+            <TotalScoreList user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
+        <div key={4}>
+          {userState.selectedUser && selectedProduct &&
+            <ReviewList user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
+      </div>}
+      <Footer></Footer>
+    </div>
   )
+
 }
 
 export default ProductDetailPage

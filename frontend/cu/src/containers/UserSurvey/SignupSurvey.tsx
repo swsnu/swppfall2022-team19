@@ -6,6 +6,7 @@ import makeAnimated from 'react-select/animated';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { postUser, getRequestUserAtLogin, getUsers } from "../../store/slices/User";
+import Footer from '../Header/Footer';
 
 const animatedComponents = makeAnimated();
 
@@ -168,6 +169,7 @@ const SignupSurvey = () => {
                         <button className="submitButton" onClick={() => postUserHandler()}>회원가입 하기</button>
                     </div>
                 </div>
+
             </div>
         )
     }
