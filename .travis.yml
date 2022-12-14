@@ -33,6 +33,9 @@ jobs:
         - sudo pip install mysqlclient
         - sudo pip install pymysql
         - sudo service mysql start
+        - mysql -u root
+        - USE cu_data;
+        - exit;
         - cd frontend
         - cd cu
         - yarn install
