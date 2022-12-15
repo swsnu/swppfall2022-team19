@@ -73,22 +73,22 @@ class BlogTestCase(TestCase):
 
 
     # (O)check setUp rate
-    # def test_str(self): 
-    #     rate = Rate.objects.get(id=2)
-    #     user = User.objects.get(username="newUser1")
-    #     product = Product.objects.get(name="자이언트일품닭강정")
-    #     tag = Tag.objects.get(name="우유")
-    #     self.assertIsInstance(rate,Rate)
-    #     self.assertEqual(rate.id, 2)
-    #     self.assertEqual(rate.user, user)
-    #     self.assertEqual(rate.product, product)
-    #     self.assertEqual(rate.scores, "55555")
-    #     self.assertEqual(rate.comment, "닭강정 최고")
+    def test_str(self): 
+        rate = Rate.objects.get(id=2)
+        user = User.objects.get(username="newUser1")
+        product = Product.objects.get(name="자이언트일품닭강정")
+        tag = Tag.objects.get(name="우유")
+        self.assertIsInstance(rate,Rate)
+        self.assertEqual(rate.id, 2)
+        self.assertEqual(rate.user, user)
+        self.assertEqual(rate.product, product)
+        self.assertEqual(rate.scores, "55555")
+        self.assertEqual(rate.comment, "닭강정 최고")
 
-    #     # (O)test_str_
-    #     self.assertEqual(str(product), product.name)
-    #     self.assertEqual(str(rate), rate.product.name)
-    #     self.assertEqual("우유",str(tag))
+        # (O)test_str_
+        self.assertEqual(str(product), product.name)
+        self.assertEqual(str(rate), rate.product.name)
+        self.assertEqual("우유",str(tag))
 
     '''
     product
@@ -101,9 +101,9 @@ class BlogTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     # (O)list /api/product/mainCategory/
-    # def test_product_mainCategory(self):
-    #     response = self.client.get('/api/product/mainCategory/', {'mainCategory':'간편식사'}, content_type='application/json') 
-    #     self.assertEqual(response.status_code, 200)
+    def test_product_mainCategory(self):
+        response = self.client.get('/api/product/mainCategory/', {'mainCategory':'간편식사'}, content_type='application/json') 
+        self.assertEqual(response.status_code, 200)
 
 
     # (O)retrieve /api/product/{product_id}/
