@@ -8,7 +8,6 @@ import Header from "../Header/Header"
 import "./Category.css"
 
 import { fetchRates } from "../../store/slices/rate";
-import BestandMost from "../Home/BestandMost";
 
 
 function Category() {
@@ -89,8 +88,6 @@ function Category() {
                 </div>
 
             </div>
-
-            {mainCategory ==="전체" && <BestandMost></BestandMost>}
 
 
             <div title="productBlocks" className="productBlocks">
