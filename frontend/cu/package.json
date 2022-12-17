@@ -68,9 +68,10 @@
       "!src/components/TotalScoreList/*",
       "!src/containers/UserSurvey/*",
       "!src/containers/ProductDetailPage/*",
+      "!src/containers/Header/*",
       "!src/store/api/*",
       "!src/test-utils/*",
-      "!src/reportWebVitals.ts"
+      "!src/reportWebVitals.js"
     ]
   }
 }
