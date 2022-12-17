@@ -79,7 +79,7 @@ const Review = (props: IProps) => {
             <div className='review_picture_except'>
                 <div className='review_button_except'>
 
-                    <div className="review_date"> { props.rate.created_at.toString().split('T')[0].replaceAll("-",".")} </div>
+                    <div className="review_date"> { props.rate.created_at.toString().split('T')[0].replace(/-/g, '.')} </div>
                     <div className="review_username">{props.rate.username}</div>
                     <div className="review_totalScore" style={{color: "green"}}>
                         {totalScore === 5 ? '★★★★★' : totalScore >= 4 ? '★★★★☆' : totalScore >= 3 ? '★★★☆☆' : totalScore >= 2 ? '★★☆☆☆' : totalScore >= 1 ? '★☆☆☆☆' : '☆☆☆☆☆'}
