@@ -7,7 +7,7 @@ import { ProductType } from "../../store/slices/product";
 import { UserType } from "../../store/slices/User";
 import { AppDispatch } from "../../store";
 
-interface IProps {
+export interface IProps {
     user: UserType,
     product: ProductType,
     rate: RateType
@@ -18,7 +18,7 @@ const Review = (props: IProps) => {
     const dispatch = useDispatch<AppDispatch>();
     const [liked, setLiked] = useState<boolean>(false);
     const [likedCount, setLikedCount] = useState(props.rate.likedCount);
-    const [isOpen, setPicture] = useState(false);  // 메뉴의 초기값을 false로 설정
+    const [isOpen, setPicture] = useState(false); 
   
     const togglePicture = () => {
         setPicture(isOpen => !isOpen); // on,off
@@ -28,13 +28,8 @@ const Review = (props: IProps) => {
         dispatch(fetchUserLikedRate({user_id: props.user.id})) 
     }, [props.user, liked])
     const rates = useSelector(selectRate).likedRates
-        
-    //(O)check if 'likedRates' are fetched
-    //console.log("fetchedLikedRates!: ", rates);
-    //console.log("props.rate!: ", props.rate)
  
     useEffect(()=> {
-        //if(rates.includes(props.rate)){ ... }
         for(let index=0; index<rates.length; index++){
             if(rates[index].id === props.rate.id){
                 setLiked(true);
@@ -71,10 +66,8 @@ const Review = (props: IProps) => {
         await dispatch(updateRate(formData))
     }
 
-    //console.log("rates' likedCount: "+likedCount)
-    // average score for each reviews
-    var totalScore=0;
-    for( var i=0; i<5; i++){
+    let totalScore=0;
+    for( let i=0; i<5; i++){
         totalScore+=Number(props.rate?.scores[i]);
     }
     totalScore/=5;
@@ -82,9 +75,8 @@ const Review = (props: IProps) => {
 
     return (
         
-        <article className='Review'>
+        <article title="spyReview" className='Review'>
             <div className='review_picture_except'>
-
                 <div className='review_button_except'>
 
                     <div className="review_date"> { props.rate.created_at.toString().split('T')[0].replaceAll("-",".")} </div>
