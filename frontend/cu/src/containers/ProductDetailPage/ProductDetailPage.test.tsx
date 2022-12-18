@@ -1,11 +1,12 @@
 import { fireEvent, getByTestId, render, screen } from "@testing-library/react";
-import React from "react";
 import { ProductType } from "../../store/slices/product";
 import { RateType } from "../../store/slices/rate";
 import { UserType } from "../../store/slices/User";
 import { renderWithProviders } from "../../test-utils/mock";
 import ProductDetailPage from "./ProductDetailPage";
-import {shallow} from "enzyme";
+import { shallow } from "enzyme";
+import RatingLayout from "../../components/RatingForm/RatingLayout";
+import * as React from 'react';
 
 const fakeUser: UserType = {
     id: 1,
@@ -32,17 +33,21 @@ const fakeProduct: ProductType = {
     rateCount: 5,
 }
 
-const fakeRate: RateType[] = [{
-    id: 1,
-    user_id: 1,
-    username: 'username',
-    product_id: 1,
-    scores: '55555',
-    comment: 'rate_comment',
-    picture: 'rate_picture',
-    likedCount: 3,
-    created_at: 22 / 12 / 13,
-}]
+const fakeRateType: RateType[] = [
+    {
+        id: 1,
+        user_id: 1,
+        username: 'username',
+        product_id: 1,
+        scores: '55555',
+        comment: 'rate_comment',
+        picture: 'rate_picture',
+        likedCount: 3,
+        created_at: 22 / 12 / 13
+    },
+]
+
+
 
 const mockSetState = jest.fn();
 jest.mock("react-redux", () => ({
@@ -50,26 +55,35 @@ jest.mock("react-redux", () => ({
   useState: () => mockSetState,
 }));
 
-const setCallRate1 = jest.fn();
-const setCallRate2 = jest.fn();
-const useStateSpy = jest.spyOn(React, "useState");
+describe("<ProductDetailPage />", () => {
+    let setState = jest.fn();
+    const useStateMock: any = (initState: any) => [initState, setState];
 
-describe("<ProductDetailPage />", () =>{
-    
     it('should render Product detail page', () => {
-        const { container } = renderWithProviders(<ProductDetailPage/>);
+        const { container } = renderWithProviders(<ProductDetailPage />);
         expect(screen.getByTitle('productDetailPage')).toBeInTheDocument();
         expect(screen.getByTitle('ratingform')).toBeInTheDocument();
         expect(screen.getByTitle('scoresReviews')).toBeInTheDocument();
     });
 
-    it('should have product details', () =>{
-        const { container } = renderWithProviders(<ProductDetailPage/>);
+    it('should have product details', () => {
+        const { container } = renderWithProviders(<ProductDetailPage />);
         expect(screen.getByTitle('productName')).toBeInTheDocument();
         expect(screen.getByTitle('productImage')).toBeInTheDocument();
         expect(screen.getByTitle('productMainCategory')).toBeInTheDocument();
         expect(screen.getByTitle('productPrice')).toBeInTheDocument();
         expect(screen.getByTitle('productDetail')).toBeInTheDocument();
-    
+    })
+
+    it('should update state', async () => {
+        renderWithProviders(<ProductDetailPage />);
+        jest.spyOn(React, 'useState').mockImplementation(useStateMock);
+        const {container} = renderWithProviders(<RatingLayout
+            user={fakeUser}
+            product={fakeProduct}
+            rate={fakeRateType}
+            recallRateState1={setState}
+            recallRateState2={setState} />);
+        expect(setState).toHaveBeenCalled();
     })
 })

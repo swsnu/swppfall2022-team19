@@ -9,7 +9,7 @@ import "./ProductDetailPage.css"
 import Header from '../Header/Header'
 import { selectUser } from "../../store/slices/User"
 import { fetchProduct, selectProduct } from "../../store/slices/product"
-import { fetchRates, selectRate } from "../../store/slices/rate"
+import { fetchRates, selectRate, updateRate } from "../../store/slices/rate"
 import { AppDispatch } from '../../store';
 import RatingLayout from '../../components/RatingForm/RatingLayout';
 
@@ -51,7 +51,7 @@ function ProductDetailPage() {
           <div title='productPrice'>{selectedProduct?.price}원</div>
           <div className='productblock_detail' title='productDetail'> {selectedProduct?.details}</div>
         </div>
-        <div className='ratingform' key={2} title='ratingform'>
+        <div className='ratingform' key={2} title='ratingform' >
           {
             userState.selectedUser && selectedProduct &&
             <RatingLayout user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} recallRateState1={updateRecall1} recallRateState2={updateRecall2}/>
@@ -59,7 +59,7 @@ function ProductDetailPage() {
         </div>
       </div>
       </div>
-      {<div className="scoresReviews" title='ratingform'>
+      {<div className="scoresReviews" title='scoresReviews'>
         <div key={3}>
           {userState.selectedUser && selectedProduct &&
             <TotalScoreList user={userState.selectedUser} product={selectedProduct} rate={rateState.rates} />}</div>
