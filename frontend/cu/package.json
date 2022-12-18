@@ -68,7 +68,6 @@
       "!src/components/TotalScoreList/*",
       "!src/containers/Header/*",
       "!src/containers/UserSurvey/*",
-      "!src/containers/ProductDetailPage/*",
       "!src/store/api/*",
       "!src/test-utils/*",
       "!src/reportWebVitals.js"

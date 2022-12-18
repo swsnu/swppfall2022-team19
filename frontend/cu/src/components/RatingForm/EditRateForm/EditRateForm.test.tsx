@@ -74,19 +74,22 @@ describe('<EditRateForm />', () => {
     });
 
     it('should handle click Back', async () => {
-
         const onclickBackEditHandler = screen.findByText('수정 취소')
         fireEvent.click(await onclickBackEditHandler);
         expect(state2).toBeCalledWith(true);
     });
 
     it('should handle  save edit rate', async () => {
-
         const onclickSaveEditHandle = screen.findByText('수정 저장')
+        expect(screen.getByTitle('q1')).toBeInTheDocument();
+        expect(screen.getByTitle('q2')).toBeInTheDocument();
+        expect(screen.getByTitle('q3')).toBeInTheDocument();
+        expect(screen.getByTitle('q4')).toBeInTheDocument();
+        expect(screen.getByTitle('q5')).toBeInTheDocument();
         fireEvent.click(await onclickSaveEditHandle);
+        
         expect(mockSetState).toHaveBeenCalledTimes(0);
-        // expect(state1).toBeCalledWith(true);
-        // expect(state2).toBeCalledWith(true);
+
     })
 
     it('should handle delete picture', async () => {
