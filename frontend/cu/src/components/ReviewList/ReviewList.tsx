@@ -54,7 +54,7 @@ export default function ReviewList (props: Props){
 
 
     return (
-        <div className="ReviewList"> 
+        <div title="spyReviewList" className="ReviewList"> 
             <div className='title'>
                 상품후기( {filteredRates.length} )
                 <div className="sorting_buttons">
