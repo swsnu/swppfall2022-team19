@@ -16,6 +16,7 @@
     "@types/react-router": "^5.1.19",
     "axios": "^0.24.0",
     "connected-react-router": "^6.8.0",
+    "enzyme": "^3.11.0",
     "eslint": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -68,7 +69,6 @@
       "!src/components/TotalScoreList/*",
       "!src/containers/Header/*",
       "!src/containers/UserSurvey/*",
-      "!src/containers/ProductDetailPage/*",
       "!src/store/api/*",
       "!src/test-utils/*",
       "!src/reportWebVitals.js"
